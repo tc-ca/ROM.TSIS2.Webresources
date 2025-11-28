@@ -20,15 +20,13 @@ namespace ROM.OperationActivity {
             }
         }
 
-        //If owner is AvSec make accountable team section visible
+        // If owner is AvSec (based on BU / team env vars) make accountable team section visible
+        updateTeamSectionVisibility(form);
+        
+        // Register onChange handler for owner field
         const ownerAttribute = form.getAttribute("ownerid");
         if (ownerAttribute != null && ownerAttribute != undefined) {
-            const ownerAttributeValue = ownerAttribute.getValue();
-            if (ownerAttributeValue != null) {
-                if (ownerAttributeValue[0].name && ownerAttributeValue[0].name.toLowerCase().includes("aviation security".toLowerCase())) {
-                    form.ui.tabs.get("tab_general").sections.get("section_team").setVisible(true);
-                }
-            }
+            ownerAttribute.addOnChange(ownerOnChange);
         }
 
         //If not business admin lock all fields
@@ -67,5 +65,38 @@ namespace ROM.OperationActivity {
             }
         });
         return isAdmin;
+    }
+
+    export function ownerOnChange(eContext?: Xrm.ExecutionContext<Xrm.LookupAttribute<"systemuser" | "team">, undefined>): void {
+        if (!eContext) return;
+        const form = <Form.ts_operationactivity.Main.Information>eContext.getFormContext();
+        updateTeamSectionVisibility(form);
+    }
+
+    function updateTeamSectionVisibility(form: Form.ts_operationactivity.Main.Information): void {
+        const ownerAttribute = form.getAttribute("ownerid");
+        if (ownerAttribute != null && ownerAttribute != undefined) {
+            const ownerAttributeValue = ownerAttribute.getValue();
+            if (ownerAttributeValue && ownerAttributeValue[0]) {
+                isOwnedByAvSec(ownerAttributeValue)
+                    .then((isAvSec) => {
+                        const teamSection = form.ui.tabs.get("tab_general")?.sections.get("section_team");
+                        if (teamSection) {
+                            teamSection.setVisible(isAvSec);
+                        } else {
+                            console.warn("OperationActivity: section_team not found in tab_general");
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error determining AvSec ownership on OperationActivity:", error);
+                    });
+            } else {
+                // Owner is cleared, hide the section
+                const teamSection = form.ui.tabs.get("tab_general")?.sections.get("section_team");
+                if (teamSection) {
+                    teamSection.setVisible(false);
+                }
+            }
+        }
     }
 }

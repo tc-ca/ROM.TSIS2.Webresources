@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -40,6 +40,7 @@ var ROM;
     var Operation;
     (function (Operation) {
         var userBusinessUnitName;
+        var userBusinessUnitId;
         var formOpenedInCreateModeWithSiteFilled = false;
         //Stakeholder owning business unit used to filter other fields
         var owningBusinessUnit;
@@ -49,277 +50,323 @@ var ROM;
         var isROM20Form = false;
         function onLoad(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var form, userRoles, formItem, userId, currentUserBusinessUnitFetchXML, isOffline, ownerAttribute, ownerAttributeValue;
+                var form, userRoles, formItem, userId, currentUserBusinessUnitFetchXML, isOffline, ownerAttribute, ownerAttributeValue, isAvSec;
                 return __generator(this, function (_a) {
-                    form = eContext.getFormContext();
-                    userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-                    //If the user is a system admin or ROM - Planner, enable risk score field
-                    userRoles.forEach(function (role) {
-                        if (role.name == "System Administrator") {
-                            form.getControl("ts_riskscore").setDisabled(false);
-                            form.getControl("ts_dateoflastsecurityplanreview").setDisabled(false);
-                            form.getControl("ts_dateoflastcomprehensiveinspection").setDisabled(false);
-                            form.getControl("ts_dateoflastriskbasedinspection").setDisabled(false);
-                            form.getControl("ts_stakeholdertcscp").setDisabled(false);
-                        }
-                    });
-                    formItem = form.ui.formSelector.getCurrentItem().getId();
-                    isROM20Form = formItem.toLowerCase() == "30d3ecf6-cd5d-4f1b-a186-ac13e6c9418f";
-                    if (form.ui.getFormType() != 0 && form.ui.getFormType() != 1 && form.ui.getFormType() != 6) {
-                        setRelatedActionsFetchXML(form);
-                    }
-                    else if (form.ui.getFormType() == 1) {
-                        setOwnerToUserBusinessUnit(form);
-                    }
-                    userId = Xrm.Utility.getGlobalContext().userSettings.userId;
-                    currentUserBusinessUnitFetchXML = [
-                        "<fetch top='50'>",
-                        "  <entity name='businessunit'>",
-                        "    <attribute name='name' />",
-                        "    <attribute name='businessunitid' />",
-                        "    <link-entity name='systemuser' from='businessunitid' to='businessunitid'>",
-                        "      <filter>",
-                        "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
-                        "      </filter>",
-                        "    </link-entity>",
-                        "  </entity>",
-                        "</fetch>",
-                    ].join("");
-                    currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
-                    isOffline = Xrm.Utility.getGlobalContext().client.getClientState() === "Offline";
-                    if (isOffline) {
-                        Xrm.WebApi.offline.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
-                            userBusinessUnitName = result.entities[0].name;
-                            businessUnitCondition = '<condition attribute="owningbusinessunit" operator="eq" value="' + result.entities[0].businessunitid + '" />';
-                            form.getAttribute("ts_ppeguide").setValue(false);
-                            var operationType = form.getAttribute("ovs_operationtypeid").getValue();
-                            //Show ISSO Properties Tab if OperationType is ISSO, show Avsec if not 
-                            if (operationType != null) {
-                                if (issoOperationTypeGuids.includes(operationType[0].id)) {
-                                    if (!isROM20Form) {
-                                        form.ui.tabs.get("operation_activity_tab").setVisible(false);
-                                        form.ui.tabs.get("tab_properties_isso").setVisible(true);
-                                    }
-                                    //Show PPE questions
-                                    var ppeRequired = form.getAttribute("ts_pperequired").getValue();
-                                    var specializedPPERequired = form.getAttribute("ts_specializedpperequired").getValue();
-                                    if (ppeRequired) {
-                                        form.getControl("ts_ppecategories").setVisible(true);
-                                        form.getControl("ts_specializedpperequired").setVisible(true);
-                                    }
-                                    if (specializedPPERequired) {
-                                        form.getControl("ts_typesofspecializedppe").setVisible(true);
-                                    }
-                                    //Show Visual Security Inspection question only for Railway Carrier and Railway Loader depending on Type Of Dangerous Goods
-                                    if (operationType != null) {
-                                        if (operationType[0].id == "{D883B39A-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{DA56FEA1-C751-EB11-A812-000D3AF3AC0D}") {
-                                            form.getControl("ts_typeofdangerousgoods").setVisible(true);
-                                            if (form.getAttribute("ts_typeofdangerousgoods").getValue() == 717750002 /* ts_typeofdangerousgoods.NonSchedule1DangerousGoods */ || form.getAttribute("ts_typeofdangerousgoods").getValue() == 717750001 /* ts_typeofdangerousgoods.Schedule1DangerousGoods */) {
-                                                form.getControl("ts_visualsecurityinspection").setVisible(true);
-                                                //Set default value for existing operations
-                                                if (form.getAttribute("ts_visualsecurityinspection").getValue() == null) {
-                                                    form.getAttribute("ts_visualsecurityinspection").setValue(717750000 /* ts_visualsecurityinspection.Unconfirmed */);
+                    switch (_a.label) {
+                        case 0:
+                            form = eContext.getFormContext();
+                            userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
+                            //If the user is a system admin or ROM - Planner, enable risk score field
+                            userRoles.forEach(function (role) {
+                                if (role.name == "System Administrator") {
+                                    form.getControl("ts_riskscore").setDisabled(false);
+                                    form.getControl("ts_dateoflastsecurityplanreview").setDisabled(false);
+                                    form.getControl("ts_dateoflastcomprehensiveinspection").setDisabled(false);
+                                    form.getControl("ts_dateoflastriskbasedinspection").setDisabled(false);
+                                    form.getControl("ts_stakeholdertcscp").setDisabled(false);
+                                }
+                            });
+                            formItem = form.ui.formSelector.getCurrentItem().getId();
+                            isROM20Form = formItem.toLowerCase() == "30d3ecf6-cd5d-4f1b-a186-ac13e6c9418f";
+                            if (form.ui.getFormType() != 0 && form.ui.getFormType() != 1 && form.ui.getFormType() != 6) {
+                                setRelatedActionsFetchXML(form);
+                            }
+                            else if (form.ui.getFormType() == 1) {
+                                setOwnerToUserBusinessUnit(form);
+                            }
+                            userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+                            currentUserBusinessUnitFetchXML = [
+                                "<fetch top='50'>",
+                                "  <entity name='businessunit'>",
+                                "    <attribute name='name' />",
+                                "    <attribute name='businessunitid' />",
+                                "    <link-entity name='systemuser' from='businessunitid' to='businessunitid'>",
+                                "      <filter>",
+                                "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
+                                "      </filter>",
+                                "    </link-entity>",
+                                "  </entity>",
+                                "</fetch>",
+                            ].join("");
+                            currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+                            isOffline = Xrm.Utility.getGlobalContext().client.getClientState() === "Offline";
+                            if (isOffline) {
+                                Xrm.WebApi.offline.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
+                                    return __awaiter(this, void 0, void 0, function () {
+                                        var operationType, ppeRequired, specializedPPERequired, ownerAttribute_1;
+                                        return __generator(this, function (_a) {
+                                            userBusinessUnitName = result.entities[0].name;
+                                            userBusinessUnitId = result.entities[0].businessunitid;
+                                            businessUnitCondition = '<condition attribute="owningbusinessunit" operator="eq" value="' + result.entities[0].businessunitid + '" />';
+                                            form.getAttribute("ts_ppeguide").setValue(false);
+                                            operationType = form.getAttribute("ovs_operationtypeid").getValue();
+                                            //Show ISSO Properties Tab if OperationType is ISSO, show Avsec if not 
+                                            if (operationType != null) {
+                                                if (issoOperationTypeGuids.includes(operationType[0].id)) {
+                                                    if (!isROM20Form) {
+                                                        form.ui.tabs.get("operation_activity_tab").setVisible(false);
+                                                        form.ui.tabs.get("tab_properties_isso").setVisible(true);
+                                                    }
+                                                    ppeRequired = form.getAttribute("ts_pperequired").getValue();
+                                                    specializedPPERequired = form.getAttribute("ts_specializedpperequired").getValue();
+                                                    if (ppeRequired) {
+                                                        form.getControl("ts_ppecategories").setVisible(true);
+                                                        form.getControl("ts_specializedpperequired").setVisible(true);
+                                                    }
+                                                    if (specializedPPERequired) {
+                                                        form.getControl("ts_typesofspecializedppe").setVisible(true);
+                                                    }
+                                                    //Show Visual Security Inspection question only for Railway Carrier and Railway Loader depending on Type Of Dangerous Goods
+                                                    if (operationType != null) {
+                                                        if (operationType[0].id == "{D883B39A-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{DA56FEA1-C751-EB11-A812-000D3AF3AC0D}") {
+                                                            form.getControl("ts_typeofdangerousgoods").setVisible(true);
+                                                            if (form.getAttribute("ts_typeofdangerousgoods").getValue() == 717750002 /* NonSchedule1DangerousGoods */ || form.getAttribute("ts_typeofdangerousgoods").getValue() == 717750001 /* Schedule1DangerousGoods */) {
+                                                                form.getControl("ts_visualsecurityinspection").setVisible(true);
+                                                                //Set default value for existing operations
+                                                                if (form.getAttribute("ts_visualsecurityinspection").getValue() == null) {
+                                                                    form.getAttribute("ts_visualsecurityinspection").setValue(717750000 /* Unconfirmed */);
+                                                                }
+                                                                else {
+                                                                    if (form.getAttribute("ts_visualsecurityinspection").getValue() == 717750001 /* Yes */) {
+                                                                        form.getControl("ts_visualsecurityinspectiondetails").setVisible(true);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        //If Operation Type is Small Passenger Company, Passenger Company, or Host Company
+                                                        if (operationType[0].id == "{199E31AE-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{3B261029-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{B27E5003-C751-EB11-A812-000D3AF3AC0D}") {
+                                                            form.getControl("ts_issecurityinspectionsite").setVisible(true);
+                                                            //Set default value for existing operations
+                                                            if (form.getAttribute("ts_issecurityinspectionsite").getValue() == null) {
+                                                                form.getAttribute("ts_issecurityinspectionsite").setValue(717750000 /* Unconfirmed */);
+                                                            }
+                                                            else {
+                                                                if (form.getAttribute("ts_issecurityinspectionsite").getValue() == 717750001 /* Yes */) {
+                                                                    form.getControl("ts_securityinspectiondetails").setVisible(true);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                                 else {
-                                                    if (form.getAttribute("ts_visualsecurityinspection").getValue() == 717750001 /* ts_visualsecurityinspection.Yes */) {
-                                                        form.getControl("ts_visualsecurityinspectiondetails").setVisible(true);
+                                                    if (!isROM20Form) {
+                                                        form.ui.tabs.get("operation_activity_tab").setVisible(true);
+                                                    }
+                                                    form.getControl("ts_targetedinspectionneeded").setVisible(false);
+                                                    //We need to keep this tab hidden for now. We may need it later though.
+                                                    //const avsecPropertiesTab = form.ui.tabs.get("tab_properties_avsec")
+                                                    //avsecPropertiesTab.setVisible(true);
+                                                    ////Show Air Carrier (Passenger) Section if Operation Type is Air Carrier Passenger
+                                                    //if (operationType[0].id == "{8B614EF0-C651-EB11-A812-000D3AF3AC0D}") { //Air Carrier (Passenger)
+                                                    //    avsecPropertiesTab.sections.get("tab_avsec_properties_air_carrier_passenger").setVisible(true);
+                                                    //}
+                                                }
+                                                if (form.ui.getFormType() == 1) { //Create
+                                                    //If the form is opened with the stakeholder or site value already filled (from account/site subgrids)
+                                                    if (form.getAttribute('ts_stakeholder').getValue() != null) {
+                                                        getStakeholderOwningBusinessUnitAndSetOperationTypeView(form);
+                                                    }
+                                                    else if (form.getAttribute('ts_site').getValue() != null) {
+                                                        formOpenedInCreateModeWithSiteFilled = true;
+                                                        form.getControl('ovs_operationtypeid').setDisabled(false);
+                                                        getSiteOwningBusinessUnitAndSetOperationTypeAndStakeholderView(form);
+                                                    }
+                                                }
+                                                else if (form.ui.getFormType() == 2) { //Update
+                                                    ownerAttribute_1 = form.getAttribute("ownerid").getValue();
+                                                    if (ownerAttribute_1 != null) {
+                                                        Xrm.WebApi.offline.retrieveRecord(ownerAttribute_1[0].entityType, ownerAttribute_1[0].id, "?$select=_businessunitid_value").then(function success(result) {
+                                                            return __awaiter(this, void 0, void 0, function () {
+                                                                return __generator(this, function (_a) {
+                                                                    switch (_a.label) {
+                                                                        case 0:
+                                                                            owningBusinessUnit = result._businessunitid_value;
+                                                                            form.getControl('ovs_operationtypeid').setDisabled(false);
+                                                                            form.getControl('ts_site').setDisabled(false);
+                                                                            return [4 /*yield*/, setStakeholderFilteredView(form)];
+                                                                        case 1:
+                                                                            _a.sent();
+                                                                            return [4 /*yield*/, setOperationTypeFilteredView(form)];
+                                                                        case 2:
+                                                                            _a.sent();
+                                                                            return [4 /*yield*/, setSiteFilteredView(form)];
+                                                                        case 3:
+                                                                            _a.sent();
+                                                                            return [4 /*yield*/, setSubSiteFilteredView(form)];
+                                                                        case 4:
+                                                                            _a.sent();
+                                                                            setSubSubSiteFilteredView(form);
+                                                                            return [2 /*return*/];
+                                                                    }
+                                                                });
+                                                            });
+                                                        });
+                                                    }
+                                                    if (form.getAttribute('ts_subsite').getValue() != null) {
+                                                        form.getControl('ts_subsite').setDisabled(false);
                                                     }
                                                 }
                                             }
-                                        }
-                                        //If Operation Type is Small Passenger Company, Passenger Company, or Host Company
-                                        if (operationType[0].id == "{199E31AE-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{3B261029-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{B27E5003-C751-EB11-A812-000D3AF3AC0D}") {
-                                            form.getControl("ts_issecurityinspectionsite").setVisible(true);
-                                            //Set default value for existing operations
-                                            if (form.getAttribute("ts_issecurityinspectionsite").getValue() == null) {
-                                                form.getAttribute("ts_issecurityinspectionsite").setValue(717750000 /* ts_issecurityinspectionsite.Unconfirmed */);
-                                            }
                                             else {
-                                                if (form.getAttribute("ts_issecurityinspectionsite").getValue() == 717750001 /* ts_issecurityinspectionsite.Yes */) {
-                                                    form.getControl("ts_securityinspectiondetails").setVisible(true);
+                                                //Set operation_activity_tab visible to false by default
+                                                if (!isROM20Form) {
+                                                    form.ui.tabs.get("operation_activity_tab").setVisible(false);
                                                 }
                                             }
-                                        }
-                                    }
-                                }
-                                else {
-                                    if (!isROM20Form) {
-                                        form.ui.tabs.get("operation_activity_tab").setVisible(true);
-                                    }
-                                    form.getControl("ts_targetedinspectionneeded").setVisible(false);
-                                    //We need to keep this tab hidden for now. We may need it later though.
-                                    //const avsecPropertiesTab = form.ui.tabs.get("tab_properties_avsec")
-                                    //avsecPropertiesTab.setVisible(true);
-                                    ////Show Air Carrier (Passenger) Section if Operation Type is Air Carrier Passenger
-                                    //if (operationType[0].id == "{8B614EF0-C651-EB11-A812-000D3AF3AC0D}") { //Air Carrier (Passenger)
-                                    //    avsecPropertiesTab.sections.get("tab_avsec_properties_air_carrier_passenger").setVisible(true);
-                                    //}
-                                }
-                                if (form.ui.getFormType() == 1) { //Create
-                                    //If the form is opened with the stakeholder or site value already filled (from account/site subgrids)
-                                    if (form.getAttribute('ts_stakeholder').getValue() != null) {
-                                        getStakeholderOwningBusinessUnitAndSetOperationTypeView(form);
-                                    }
-                                    else if (form.getAttribute('ts_site').getValue() != null) {
-                                        formOpenedInCreateModeWithSiteFilled = true;
-                                        form.getControl('ovs_operationtypeid').setDisabled(false);
-                                        getSiteOwningBusinessUnitAndSetOperationTypeAndStakeholderView(form);
-                                    }
-                                }
-                                else if (form.ui.getFormType() == 2) { //Update
-                                    //We filter the form on the business unit of the owner of the record
-                                    var ownerAttribute_1 = form.getAttribute("ownerid").getValue();
-                                    if (ownerAttribute_1 != null) {
-                                        Xrm.WebApi.offline.retrieveRecord(ownerAttribute_1[0].entityType, ownerAttribute_1[0].id, "?$select=_businessunitid_value").then(function success(result) {
-                                            owningBusinessUnit = result._businessunitid_value;
-                                            form.getControl('ovs_operationtypeid').setDisabled(false);
-                                            form.getControl('ts_site').setDisabled(false);
-                                            setStakeholderFilteredView(form);
-                                            setOperationTypeFilteredView(form);
-                                            setSiteFilteredView(form);
-                                            setSubSiteFilteredView(form);
-                                            setSubSubSiteFilteredView(form);
+                                            return [2 /*return*/];
                                         });
-                                    }
-                                    if (form.getAttribute('ts_subsite').getValue() != null) {
-                                        form.getControl('ts_subsite').setDisabled(false);
-                                    }
-                                }
+                                    });
+                                });
                             }
                             else {
-                                //Set operation_activity_tab visible to false by default
-                                if (!isROM20Form) {
-                                    form.ui.tabs.get("operation_activity_tab").setVisible(false);
-                                }
-                            }
-                        });
-                    }
-                    else {
-                        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
-                            userBusinessUnitName = result.entities[0].name;
-                            businessUnitCondition = '<condition attribute="owningbusinessunit" operator="eq" value="' + result.entities[0].businessunitid + '" />';
-                            form.getAttribute("ts_ppeguide").setValue(false);
-                            var operationType = form.getAttribute("ovs_operationtypeid").getValue();
-                            //Show ISSO Properties Tab if OperationType is ISSO, show Avsec if not 
-                            if (operationType != null) {
-                                if (issoOperationTypeGuids.includes(operationType[0].id)) {
-                                    if (!isROM20Form) {
-                                        form.ui.tabs.get("operation_activity_tab").setVisible(false);
-                                        form.ui.tabs.get("tab_properties_isso").setVisible(true);
-                                    }
-                                    //Show PPE questions
-                                    var ppeRequired = form.getAttribute("ts_pperequired").getValue();
-                                    var specializedPPERequired = form.getAttribute("ts_specializedpperequired").getValue();
-                                    if (ppeRequired) {
-                                        form.getControl("ts_ppecategories").setVisible(true);
-                                        form.getControl("ts_specializedpperequired").setVisible(true);
-                                    }
-                                    if (specializedPPERequired) {
-                                        form.getControl("ts_typesofspecializedppe").setVisible(true);
-                                    }
-                                    //Show Visual Security Inspection question only for Railway Carrier and Railway Loader depending on Type Of Dangerous Goods
-                                    if (operationType != null) {
-                                        if (operationType[0].id == "{D883B39A-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{DA56FEA1-C751-EB11-A812-000D3AF3AC0D}") {
-                                            form.getControl("ts_typeofdangerousgoods").setVisible(true);
-                                            if (form.getAttribute("ts_typeofdangerousgoods").getValue() == 717750002 /* ts_typeofdangerousgoods.NonSchedule1DangerousGoods */ || form.getAttribute("ts_typeofdangerousgoods").getValue() == 717750001 /* ts_typeofdangerousgoods.Schedule1DangerousGoods */) {
-                                                form.getControl("ts_visualsecurityinspection").setVisible(true);
-                                                //Set default value for existing operations
-                                                if (form.getAttribute("ts_visualsecurityinspection").getValue() == null) {
-                                                    form.getAttribute("ts_visualsecurityinspection").setValue(717750000 /* ts_visualsecurityinspection.Unconfirmed */);
+                                Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (result) {
+                                    return __awaiter(this, void 0, void 0, function () {
+                                        var operationType, ppeRequired, specializedPPERequired, ownerAttribute_2;
+                                        return __generator(this, function (_a) {
+                                            userBusinessUnitName = result.entities[0].name;
+                                            userBusinessUnitId = result.entities[0].businessunitid;
+                                            businessUnitCondition = '<condition attribute="owningbusinessunit" operator="eq" value="' + result.entities[0].businessunitid + '" />';
+                                            form.getAttribute("ts_ppeguide").setValue(false);
+                                            operationType = form.getAttribute("ovs_operationtypeid").getValue();
+                                            //Show ISSO Properties Tab if OperationType is ISSO, show Avsec if not 
+                                            if (operationType != null) {
+                                                if (issoOperationTypeGuids.includes(operationType[0].id)) {
+                                                    if (!isROM20Form) {
+                                                        form.ui.tabs.get("operation_activity_tab").setVisible(false);
+                                                        form.ui.tabs.get("tab_properties_isso").setVisible(true);
+                                                    }
+                                                    ppeRequired = form.getAttribute("ts_pperequired").getValue();
+                                                    specializedPPERequired = form.getAttribute("ts_specializedpperequired").getValue();
+                                                    if (ppeRequired) {
+                                                        form.getControl("ts_ppecategories").setVisible(true);
+                                                        form.getControl("ts_specializedpperequired").setVisible(true);
+                                                    }
+                                                    if (specializedPPERequired) {
+                                                        form.getControl("ts_typesofspecializedppe").setVisible(true);
+                                                    }
+                                                    //Show Visual Security Inspection question only for Railway Carrier and Railway Loader depending on Type Of Dangerous Goods
+                                                    if (operationType != null) {
+                                                        if (operationType[0].id == "{D883B39A-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{DA56FEA1-C751-EB11-A812-000D3AF3AC0D}") {
+                                                            form.getControl("ts_typeofdangerousgoods").setVisible(true);
+                                                            if (form.getAttribute("ts_typeofdangerousgoods").getValue() == 717750002 /* NonSchedule1DangerousGoods */ || form.getAttribute("ts_typeofdangerousgoods").getValue() == 717750001 /* Schedule1DangerousGoods */) {
+                                                                form.getControl("ts_visualsecurityinspection").setVisible(true);
+                                                                //Set default value for existing operations
+                                                                if (form.getAttribute("ts_visualsecurityinspection").getValue() == null) {
+                                                                    form.getAttribute("ts_visualsecurityinspection").setValue(717750000 /* Unconfirmed */);
+                                                                }
+                                                                else {
+                                                                    if (form.getAttribute("ts_visualsecurityinspection").getValue() == 717750001 /* Yes */) {
+                                                                        form.getControl("ts_visualsecurityinspectiondetails").setVisible(true);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        //If Operation Type is Small Passenger Company, Passenger Company, or Host Company
+                                                        if (operationType[0].id == "{199E31AE-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{3B261029-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{B27E5003-C751-EB11-A812-000D3AF3AC0D}") {
+                                                            form.getControl("ts_issecurityinspectionsite").setVisible(true);
+                                                            //Set default value for existing operations
+                                                            if (form.getAttribute("ts_issecurityinspectionsite").getValue() == null) {
+                                                                form.getAttribute("ts_issecurityinspectionsite").setValue(717750000 /* Unconfirmed */);
+                                                            }
+                                                            else {
+                                                                if (form.getAttribute("ts_issecurityinspectionsite").getValue() == 717750001 /* Yes */) {
+                                                                    form.getControl("ts_securityinspectiondetails").setVisible(true);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    if (!isROM20Form) {
+                                                        form.ui.tabs.get("tab_general").sections.get("section_riskrating").setVisible(false);
+                                                    }
                                                 }
                                                 else {
-                                                    if (form.getAttribute("ts_visualsecurityinspection").getValue() == 717750001 /* ts_visualsecurityinspection.Yes */) {
-                                                        form.getControl("ts_visualsecurityinspectiondetails").setVisible(true);
+                                                    if (!isROM20Form) {
+                                                        form.ui.tabs.get("operation_activity_tab").setVisible(true);
+                                                    }
+                                                    form.getControl("ts_targetedinspectionneeded").setVisible(false);
+                                                    //We need to keep this tab hidden for now. We may need it later though.
+                                                    //const avsecPropertiesTab = form.ui.tabs.get("tab_properties_avsec")
+                                                    //avsecPropertiesTab.setVisible(true);
+                                                    ////Show Air Carrier (Passenger) Section if Operation Type is Air Carrier Passenger
+                                                    //if (operationType[0].id == "{8B614EF0-C651-EB11-A812-000D3AF3AC0D}") { //Air Carrier (Passenger)
+                                                    //    avsecPropertiesTab.sections.get("tab_avsec_properties_air_carrier_passenger").setVisible(true);
+                                                    //}
+                                                }
+                                                if (form.ui.getFormType() == 1) { //Create
+                                                    //If the form is opened with the stakeholder or site value already filled (from account/site subgrids)
+                                                    if (form.getAttribute('ts_stakeholder').getValue() != null) {
+                                                        getStakeholderOwningBusinessUnitAndSetOperationTypeView(form);
+                                                    }
+                                                    else if (form.getAttribute('ts_site').getValue() != null) {
+                                                        formOpenedInCreateModeWithSiteFilled = true;
+                                                        form.getControl('ovs_operationtypeid').setDisabled(false);
+                                                        getSiteOwningBusinessUnitAndSetOperationTypeAndStakeholderView(form);
+                                                    }
+                                                }
+                                                else if (form.ui.getFormType() == 2) { //Update
+                                                    ownerAttribute_2 = form.getAttribute("ownerid").getValue();
+                                                    if (ownerAttribute_2 != null) {
+                                                        Xrm.WebApi.retrieveRecord(ownerAttribute_2[0].entityType, ownerAttribute_2[0].id, "?$select=_businessunitid_value").then(function success(result) {
+                                                            return __awaiter(this, void 0, void 0, function () {
+                                                                return __generator(this, function (_a) {
+                                                                    switch (_a.label) {
+                                                                        case 0:
+                                                                            owningBusinessUnit = result._businessunitid_value;
+                                                                            form.getControl('ovs_operationtypeid').setDisabled(false);
+                                                                            form.getControl('ts_site').setDisabled(false);
+                                                                            return [4 /*yield*/, setStakeholderFilteredView(form)];
+                                                                        case 1:
+                                                                            _a.sent();
+                                                                            return [4 /*yield*/, setOperationTypeFilteredView(form)];
+                                                                        case 2:
+                                                                            _a.sent();
+                                                                            return [4 /*yield*/, setSiteFilteredView(form)];
+                                                                        case 3:
+                                                                            _a.sent();
+                                                                            return [4 /*yield*/, setSubSiteFilteredView(form)];
+                                                                        case 4:
+                                                                            _a.sent();
+                                                                            setSubSubSiteFilteredView(form);
+                                                                            return [2 /*return*/];
+                                                                    }
+                                                                });
+                                                            });
+                                                        });
+                                                    }
+                                                    if (form.getAttribute('ts_subsite').getValue() != null) {
+                                                        form.getControl('ts_subsite').setDisabled(false);
                                                     }
                                                 }
                                             }
-                                        }
-                                        //If Operation Type is Small Passenger Company, Passenger Company, or Host Company
-                                        if (operationType[0].id == "{199E31AE-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{3B261029-C751-EB11-A812-000D3AF3AC0D}" || operationType[0].id == "{B27E5003-C751-EB11-A812-000D3AF3AC0D}") {
-                                            form.getControl("ts_issecurityinspectionsite").setVisible(true);
-                                            //Set default value for existing operations
-                                            if (form.getAttribute("ts_issecurityinspectionsite").getValue() == null) {
-                                                form.getAttribute("ts_issecurityinspectionsite").setValue(717750000 /* ts_issecurityinspectionsite.Unconfirmed */);
-                                            }
                                             else {
-                                                if (form.getAttribute("ts_issecurityinspectionsite").getValue() == 717750001 /* ts_issecurityinspectionsite.Yes */) {
-                                                    form.getControl("ts_securityinspectiondetails").setVisible(true);
+                                                //Set operation_activity_tab visible to false by default
+                                                if (!isROM20Form) {
+                                                    form.ui.tabs.get("operation_activity_tab").setVisible(false);
                                                 }
                                             }
-                                        }
-                                    }
-                                    if (!isROM20Form) {
-                                        form.ui.tabs.get("tab_general").sections.get("section_riskrating").setVisible(false);
-                                    }
-                                }
-                                else {
-                                    if (!isROM20Form) {
-                                        form.ui.tabs.get("operation_activity_tab").setVisible(true);
-                                    }
-                                    form.getControl("ts_targetedinspectionneeded").setVisible(false);
-                                    //We need to keep this tab hidden for now. We may need it later though.
-                                    //const avsecPropertiesTab = form.ui.tabs.get("tab_properties_avsec")
-                                    //avsecPropertiesTab.setVisible(true);
-                                    ////Show Air Carrier (Passenger) Section if Operation Type is Air Carrier Passenger
-                                    //if (operationType[0].id == "{8B614EF0-C651-EB11-A812-000D3AF3AC0D}") { //Air Carrier (Passenger)
-                                    //    avsecPropertiesTab.sections.get("tab_avsec_properties_air_carrier_passenger").setVisible(true);
-                                    //}
-                                }
-                                if (form.ui.getFormType() == 1) { //Create
-                                    //If the form is opened with the stakeholder or site value already filled (from account/site subgrids)
-                                    if (form.getAttribute('ts_stakeholder').getValue() != null) {
-                                        getStakeholderOwningBusinessUnitAndSetOperationTypeView(form);
-                                    }
-                                    else if (form.getAttribute('ts_site').getValue() != null) {
-                                        formOpenedInCreateModeWithSiteFilled = true;
-                                        form.getControl('ovs_operationtypeid').setDisabled(false);
-                                        getSiteOwningBusinessUnitAndSetOperationTypeAndStakeholderView(form);
-                                    }
-                                }
-                                else if (form.ui.getFormType() == 2) { //Update
-                                    //We filter the form on the business unit of the owner of the record
-                                    var ownerAttribute_2 = form.getAttribute("ownerid").getValue();
-                                    if (ownerAttribute_2 != null) {
-                                        Xrm.WebApi.retrieveRecord(ownerAttribute_2[0].entityType, ownerAttribute_2[0].id, "?$select=_businessunitid_value").then(function success(result) {
-                                            owningBusinessUnit = result._businessunitid_value;
-                                            form.getControl('ovs_operationtypeid').setDisabled(false);
-                                            form.getControl('ts_site').setDisabled(false);
-                                            setStakeholderFilteredView(form);
-                                            setOperationTypeFilteredView(form);
-                                            setSiteFilteredView(form);
-                                            setSubSiteFilteredView(form);
-                                            setSubSubSiteFilteredView(form);
+                                            return [2 /*return*/];
                                         });
-                                    }
-                                    if (form.getAttribute('ts_subsite').getValue() != null) {
-                                        form.getControl('ts_subsite').setDisabled(false);
-                                    }
-                                }
+                                    });
+                                });
                             }
-                            else {
-                                //Set operation_activity_tab visible to false by default
-                                if (!isROM20Form) {
-                                    form.ui.tabs.get("operation_activity_tab").setVisible(false);
-                                }
+                            if (form.getAttribute("ts_statusstartdate").getValue() != null) {
+                                form.getControl("ts_statusenddate").setDisabled(false);
+                                form.getControl("ts_description").setDisabled(false);
+                                form.getAttribute("ts_description").setRequiredLevel("required");
                             }
-                        });
-                    }
-                    if (form.getAttribute("ts_statusstartdate").getValue() != null) {
-                        form.getControl("ts_statusenddate").setDisabled(false);
-                        form.getControl("ts_description").setDisabled(false);
-                        form.getAttribute("ts_description").setRequiredLevel("required");
-                    }
-                    ownerAttribute = form.getAttribute("ownerid");
-                    ownerAttributeValue = ownerAttribute.getValue();
-                    if (ownerAttributeValue != null) {
-                        if (ownerAttributeValue[0].name && ownerAttributeValue[0].name.toLowerCase().includes("aviation security".toLowerCase())) {
-                            form.ui.tabs.get("plan_track").sections.get("entity_risk_section").setVisible(true);
-                        }
-                        else {
+                            ownerAttribute = form.getAttribute("ownerid");
+                            ownerAttributeValue = ownerAttribute.getValue();
+                            if (!(ownerAttributeValue != null && ownerAttributeValue[0])) return [3 /*break*/, 2];
+                            return [4 /*yield*/, isOwnedByAvSec(ownerAttributeValue)];
+                        case 1:
+                            isAvSec = _a.sent();
+                            form.ui.tabs.get("plan_track").sections.get("entity_risk_section").setVisible(isAvSec);
+                            return [3 /*break*/, 3];
+                        case 2:
                             form.ui.tabs.get("plan_track").sections.get("entity_risk_section").setVisible(false);
-                        }
+                            _a.label = 3;
+                        case 3: return [2 /*return*/];
                     }
-                    return [2 /*return*/];
                 });
             });
         }
@@ -330,33 +377,71 @@ var ROM;
             var statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
             if (statusStartDateValue != null) {
                 if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_operationalstatus").setValue(717750001 /* ts_operationalstatus.NonOperational */);
+                    form.getAttribute("ts_operationalstatus").setValue(717750001 /* NonOperational */);
                 }
             }
             if (statusEndDateValue != null) {
                 if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_operationalstatus").setValue(717750000 /* ts_operationalstatus.Operational */);
+                    form.getAttribute("ts_operationalstatus").setValue(717750000 /* Operational */);
                 }
             }
         }
         Operation.onSave = onSave;
         function setStakeholderFilteredView(form) {
-            form.getControl('ts_stakeholder').setDisabled(false);
-            var viewId = '{3BC6D613-1CBD-48DC-86C3-33830D34EF7D}';
-            var entityName = "account";
-            var viewDisplayName = "Filtered Stakeholders";
-            var activityTypeFetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="account"><attribute name="statecode"/><attribute name="name"/><attribute name="accountnumber"/><attribute name="primarycontactid"/><attribute name="address1_city"/><attribute name="telephone1"/><attribute name="emailaddress1"/><attribute name="accountid"/><attribute name="fax"/><attribute name="address1_name"/><attribute name="address1_fax"/><order attribute="name" descending="false"/><attribute name="ovs_legalname"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/></filter><filter type = "or"><condition attribute="ts_stakeholderstatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '" uitype="businessunit"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter></entity></fetch>';
-            var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /></row></grid>';
-            form.getControl("ts_stakeholder").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+            return __awaiter(this, void 0, void 0, function () {
+                var viewId, entityName, viewDisplayName, isTC, _a, activityTypeFetchXml, layoutXml;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            form.getControl('ts_stakeholder').setDisabled(false);
+                            viewId = '{3BC6D613-1CBD-48DC-86C3-33830D34EF7D}';
+                            entityName = "account";
+                            viewDisplayName = "Filtered Stakeholders";
+                            if (!userBusinessUnitId) return [3 /*break*/, 2];
+                            return [4 /*yield*/, isUserInTCBU(userBusinessUnitId)];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 3];
+                        case 2:
+                            _a = false;
+                            _b.label = 3;
+                        case 3:
+                            isTC = _a;
+                            activityTypeFetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="account"><attribute name="statecode"/><attribute name="name"/><attribute name="accountnumber"/><attribute name="primarycontactid"/><attribute name="address1_city"/><attribute name="telephone1"/><attribute name="emailaddress1"/><attribute name="accountid"/><attribute name="fax"/><attribute name="address1_name"/><attribute name="address1_fax"/><order attribute="name" descending="false"/><attribute name="ovs_legalname"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/></filter><filter type = "or"><condition attribute="ts_stakeholderstatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '" uitype="businessunit"/>' + (!isTC ? businessUnitCondition : "") + '</filter></entity></fetch>';
+                            layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="accountid"><cell name="name" width="200" /></row></grid>';
+                            form.getControl("ts_stakeholder").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+                            return [2 /*return*/];
+                    }
+                });
+            });
         }
         function setOperationTypeFilteredView(form) {
-            form.getControl('ovs_operationtypeid').setDisabled(false);
-            var viewId = '{1BC6D613-1CBD-48DC-86C3-77830D34EF7D}';
-            var entityName = "ovs_operationtype";
-            var viewDisplayName = "Filtered Operation Types";
-            var activityTypeFetchXml = '<fetch version="1.0" mapping="logical" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="ovs_operationtype"><attribute name="ovs_operationtypeid"/><attribute name="ovs_name"/><attribute name="ownerid"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/></filter><filter type = "or"><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '" uitype="businessunit"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter><order attribute="ovs_name" descending="false"/></entity></fetch>';
-            var layoutXml = '<grid name="resultset" object="10010" jump="ovs_name" select="1" icon="1" preview="1"><row name="result" id="ovs_operationtypeid"><cell name="ovs_name" width="200" /></row></grid>';
-            form.getControl("ovs_operationtypeid").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+            return __awaiter(this, void 0, void 0, function () {
+                var viewId, entityName, viewDisplayName, isTC, _a, activityTypeFetchXml, layoutXml;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            form.getControl('ovs_operationtypeid').setDisabled(false);
+                            viewId = '{1BC6D613-1CBD-48DC-86C3-77830D34EF7D}';
+                            entityName = "ovs_operationtype";
+                            viewDisplayName = "Filtered Operation Types";
+                            if (!userBusinessUnitId) return [3 /*break*/, 2];
+                            return [4 /*yield*/, isUserInTCBU(userBusinessUnitId)];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 3];
+                        case 2:
+                            _a = false;
+                            _b.label = 3;
+                        case 3:
+                            isTC = _a;
+                            activityTypeFetchXml = '<fetch version="1.0" mapping="logical" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="ovs_operationtype"><attribute name="ovs_operationtypeid"/><attribute name="ovs_name"/><attribute name="ownerid"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/></filter><filter type = "or"><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '" uitype="businessunit"/>' + (!isTC ? businessUnitCondition : "") + '</filter><order attribute="ovs_name" descending="false"/></entity></fetch>';
+                            layoutXml = '<grid name="resultset" object="10010" jump="ovs_name" select="1" icon="1" preview="1"><row name="result" id="ovs_operationtypeid"><cell name="ovs_name" width="200" /></row></grid>';
+                            form.getControl("ovs_operationtypeid").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+                            return [2 /*return*/];
+                    }
+                });
+            });
         }
         function getStakeholderOwningBusinessUnitAndSetOperationTypeView(form) {
             var stakeholder = form.getAttribute("ts_stakeholder");
@@ -365,18 +450,38 @@ var ROM;
                 var isOffline = Xrm.Utility.getGlobalContext().client.getClientState() === "Offline";
                 if (isOffline) {
                     Xrm.WebApi.offline.retrieveRecord('account', stakeholderValue[0].id, "?$select=_owningbusinessunit_value").then(function success(result) {
-                        owningBusinessUnit = result._owningbusinessunit_value;
-                        if (!formOpenedInCreateModeWithSiteFilled) {
-                            setOperationTypeFilteredView(form);
-                        }
+                        return __awaiter(this, void 0, void 0, function () {
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        owningBusinessUnit = result._owningbusinessunit_value;
+                                        if (!!formOpenedInCreateModeWithSiteFilled) return [3 /*break*/, 2];
+                                        return [4 /*yield*/, setOperationTypeFilteredView(form)];
+                                    case 1:
+                                        _a.sent();
+                                        _a.label = 2;
+                                    case 2: return [2 /*return*/];
+                                }
+                            });
+                        });
                     }, function (error) { });
                 }
                 else {
                     Xrm.WebApi.retrieveRecord('account', stakeholderValue[0].id, "?$select=_owningbusinessunit_value").then(function success(result) {
-                        owningBusinessUnit = result._owningbusinessunit_value;
-                        if (!formOpenedInCreateModeWithSiteFilled) {
-                            setOperationTypeFilteredView(form);
-                        }
+                        return __awaiter(this, void 0, void 0, function () {
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        owningBusinessUnit = result._owningbusinessunit_value;
+                                        if (!!formOpenedInCreateModeWithSiteFilled) return [3 /*break*/, 2];
+                                        return [4 /*yield*/, setOperationTypeFilteredView(form)];
+                                    case 1:
+                                        _a.sent();
+                                        _a.label = 2;
+                                    case 2: return [2 /*return*/];
+                                }
+                            });
+                        });
                     }, function (error) { });
                 }
             }
@@ -399,19 +504,37 @@ var ROM;
         }
         Operation.stakeholderOnChange = stakeholderOnChange;
         function setSiteFilteredView(form) {
-            var operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
-            var operationTypeAttributeValue = operationTypeAttribute.getValue();
-            // Filter Functional Location field with owning business unit
-            if (operationTypeAttributeValue != null && operationTypeAttributeValue != undefined) {
-                form.getControl('ts_site').setDisabled(false);
-                var viewId = '{26A950A2-BD89-4B6D-AB80-5074DF8AD580}';
-                var entityName = "msdyn_functionallocation";
-                var viewDisplayName = "Filtered Sites";
-                var activityTypeFetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><order attribute="msdyn_name" descending="false"/><attribute name="msdyn_parentfunctionallocation"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/></filter><filter type = "or"><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter></entity></fetch>';
-                console.log("setSiteFilteredView:  " + activityTypeFetchXml);
-                var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
-                form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
-            }
+            return __awaiter(this, void 0, void 0, function () {
+                var operationTypeAttribute, operationTypeAttributeValue, viewId, entityName, viewDisplayName, isTC, _a, activityTypeFetchXml, layoutXml;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
+                            operationTypeAttributeValue = operationTypeAttribute.getValue();
+                            if (!(operationTypeAttributeValue != null && operationTypeAttributeValue != undefined)) return [3 /*break*/, 4];
+                            form.getControl('ts_site').setDisabled(false);
+                            viewId = '{26A950A2-BD89-4B6D-AB80-5074DF8AD580}';
+                            entityName = "msdyn_functionallocation";
+                            viewDisplayName = "Filtered Sites";
+                            if (!userBusinessUnitId) return [3 /*break*/, 2];
+                            return [4 /*yield*/, isUserInTCBU(userBusinessUnitId)];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 3];
+                        case 2:
+                            _a = false;
+                            _b.label = 3;
+                        case 3:
+                            isTC = _a;
+                            activityTypeFetchXml = '<fetch version="1.0" mapping="logical" distinct="true" returntotalrecordcount="true" page="1" count="25" no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><order attribute="msdyn_name" descending="false"/><attribute name="msdyn_parentfunctionallocation"/><filter type="and"><condition attribute="statecode" operator="eq" value="0"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/></filter><filter type = "or"><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!isTC ? businessUnitCondition : "") + '</filter></entity></fetch>';
+                            console.log("setSiteFilteredView:  " + activityTypeFetchXml);
+                            layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+                            form.getControl("ts_site").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+                            _b.label = 4;
+                        case 4: return [2 /*return*/];
+                    }
+                });
+            });
         }
         function getSiteOwningBusinessUnitAndSetOperationTypeAndStakeholderView(form) {
             var functionalLocation = form.getAttribute("ts_site");
@@ -420,74 +543,149 @@ var ROM;
                 var isOffline = Xrm.Utility.getGlobalContext().client.getClientState() === "Offline";
                 if (isOffline) {
                     Xrm.WebApi.offline.retrieveRecord('msdyn_functionallocation', functionalLocationValue[0].id, "?$select=_owningbusinessunit_value").then(function success(result) {
-                        owningBusinessUnit = result._owningbusinessunit_value;
-                        setOperationTypeFilteredView(form);
-                        setStakeholderFilteredView(form);
+                        return __awaiter(this, void 0, void 0, function () {
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        owningBusinessUnit = result._owningbusinessunit_value;
+                                        return [4 /*yield*/, setOperationTypeFilteredView(form)];
+                                    case 1:
+                                        _a.sent();
+                                        return [4 /*yield*/, setStakeholderFilteredView(form)];
+                                    case 2:
+                                        _a.sent();
+                                        return [2 /*return*/];
+                                }
+                            });
+                        });
                     }, function (error) { });
                 }
                 else {
                     Xrm.WebApi.retrieveRecord('msdyn_functionallocation', functionalLocationValue[0].id, "?$select=_owningbusinessunit_value").then(function success(result) {
-                        owningBusinessUnit = result._owningbusinessunit_value;
-                        setOperationTypeFilteredView(form);
-                        setStakeholderFilteredView(form);
+                        return __awaiter(this, void 0, void 0, function () {
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        owningBusinessUnit = result._owningbusinessunit_value;
+                                        return [4 /*yield*/, setOperationTypeFilteredView(form)];
+                                    case 1:
+                                        _a.sent();
+                                        return [4 /*yield*/, setStakeholderFilteredView(form)];
+                                    case 2:
+                                        _a.sent();
+                                        return [2 /*return*/];
+                                }
+                            });
+                        });
                     }, function (error) { });
                 }
             }
         }
         function operationTypeOnChange(eContext) {
-            var form = eContext.getFormContext();
-            var operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
-            if (!formOpenedInCreateModeWithSiteFilled && form.ui.getFormType() != 2) {
-                if (operationTypeAttribute != null) {
-                    setSiteFilteredView(form);
-                }
-                else {
-                    form.getControl('ts_site').setDisabled(true);
-                }
-            }
+            return __awaiter(this, void 0, void 0, function () {
+                var form, operationTypeAttribute;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            form = eContext.getFormContext();
+                            operationTypeAttribute = form.getAttribute("ovs_operationtypeid");
+                            if (!(!formOpenedInCreateModeWithSiteFilled && form.ui.getFormType() != 2)) return [3 /*break*/, 3];
+                            if (!(operationTypeAttribute != null)) return [3 /*break*/, 2];
+                            return [4 /*yield*/, setSiteFilteredView(form)];
+                        case 1:
+                            _a.sent();
+                            return [3 /*break*/, 3];
+                        case 2:
+                            form.getControl('ts_site').setDisabled(true);
+                            _a.label = 3;
+                        case 3: return [2 /*return*/];
+                    }
+                });
+            });
         }
         Operation.operationTypeOnChange = operationTypeOnChange;
         function siteOnChange(eContext) {
-            console.log("siteOnChange");
-            var form = eContext.getFormContext();
-            var opValue = form.getAttribute("ovs_operationtypeid").getValue();
-            var siteValue = form.getAttribute("ts_site").getValue();
-            if (opValue != null && opValue != undefined && siteValue == null) {
-                setSiteFilteredView(form);
-            }
-            else {
-                setSubSiteFilteredView(form);
-            }
+            return __awaiter(this, void 0, void 0, function () {
+                var form, opValue, siteValue;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            console.log("siteOnChange");
+                            form = eContext.getFormContext();
+                            opValue = form.getAttribute("ovs_operationtypeid").getValue();
+                            siteValue = form.getAttribute("ts_site").getValue();
+                            if (!(opValue != null && opValue != undefined && siteValue == null)) return [3 /*break*/, 2];
+                            return [4 /*yield*/, setSiteFilteredView(form)];
+                        case 1:
+                            _a.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, setSubSiteFilteredView(form)];
+                        case 3:
+                            _a.sent();
+                            _a.label = 4;
+                        case 4: return [2 /*return*/];
+                    }
+                });
+            });
         }
         Operation.siteOnChange = siteOnChange;
         function setSubSiteFilteredView(form) {
-            var siteAttribute = form.getAttribute("ts_site");
-            var siteAttributeValue = siteAttribute.getValue();
-            console.log("setSubSiteFilteredView");
-            // Enable subsite field with appropriate filtered view if site selected
-            if (siteAttributeValue != null && siteAttributeValue != undefined) {
-                form.getControl('ts_subsite').setDisabled(false);
-                var viewId = '{511EDA6B-C300-4B38-8873-363BE39D4E8F}';
-                var entityName = "msdyn_functionallocation";
-                var viewDisplayName = "Filtered Sites";
-                var activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!userBusinessUnitName.startsWith("Transport") ? businessUnitCondition : "") + '</filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
-                var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
-                console.log("setSubSiteFilteredView: " + activityTypeFetchXml);
-                //Non-Operational -> 717,750,001  ts_sitestatus
-                form.getControl("ts_subsite").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
-            }
+            return __awaiter(this, void 0, void 0, function () {
+                var siteAttribute, siteAttributeValue, viewId, entityName, viewDisplayName, isTC, _a, activityTypeFetchXml, layoutXml;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            siteAttribute = form.getAttribute("ts_site");
+                            siteAttributeValue = siteAttribute.getValue();
+                            console.log("setSubSiteFilteredView");
+                            if (!(siteAttributeValue != null && siteAttributeValue != undefined)) return [3 /*break*/, 4];
+                            form.getControl('ts_subsite').setDisabled(false);
+                            viewId = '{511EDA6B-C300-4B38-8873-363BE39D4E8F}';
+                            entityName = "msdyn_functionallocation";
+                            viewDisplayName = "Filtered Sites";
+                            if (!userBusinessUnitId) return [3 /*break*/, 2];
+                            return [4 /*yield*/, isUserInTCBU(userBusinessUnitId)];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 3];
+                        case 2:
+                            _a = false;
+                            _b.label = 3;
+                        case 3:
+                            isTC = _a;
+                            activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="under" value="' + siteAttributeValue[0].id + '"/><condition attribute="ts_sitestatus" operator="ne" value="717750001"/><condition attribute="owningbusinessunit" operator="eq" value="' + owningBusinessUnit + '"/>' + (!isTC ? businessUnitCondition : "") + '</filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
+                            layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
+                            console.log("setSubSiteFilteredView: " + activityTypeFetchXml);
+                            //Non-Operational -> 717,750,001  ts_sitestatus
+                            form.getControl("ts_subsite").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+                            _b.label = 4;
+                        case 4: return [2 /*return*/];
+                    }
+                });
+            });
         }
         function subsiteOnChange(eContext) {
-            console.log("subsiteOnChange");
-            var form = eContext.getFormContext();
-            var siteValue = form.getAttribute("ts_site").getValue();
-            var subSiteValue = form.getAttribute("ts_subsite").getValue();
-            if (siteValue != null && siteValue != undefined && subSiteValue == null) {
-                setSubSiteFilteredView(form);
-            }
-            else {
-                setSubSubSiteFilteredView(form);
-            }
+            return __awaiter(this, void 0, void 0, function () {
+                var form, siteValue, subSiteValue;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            console.log("subsiteOnChange");
+                            form = eContext.getFormContext();
+                            siteValue = form.getAttribute("ts_site").getValue();
+                            subSiteValue = form.getAttribute("ts_subsite").getValue();
+                            if (!(siteValue != null && siteValue != undefined && subSiteValue == null)) return [3 /*break*/, 2];
+                            return [4 /*yield*/, setSubSiteFilteredView(form)];
+                        case 1:
+                            _a.sent();
+                            return [3 /*break*/, 3];
+                        case 2:
+                            setSubSubSiteFilteredView(form);
+                            _a.label = 3;
+                        case 3: return [2 /*return*/];
+                    }
+                });
+            });
         }
         Operation.subsiteOnChange = subsiteOnChange;
         function setSubSubSiteFilteredView(form) {
@@ -562,7 +760,7 @@ var ROM;
             var form = eContext.getFormContext();
             var VSIConducted = form.getAttribute("ts_visualsecurityinspection").getValue();
             var VSIDetails = form.getControl("ts_visualsecurityinspectiondetails");
-            if (VSIConducted == 717750001 /* ts_visualsecurityinspection.Yes */) {
+            if (VSIConducted == 717750001 /* Yes */) {
                 VSIDetails.setVisible(true);
             }
             else {
@@ -575,7 +773,7 @@ var ROM;
             var form = eContext.getFormContext();
             var SIConducted = form.getAttribute("ts_issecurityinspectionsite").getValue();
             var SIDetails = form.getControl("ts_securityinspectiondetails");
-            if (SIConducted == 717750001 /* ts_issecurityinspectionsite.Yes */) {
+            if (SIConducted == 717750001 /* Yes */) {
                 SIDetails.setVisible(true);
             }
             else {
@@ -587,7 +785,7 @@ var ROM;
         function typeOfDangerousGoodsOnChange(eContext) {
             var form = eContext.getFormContext();
             var typeOfDangerousGoods = form.getAttribute("ts_typeofdangerousgoods").getValue();
-            if (typeOfDangerousGoods == 717750002 /* ts_typeofdangerousgoods.NonSchedule1DangerousGoods */ || typeOfDangerousGoods == 717750001 /* ts_typeofdangerousgoods.Schedule1DangerousGoods */) {
+            if (typeOfDangerousGoods == 717750002 /* NonSchedule1DangerousGoods */ || typeOfDangerousGoods == 717750001 /* Schedule1DangerousGoods */) {
                 form.getControl("ts_visualsecurityinspection").setVisible(true);
             }
             else {
@@ -622,7 +820,7 @@ var ROM;
             }
             else {
                 var operationId = form.data.entity.getId();
-                var fetchXml = "<link-entity name=\"ts_actionfinding\" from=\"ts_action\" to=\"ts_actionid\" link-type=\"inner\" alias=\"af\"><attribute name=\"ts_ovs_finding\"/><order attribute=\"ts_ovs_finding\"/><link-entity name=\"ovs_finding\" from=\"ovs_findingid\" to=\"ts_ovs_finding\" link-type=\"inner\" alias=\"f\"><link-entity name=\"ovs_operation\" from=\"ovs_operationid\" to=\"ts_operationid\" link-type=\"inner\" alias=\"op\"><filter><condition attribute=\"ovs_operationid\" operator=\"eq\" value=\"".concat(operationId, "\"/></filter></link-entity></link-entity></link-entity>");
+                var fetchXml = "<link-entity name=\"ts_actionfinding\" from=\"ts_action\" to=\"ts_actionid\" link-type=\"inner\" alias=\"af\"><attribute name=\"ts_ovs_finding\"/><order attribute=\"ts_ovs_finding\"/><link-entity name=\"ovs_finding\" from=\"ovs_findingid\" to=\"ts_ovs_finding\" link-type=\"inner\" alias=\"f\"><link-entity name=\"ovs_operation\" from=\"ovs_operationid\" to=\"ts_operationid\" link-type=\"inner\" alias=\"op\"><filter><condition attribute=\"ovs_operationid\" operator=\"eq\" value=\"" + operationId + "\"/></filter></link-entity></link-entity></link-entity>";
                 ROM.Utils.setSubgridFilterXml(form, "subgrid_related_actions", fetchXml);
             }
         }

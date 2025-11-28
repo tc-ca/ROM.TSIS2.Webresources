@@ -26,12 +26,10 @@ namespace ROM.WorkOrder {
 
         //Set comment field visible if AvSec
         //Set Overtime field visible for AvSec
-        let userBusinessUnitName;
         let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
         let currentUserBusinessUnitFetchXML = [
             "<fetch top='50'>",
             "  <entity name='businessunit'>",
-            "    <attribute name='name' />",
             "    <attribute name='businessunitid' />",
             "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>>",
             "      <filter>",
@@ -42,15 +40,16 @@ namespace ROM.WorkOrder {
             "</fetch>",
         ].join("");
         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
-        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
-            userBusinessUnitName = businessunit.entities[0].name;
-            if (!userBusinessUnitName.startsWith("Aviation")) {
+        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(async function (businessunit) {
+            const userBusinessUnitId = businessunit.entities[0].businessunitid;
+            const inAvSecBU = await isAvSecBU(userBusinessUnitId);
+            if (!inAvSecBU) {
                 form.getControl("ts_details").setVisible(false);
                 form.getControl("ts_overtime").setVisible(false);
                 form.getControl("ts_overtimerequired").setVisible(true);
 
             }
-            else if (userBusinessUnitName.startsWith("Aviation")) {
+            else if (inAvSecBU) {
                 form.getControl("ts_details").setVisible(true);
                 form.getControl("msdyn_instructions").setVisible(true);
                 form.getControl("ts_accountableteam").setVisible(true);
@@ -908,19 +907,51 @@ namespace ROM.WorkOrder {
                         "</fetch>"
                     ].join("");
                     operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
-                    Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(function success(resultBusinessUnit) {
-                        var targetFilter = "<filter type='and'><condition attribute='owneridname' operator='like' value='Avia%'/></filter>";
-                        if (resultBusinessUnit.entities[0].name.startsWith("Inte")) {
-                            targetFilter = "<filter type='and'> <condition attribute='owneridname' operator='like' value='Inte%'/> </filter> ";
-                        }
-                        form.getControl("ts_canceledinspectionjustification").addPreSearch(function () {
-                            console.log("inside Filter: " + targetFilter);
-                            form.getControl("ts_canceledinspectionjustification").addCustomFilter(targetFilter, "ts_canceledinspectionjustification");
-                        });
+                    Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(
+                        async function success(resultBusinessUnit) {
+                            if (!resultBusinessUnit.entities.length) {
+                                return;
+                            }
 
-                    }, function (error) {
-                        showErrorMessageAlert(error);
-                    });
+                            const owningBuId = resultBusinessUnit.entities[0].businessunitid;
+                            let filterConditions: string[] = [];
+
+                            // AvSec-owned operation type → AvSec teams
+                            if (owningBuId && await isAvSecBU(owningBuId)) {
+                                const avSecDomesticTeamId = await getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC);
+                                const avSecInternationalTeamId = await getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL);
+
+                                if (avSecDomesticTeamId) {
+                                    filterConditions.push("<condition attribute='ownerid' operator='eq' value='" + avSecDomesticTeamId + "'/>");
+                                }
+                                if (avSecInternationalTeamId) {
+                                    filterConditions.push("<condition attribute='ownerid' operator='eq' value='" + avSecInternationalTeamId + "'/>");
+                                }
+                            }
+                            // ISSO-owned operation type → ISSO team
+                            else if (owningBuId && await isISSOBU(owningBuId)) {
+                                const issoTeamId = await getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.ISSO_TEAM);
+                                if (issoTeamId) {
+                                    filterConditions.push("<condition attribute='ownerid' operator='eq' value='" + issoTeamId + "'/>");
+                                }
+                            }
+
+                            if (!filterConditions.length) {
+                                return;
+                            }
+
+                            const targetFilter = "<filter type='or'>" + filterConditions.join("") + "</filter>";
+
+                            form.getControl("ts_canceledinspectionjustification").addPreSearch(function () {
+                                console.log("inside Filter: " + targetFilter);
+                                form.getControl("ts_canceledinspectionjustification").addCustomFilter(targetFilter, "ts_canceledinspectionjustification");
+                            });
+
+                        },
+                        function (error) {
+                            showErrorMessageAlert(error);
+                        }
+                    );
                 }
             }
         }
@@ -1718,30 +1749,18 @@ namespace ROM.WorkOrder {
 
     function setActivityTypeFilteredView(form: Form.msdyn_workorder.Main.ROMOversightActivity, operationAttributeId: string, workOrderTypeAttributeId: string, operationTypeAttributeId: string): void {
 
-        //Check whether this is a AvSec WO by using the operation
-        let operationTypeOwningBusinessUnitFetchXML = [
-            "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
-            "  <entity name='businessunit'>",
-            "    <attribute name='name'/>",
-            "    <attribute name='businessunitid'/>",
-            "    <filter>",
-            "      <condition attribute='name' operator='like' value='Avia%'/>",
-            "    </filter>",
-            "    <link-entity name='ovs_operationtype' from='owningbusinessunit' to='businessunitid' link-type='inner'>",
-            "      <filter>",
-            "        <condition attribute='ovs_operationtypeid' operator='eq' value='", operationTypeAttributeId, "'/>",
-            "      </filter>",
-            "    </link-entity>",
-            "  </entity>",
-            "</fetch>"
-        ].join("");
-        operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
+        // Determine if this is an AvSec WO by checking the owning BU of the operation type using environment-based helpers
+        const opTypeId = operationTypeAttributeId ? operationTypeAttributeId.replace(/[{}]/g, "") : operationTypeAttributeId;
 
-        Xrm.WebApi.retrieveMultipleRecords('businessunit', operationTypeOwningBusinessUnitFetchXML).then(
-            function success(result) {
+        Xrm.WebApi.retrieveRecord("ovs_operationtype", opTypeId, "?$select=_owningbusinessunit_value").then(
+            async function success(operationType) {
                 let operationActivityFilter = "";
-                if (result.entities.length == 1 && !isFromSecurityIncident) { //Add the operation activity filter if it's an AvSec workorder
-                    operationActivityFilter += "<link-entity name='ts_operationactivity' from='ts_activity' to='msdyn_incidenttypeid' link-type='inner'><filter><condition attribute='ts_operation' operator='eq' value='" + operationAttributeId + "'/><condition attribute='ts_operationalstatus' operator='eq' value='717750000'/></filter></link-entity>";
+
+                if (!isFromSecurityIncident && operationType._owningbusinessunit_value) {
+                    const isAvSec = await isAvSecBU(operationType._owningbusinessunit_value);
+                    if (isAvSec) {
+                        operationActivityFilter += "<link-entity name='ts_operationactivity' from='ts_activity' to='msdyn_incidenttypeid' link-type='inner'><filter><condition attribute='ts_operation' operator='eq' value='" + operationAttributeId + "'/><condition attribute='ts_operationalstatus' operator='eq' value='717750000'/></filter></link-entity>";
+                    }
                 }
 
                 let fetchXmlActivity = "";
@@ -1754,17 +1773,16 @@ namespace ROM.WorkOrder {
                     fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeId + '" /><condition attribute="statecode" operator="eq" value="0" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeId + '" /></filter></link-entity></link-entity>' + operationActivityFilter + '</entity></fetch>';
                 }
                 else {
-                    const viewIdActivity = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
-                    const entityNameActivity = "msdyn_incidenttype";
-                    const viewDisplayNameActivity = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredActivityType");
                     fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeId + '" /><condition attribute="statecode" operator="eq" value="0" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeId + '" /></filter></link-entity></link-entity></entity></fetch>';
-                    const layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
-
                 }
+
                 form.getControl("msdyn_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
                 form.getControl("msdyn_primaryincidenttype").setDisabled(false);
+            },
+            function (error) {
+                showErrorMessageAlert(error);
             }
-            ,);
+        );
     }
 
     function setCountryFilteredView(form: Form.msdyn_workorder.Main.ROMOversightActivity): void {
@@ -2320,7 +2338,6 @@ namespace ROM.WorkOrder {
         let currentUserBusinessUnitFetchXML = [
             "<fetch top='50'>",
             "  <entity name='businessunit'>",
-            "    <attribute name='name' />",
             "    <attribute name='businessunitid' />",
             "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>>",
             "      <filter>",
@@ -2331,8 +2348,9 @@ namespace ROM.WorkOrder {
             "</fetch>",
         ].join("");
         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
-        let userBusinessUnitName = await Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML);
-        return userBusinessUnitName.entities[0].name.startsWith("Aviation");
+        let userBusinessUnit = await Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML);
+        const userBusinessUnitId = userBusinessUnit.entities[0].businessunitid;
+        return await isAvSecBU(userBusinessUnitId);
     }
 
     function setFiscalQuarter(form: Form.msdyn_workorder.Main.ROMOversightActivity) {

@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -61,12 +61,10 @@ var ROM;
             currentSystemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             //Set comment field visible if AvSec
             //Set Overtime field visible for AvSec
-            var userBusinessUnitName;
             var userId = Xrm.Utility.getGlobalContext().userSettings.userId;
             var currentUserBusinessUnitFetchXML = [
                 "<fetch top='50'>",
                 "  <entity name='businessunit'>",
-                "    <attribute name='name' />",
                 "    <attribute name='businessunitid' />",
                 "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>>",
                 "      <filter>",
@@ -78,41 +76,53 @@ var ROM;
             ].join("");
             currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
             Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
-                userBusinessUnitName = businessunit.entities[0].name;
-                if (!userBusinessUnitName.startsWith("Aviation")) {
-                    form.getControl("ts_details").setVisible(false);
-                    form.getControl("ts_overtime").setVisible(false);
-                    form.getControl("ts_overtimerequired").setVisible(true);
-                }
-                else if (userBusinessUnitName.startsWith("Aviation")) {
-                    form.getControl("ts_details").setVisible(true);
-                    form.getControl("msdyn_instructions").setVisible(true);
-                    form.getControl("ts_accountableteam").setVisible(true);
-                    form.getControl("ts_plannedcost").setVisible(false);
-                    form.getControl("ts_actualcost").setVisible(false);
-                    form.getControl("ts_costexplanation").setVisible(false);
-                    form.getControl("ts_cantcompleteinspection").setVisible(false);
-                    // Hide overtime toggle for AvSec users in ROM20 form
-                    if (isROM20Form) {
-                        form.getControl("ts_overtimerequired").setVisible(false);
-                    }
-                    if (currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */ || currentSystemStatus == 690970005 /* msdyn_wosystemstatus.Cancelled */) {
-                        if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager")) {
-                            form.getControl("msdyn_systemstatus").setDisabled(true);
+                return __awaiter(this, void 0, void 0, function () {
+                    var userBusinessUnitId, inAvSecBU;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                userBusinessUnitId = businessunit.entities[0].businessunitid;
+                                return [4 /*yield*/, isAvSecBU(userBusinessUnitId)];
+                            case 1:
+                                inAvSecBU = _a.sent();
+                                if (!inAvSecBU) {
+                                    form.getControl("ts_details").setVisible(false);
+                                    form.getControl("ts_overtime").setVisible(false);
+                                    form.getControl("ts_overtimerequired").setVisible(true);
+                                }
+                                else if (inAvSecBU) {
+                                    form.getControl("ts_details").setVisible(true);
+                                    form.getControl("msdyn_instructions").setVisible(true);
+                                    form.getControl("ts_accountableteam").setVisible(true);
+                                    form.getControl("ts_plannedcost").setVisible(false);
+                                    form.getControl("ts_actualcost").setVisible(false);
+                                    form.getControl("ts_costexplanation").setVisible(false);
+                                    form.getControl("ts_cantcompleteinspection").setVisible(false);
+                                    // Hide overtime toggle for AvSec users in ROM20 form
+                                    if (isROM20Form) {
+                                        form.getControl("ts_overtimerequired").setVisible(false);
+                                    }
+                                    if (currentSystemStatus == 741130000 /* Closed */ || currentSystemStatus == 690970005 /* Cancelled */) {
+                                        if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager")) {
+                                            form.getControl("msdyn_systemstatus").setDisabled(true);
+                                        }
+                                    }
+                                }
+                                //Set disabled false for quarter fields if ISSO
+                                else {
+                                    if (userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager|ROM - Inspector")) {
+                                        form.getControl("ts_completedquarter").setDisabled(false);
+                                        form.getControl("ovs_revisedquarterid").setDisabled(false);
+                                    }
+                                    else {
+                                        form.getControl("ts_completedquarter").setDisabled(true);
+                                        form.getControl("ovs_revisedquarterid").setDisabled(true);
+                                    }
+                                }
+                                return [2 /*return*/];
                         }
-                    }
-                }
-                //Set disabled false for quarter fields if ISSO
-                else {
-                    if (userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager|ROM - Inspector")) {
-                        form.getControl("ts_completedquarter").setDisabled(false);
-                        form.getControl("ovs_revisedquarterid").setDisabled(false);
-                    }
-                    else {
-                        form.getControl("ts_completedquarter").setDisabled(true);
-                        form.getControl("ovs_revisedquarterid").setDisabled(true);
-                    }
-                }
+                    });
+                });
             });
             getUserTeam(userId).then(function (userTeams) {
                 if (userTeams != null && userTeams.entities.length > 0) {
@@ -143,13 +153,13 @@ var ROM;
             //Set Trip Lookup Navigation to open Time Tracking form when on Time Tracking Tab
             setTripLookupClickNavigation(eContext);
             showHideFiedsByOperationType(eContext);
-            if (currentSystemStatus == 690970004 || currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) {
+            if (currentSystemStatus == 690970004 || currentSystemStatus == 741130000 /* Closed */) {
                 form.getControl("ts_completedquarter").setVisible(true);
             }
             else {
                 form.getControl("ts_completedquarter").setVisible(false);
             }
-            if (currentSystemStatus == 690970004 || currentSystemStatus == 690970003 || currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) { //Closed ; Completed
+            if (currentSystemStatus == 690970004 || currentSystemStatus == 690970003 || currentSystemStatus == 741130000 /* Closed */) { //Closed ; Completed
                 form.getControl("ovs_revisedquarterid").setDisabled(true);
             }
             //Limit ownership of a Work Order to users associated with the same program
@@ -206,7 +216,7 @@ var ROM;
                     else {
                         var lookup = new Array();
                         lookup[0] = new Object();
-                        lookup[0].id = "{".concat(UNPLANNED_CATEGORY_ID, "}");
+                        lookup[0].id = "{" + UNPLANNED_CATEGORY_ID + "}";
                         lookup[0].name = "Unplanned";
                         lookup[0].entityType = "ovs_tyrational";
                         form.getAttribute("ovs_rational").setValue(lookup); //Unplanned
@@ -263,12 +273,12 @@ var ROM;
                         }
                     }
                     setActivityTypeDisabled(eContext);
-                    if (currentSystemStatus == 690970004 || currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) {
+                    if (currentSystemStatus == 690970004 || currentSystemStatus == 741130000 /* Closed */) {
                         if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
                             form.getControl("header_msdyn_systemstatus").setDisabled(true);
                         }
                     }
-                    if (currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) {
+                    if (currentSystemStatus == 741130000 /* Closed */) {
                         form.getControl("msdyn_workordertype").setDisabled(true);
                         form.getControl("ts_region").setDisabled(true);
                         form.getControl("ovs_operationtypeid").setDisabled(true);
@@ -305,7 +315,7 @@ var ROM;
                     break;
             }
             // Lock some fields if there exist a Case that has this WO associated to it
-            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"".concat(form.data.entity.getId(), "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>");
+            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"" + form.data.entity.getId() + "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>";
             fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
             Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", fetchXML).then(function success(result) {
                 if (result.entities.length > 0) {
@@ -366,12 +376,12 @@ var ROM;
                     }
                 }
             }
-            if (currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) {
-                form.getControl("msdyn_systemstatus").removeOption(690970000 /* msdyn_wosystemstatus.New */);
-                form.getControl("msdyn_systemstatus").removeOption(690970001 /* msdyn_wosystemstatus.Scheduled */);
-                form.getControl("msdyn_systemstatus").removeOption(690970005 /* msdyn_wosystemstatus.Cancelled */);
+            if (currentSystemStatus == 741130000 /* Closed */) {
+                form.getControl("msdyn_systemstatus").removeOption(690970000 /* New */);
+                form.getControl("msdyn_systemstatus").removeOption(690970001 /* Scheduled */);
+                form.getControl("msdyn_systemstatus").removeOption(690970005 /* Cancelled */);
                 if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
-                    form.getControl("msdyn_systemstatus").removeOption(741130001 /* msdyn_wosystemstatus.InProgress */);
+                    form.getControl("msdyn_systemstatus").removeOption(741130001 /* InProgress */);
                 }
             }
             //Restrict edit rights for Report Details to WO Owner and Additional Inspectors
@@ -382,7 +392,7 @@ var ROM;
                 });
             }
             //Lock Cancelled Inspection Justification field if WO is cancelled        
-            if (currentSystemStatus == 690970005 /* msdyn_wosystemstatus.Cancelled */) {
+            if (currentSystemStatus == 690970005 /* Cancelled */) {
                 form.getControl("ts_canceledinspectionjustification").setDisabled(true);
             }
             unlockRecordLogFieldsIfUserIsSystemAdmin(form);
@@ -438,7 +448,7 @@ var ROM;
             var form = eContext.getFormContext();
             var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             var workOrderServiceTaskData;
-            if (systemStatus == 690970004 /* msdyn_wosystemstatus.ClosedInactive */) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
+            if (systemStatus == 690970004 /* ClosedInactive */) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
                 workOrderServiceTaskData =
                     {
                         "statecode": 1,
@@ -866,13 +876,65 @@ var ROM;
                         ].join("");
                         operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
                         Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(function success(resultBusinessUnit) {
-                            var targetFilter = "<filter type='and'><condition attribute='owneridname' operator='like' value='Avia%'/></filter>";
-                            if (resultBusinessUnit.entities[0].name.startsWith("Inte")) {
-                                targetFilter = "<filter type='and'> <condition attribute='owneridname' operator='like' value='Inte%'/> </filter> ";
-                            }
-                            form_2.getControl("ts_canceledinspectionjustification").addPreSearch(function () {
-                                console.log("inside Filter: " + targetFilter);
-                                form_2.getControl("ts_canceledinspectionjustification").addCustomFilter(targetFilter, "ts_canceledinspectionjustification");
+                            return __awaiter(this, void 0, void 0, function () {
+                                var owningBuId, filterConditions, _a, avSecDomesticTeamId, avSecInternationalTeamId, _b, issoTeamId, targetFilter;
+                                return __generator(this, function (_c) {
+                                    switch (_c.label) {
+                                        case 0:
+                                            if (!resultBusinessUnit.entities.length) {
+                                                return [2 /*return*/];
+                                            }
+                                            owningBuId = resultBusinessUnit.entities[0].businessunitid;
+                                            filterConditions = [];
+                                            _a = owningBuId;
+                                            if (!_a) return [3 /*break*/, 2];
+                                            return [4 /*yield*/, isAvSecBU(owningBuId)];
+                                        case 1:
+                                            _a = (_c.sent());
+                                            _c.label = 2;
+                                        case 2:
+                                            if (!_a) return [3 /*break*/, 5];
+                                            return [4 /*yield*/, getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC)];
+                                        case 3:
+                                            avSecDomesticTeamId = _c.sent();
+                                            return [4 /*yield*/, getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL)];
+                                        case 4:
+                                            avSecInternationalTeamId = _c.sent();
+                                            if (avSecDomesticTeamId) {
+                                                filterConditions.push("<condition attribute='ownerid' operator='eq' value='" + avSecDomesticTeamId + "'/>");
+                                            }
+                                            if (avSecInternationalTeamId) {
+                                                filterConditions.push("<condition attribute='ownerid' operator='eq' value='" + avSecInternationalTeamId + "'/>");
+                                            }
+                                            return [3 /*break*/, 9];
+                                        case 5:
+                                            _b = owningBuId;
+                                            if (!_b) return [3 /*break*/, 7];
+                                            return [4 /*yield*/, isISSOBU(owningBuId)];
+                                        case 6:
+                                            _b = (_c.sent());
+                                            _c.label = 7;
+                                        case 7:
+                                            if (!_b) return [3 /*break*/, 9];
+                                            return [4 /*yield*/, getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.ISSO_TEAM)];
+                                        case 8:
+                                            issoTeamId = _c.sent();
+                                            if (issoTeamId) {
+                                                filterConditions.push("<condition attribute='ownerid' operator='eq' value='" + issoTeamId + "'/>");
+                                            }
+                                            _c.label = 9;
+                                        case 9:
+                                            if (!filterConditions.length) {
+                                                return [2 /*return*/];
+                                            }
+                                            targetFilter = "<filter type='or'>" + filterConditions.join("") + "</filter>";
+                                            form_2.getControl("ts_canceledinspectionjustification").addPreSearch(function () {
+                                                console.log("inside Filter: " + targetFilter);
+                                                form_2.getControl("ts_canceledinspectionjustification").addCustomFilter(targetFilter, "ts_canceledinspectionjustification");
+                                            });
+                                            return [2 /*return*/];
+                                    }
+                                });
                             });
                         }, function (error) {
                             showErrorMessageAlert(error);
@@ -1194,7 +1256,7 @@ var ROM;
             }
             else 
             //If system status is set to closed
-            if (newSystemStatus == 690970004 /* msdyn_wosystemstatus.ClosedInactive */ || newSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) {
+            if (newSystemStatus == 690970004 /* ClosedInactive */ || newSystemStatus == 741130000 /* Closed */) {
                 Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=statecode eq 0 and msdyn_workorder/msdyn_workorderid eq " + form.data.entity.getId() + " and statuscode ne 918640002 and ts_mandatory eq true").then(function success(result) {
                     if (result.entities.length > 0) {
                         var alertStrings = {
@@ -1206,7 +1268,7 @@ var ROM;
                         form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
                     }
                     else {
-                        if (newSystemStatus == 690970004 /* msdyn_wosystemstatus.ClosedInactive */) {
+                        if (newSystemStatus == 690970004 /* ClosedInactive */) {
                             var confirmStrings = {
                                 text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationText"),
                                 title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationTitle")
@@ -1588,46 +1650,43 @@ var ROM;
             }
         }
         function setActivityTypeFilteredView(form, operationAttributeId, workOrderTypeAttributeId, operationTypeAttributeId) {
-            //Check whether this is a AvSec WO by using the operation
-            var operationTypeOwningBusinessUnitFetchXML = [
-                "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
-                "  <entity name='businessunit'>",
-                "    <attribute name='name'/>",
-                "    <attribute name='businessunitid'/>",
-                "    <filter>",
-                "      <condition attribute='name' operator='like' value='Avia%'/>",
-                "    </filter>",
-                "    <link-entity name='ovs_operationtype' from='owningbusinessunit' to='businessunitid' link-type='inner'>",
-                "      <filter>",
-                "        <condition attribute='ovs_operationtypeid' operator='eq' value='", operationTypeAttributeId, "'/>",
-                "      </filter>",
-                "    </link-entity>",
-                "  </entity>",
-                "</fetch>"
-            ].join("");
-            operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
-            Xrm.WebApi.retrieveMultipleRecords('businessunit', operationTypeOwningBusinessUnitFetchXML).then(function success(result) {
-                var operationActivityFilter = "";
-                if (result.entities.length == 1 && !isFromSecurityIncident) { //Add the operation activity filter if it's an AvSec workorder
-                    operationActivityFilter += "<link-entity name='ts_operationactivity' from='ts_activity' to='msdyn_incidenttypeid' link-type='inner'><filter><condition attribute='ts_operation' operator='eq' value='" + operationAttributeId + "'/><condition attribute='ts_operationalstatus' operator='eq' value='717750000'/></filter></link-entity>";
-                }
-                var fetchXmlActivity = "";
-                var viewIdActivity = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
-                var entityNameActivity = "msdyn_incidenttype";
-                var viewDisplayNameActivity = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredActivityType");
-                var layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
-                if (!isFromCase) {
-                    fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeId + '" /><condition attribute="statecode" operator="eq" value="0" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeId + '" /></filter></link-entity></link-entity>' + operationActivityFilter + '</entity></fetch>';
-                }
-                else {
-                    var viewIdActivity_1 = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
-                    var entityNameActivity_1 = "msdyn_incidenttype";
-                    var viewDisplayNameActivity_1 = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredActivityType");
-                    fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeId + '" /><condition attribute="statecode" operator="eq" value="0" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeId + '" /></filter></link-entity></link-entity></entity></fetch>';
-                    var layoutXmlActivity_1 = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
-                }
-                form.getControl("msdyn_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
-                form.getControl("msdyn_primaryincidenttype").setDisabled(false);
+            // Determine if this is an AvSec WO by checking the owning BU of the operation type using environment-based helpers
+            var opTypeId = operationTypeAttributeId ? operationTypeAttributeId.replace(/[{}]/g, "") : operationTypeAttributeId;
+            Xrm.WebApi.retrieveRecord("ovs_operationtype", opTypeId, "?$select=_owningbusinessunit_value").then(function success(operationType) {
+                return __awaiter(this, void 0, void 0, function () {
+                    var operationActivityFilter, isAvSec, fetchXmlActivity, viewIdActivity, entityNameActivity, viewDisplayNameActivity, layoutXmlActivity;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                operationActivityFilter = "";
+                                if (!(!isFromSecurityIncident && operationType._owningbusinessunit_value)) return [3 /*break*/, 2];
+                                return [4 /*yield*/, isAvSecBU(operationType._owningbusinessunit_value)];
+                            case 1:
+                                isAvSec = _a.sent();
+                                if (isAvSec) {
+                                    operationActivityFilter += "<link-entity name='ts_operationactivity' from='ts_activity' to='msdyn_incidenttypeid' link-type='inner'><filter><condition attribute='ts_operation' operator='eq' value='" + operationAttributeId + "'/><condition attribute='ts_operationalstatus' operator='eq' value='717750000'/></filter></link-entity>";
+                                }
+                                _a.label = 2;
+                            case 2:
+                                fetchXmlActivity = "";
+                                viewIdActivity = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
+                                entityNameActivity = "msdyn_incidenttype";
+                                viewDisplayNameActivity = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredActivityType");
+                                layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
+                                if (!isFromCase) {
+                                    fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeId + '" /><condition attribute="statecode" operator="eq" value="0" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeId + '" /></filter></link-entity></link-entity>' + operationActivityFilter + '</entity></fetch>';
+                                }
+                                else {
+                                    fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeId + '" /><condition attribute="statecode" operator="eq" value="0" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeId + '" /></filter></link-entity></link-entity></entity></fetch>';
+                                }
+                                form.getControl("msdyn_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
+                                form.getControl("msdyn_primaryincidenttype").setDisabled(false);
+                                return [2 /*return*/];
+                        }
+                    });
+                });
+            }, function (error) {
+                showErrorMessageAlert(error);
             });
         }
         function setCountryFilteredView(form) {
@@ -1709,7 +1768,7 @@ var ROM;
             return "";
         }
         function closeWorkOrderServiceTasks(formContext, workOrderServiceTaskData) {
-            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq ".concat(formContext.data.entity.getId())).then(function success(result) {
+            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq " + formContext.data.entity.getId()).then(function success(result) {
                 for (var i = 0; i < result.entities.length; i++) {
                     Xrm.WebApi.updateRecord("msdyn_workorderservicetask", result.entities[i].msdyn_workorderservicetaskid, workOrderServiceTaskData).then(function success(result) {
                         //work order service task closed successfully
@@ -1747,7 +1806,7 @@ var ROM;
             var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             var plannedFiscalQuarter = form.getAttribute("ovs_fiscalquarter").getValue();
             var validWorkOrderStatus = false;
-            if (systemStatus != null && (systemStatus == 690970000 /* msdyn_wosystemstatus.New */ || systemStatus == 690970001 /* msdyn_wosystemstatus.Scheduled */ || systemStatus == 741130001 /* msdyn_wosystemstatus.InProgress */)) {
+            if (systemStatus != null && (systemStatus == 690970000 /* New */ || systemStatus == 690970001 /* Scheduled */ || systemStatus == 741130001 /* InProgress */)) {
                 validWorkOrderStatus = true;
             }
             if (plannedFiscalQuarter != null) {
@@ -1852,7 +1911,7 @@ var ROM;
                             var wost = _a[_i];
                             if (wost.statecode == 0) {
                                 workOrderHasActiveWost = true;
-                                if (wost.statuscode == 918640005 /* msdyn_workorderservicetask_statuscode.New */)
+                                if (wost.statuscode == 918640005 /* New */)
                                     workOrderHasNewWost = true;
                             }
                         }
@@ -1911,7 +1970,7 @@ var ROM;
                         var wost = _a[_i];
                         if (wost.statecode == 0) {
                             workOrderHasActiveWost = true;
-                            if (wost.statuscode == 918640005 /* msdyn_workorderservicetask_statuscode.New */)
+                            if (wost.statuscode == 918640005 /* New */)
                                 workOrderHasNewWost = true;
                         }
                     }
@@ -2118,7 +2177,7 @@ var ROM;
         }
         function isAvSecBusinessUnit() {
             return __awaiter(this, void 0, void 0, function () {
-                var userId, currentUserBusinessUnitFetchXML, userBusinessUnitName;
+                var userId, currentUserBusinessUnitFetchXML, userBusinessUnit, userBusinessUnitId;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -2126,7 +2185,6 @@ var ROM;
                             currentUserBusinessUnitFetchXML = [
                                 "<fetch top='50'>",
                                 "  <entity name='businessunit'>",
-                                "    <attribute name='name' />",
                                 "    <attribute name='businessunitid' />",
                                 "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>>",
                                 "      <filter>",
@@ -2139,8 +2197,10 @@ var ROM;
                             currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML)];
                         case 1:
-                            userBusinessUnitName = _a.sent();
-                            return [2 /*return*/, userBusinessUnitName.entities[0].name.startsWith("Aviation")];
+                            userBusinessUnit = _a.sent();
+                            userBusinessUnitId = userBusinessUnit.entities[0].businessunitid;
+                            return [4 /*yield*/, isAvSecBU(userBusinessUnitId)];
+                        case 2: return [2 /*return*/, _a.sent()];
                     }
                 });
             });
@@ -2148,7 +2208,7 @@ var ROM;
         function setFiscalQuarter(form) {
             var currentDate = new Date();
             var currentDateString = currentDate.toISOString();
-            var fetchXml = "<fetch top=\"1\"><entity name=\"tc_tcfiscalquarter\"><attribute name=\"tc_name\"/><attribute name=\"tc_tcfiscalquarterid\"/><filter type=\"and\"><condition attribute=\"tc_quarterstart\" operator=\"le\" value=\"".concat(currentDateString, "\"/><condition attribute=\"tc_quarterend\" operator=\"ge\" value=\"").concat(currentDateString, "\"/></filter></entity></fetch>");
+            var fetchXml = "<fetch top=\"1\"><entity name=\"tc_tcfiscalquarter\"><attribute name=\"tc_name\"/><attribute name=\"tc_tcfiscalquarterid\"/><filter type=\"and\"><condition attribute=\"tc_quarterstart\" operator=\"le\" value=\"" + currentDateString + "\"/><condition attribute=\"tc_quarterend\" operator=\"ge\" value=\"" + currentDateString + "\"/></filter></entity></fetch>";
             var lookup = new Array();
             Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalquarter", "?fetchXml=" + fetchXml).then(function success(result) {
                 lookup[0] = new Object();
@@ -2268,7 +2328,7 @@ var ROM;
                     if (operationTypeAttributeValue[0].id.toLowerCase() == "{8b614ef0-c651-eb11-a812-000d3af3ac0d}") { //Air Carrier (Passenger)
                         form.getControl("ts_aircraftclassification").setVisible(true);
                         if (form.getAttribute("ts_aircraftclassification").getValue() == null) {
-                            form.getAttribute("ts_aircraftclassification").setValue(741130000 /* ts_aircraftclassification.PassengerPAX */);
+                            form.getAttribute("ts_aircraftclassification").setValue(741130000 /* PassengerPAX */);
                         }
                         if (isROM20Form) {
                             formROM2.ui.tabs.get("tab_workspace").sections.get("tab_workspace_flightdetails").setVisible(true);
@@ -2320,16 +2380,16 @@ var ROM;
                         distinationCountry = result2._ts_country_value;
                         if (distinationCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7" && originCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7") { // Canada
                             // Domestic
-                            form.getAttribute("ts_airserviceclassification").setValue(741130000 /* ts_airserviceclassification.Domestic */);
+                            form.getAttribute("ts_airserviceclassification").setValue(741130000 /* Domestic */);
                         }
                         else if ((distinationCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && distinationCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")
                             || (originCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && originCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")) { //Not in USA or Canada
                             //International
-                            form.getAttribute("ts_airserviceclassification").setValue(741130001 /* ts_airserviceclassification.International */);
+                            form.getAttribute("ts_airserviceclassification").setValue(741130001 /* International */);
                         }
                         else {
                             //Transborder
-                            form.getAttribute("ts_airserviceclassification").setValue(741130002 /* ts_airserviceclassification.Transborder */);
+                            form.getAttribute("ts_airserviceclassification").setValue(741130002 /* Transborder */);
                         }
                     }, function error(error) {
                         Xrm.Navigation.openAlertDialog({ text: error.message });

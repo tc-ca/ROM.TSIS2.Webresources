@@ -23,9 +23,7 @@ namespace ROM.UnplannedWorkOrder {
 
         currentSystemStatus = form.getAttribute("ts_recordstatus").getValue();
 
-        //Set comment field visible if AvSec
-        //Set Overtime field visible for AvSec
-        let userBusinessUnitName;
+        // Set comment/overtime visibility based on user's Business Unit (AvSec vs non‑AvSec)
         let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
         let currentUserBusinessUnitFetchXML = [
             "<fetch top='50'>",
@@ -41,15 +39,23 @@ namespace ROM.UnplannedWorkOrder {
             "</fetch>",
         ].join("");
         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
-        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
-            userBusinessUnitName = businessunit.entities[0].name;
-            if (!userBusinessUnitName.startsWith("Aviation")) {
+        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(async function (businessunit) {
+            if (!businessunit || !businessunit.entities || businessunit.entities.length === 0) {
+                return;
+            }
+
+            const userBU = businessunit.entities[0];
+            const userBusinessUnitId = userBU.businessunitid;
+
+            const isAvSec = await isAvSecBU(userBusinessUnitId);
+
+            if (!isAvSec) {
                 form.getControl("ts_details").setVisible(false);
                 /*                form.getControl("ts_overtime").setVisible(false);*/
                 form.getControl("ts_overtimerequired").setVisible(true);
 
             }
-            else if (userBusinessUnitName.startsWith("Aviation")) {
+            else {
                 form.getControl("ts_details").setVisible(true);
                 //form.getControl("ts_instructions").setVisible(true);
                 //form.getControl("ts_accountableteam").setVisible(true);
@@ -81,16 +87,22 @@ namespace ROM.UnplannedWorkOrder {
             //}
         });
 
-        getUserTeam(userId).then(function (userTeams) {
-            if (userTeams != null && userTeams.entities.length > 0) {
-                for (var i = 0; i < userTeams.entities.length; i++) {
-                    if (userTeams.entities[i]["name"].indexOf("International - Inspectors") > 0) {
-                        form.getControl("ts_rational").setDisabled(false);
-                        break;
-                    }
+        // Enable rationale editing for users in the AvSec International team (based on environment variable, not team name)
+        getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL)
+            .then(function (teamId) {
+                if (!teamId) {
+                    return null;
                 }
-            }
-        });
+                return isUserInTeam(userId, teamId);
+            })
+            .then(function (isMember) {
+                if (isMember) {
+                    form.getControl("ts_rational").setDisabled(false);
+                }
+            })
+            .catch(function (error) {
+                console.error("Error checking AvSec International team membership:", error);
+            });
 
         //Keep track of the current system status, to be used when cancelling a status change.
         currentStatus = form.getAttribute("ts_state").getValue();
@@ -399,7 +411,7 @@ namespace ROM.UnplannedWorkOrder {
             });
         }
 
-        //Lock Cancelled Inspection Justification field if WO is cancelled        
+        //Lock Cancelled Inspection Justification field if WO is cancelled
         if (currentSystemStatus == msdyn_wosystemstatus.Cancelled) {
             form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
         }
@@ -483,7 +495,7 @@ namespace ROM.UnplannedWorkOrder {
 
         //Post a note on ScheduledQuarter Change
         //  postNoteOnScheduledQuarterChange(form);
-        
+
         if (cancelledInspectionJustification != null) {
             form.getAttribute("ts_recordstatus").setValue(msdyn_wosystemstatus.Cancelled);
             form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
@@ -1725,30 +1737,24 @@ namespace ROM.UnplannedWorkOrder {
 
     function setActivityTypeFilteredView(form: Form.ts_unplannedworkorder.Main.Information, operationAttributeId: string, workOrderTypeAttributeId: string, operationTypeAttributeId: string): void {
 
-        //Check whether this is a AvSec WO by using the operation
-        let operationTypeOwningBusinessUnitFetchXML = [
-            "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
-            "  <entity name='businessunit'>",
-            "    <attribute name='name'/>",
-            "    <attribute name='businessunitid'/>",
-            "    <filter>",
-            "      <condition attribute='name' operator='like' value='Avia%'/>",
-            "    </filter>",
-            "    <link-entity name='ovs_operationtype' from='owningbusinessunit' to='businessunitid' link-type='inner'>",
-            "      <filter>",
-            "        <condition attribute='ovs_operationtypeid' operator='eq' value='", operationTypeAttributeId, "'/>",
-            "      </filter>",
-            "    </link-entity>",
-            "  </entity>",
-            "</fetch>"
-        ].join("");
-        operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
+        // Check whether this is an AvSec WO by using the operation type's owning BU (via GUID, not name)
+        const operationTypeIdClean = operationTypeAttributeId ? operationTypeAttributeId.replace(/[{}]/g, "") : "";
 
-        Xrm.WebApi.retrieveMultipleRecords('businessunit', operationTypeOwningBusinessUnitFetchXML).then(
-            function success(result) {
+        if (!operationTypeIdClean) {
+            return;
+        }
+
+        Xrm.WebApi.retrieveRecord("ovs_operationtype", operationTypeIdClean, "?$select=_owningbusinessunit_value")
+            .then(async function success(operationType) {
                 let operationActivityFilter = "";
-                if (result.entities.length == 1 && !isFromSecurityIncident) { //Add the operation activity filter if it's an AvSec workorder
-                    operationActivityFilter += "<link-entity name='ts_operationactivity' from='ts_activity' to='msdyn_incidenttypeid' link-type='inner'><filter><condition attribute='ts_operation' operator='eq' value='" + operationAttributeId + "'/><condition attribute='ts_operationalstatus' operator='eq' value='717750000'/></filter></link-entity>";
+
+                if (!isFromSecurityIncident && operationType && operationType._owningbusinessunit_value) {
+                    const owningBuId = operationType._owningbusinessunit_value;
+                    const isAvSec = await isAvSecBU(owningBuId);
+
+                    if (isAvSec) { // Add the operation activity filter if it's an AvSec workorder
+                        operationActivityFilter += "<link-entity name='ts_operationactivity' from='ts_activity' to='msdyn_incidenttypeid' link-type='inner'><filter><condition attribute='ts_operation' operator='eq' value='" + operationAttributeId + "'/><condition attribute='ts_operationalstatus' operator='eq' value='717750000'/></filter></link-entity>";
+                    }
                 }
 
                 let fetchXmlActivity = "";
@@ -1760,18 +1766,13 @@ namespace ROM.UnplannedWorkOrder {
                 if (!isFromCase) {
                     fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeId + '" /><condition attribute="statecode" operator="eq" value="0" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ovs_operationtypeid" to="ovs_operationtypeid" alias="ab"><filter type="and"><condition attribute="ovs_operationtypeid" operator="eq" value="' + operationTypeAttributeId + '" /></filter></link-entity></link-entity>' + operationActivityFilter + '</entity></fetch>';
                 }
-                //else {
-                //    const viewIdActivity = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F661}';
-                //    const entityNameActivity = "msdyn_incidenttype";
-                //    const viewDisplayNameActivity = Xrm.Utility.getResourceString("ts_/resx/UnplannedWorkOrder", "FilteredActivityType");
-                //    fetchXmlActivity = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"><entity name="msdyn_incidenttype"><attribute name="msdyn_name" /><attribute name="msdyn_incidenttypeid" /><order attribute="msdyn_name" descending="false" /><filter type="and"><condition attribute="msdyn_defaultworkordertype" operator="eq" uiname="Inspection" uitype="msdyn_workordertype" value="' + workOrderTypeAttributeId + '" /><condition attribute="statecode" operator="eq" value="0" /></filter><link-entity name="ts_ovs_operationtypes_msdyn_incidenttypes" from="msdyn_incidenttypeid" to="msdyn_incidenttypeid" visible="false" intersect="true"><link-entity name="ovs_operationtype" from="ts_operationtype" to="ts_operationtype" alias="ab"><filter type="and"><condition attribute="ts_operationtype" operator="eq" value="' + operationTypeAttributeId + '" /></filter></link-entity></link-entity></entity></fetch>';
-                //    const layoutXmlActivity = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_incidenttypeid"><cell name="msdyn_name" width="200" /></row></grid>';
 
-                //}
                 form.getControl("ts_primaryincidenttype").addCustomView(viewIdActivity, entityNameActivity, viewDisplayNameActivity, fetchXmlActivity, layoutXmlActivity, true);
                 form.getControl("ts_primaryincidenttype").setDisabled(false);
-            }
-            ,);
+            })
+            .catch(function (error) {
+                showErrorMessageAlert(error);
+            });
     }
 
     function setCountryFilteredView(form: Form.ts_unplannedworkorder.Main.Information): void {
@@ -2107,17 +2108,6 @@ namespace ROM.UnplannedWorkOrder {
         });
     }
 
-    export function userHasRole(rolesName) {
-        var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-        var hasRole = false;
-        var roles = rolesName.split("|");
-        roles.forEach(function (roleItem) {
-            userRoles.forEach(function (userRoleItem) {
-                if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
-            });
-        });
-        return hasRole;
-    }
 
     //export function cantCompleteInspectionOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
     //    const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
@@ -2327,7 +2317,6 @@ namespace ROM.UnplannedWorkOrder {
         let currentUserBusinessUnitFetchXML = [
             "<fetch top='50'>",
             "  <entity name='businessunit'>",
-            "    <attribute name='name' />",
             "    <attribute name='businessunitid' />",
             "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>>",
             "      <filter>",
@@ -2338,8 +2327,9 @@ namespace ROM.UnplannedWorkOrder {
             "</fetch>",
         ].join("");
         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
-        let userBusinessUnitName = await Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML);
-        return userBusinessUnitName.entities[0].name.startsWith("Aviation");
+        let userBusinessUnit = await Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML);
+        const userBusinessUnitId = userBusinessUnit.entities[0].businessunitid;
+        return await isAvSecBU(userBusinessUnitId);
     }
 
     //function setFiscalQuarter(form: Form.msdyn_workorder.Main.ROMOversightActivity) {
@@ -2559,31 +2549,6 @@ namespace ROM.UnplannedWorkOrder {
                     Xrm.Navigation.openAlertDialog({ text: error.message });
                 });
         }
-    }
-
-    function getUserTeam(userId) {
-        const fetchXml = [
-            "<fetch distinct='false' mapping='logical'>",
-            "  <entity name='team'>",
-            "    <attribute name='name' />",
-            "    <attribute name='teamid' />",
-            "    <filter type='and'>",
-            "      <condition attribute='teamtype' operator='ne' value='1' />",
-            "    </filter>",
-            "    <link-entity name='teammembership' intersect='true' visible='false' to='teamid' from='teamid'>",
-            "      <link-entity name='systemuser' from='systemuserid' to='systemuserid' alias='bb'>",
-            "        <filter type='and'>",
-            "          <condition attribute='systemuserid' operator='eq' value='",
-            userId,
-            "' />",
-            "        </filter>",
-            "      </link-entity>",
-            "    </link-entity>",
-            "  </entity>",
-            "</fetch>",
-        ].join("");
-
-        return Xrm.WebApi.retrieveMultipleRecords("team", "?fetchXml=" + encodeURIComponent(fetchXml));
     }
 
     /**

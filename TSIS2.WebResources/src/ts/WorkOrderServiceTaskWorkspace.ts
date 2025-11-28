@@ -315,8 +315,8 @@
         const workOrderValue = form.getAttribute("ts_workorder").getValue();
         const workOrderId = workOrderValue ? workOrderValue[0].id : "";
 
-        Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_workordertype_value,_ovs_operationtypeid_value,_ts_site_value,_ts_region_value,_msdyn_serviceaccount_value,_ovs_operationid_value&$expand=ovs_operationtypeid($select=_ownerid_value) ").then(
-            function success(result) {
+        Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=_msdyn_workordertype_value,_ovs_operationtypeid_value,_ts_site_value,_ts_region_value,_msdyn_serviceaccount_value,_ovs_operationid_value").then(
+            async function success(result) {
                 const viewId = '{ae0d8547-6871-4854-91ba-03b0c619dbe1}';
                 const entityName = "msdyn_servicetasktype";
                 const viewDisplayName = (lang == 1036) ? "Type de tâche relative au service" : "Service Task Types";
@@ -324,7 +324,15 @@
                 const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_servicetasktype"><cell name="msdyn_name" width="200" /></row></grid>';
                 form.getControl("ts_tasktype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
 
-                showHideFieldsByOperationType(form, result._ovs_operationtypeid_value, result.ovs_operationtypeid._ownerid_value);
+                const operationType = await Xrm.WebApi.retrieveRecord(
+                    "ovs_operationtype",
+                    result._ovs_operationtypeid_value,
+                    "?$select=_ownerid_value"
+                );
+
+                const ownerId = getOwnerIdFromRecord(operationType);
+
+                await showHideFieldsByOperationType(form, result._ovs_operationtypeid_value, ownerId);
                 aocRegion = result._ts_region_value;
 
                 if (form.getAttribute("ts_aocoperation").getValue() == null && result._ovs_operationtypeid_value == "8b614ef0-c651-eb11-a812-000d3af3ac0d") {  //Air Carrier (Passenger)
@@ -459,8 +467,9 @@
                 Xrm.Navigation.openAlertDialog({ text: error.message });
             });
     }
-    function showHideFieldsByOperationType(form: Form.ts_workorderservicetaskworkspace.Main.Information, operationTypeId, operationTypeOwnerId): void {
-        if (operationTypeOwnerId != "e2e3910d-a41f-ec11-b6e6-0022483cb5c7") {  //Owner is AvSec
+    async function showHideFieldsByOperationType(form: Form.ts_workorderservicetaskworkspace.Main.Information, operationTypeId, operationTypeOwnerId): Promise<void> {
+        const isAvSec = await isOwnedByAvSec(operationTypeOwnerId);
+        if (!isAvSec) {
             form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_AirCarrier').setVisible(false);
             form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_Location').setVisible(false);
             form.ui.tabs.get('tab_Oversight').sections.get('tab_Oversight_ServiceProviders').setVisible(false);
@@ -573,13 +582,15 @@
             form.getControl("ts_aircraftmodel").setVisible(false);
         }
     }
-    function filterLegislationSource(eContext: Xrm.ExecutionContext<any, any>) {
+    async function filterLegislationSource(eContext: Xrm.ExecutionContext<any, any>) {
         const formContext = <Form.ts_workorderservicetaskworkspace.Main.Information>eContext.getFormContext();
         const workOrderValue = formContext.getAttribute("ts_workorder").getValue();
         const workOrderId = workOrderValue ? workOrderValue[0].id : "";
-        Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_operationtypeid&$expand=ovs_operationtypeid($expand=owningbusinessunit($select=name))").then(function (workOrder) {
-            if (workOrder != null && workOrder.ovs_operationtypeid != null && workOrder.ovs_operationtypeid.owningbusinessunit.name != null) {
-                if (workOrder.ovs_operationtypeid.owningbusinessunit.name.startsWith("Aviation")) {
+        Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ovs_operationtypeid&$expand=ovs_operationtypeid($expand=owningbusinessunit($select=businessunitid))").then(async function (workOrder) {
+            if (workOrder != null && workOrder.ovs_operationtypeid != null && workOrder.ovs_operationtypeid.owningbusinessunit != null) {
+                const buId = workOrder.ovs_operationtypeid.owningbusinessunit.businessunitid;
+                const isAvSec = await isAvSecBU(buId);
+                if (isAvSec) {
                     //Change Legislation Source filter to use
                     const viewId = '{145AC9F2-4F7E-43DF-BEBD-442CB4C1F662}';
                     const entityName = "qm_tylegislationsource";
@@ -604,7 +615,13 @@
     async function workOrderIsDraft(eContext: Xrm.ExecutionContext<any, any>) {
         const form = <Form.ts_workorderservicetaskworkspace.Main.Information>eContext.getFormContext();
         const workOrderValue = form.getAttribute("ts_workorder").getValue();
-        const workOrderId = workOrderValue ? workOrderValue[0].id : "";
+        const workOrderId = workOrderValue && workOrderValue[0] ? workOrderValue[0].id : null;
+
+        // No parent work order → cannot be "Draft" in the planning sense
+        if (!workOrderId) {
+            return false;
+        }
+
         const workOrder = await Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ts_state");
         return workOrder.ts_state == ts_planningstate.Draft;
     }
@@ -1205,17 +1222,6 @@
             }
         }
     }
-    function userHasRole(rolesName) {
-        var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-        var hasRole = false;
-        var roles = rolesName.split("|");
-        roles.forEach(function (roleItem) {
-            userRoles.forEach(function (userRoleItem) {
-                if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
-            });
-        });
-        return hasRole;
-    }
     function CompleteQuestionnaire(wrCtrl) {
         // Get the web resource inner content window
         wrCtrl.getContentWindow().then(function (win) {
@@ -1231,5 +1237,5 @@
             }
         });
     }
-    
+
 }
