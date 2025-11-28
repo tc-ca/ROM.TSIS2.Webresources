@@ -3,21 +3,26 @@ namespace ROM.FunctionalLocation {
         const form = <Form.msdyn_functionallocation.Main.Information>eContext.getFormContext();
 
         // Show only Summary and Work Orders tabs, hide all others
-        const tabs = form.ui.tabs.get();
-        const tabsToShow = ["tab_3", "Work Orders"]; // Summary and Work Orders
-        
-        tabs.forEach(function(tab: any) {
+        (async () => {
             try {
-                const tabName = tab.getName();
-                if (tabsToShow.includes(tabName)) {
-                    tab.setVisible(true);
-                } else {
-                    tab.setVisible(false);
-                }
-            } catch (e) {
-                // Tab error, skip
+                const isMember = await isCurrentUserInRailSafetyTeam();
+                if (!isMember) return; // only apply hiding for Rail Safety users
+
+                const tabs = form.ui.tabs.get();
+                const tabsToShow = ["tab_3", "Work Orders"]; // Summary and Work Orders
+
+                tabs.forEach(function (tab: any) {
+                    try {
+                        const tabName = tab.getName();
+                        tab.setVisible(tabsToShow.includes(tabName));
+                    } catch (e) {
+                        // Tab error, skip
+                    }
+                });
+            } catch (err) {
+                console.error("Error applying Rail Safety tab visibility:", err);
             }
-        });
+        })();
 
         const ownerAttribute = form.getAttribute("ownerid")
         if (ownerAttribute != null && ownerAttribute != undefined) {
@@ -208,6 +213,21 @@ namespace ROM.FunctionalLocation {
         }
     }
 
+    // Helper: Is current user member of Rail Safety team
+    async function isCurrentUserInRailSafetyTeam(teamId?: string): Promise<boolean> {
+        try {
+            const railSafetyTeamGuid = teamId ?? await GetEnvironmentVariableValue("ts_RailSafetyTeamGUID");
+            if (!railSafetyTeamGuid) return false;
+
+            const userId = Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, "");
+            return await checkUserTeamMembership(userId, railSafetyTeamGuid);
+        } catch (e) {
+            console.error("Error checking current user Rail Safety membership:", e);
+            return false;
+        }
+    }
+
+
     // Set owner to Rail Safety Team if user is member (called on form load)
     async function checkAndSetRailSafetyTeamOwnerOnLoad(form: Form.msdyn_functionallocation.Main.Information): Promise<void> {
         try {
@@ -227,37 +247,30 @@ namespace ROM.FunctionalLocation {
                     return;
                 }
             }
-
-            const userId = Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, "");
             
-            const isUserInRailSafetyTeam = await checkUserTeamMembership(userId, railSafetyTeamGuid);
+            // check membership
+            const isUserInRailSafetyTeam = await isCurrentUserInRailSafetyTeam(railSafetyTeamGuid);
+            if (!isUserInRailSafetyTeam) return;
 
-            if (isUserInRailSafetyTeam) {
-                const teamName = await getTeamName(railSafetyTeamGuid);
+            const teamName = (await getTeamName(railSafetyTeamGuid)) || "";
+            const teamLookup: any = [
+                {
+                    id: railSafetyTeamGuid,
+                    entityType: "team",
+                    name: teamName
+                }
+            ];
                 
-                const teamLookup: any = [
-                    {
-                        id: railSafetyTeamGuid,
-                        entityType: "team",
-                        name: teamName
-                    }
-                ];
-                
-                const ownerIdAttr = form.getAttribute("ownerid");
-                if (ownerIdAttr != null) {
-                    ownerIdAttr.setValue(teamLookup);
-                    
-                    // Trigger save event
-                    form.data.save().then(
-                        function() {
-                            // Save successful
-                        },
-                        function(error) {
-                            console.error("Error saving Rail Safety Team owner:", error);
-                        }
-                    );
+            const ownerIdAttr = form.getAttribute("ownerid");
+            if (ownerIdAttr != null) {
+                ownerIdAttr.setValue(teamLookup);
+                try {
+                    await form.data.save();
+                } catch (saveError) {
+                    console.error("Error saving Rail Safety Team owner:", saveError);
                 }
             }
+
         } catch (error) {
             console.error("Error in checkAndSetRailSafetyTeamOwnerOnLoad:", error);
         }

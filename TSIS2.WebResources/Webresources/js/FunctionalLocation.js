@@ -40,24 +40,40 @@ var ROM;
     var FunctionalLocation;
     (function (FunctionalLocation) {
         function onLoad(eContext) {
+            var _this = this;
             var form = eContext.getFormContext();
             // Show only Summary and Work Orders tabs, hide all others
-            var tabs = form.ui.tabs.get();
-            var tabsToShow = ["tab_3", "Work Orders"]; // Summary and Work Orders
-            tabs.forEach(function (tab) {
-                try {
-                    var tabName = tab.getName();
-                    if (tabsToShow.includes(tabName)) {
-                        tab.setVisible(true);
+            (function () { return __awaiter(_this, void 0, void 0, function () {
+                var isMember, tabs, tabsToShow_1, err_1;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            _a.trys.push([0, 2, , 3]);
+                            return [4 /*yield*/, isCurrentUserInRailSafetyTeam()];
+                        case 1:
+                            isMember = _a.sent();
+                            if (!isMember)
+                                return [2 /*return*/]; // only apply hiding for Rail Safety users
+                            tabs = form.ui.tabs.get();
+                            tabsToShow_1 = ["tab_3", "Work Orders"];
+                            tabs.forEach(function (tab) {
+                                try {
+                                    var tabName = tab.getName();
+                                    tab.setVisible(tabsToShow_1.includes(tabName));
+                                }
+                                catch (e) {
+                                    // Tab error, skip
+                                }
+                            });
+                            return [3 /*break*/, 3];
+                        case 2:
+                            err_1 = _a.sent();
+                            console.error("Error applying Rail Safety tab visibility:", err_1);
+                            return [3 /*break*/, 3];
+                        case 3: return [2 /*return*/];
                     }
-                    else {
-                        tab.setVisible(false);
-                    }
-                }
-                catch (e) {
-                    // Tab error, skip
-                }
-            });
+                });
+            }); })();
             var ownerAttribute = form.getAttribute("ownerid");
             if (ownerAttribute != null && ownerAttribute != undefined) {
                 var ownerAttributeValue_1 = ownerAttribute.getValue();
@@ -254,14 +270,45 @@ var ROM;
             });
         }
         FunctionalLocation.onSave = onSave;
+        // Helper: Is current user member of Rail Safety team
+        function isCurrentUserInRailSafetyTeam(teamId) {
+            return __awaiter(this, void 0, void 0, function () {
+                var railSafetyTeamGuid, _a, userId, e_1;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            _b.trys.push([0, 5, , 6]);
+                            if (!(teamId !== null && teamId !== void 0)) return [3 /*break*/, 1];
+                            _a = teamId;
+                            return [3 /*break*/, 3];
+                        case 1: return [4 /*yield*/, GetEnvironmentVariableValue("ts_RailSafetyTeamGUID")];
+                        case 2:
+                            _a = _b.sent();
+                            _b.label = 3;
+                        case 3:
+                            railSafetyTeamGuid = _a;
+                            if (!railSafetyTeamGuid)
+                                return [2 /*return*/, false];
+                            userId = Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, "");
+                            return [4 /*yield*/, checkUserTeamMembership(userId, railSafetyTeamGuid)];
+                        case 4: return [2 /*return*/, _b.sent()];
+                        case 5:
+                            e_1 = _b.sent();
+                            console.error("Error checking current user Rail Safety membership:", e_1);
+                            return [2 /*return*/, false];
+                        case 6: return [2 /*return*/];
+                    }
+                });
+            });
+        }
         // Set owner to Rail Safety Team if user is member (called on form load)
         function checkAndSetRailSafetyTeamOwnerOnLoad(form) {
             return __awaiter(this, void 0, void 0, function () {
-                var railSafetyTeamGuid, currentOwner, currentOwnerId, cleanRailSafetyTeamGuid, userId, isUserInRailSafetyTeam, teamName, teamLookup, ownerIdAttr, error_2;
+                var railSafetyTeamGuid, currentOwner, currentOwnerId, cleanRailSafetyTeamGuid, isUserInRailSafetyTeam, teamName, teamLookup, ownerIdAttr, saveError_1, error_2;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
-                            _a.trys.push([0, 5, , 6]);
+                            _a.trys.push([0, 8, , 9]);
                             return [4 /*yield*/, GetEnvironmentVariableValue("ts_RailSafetyTeamGUID")];
                         case 1:
                             railSafetyTeamGuid = _a.sent();
@@ -277,14 +324,14 @@ var ROM;
                                     return [2 /*return*/];
                                 }
                             }
-                            userId = Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, "");
-                            return [4 /*yield*/, checkUserTeamMembership(userId, railSafetyTeamGuid)];
+                            return [4 /*yield*/, isCurrentUserInRailSafetyTeam(railSafetyTeamGuid)];
                         case 2:
                             isUserInRailSafetyTeam = _a.sent();
-                            if (!isUserInRailSafetyTeam) return [3 /*break*/, 4];
+                            if (!isUserInRailSafetyTeam)
+                                return [2 /*return*/];
                             return [4 /*yield*/, getTeamName(railSafetyTeamGuid)];
                         case 3:
-                            teamName = _a.sent();
+                            teamName = (_a.sent()) || "";
                             teamLookup = [
                                 {
                                     id: railSafetyTeamGuid,
@@ -293,22 +340,25 @@ var ROM;
                                 }
                             ];
                             ownerIdAttr = form.getAttribute("ownerid");
-                            if (ownerIdAttr != null) {
-                                ownerIdAttr.setValue(teamLookup);
-                                // Trigger save event
-                                form.data.save().then(function () {
-                                    // Save successful
-                                }, function (error) {
-                                    console.error("Error saving Rail Safety Team owner:", error);
-                                });
-                            }
+                            if (!(ownerIdAttr != null)) return [3 /*break*/, 7];
+                            ownerIdAttr.setValue(teamLookup);
                             _a.label = 4;
-                        case 4: return [3 /*break*/, 6];
+                        case 4:
+                            _a.trys.push([4, 6, , 7]);
+                            return [4 /*yield*/, form.data.save()];
                         case 5:
+                            _a.sent();
+                            return [3 /*break*/, 7];
+                        case 6:
+                            saveError_1 = _a.sent();
+                            console.error("Error saving Rail Safety Team owner:", saveError_1);
+                            return [3 /*break*/, 7];
+                        case 7: return [3 /*break*/, 9];
+                        case 8:
                             error_2 = _a.sent();
                             console.error("Error in checkAndSetRailSafetyTeamOwnerOnLoad:", error_2);
-                            return [3 /*break*/, 6];
-                        case 6: return [2 /*return*/];
+                            return [3 /*break*/, 9];
+                        case 9: return [2 /*return*/];
                     }
                 });
             });
