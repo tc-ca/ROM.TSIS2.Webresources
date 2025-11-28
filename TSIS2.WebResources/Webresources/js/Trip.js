@@ -17,19 +17,6 @@ var ROM;
             toggleSubgrid(form);
         }
         Trip.onLoad = onLoad;
-        function userHasRole(rolesName) {
-            var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-            var hasRole = false;
-            var roles = rolesName.split("|");
-            roles.forEach(function (roleItem) {
-                userRoles.forEach(function (userRoleItem) {
-                    if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase())
-                        hasRole = true;
-                });
-            });
-            return hasRole;
-        }
-        Trip.userHasRole = userHasRole;
         function onProgramChange(eContext) {
             var form = eContext.getFormContext();
             toggleSubgrid(form);

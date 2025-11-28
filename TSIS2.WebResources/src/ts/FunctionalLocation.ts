@@ -69,29 +69,35 @@ namespace ROM.FunctionalLocation {
 
             //If owner is ISSO, replace operations view
             if (ownerAttributeValue != null) {
-                if (ownerAttributeValue[0].name == "Intermodal Surface Security Oversight (ISSO)") {
-                    let operationView =
-                    {
-                        entityType: "savedquery",
-                        id: "{4361bdce-d4ae-ec11-983e-002248ade910}",
-                        name: "Active Operations ISSO (Site)"
-                    }
-                    form.getControl("Operations").getViewSelector().setCurrentView(operationView);
+                (async function () {
+                    const isISSO = await isOwnedByISSO(ownerAttributeValue);
+                    if (isISSO) {
+                        let operationView =
+                        {
+                            entityType: "savedquery",
+                            id: "{4361bdce-d4ae-ec11-983e-002248ade910}",
+                            name: "Active Operations"
+                        }
+                        form.getControl("Operations").getViewSelector().setCurrentView(operationView);
 
-                    form.getControl("ts_siteriskrating").setVisible(false);
-                }
+                        form.getControl("ts_siteriskrating").setVisible(false);
+                    }
+                })();
             }
 
             //If owner is Aviation Security
             if (ownerAttributeValue != null) {
-                if (ownerAttributeValue[0].name && ownerAttributeValue[0].name.toLowerCase().includes("aviation security".toLowerCase())) {
-                    form.ui.tabs.get("tab_Risk").setVisible(true);
-                    form.getControl("ts_accountableteam").setVisible(true);
-                    form.getAttribute("ts_accountableteam").setRequiredLevel("required");
-                }
-                else {
-                    form.ui.tabs.get("tab_Risk").setVisible(false);
-                }
+                (async function () {
+                    const isAvSec = await isOwnedByAvSec(ownerAttributeValue);
+                    if (isAvSec) {
+                        form.ui.tabs.get("tab_Risk").setVisible(true);
+                        form.getControl("ts_accountableteam").setVisible(true);
+                        form.getAttribute("ts_accountableteam").setRequiredLevel("required");
+                    }
+                    else {
+                        form.ui.tabs.get("tab_Risk").setVisible(false);
+                    }
+                })();
             }
         }
 
@@ -285,17 +291,6 @@ namespace ROM.FunctionalLocation {
         riskScoreVisibility(form);
     }
 
-    export function userHasRole(rolesName) {
-        var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
-        var hasRole = false;
-        var roles = rolesName.split("|");
-        roles.forEach(function (roleItem) {
-            userRoles.forEach(function (userRoleItem) {
-                if (userRoleItem.name.toLowerCase() == roleItem.toLowerCase()) hasRole = true;
-            });
-        });
-        return hasRole;
-    }
 
     export function onOwnerChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_functionallocation.Main.Information>eContext.getFormContext();
@@ -305,13 +300,16 @@ namespace ROM.FunctionalLocation {
 
         // If owner is Aviation Security, make the ts_accountableteam field required and visible
         if (ownerAttributeValue != null) {
-            if (ownerAttributeValue[0].name && ownerAttributeValue[0].name.toLowerCase().includes("aviation security".toLowerCase())) {
-                form.getControl("ts_accountableteam").setVisible(true);
-                form.getAttribute("ts_accountableteam").setRequiredLevel("required");
-            } else {
-                form.getControl("ts_accountableteam").setVisible(false);
-                form.getAttribute("ts_accountableteam").setRequiredLevel("none");
-            }
+            (async function () {
+                const isAvSec = await isOwnedByAvSec(ownerAttributeValue);
+                if (isAvSec) {
+                    form.getControl("ts_accountableteam").setVisible(true);
+                    form.getAttribute("ts_accountableteam").setRequiredLevel("required");
+                } else {
+                    form.getControl("ts_accountableteam").setVisible(false);
+                    form.getAttribute("ts_accountableteam").setRequiredLevel("none");
+                }
+            })();
         }
         else {
             // If owner is null, hide and unrequire the ts_accountableteam field

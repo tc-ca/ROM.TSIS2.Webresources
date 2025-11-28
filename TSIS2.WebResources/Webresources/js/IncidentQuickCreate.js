@@ -29,6 +29,12 @@ var ROM;
                     currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
                     Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
                         var team;
+                        // TODO: Need to verify which Aviation Security team we should use for team name lookup.
+                        // There are multiple teams with similar names:
+                        //   - "Aviation Security" (hardcoded name used here) - in "Aviation Security Directorate - Domestic" business unit (e2e3910d-a41f-ec11-b6e6-0022483cb5c7)
+                        //   - "Aviation Security Directorate - Domestic" - in "Aviation Security Directorate - Domestic" business unit (8444831b-bead-eb11-8236-000d3ae8b866)
+                        //   - "Aviation Security Directorate" - in "Aviation Security Directorate" business unit (3b8513c3-b426-ec11-b6e6-000d3af4f86f)
+                        // We need to determine which team name is correct for this use case.
                         if (businessunit.entities[0].name.startsWith('Aviation')) {
                             team = {
                                 "name": "Aviation Security",
