@@ -1023,15 +1023,49 @@ function createWorkOrderWorkspaceFromWorkOrder(formContext, currentWorkOrderId, 
   );
 }
 function disableEditButtonOnWorkOrder(primaryControl) {
-  // Disable Edit button on Work Order if the Work Order is not "In Progress" or "New"
-  var attr = primaryControl && primaryControl.getAttribute
-    ? primaryControl.getAttribute("msdyn_systemstatus")
-    : null;
-  var status = attr ? attr.getValue() : null;
-  if (status === 690970000 || status === 741130001) {
-    return true; // Enable Edit button
-  }
-  else {
-    return false; // Disable Edit button
-  }
+    // Disable Edit button on Work Order if the Work Order is not "In Progress" or "New"
+    var attr = primaryControl && primaryControl.getAttribute
+        ? primaryControl.getAttribute("msdyn_systemstatus")
+        : null;
+    var status = attr ? attr.getValue() : null;
+    if (status === 690970000 || status === 741130001) {
+        return true; // Enable Edit button
+    }
+    else {
+        return false; // Disable Edit button
+    }
+}
+
+/**
+ * Enables the "Edit Work Order" button when the current user is
+ * either the owner of the Work Order or is part of an access team
+ * evaluated elsewhere in ROM.WorkOrder.isEditWorkOrderEnabled.
+ *
+ * @param {any} primaryControl 
+ *        The form context passed automatically by the ribbon command.
+ *
+ * @returns {boolean}
+ *          - true: if the current user is the Work Order owner  
+ *          - true: if ROM.WorkOrder.isEditWorkOrderEnabled is true  
+ *          - false: otherwise
+ *
+ * @description
+ * This function is used as a Ribbon Enable Rule.  
+ * It first checks if the logged-in user owns the Work Order record.  
+ * If not, it falls back to a shared flag that indicates whether the
+ * user has access through an Access Team (e.g., Additional Inspectors).
+ */
+
+function enableEditWorkOrderButtonForOwnerOrInspector(primaryControl) {
+    const formContext = primaryControl;
+    const currentUserId = Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, "");
+
+    const owner = formContext.getAttribute("ownerid")?.getValue();
+    if (owner) {
+        if (owner[0].id.replace(/[{}]/g, "").toLowerCase() === currentUserId.toLowerCase()) {
+            return validUser = true;
+        }
+    }
+
+    return ROM.WorkOrder.isEditWorkOrderEnabled;
 }

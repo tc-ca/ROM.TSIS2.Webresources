@@ -7,6 +7,7 @@ namespace ROM.WorkOrder {
     var scheduledQuarterAttributeValueChanged = false;
     var isROM20Form = false;
     const UNPLANNED_CATEGORY_ID = "47f438c7-c104-eb11-a813-000d3af3a7a7";
+    export var isEditWorkOrderEnabled: boolean = false;
 
     // EVENTS
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -407,6 +408,8 @@ namespace ROM.WorkOrder {
         RemoveOptionCancel(eContext);
 
         showRationaleField(form, UNPLANNED_CATEGORY_ID);
+
+        checkUserIsInWorkOrderAccessTeam(form);
     }
     function restrictEditRightReportDetails(executionContext, subgridAdditionalInspectors) {
         //Process Additional Inspectors Subgrid
@@ -2704,5 +2707,68 @@ namespace ROM.WorkOrder {
                 justificationAttribute.setValue(null);
             }
         }
+    }
+
+    /**
+     * Checks whether the current user is part of the Work Order Access Team
+     * based on a specific Team Template associated with the Work Order.
+     *
+     * @param {Form.msdyn_workorder.Main.ROMOversightActivity} form
+     *        The form context from the Work Order form.
+     *
+     * @description
+     * This function runs a FetchXML query to retrieve users who:
+     * - belong to a team created from a specific Team Template
+     * - AND have access to the current Work Order (via principalobjectaccess)
+     *
+     * If the logged-in user's ID is found, the global flag
+     * `isEditWorkOrderEnabled` is set to true.
+     */
+    function checkUserIsInWorkOrderAccessTeam(form: Form.msdyn_workorder.Main.ROMOversightActivity): void{
+
+        const currentWorkOrderRecordId = form.data.entity.getId().replace(/({|})/g, '');
+        const currentUserId = Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, "").toLocaleLowerCase();
+
+        // Hardcoded Team Template ID
+        const teamTemplateId = "bddf1d45-706d-ec11-8f8e-0022483da5aa";
+
+        // FetchXML to get existing users in the Additional Inspectors subgrid 
+        const fetchXML = `
+                        <fetch>
+                          <entity name="systemuser">
+                            <attribute name="systemuserid"/>
+                            <attribute name="fullname"/>
+                            <link-entity name="teammembership" from="systemuserid" to="systemuserid" link-type="inner">
+                              <link-entity name="team" from="teamid" to="teamid" link-type="inner">
+                                <link-entity name="teamtemplate" from="teamtemplateid" to="teamtemplateid" link-type="inner">
+                                  <filter>
+                                    <condition attribute="teamtemplateid" operator="eq" value="${teamTemplateId}" />
+                                  </filter>
+                                </link-entity>
+                                <link-entity name="principalobjectaccess" from="principalid" to="teamid" link-type="inner">
+                                  <link-entity name="msdyn_workorder" from="msdyn_workorderid" to="objectid" link-type="inner">
+                                    <filter>
+                                      <condition attribute="msdyn_workorderid" operator="eq" value="${currentWorkOrderRecordId}" />
+                                    </filter>
+                                  </link-entity>
+                                </link-entity>
+                              </link-entity>
+                            </link-entity>sys
+                          </entity>
+                        </fetch>`;
+
+        Xrm.WebApi.retrieveMultipleRecords("systemuser", "?fetchXml=" + encodeURIComponent(fetchXML))
+            .then(result => {
+                for (let i = 0; i < result.entities.length; i++) {
+                    if (currentUserId === result.entities[i].systemuserid.replace(/({|})/g, '').toLowerCase()) {
+                        isEditWorkOrderEnabled = true;
+                        break;
+                    }
+                   
+                }
+            })
+            .catch(error => {
+                console.error("Error retrieving subgrid users: ", error.message);
+            });
     }
 }
