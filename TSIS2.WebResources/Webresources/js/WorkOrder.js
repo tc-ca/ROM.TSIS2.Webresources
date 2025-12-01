@@ -47,6 +47,7 @@ var ROM;
         var scheduledQuarterAttributeValueChanged = false;
         var isROM20Form = false;
         var UNPLANNED_CATEGORY_ID = "47f438c7-c104-eb11-a813-000d3af3a7a7";
+        WorkOrder.isEditWorkOrderEnabled = false;
         // EVENTS
         function onLoad(eContext) {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j;
@@ -398,6 +399,7 @@ var ROM;
             unlockRecordLogFieldsIfUserIsSystemAdmin(form);
             RemoveOptionCancel(eContext);
             showRationaleField(form, UNPLANNED_CATEGORY_ID);
+            checkUserIsInWorkOrderAccessTeam(form);
         }
         WorkOrder.onLoad = onLoad;
         function restrictEditRightReportDetails(executionContext, subgridAdditionalInspectors) {
@@ -2510,6 +2512,41 @@ var ROM;
                     justificationAttribute.setValue(null);
                 }
             }
+        }
+        /**
+         * Checks whether the current user is part of the Work Order Access Team
+         * based on a specific Team Template associated with the Work Order.
+         *
+         * @param {Form.msdyn_workorder.Main.ROMOversightActivity} form
+         *        The form context from the Work Order form.
+         *
+         * @description
+         * This function runs a FetchXML query to retrieve users who:
+         * - belong to a team created from a specific Team Template
+         * - AND have access to the current Work Order (via principalobjectaccess)
+         *
+         * If the logged-in user's ID is found, the global flag
+         * `isEditWorkOrderEnabled` is set to true.
+         */
+        function checkUserIsInWorkOrderAccessTeam(form) {
+            var currentWorkOrderRecordId = form.data.entity.getId().replace(/({|})/g, '');
+            var currentUserId = Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, "").toLocaleLowerCase();
+            // Hardcoded Team Template ID
+            var teamTemplateId = "bddf1d45-706d-ec11-8f8e-0022483da5aa";
+            // FetchXML to get existing users in the Additional Inspectors subgrid 
+            var fetchXML = "\n                        <fetch>\n                          <entity name=\"systemuser\">\n                            <attribute name=\"systemuserid\"/>\n                            <attribute name=\"fullname\"/>\n                            <link-entity name=\"teammembership\" from=\"systemuserid\" to=\"systemuserid\" link-type=\"inner\">\n                              <link-entity name=\"team\" from=\"teamid\" to=\"teamid\" link-type=\"inner\">\n                                <link-entity name=\"teamtemplate\" from=\"teamtemplateid\" to=\"teamtemplateid\" link-type=\"inner\">\n                                  <filter>\n                                    <condition attribute=\"teamtemplateid\" operator=\"eq\" value=\"".concat(teamTemplateId, "\" />\n                                  </filter>\n                                </link-entity>\n                                <link-entity name=\"principalobjectaccess\" from=\"principalid\" to=\"teamid\" link-type=\"inner\">\n                                  <link-entity name=\"msdyn_workorder\" from=\"msdyn_workorderid\" to=\"objectid\" link-type=\"inner\">\n                                    <filter>\n                                      <condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"").concat(currentWorkOrderRecordId, "\" />\n                                    </filter>\n                                  </link-entity>\n                                </link-entity>\n                              </link-entity>\n                            </link-entity>sys\n                          </entity>\n                        </fetch>");
+            Xrm.WebApi.retrieveMultipleRecords("systemuser", "?fetchXml=" + encodeURIComponent(fetchXML))
+                .then(function (result) {
+                for (var i = 0; i < result.entities.length; i++) {
+                    if (currentUserId === result.entities[i].systemuserid.replace(/({|})/g, '').toLowerCase()) {
+                        WorkOrder.isEditWorkOrderEnabled = true;
+                        break;
+                    }
+                }
+            })
+                .catch(function (error) {
+                console.error("Error retrieving subgrid users: ", error.message);
+            });
         }
     })(WorkOrder = ROM.WorkOrder || (ROM.WorkOrder = {}));
 })(ROM || (ROM = {}));
