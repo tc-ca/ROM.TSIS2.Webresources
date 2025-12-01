@@ -52,6 +52,36 @@ var ROM;
             var _a, _b, _c, _d, _e, _f, _g, _h, _j;
             var form = eContext.getFormContext();
             var state = (_a = form.getAttribute("statecode").getValue()) !== null && _a !== void 0 ? _a : null;
+            // Check flag and navigate to WO if needed
+            var flagAttr = form.getAttribute("ts_openworkorderoncreation");
+            if (flagAttr && flagAttr.getValue() === true && form.ui.getFormType() === 2) {
+                // Clear the flag immediately to prevent re-triggering
+                flagAttr.setValue(false);
+                flagAttr.setSubmitMode("always");
+                // Save the form to confirm the flag change
+                form.data.save().then(function success() {
+                    // Now check if the related work order was created by the plugin
+                    var workOrderLookup = form.getAttribute("ts_workorder");
+                    if (workOrderLookup) {
+                        var workOrderValue = workOrderLookup.getValue();
+                        if (workOrderValue && workOrderValue.length > 0) {
+                            var woId = workOrderValue[0].id.replace(/[{}]/g, "");
+                            // Navigate to the related work order
+                            Xrm.Navigation.openForm({
+                                entityName: "msdyn_workorder",
+                                entityId: woId,
+                                openInNewWindow: false
+                            }).then(function success() {
+                                console.log("Successfully navigated to related work order");
+                            }, function error(err) {
+                                console.error("Error opening work order:", err);
+                            });
+                        }
+                    }
+                }, function error(err) {
+                    console.error("Error saving flag change:", err);
+                });
+            }
             var regionAttribute = form.getAttribute("ts_region");
             var regionAttributeValue = regionAttribute.getValue();
             var ownerControl = form.getControl("header_ownerid");
@@ -430,7 +460,7 @@ var ROM;
             //Get Security Roles of the current User
             var securityRoles = userSettings.roles;
             if (!CheckRolesBeforeCancel(securityRoles)) {
-                formContext.getControl("ts_recordstatus").removeOption(690970005);
+                formContext.getControl("header_ts_recordstatus").removeOption(690970005);
             }
         }
         function CheckRolesBeforeCancel(securityRoles) {
