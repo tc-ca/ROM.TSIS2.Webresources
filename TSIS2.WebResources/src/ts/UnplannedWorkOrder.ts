@@ -12,6 +12,45 @@ namespace ROM.UnplannedWorkOrder {
         const form = <Form.ts_unplannedworkorder.Main.Information>eContext.getFormContext();
         const state = form.getAttribute("statecode").getValue() ?? null;
 
+        // Check flag and navigate to WO if needed
+        const flagAttr = form.getAttribute("ts_openworkorderoncreation");
+        if (flagAttr && flagAttr.getValue() === true && form.ui.getFormType() === 2) {
+            // Clear the flag immediately to prevent re-triggering
+            flagAttr.setValue(false);
+            flagAttr.setSubmitMode("always");
+
+            // Save the form to confirm the flag change
+            form.data.save().then(
+                function success() {
+                    // Now check if the related work order was created by the plugin
+                    const workOrderLookup = form.getAttribute("ts_workorder");
+                    if (workOrderLookup) {
+                        const workOrderValue = workOrderLookup.getValue();
+                        if (workOrderValue && workOrderValue.length > 0) {
+                            const woId = workOrderValue[0].id.replace(/[{}]/g, "");
+
+                            // Navigate to the related work order
+                            Xrm.Navigation.openForm({
+                                entityName: "msdyn_workorder",
+                                entityId: woId,
+                                openInNewWindow: false
+                            }).then(
+                                function success() {
+                                    console.log("Successfully navigated to related work order");
+                                },
+                                function error(err) {
+                                    console.error("Error opening work order:", err);
+                                }
+                            );
+                        }
+                    }
+                },
+                function error(err) {
+                    console.error("Error saving flag change:", err);
+                }
+            );
+        }
+
         const regionAttribute = form.getAttribute("ts_region");
         const regionAttributeValue = regionAttribute.getValue();
 
