@@ -19,6 +19,7 @@ interface ts_unplannedworkorder_Base extends WebEntity {
   ts_details?: string | null;
   ts_instructions?: string | null;
   ts_name?: string | null;
+  ts_openworkorderoncreation?: boolean | null;
   ts_overtime?: number | null;
   ts_overtimerequired?: boolean | null;
   ts_plannedcost?: number | null;
@@ -134,6 +135,7 @@ interface ts_unplannedworkorder_Select {
   ts_functionallocation_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_functionallocation_guid: string | null }, { ts_functionallocation_formatted?: string }>;
   ts_instructions: WebAttribute<ts_unplannedworkorder_Select, { ts_instructions: string | null }, {  }>;
   ts_name: WebAttribute<ts_unplannedworkorder_Select, { ts_name: string | null }, {  }>;
+  ts_openworkorderoncreation: WebAttribute<ts_unplannedworkorder_Select, { ts_openworkorderoncreation: boolean | null }, {  }>;
   ts_operation_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_operation_guid: string | null }, { ts_operation_formatted?: string }>;
   ts_operationtype_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_operationtype_guid: string | null }, { ts_operationtype_formatted?: string }>;
   ts_overtime: WebAttribute<ts_unplannedworkorder_Select, { ts_overtime: number | null }, {  }>;
@@ -218,6 +220,7 @@ interface ts_unplannedworkorder_Filter {
   ts_functionallocation_guid: XQW.Guid;
   ts_instructions: string;
   ts_name: string;
+  ts_openworkorderoncreation: boolean;
   ts_operation_guid: XQW.Guid;
   ts_operationtype_guid: XQW.Guid;
   ts_overtime: any;

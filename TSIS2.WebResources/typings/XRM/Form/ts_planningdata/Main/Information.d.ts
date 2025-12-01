@@ -5,6 +5,7 @@ declare namespace Form.ts_planningdata.Main {
     interface Attributes extends Xrm.AttributeCollectionBase {
       get(name: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
       get(name: "ts_activitytype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
+      get(name: "ts_closedondatemostrecentwo"): Xrm.DateAttribute;
       get(name: "ts_completedq1"): Xrm.NumberAttribute;
       get(name: "ts_completedq2"): Xrm.NumberAttribute;
       get(name: "ts_completedq3"): Xrm.NumberAttribute;
@@ -49,6 +50,7 @@ declare namespace Form.ts_planningdata.Main {
     interface Controls extends Xrm.ControlCollectionBase {
       get(name: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
       get(name: "ts_activitytype"): Xrm.LookupControl<"msdyn_incidenttype">;
+      get(name: "ts_closedondatemostrecentwo"): Xrm.DateControl;
       get(name: "ts_completedq1"): Xrm.NumberControl;
       get(name: "ts_completedq2"): Xrm.NumberControl;
       get(name: "ts_completedq3"): Xrm.NumberControl;
@@ -101,6 +103,7 @@ declare namespace Form.ts_planningdata.Main {
   interface Information extends Xrm.PageBase<Information.Attributes,Information.Tabs,Information.Controls> {
     getAttribute(attributeName: "ownerid"): Xrm.LookupAttribute<"systemuser" | "team">;
     getAttribute(attributeName: "ts_activitytype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
+    getAttribute(attributeName: "ts_closedondatemostrecentwo"): Xrm.DateAttribute;
     getAttribute(attributeName: "ts_completedq1"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_completedq2"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_completedq3"): Xrm.NumberAttribute;
@@ -140,6 +143,7 @@ declare namespace Form.ts_planningdata.Main {
     getAttribute(attributeName: string): undefined;
     getControl(controlName: "header_ownerid"): Xrm.LookupControl<"systemuser" | "team">;
     getControl(controlName: "ts_activitytype"): Xrm.LookupControl<"msdyn_incidenttype">;
+    getControl(controlName: "ts_closedondatemostrecentwo"): Xrm.DateControl;
     getControl(controlName: "ts_completedq1"): Xrm.NumberControl;
     getControl(controlName: "ts_completedq2"): Xrm.NumberControl;
     getControl(controlName: "ts_completedq3"): Xrm.NumberControl;

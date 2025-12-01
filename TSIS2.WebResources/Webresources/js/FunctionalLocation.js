@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -257,12 +257,12 @@ var ROM;
                     statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
                     if (statusStartDateValue != null) {
                         if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                            form.getAttribute("ts_sitestatus").setValue(717750001 /* ts_sitestatus.NonOperational */);
+                            form.getAttribute("ts_sitestatus").setValue(717750001 /* NonOperational */);
                         }
                     }
                     if (statusEndDateValue != null) {
                         if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                            form.getAttribute("ts_sitestatus").setValue(717750000 /* ts_sitestatus.Operational */);
+                            form.getAttribute("ts_sitestatus").setValue(717750000 /* Operational */);
                         }
                     }
                     return [2 /*return*/];
@@ -406,7 +406,7 @@ var ROM;
                     switch (_a.label) {
                         case 0:
                             _a.trys.push([0, 2, , 3]);
-                            query = "?$filter=schemaname eq '".concat(name, "'&$select=environmentvariabledefinitionid&$expand=environmentvariabledefinition_environmentvariablevalue($select=value)");
+                            query = "?$filter=schemaname eq '" + name + "'&$select=environmentvariabledefinitionid&$expand=environmentvariabledefinition_environmentvariablevalue($select=value)";
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("environmentvariabledefinition", query)];
                         case 1:
                             results = _a.sent();
@@ -547,7 +547,7 @@ var ROM;
         //Shows the Risk Score field only when the Class is 2 or 3
         function riskScoreVisibility(form) {
             var siteClass = form.getAttribute("ts_class").getValue();
-            if (siteClass == 717750002 /* ts_msdyn_functionallocation_ts_class._2 */ || siteClass == 717750003 /* ts_msdyn_functionallocation_ts_class._3 */) {
+            if (siteClass == 717750002 /* _2 */ || siteClass == 717750003 /* _3 */) {
                 form.getControl("ts_riskscore").setVisible(true);
                 form.getControl("ts_lpdtounitedstates").setVisible(true);
             }

@@ -756,12 +756,16 @@ function isTeamOrPlanContext(primaryControl) {
 }
 
 function openUnplannedWorkOrderForm() {
-  // Open Unplanned Work Order form
-  Xrm.Navigation.openForm({
-    entityName: "ts_unplannedworkorder",
-    useQuickCreateForm: false,
-    formId: "f3f01c33-c5b2-4835-a141-db032f3869a6",
-  });
+    // Open Unplanned WO form, from ribbon button, and set flag to true to open the related WO on creation of unplanned WO
+    Xrm.Navigation.navigateTo({
+        pageType: "entityrecord",
+        entityName: "ts_unplannedworkorder",
+        data: {
+            ts_openworkorderoncreation: true
+        }
+    }, {
+        target: 1
+    });
 }
 function editUnplannedWorkOrder(primaryControl) {
   const formContext = primaryControl;
