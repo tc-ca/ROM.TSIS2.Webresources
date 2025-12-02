@@ -4,6 +4,7 @@ declare const TEAM_SCHEMA_NAMES: {
     AVIATION_SECURITY_DOMESTIC: string;
     AVIATION_SECURITY_INTERNATIONAL: string;
     ISSO_TEAM: string;
+    RAIL_SAFETY: string;
 };
 
 declare const BU_SCHEMA_NAMES: {
@@ -54,3 +55,7 @@ declare function isUserInISSOTeam(userId?: string): Promise<boolean>;
 declare function getAvSecBUName(): Promise<string>;
 declare function getISSOBUName(): Promise<string>;
 declare function toggleDocumentCenter(executionContext: Xrm.ExecutionContext<any, any>, tabName: string, sectionName: string): Promise<void>;
+declare function getTeamNameById(teamId: string): Promise<string | null>;
+declare function isCurrentUserInTeamByEnvVar(teamSchemaName: string): Promise<boolean>;
+declare function setOwnerToTeamAndSave(formContext: any, teamSchemaName: string): Promise<void>;
+declare function applyTabVisibilityForTeam(formContext: any, teamSchemaName: string, visibleTabs: string[]): Promise<void>;

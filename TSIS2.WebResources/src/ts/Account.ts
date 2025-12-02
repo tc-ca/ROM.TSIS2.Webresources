@@ -1,7 +1,9 @@
 namespace ROM.Account {
+    // Rail Safety tab visibility configuration for Account (Stakeholder) form
+    const RAIL_SAFETY_VISIBLE_TABS = ["SUMMARY_TAB", "DETAILS_TAB", "tab_contacts", "Work Orders"];
+
     export async function onLoad(eContext: Xrm.ExecutionContext<any, any>) {
         const form = <Form.account.Main.ROMInformation>eContext.getFormContext();
-
         const addressControl = form.getControl("address1_composite_compositionLinkControl_address1_country");
 
         if (addressControl != null && addressControl != undefined) {
@@ -13,7 +15,6 @@ namespace ROM.Account {
             form.getControl("ts_statusdescription").setDisabled(false);
             form.getAttribute("ts_statusdescription").setRequiredLevel("required");
         }
-
 
         //If owner is ISSO, replace operations view
         const ownerAttribute = form.getAttribute("ownerid")
@@ -33,6 +34,23 @@ namespace ROM.Account {
             }
         }
 
+        // Rail Safety: Detect if record is owned by Rail Safety Team and configure tab visibility
+        try {
+            const ownerVal = ownerAttribute?.getValue();
+            if (ownerVal && ownerVal[0] && ownerVal[0].entityType === "team") {
+                const isRailSafetyOwned = await isOwnedBy(ownerVal[0].id, [TEAM_SCHEMA_NAMES.RAIL_SAFETY]);
+                if (isRailSafetyOwned) {
+                    const teamName = await getTeamNameById(ownerVal[0].id);
+                    console.log(`This record belongs to ${teamName}`);
+                }
+            }
+
+            // Show only specific tabs for Rail Safety team members
+            await applyTabVisibilityForTeam(form, TEAM_SCHEMA_NAMES.RAIL_SAFETY, RAIL_SAFETY_VISIBLE_TABS);
+        } catch (e) {
+            console.error("Rail Safety tab/owner check error:", e);
+        }
+
         //Lock for non Admin users
         if (!userHasRole("System Administrator|ROM - Business Admin")) {
             form.getControl("name").setDisabled(true);
@@ -48,6 +66,8 @@ namespace ROM.Account {
         var isAvSec = await isOwnedByAvSec(ownerValue);
         form.ui.tabs.get("tab_Risk").setVisible(isAvSec);
 
+        // Set owner to Rail Safety team if user is a member (on load, then save)
+        await setOwnerToTeamAndSave(form, TEAM_SCHEMA_NAMES.RAIL_SAFETY);
     }
 
     export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
@@ -65,6 +85,7 @@ namespace ROM.Account {
             }
         }
     }
+
     export function regionOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.account.Main.ROMInformation>eContext.getFormContext();
 
@@ -169,5 +190,4 @@ namespace ROM.Account {
         }
 
     }
-
 }
