@@ -3,6 +3,7 @@ const TEAM_SCHEMA_NAMES = {
   AVIATION_SECURITY_DOMESTIC: "ts_AviationSecurityDirectorateDomesticTeamGUID",
   AVIATION_SECURITY_INTERNATIONAL: "ts_AviationSecurityInternationalTeamGUID",
   ISSO_TEAM: "ts_IntermodalSurfaceSecurityOversightISSOTeamGUID",
+  RAIL_SAFETY: "ts_RailSafetyTeamGUID",
 };
 
 // Business Unit Schema Name Constants
@@ -707,5 +708,107 @@ async function toggleDocumentCenter(executionContext, tabName, sectionName) {
     console.log("Don't turn off the Document Centre");
   } else {
     console.log("Variable not found or invalid");
+  }
+}
+
+/**
+ * Get team name by team ID
+ * @param {string} teamId - The team GUID
+ * @returns {Promise<string|null>} The team name or null if not found
+ */
+async function getTeamNameById(teamId) {
+  try {
+    var cleanTeamId = teamId.replace(/[{}]/g, "").toLowerCase();
+    var result = await Xrm.WebApi.retrieveRecord("team", cleanTeamId, "?$select=name");
+    return result.name;
+  } catch (error) {
+    console.error("Error retrieving team name:", error);
+    return null;
+  }
+}
+
+/**
+ * Check if current user is a member of a team (by env var schema name)
+ * @param {string} teamSchemaName - The environment variable schema name for the team GUID
+ * @returns {Promise<boolean>} True if user is a member
+ */
+async function isCurrentUserInTeamByEnvVar(teamSchemaName) {
+  try {
+    var teamGuid = await getEnvironmentVariableValue(teamSchemaName);
+    if (!teamGuid) return false;
+
+    var userId = Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, "").toLowerCase();
+    return await isUserInTeam(userId, teamGuid);
+  } catch (error) {
+    console.error("Error checking current user team membership:", error);
+    return false;
+  }
+}
+
+/**
+ * Set owner to a team and save the form (typically called on load)
+ * @param {object} formContext - The form context
+ * @param {string} teamSchemaName - The environment variable schema name for the team GUID
+ * @returns {Promise<void>}
+ */
+async function setOwnerToTeamAndSave(formContext, teamSchemaName) {
+  try {
+    var isMember = await isCurrentUserInTeamByEnvVar(teamSchemaName);
+    if (!isMember) return;
+
+    var teamGuid = await getEnvironmentVariableValue(teamSchemaName);
+    if (!teamGuid) return;
+
+    var ownerAttribute = formContext.getAttribute("ownerid");
+    var currentOwner = ownerAttribute.getValue();
+
+    // Skip if already owned by this team
+    if (currentOwner && currentOwner[0] && currentOwner[0].entityType === "team") {
+      var currentOwnerId = currentOwner[0].id.replace(/[{}]/g, "").toLowerCase();
+      if (currentOwnerId === teamGuid) {
+        return;
+      }
+    }
+
+    // Set owner to team
+    var teamName = (await getTeamNameById(teamGuid)) || "";
+    ownerAttribute.setValue([
+      {
+        id: teamGuid,
+        entityType: "team",
+        name: teamName,
+      },
+    ]);
+
+    // Save the form with the new owner
+    try {
+      await formContext.data.save();
+    } catch (saveError) {
+      console.error("Error saving team owner:", saveError);
+    }
+  } catch (error) {
+    console.error("Error setting team ownership:", error);
+  }
+}
+
+/**
+ * Apply tab visibility based on team membership
+ * @param {object} formContext - The form context
+ * @param {string} teamSchemaName - The environment variable schema name for the team GUID
+ * @param {string[]} visibleTabs - Array of tab names to show (all others will be hidden)
+ * @returns {Promise<void>}
+ */
+async function applyTabVisibilityForTeam(formContext, teamSchemaName, visibleTabs) {
+  try {
+    var isMember = await isCurrentUserInTeamByEnvVar(teamSchemaName);
+    if (!isMember) return;
+
+    var tabs = formContext.ui.tabs.get();
+    tabs.forEach(function (tab) {
+      var tabName = tab.getName();
+      tab.setVisible(visibleTabs.indexOf(tabName) > -1);
+    });
+  } catch (error) {
+    console.error("Error applying tab visibility for team:", error);
   }
 }

@@ -420,6 +420,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\ts\CauseFinding.ts" />
+    <TypeScriptCompile Include="src\ts\Common.d.ts" />
     <TypeScriptCompile Include="src\ts\DutyInspectorSchedule.ts" />
     <TypeScriptCompile Include="src\ts\EntityRisk.ts" />
     <TypeScriptCompile Include="src\ts\EntityRiskFrequency.ts" />
