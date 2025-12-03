@@ -98,15 +98,44 @@ var ROM;
                             console.error("Rail Safety tab/owner check error:", e_1);
                             return [3 /*break*/, 8];
                         case 8:
-                            //Lock for non Admin users
-                            if (!userHasRole("System Administrator|ROM - Business Admin")) {
-                                form.getControl("name").setDisabled(true);
-                                form.getControl("ovs_legalname").setDisabled(true);
-                            }
-                            else {
-                                form.getControl("ovs_accountnameenglish").setVisible(true);
-                                form.getControl("ovs_accountnamefrench").setVisible(true);
-                            }
+                            //Lock for non Admin users, unless the current user is a member of the ROM Rail Safety Administrator team
+                            (function () {
+                                return __awaiter(this, void 0, void 0, function () {
+                                    var isRailSafetyAdmin, err_1;
+                                    return __generator(this, function (_a) {
+                                        switch (_a.label) {
+                                            case 0:
+                                                _a.trys.push([0, 2, , 3]);
+                                                return [4 /*yield*/, isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.ROM_RAIL_SAFETY_ADMINISTRATOR)];
+                                            case 1:
+                                                isRailSafetyAdmin = _a.sent();
+                                                if (!userHasRole("System Administrator|ROM - Business Admin") && !isRailSafetyAdmin) {
+                                                    form.getControl("name").setDisabled(true);
+                                                    form.getControl("ovs_legalname").setDisabled(true);
+                                                }
+                                                else {
+                                                    form.getControl("ovs_accountnameenglish").setVisible(true);
+                                                    form.getControl("ovs_accountnamefrench").setVisible(true);
+                                                }
+                                                return [3 /*break*/, 3];
+                                            case 2:
+                                                err_1 = _a.sent();
+                                                console.error("Error checking Rail Safety admin team membership:", err_1);
+                                                // Fallback to original behavior if check fails
+                                                if (!userHasRole("System Administrator|ROM - Business Admin")) {
+                                                    form.getControl("name").setDisabled(true);
+                                                    form.getControl("ovs_legalname").setDisabled(true);
+                                                }
+                                                else {
+                                                    form.getControl("ovs_accountnameenglish").setVisible(true);
+                                                    form.getControl("ovs_accountnamefrench").setVisible(true);
+                                                }
+                                                return [3 /*break*/, 3];
+                                            case 3: return [2 /*return*/];
+                                        }
+                                    });
+                                });
+                            })();
                             ownerValue = form.getAttribute("ownerid").getValue();
                             return [4 /*yield*/, isOwnedByAvSec(ownerValue)];
                         case 9:

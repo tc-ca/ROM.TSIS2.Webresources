@@ -5,6 +5,7 @@ declare const TEAM_SCHEMA_NAMES: {
     AVIATION_SECURITY_INTERNATIONAL: string;
     ISSO_TEAM: string;
     RAIL_SAFETY: string;
+    ROM_RAIL_SAFETY_ADMINISTRATOR: string;
 };
 
 declare const BU_SCHEMA_NAMES: {
@@ -36,6 +37,7 @@ declare function onLookupClick(executionContext: Xrm.ExecutionContext<any, any>)
 declare function setOwnerToUserBusinessUnit(formContext: Xrm.FormContext): void;
 declare function showFieldWarningMessageIfOwnerIsNotISSONorAvSec(formContext: Xrm.FormContext): Promise<boolean>;
 declare function isUserInTeam(userId: string, teamId: string): Promise<boolean>;
+declare function isUserInTeamByEnvVar(teamSchemaName: string): Promise<boolean>;
 declare function getEnvironmentVariableValue(schemaName: string): Promise<string | null>;
 declare function getOwnerIdFromRecord(record: any): string | null;
 declare function isOwnedBy(ownerValue: any, schemaNames: string[]): Promise<boolean>;
@@ -56,6 +58,5 @@ declare function getAvSecBUName(): Promise<string>;
 declare function getISSOBUName(): Promise<string>;
 declare function toggleDocumentCenter(executionContext: Xrm.ExecutionContext<any, any>, tabName: string, sectionName: string): Promise<void>;
 declare function getTeamNameById(teamId: string): Promise<string | null>;
-declare function isCurrentUserInTeamByEnvVar(teamSchemaName: string): Promise<boolean>;
 declare function setOwnerToTeamAndSave(formContext: any, teamSchemaName: string): Promise<void>;
 declare function applyTabVisibilityForTeam(formContext: any, teamSchemaName: string, visibleTabs: string[]): Promise<void>;
