@@ -4,6 +4,7 @@ const TEAM_SCHEMA_NAMES = {
   AVIATION_SECURITY_INTERNATIONAL: "ts_AviationSecurityInternationalTeamGUID",
   ISSO_TEAM: "ts_IntermodalSurfaceSecurityOversightISSOTeamGUID",
   RAIL_SAFETY: "ts_RailSafetyTeamGUID",
+  ROM_RAIL_SAFETY_ADMINISTRATOR: "ts_ROMRailSafetyAdministratorGUID",
 };
 
 // Business Unit Schema Name Constants
@@ -732,7 +733,7 @@ async function getTeamNameById(teamId) {
  * @param {string} teamSchemaName - The environment variable schema name for the team GUID
  * @returns {Promise<boolean>} True if user is a member
  */
-async function isCurrentUserInTeamByEnvVar(teamSchemaName) {
+async function isUserInTeamByEnvVar(teamSchemaName) {
   try {
     var teamGuid = await getEnvironmentVariableValue(teamSchemaName);
     if (!teamGuid) return false;

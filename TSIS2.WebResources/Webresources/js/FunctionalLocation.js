@@ -175,12 +175,49 @@ var ROM;
             setOwnerToTeamAndSave(form, TEAM_SCHEMA_NAMES.RAIL_SAFETY).catch(function (error) {
                 console.error("Error in setOwnerToTeamAndSave:", error);
             });
-            //Lock for non Admin users
-            if (!userHasRole("System Administrator|ROM - Business Admin")) {
-                form.getControl("msdyn_name").setDisabled(true);
-                form.getControl("ts_functionallocationnameenglish").setDisabled(true);
-                form.getControl("ts_functionallocationnamefrench").setDisabled(true);
-            }
+            // Lock for non-Admin users, unless the current user is a member of the Rail Safety team (env var)
+            (function () {
+                return __awaiter(this, void 0, void 0, function () {
+                    var currentUserId, railSafetyTeamGuid, isRailSafetyMember, _a, err_1;
+                    return __generator(this, function (_b) {
+                        switch (_b.label) {
+                            case 0:
+                                _b.trys.push([0, 5, , 6]);
+                                currentUserId = Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, "").toLowerCase();
+                                return [4 /*yield*/, getEnvironmentVariableValue("ts_ROMRailSafetyAdministratorGUID")];
+                            case 1:
+                                railSafetyTeamGuid = _b.sent();
+                                if (!railSafetyTeamGuid) return [3 /*break*/, 3];
+                                return [4 /*yield*/, isUserInTeam(currentUserId, railSafetyTeamGuid)];
+                            case 2:
+                                _a = _b.sent();
+                                return [3 /*break*/, 4];
+                            case 3:
+                                _a = false;
+                                _b.label = 4;
+                            case 4:
+                                isRailSafetyMember = _a;
+                                if (!userHasRole("System Administrator|ROM - Business Admin") && !isRailSafetyMember) {
+                                    form.getControl("msdyn_name").setDisabled(true);
+                                    form.getControl("ts_functionallocationnameenglish").setDisabled(true);
+                                    form.getControl("ts_functionallocationnamefrench").setDisabled(true);
+                                }
+                                return [3 /*break*/, 6];
+                            case 5:
+                                err_1 = _b.sent();
+                                console.error("Error checking Rail Safety team membership:", err_1);
+                                // Fallback: preserve previous behavior if team check fails
+                                if (!userHasRole("System Administrator|ROM - Business Admin")) {
+                                    form.getControl("msdyn_name").setDisabled(true);
+                                    form.getControl("ts_functionallocationnameenglish").setDisabled(true);
+                                    form.getControl("ts_functionallocationnamefrench").setDisabled(true);
+                                }
+                                return [3 /*break*/, 6];
+                            case 6: return [2 /*return*/];
+                        }
+                    });
+                });
+            })();
         }
         FunctionalLocation.onLoad = onLoad;
         function IATACodeOnChange(eContext) {
