@@ -450,6 +450,11 @@
                 "file": "js\\WorkOrderServiceTaskWorkspace.js",
                 "description": "Work Order Serice Task Workspace for Work Order Service Task table"
             },
+            {
+                "uniquename": "ts_/js/UnplannedWorkOrder.js",
+                "file": "js\\UnplannedWorkOrder.js",
+                "description": "Work Order Workspace for Work Order table"
+            },
             /* Styles */
             {
                 "uniquename": "ovs_/css/bootstrap.min.css",
@@ -619,19 +624,19 @@
                 "description": "Attach Document Centre File to Email button"
             },
             {
-              "uniquename": "ts_/html/EmailAttachFilePopUp.html",
-              "file": "html\\EmailAttachFilePopUp.html",
-              "description": "Popup for Email Attach File"
+                "uniquename": "ts_/html/EmailAttachFilePopUp.html",
+                "file": "html\\EmailAttachFilePopUp.html",
+                "description": "Popup for Email Attach File"
             },
             {
-              "uniquename": "ts_/html/NewDocumentCenterNotice.html",
-              "file": "html\\NewDocumentCenterNotice.html",
-              "description": "Display the message: Click the 'Documents' button at the top to add files via SharePoint."
+                "uniquename": "ts_/html/NewDocumentCenterNotice.html",
+                "file": "html\\NewDocumentCenterNotice.html",
+                "description": "Display the message: Click the 'Documents' button at the top to add files via SharePoint."
             },
             {
-              "uniquename": "ts_/html/OperationActivityRiskScoresRecalculateRiskRating.html",
-              "file": "html\\OperationActivityRiskScoresRecalculateRiskRating.html",
-              "description": "The form button to Recalculate the Risk Rating"
+                "uniquename": "ts_/html/OperationActivityRiskScoresRecalculateRiskRating.html",
+                "file": "html\\OperationActivityRiskScoresRecalculateRiskRating.html",
+                "description": "The form button to Recalculate the Risk Rating"
             },
             {
                 "uniquename": "ts_/html/SharePointAttachFilePopUp.html",
@@ -770,14 +775,14 @@
                 "description": "Function library to build NonOversightActivity"
             },
             {
-              "uniquename": "ts_/js/AppLevelFunctions.js",
-              "file": "js\\AppLevelFunctions.js",
-              "description": "TSIS 2.0 AppLevel Scripts"
+                "uniquename": "ts_/js/AppLevelFunctions.js",
+                "file": "js\\AppLevelFunctions.js",
+                "description": "TSIS 2.0 AppLevel Scripts"
             },
             {
-              "uniquename": "ts_/js/Trip.js",
-              "file": "js\\Trip.js",
-              "description": "Trip Scripts"
+                "uniquename": "ts_/js/Trip.js",
+                "file": "js\\Trip.js",
+                "description": "Trip Scripts"
             }
         ]
       }

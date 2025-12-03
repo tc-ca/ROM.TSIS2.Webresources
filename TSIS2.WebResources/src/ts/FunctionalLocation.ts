@@ -1,28 +1,14 @@
 namespace ROM.FunctionalLocation {
+    // Rail Safety tab visibility configuration for Functional Location (Site) form
+    const RAIL_SAFETY_VISIBLE_TABS = ["tab_3", "Work Orders"]; // Summary and Work Orders
+
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_functionallocation.Main.Information>eContext.getFormContext();
 
-        // Show only Summary and Work Orders tabs, hide all others
-        (async () => {
-            try {
-                const isMember = await isCurrentUserInRailSafetyTeam();
-                if (!isMember) return; // only apply hiding for Rail Safety users
-
-                const tabs = form.ui.tabs.get();
-                const tabsToShow = ["tab_3", "Work Orders"]; // Summary and Work Orders
-
-                tabs.forEach(function (tab: any) {
-                    try {
-                        const tabName = tab.getName();
-                        tab.setVisible(tabsToShow.includes(tabName));
-                    } catch (e) {
-                        // Tab error, skip
-                    }
-                });
-            } catch (err) {
-                console.error("Error applying Rail Safety tab visibility:", err);
-            }
-        })();
+        // Rail Safety: Show only specific tabs for Rail Safety team members
+        applyTabVisibilityForTeam(form, TEAM_SCHEMA_NAMES.RAIL_SAFETY, RAIL_SAFETY_VISIBLE_TABS).catch((err) => {
+            console.error("Error applying Rail Safety tab visibility:", err);
+        });
 
         const ownerAttribute = form.getAttribute("ownerid")
         if (ownerAttribute != null && ownerAttribute != undefined) {
@@ -72,7 +58,12 @@ namespace ROM.FunctionalLocation {
 
             // Detect if the record is owned by the Rail Safety Team
             if (ownerAttributeValue != null && ownerAttributeValue != undefined && ownerAttributeValue[0].entityType == "team") {
-                checkIfOwnedByRailSafetyTeam(ownerAttributeValue[0].id);
+                isOwnedBy(ownerAttributeValue[0].id, [TEAM_SCHEMA_NAMES.RAIL_SAFETY]).then(async (isRailSafety) => {
+                    if (isRailSafety) {
+                        const teamName = await getTeamNameById(ownerAttributeValue[0].id);
+                        console.log(`This record belongs to ${teamName}`);
+                    }
+                });
             }
 
             //If site type is aerodrome, show ICAO and IATA fields
@@ -135,9 +126,9 @@ namespace ROM.FunctionalLocation {
         riskScoreVisibility(form);
         siteTypesVisibility(eContext);
 
-        // Check if user should be assigned to Rail Safety Team on load
-        checkAndSetRailSafetyTeamOwnerOnLoad(form).catch((error) => {
-            console.error("Error in checkAndSetRailSafetyTeamOwnerOnLoad:", error);
+        // Set owner to Rail Safety team if user is a member (on load, then save)
+        setOwnerToTeamAndSave(form, TEAM_SCHEMA_NAMES.RAIL_SAFETY).catch((error) => {
+            console.error("Error in setOwnerToTeamAndSave:", error);
         });
 
         //Lock for non Admin users
@@ -145,26 +136,6 @@ namespace ROM.FunctionalLocation {
             form.getControl("msdyn_name").setDisabled(true);
             form.getControl("ts_functionallocationnameenglish").setDisabled(true);
             form.getControl("ts_functionallocationnamefrench").setDisabled(true);
-        }
-    }
-
-    // Check if record is owned by Rail Safety Team
-    async function checkIfOwnedByRailSafetyTeam(ownerId: string): Promise<void> {
-        try {
-            const railSafetyTeamGuid = await GetEnvironmentVariableValue("ts_RailSafetyTeamGUID");
-
-            if (!railSafetyTeamGuid) {
-                return;
-            }
-
-            const cleanOwnerId = ownerId.replace(/[{}]/g, "").toLowerCase();
-            const cleanRailSafetyTeamGuid = railSafetyTeamGuid.replace(/[{}]/g, "").toLowerCase();
-
-            if (cleanOwnerId === cleanRailSafetyTeamGuid) {
-                console.log("This record belongs to Rail Safety");
-            }
-        } catch (error) {
-            console.error("Error checking Rail Safety Team ownership:", error);
         }
     }
 
@@ -210,137 +181,6 @@ namespace ROM.FunctionalLocation {
             if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
                 form.getAttribute("ts_sitestatus").setValue(ts_sitestatus.Operational);
             }
-        }
-    }
-
-    // Helper: Is current user member of Rail Safety team
-    async function isCurrentUserInRailSafetyTeam(teamId?: string): Promise<boolean> {
-        try {
-            const railSafetyTeamGuid = teamId ?? await GetEnvironmentVariableValue("ts_RailSafetyTeamGUID");
-            if (!railSafetyTeamGuid) return false;
-
-            const userId = Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, "");
-            return await checkUserTeamMembership(userId, railSafetyTeamGuid);
-        } catch (e) {
-            console.error("Error checking current user Rail Safety membership:", e);
-            return false;
-        }
-    }
-
-
-    // Set owner to Rail Safety Team if user is member (called on form load)
-    async function checkAndSetRailSafetyTeamOwnerOnLoad(form: Form.msdyn_functionallocation.Main.Information): Promise<void> {
-        try {
-            const railSafetyTeamGuid = await GetEnvironmentVariableValue("ts_RailSafetyTeamGUID");
-
-            if (!railSafetyTeamGuid) {
-                return;
-            }
-
-            const currentOwner = form.getAttribute("ownerid").getValue();
-
-            // Check if already owned by Rail Safety Team
-            if (currentOwner != null && currentOwner[0].entityType === "team") {
-                const currentOwnerId = currentOwner[0].id.replace(/[{}]/g, "").toLowerCase();
-                const cleanRailSafetyTeamGuid = railSafetyTeamGuid.replace(/[{}]/g, "").toLowerCase();
-                if (currentOwnerId === cleanRailSafetyTeamGuid) {
-                    return;
-                }
-            }
-            
-            // check membership
-            const isUserInRailSafetyTeam = await isCurrentUserInRailSafetyTeam(railSafetyTeamGuid);
-            if (!isUserInRailSafetyTeam) return;
-
-            const teamName = (await getTeamName(railSafetyTeamGuid)) || "";
-            const teamLookup: any = [
-                {
-                    id: railSafetyTeamGuid,
-                    entityType: "team",
-                    name: teamName
-                }
-            ];
-                
-            const ownerIdAttr = form.getAttribute("ownerid");
-            if (ownerIdAttr != null) {
-                ownerIdAttr.setValue(teamLookup);
-                try {
-                    await form.data.save();
-                } catch (saveError) {
-                    console.error("Error saving Rail Safety Team owner:", saveError);
-                }
-            }
-
-        } catch (error) {
-            console.error("Error in checkAndSetRailSafetyTeamOwnerOnLoad:", error);
-        }
-    }
-
-    // Helper: Check if user is member of specific team
-    async function checkUserTeamMembership(userId: string, teamId: string): Promise<boolean> {
-        try {
-            const cleanUserId = userId.replace(/[{}]/g, "");
-            const cleanTeamId = teamId.replace(/[{}]/g, "");
-
-            const fetchXml = [
-                "<fetch top='1'>",
-                "  <entity name='teammembership'>",
-                "    <attribute name='teammembershipid'/>",
-                "    <filter type='and'>",
-                "      <condition attribute='systemuserid' operator='eq' value='", cleanUserId, "'/>",
-                "      <condition attribute='teamid' operator='eq' value='", cleanTeamId, "'/>",
-                "    </filter>",
-                "  </entity>",
-                "</fetch>"
-            ].join("");
-
-            const encodedFetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
-            const result = await Xrm.WebApi.retrieveMultipleRecords("teammembership", encodedFetchXml);
-            
-            const isMember = result.entities.length > 0;
-            return isMember;
-        } catch (error) {
-            return false;
-        }
-    }
-
-    // Helper: Get environment variable value
-    async function GetEnvironmentVariableValue(name: string): Promise<string | null> {
-        try {
-            const query = `?$filter=schemaname eq '${name}'&$select=environmentvariabledefinitionid&$expand=environmentvariabledefinition_environmentvariablevalue($select=value)`;
-            
-            const results = await Xrm.WebApi.retrieveMultipleRecords(
-                "environmentvariabledefinition",
-                query
-            );
-
-            if (!results || !results.entities || results.entities.length < 1) {
-                return null;
-            }
-            const variable = results.entities[0];
-            
-            if (!variable.environmentvariabledefinition_environmentvariablevalue ||
-                variable.environmentvariabledefinition_environmentvariablevalue.length < 1) {
-                return null;
-            }
-
-            const value = variable.environmentvariabledefinition_environmentvariablevalue[0].value;
-            return value;
-        } catch (error) {
-            return null;
-        }
-    }
-
-    // Helper: Get team name by team ID
-    async function getTeamName(teamId: string): Promise<string | null> {
-        try {
-            const cleanTeamId = teamId.replace(/[{}]/g, "");
-
-            const result = await Xrm.WebApi.retrieveRecord("team", cleanTeamId, "?$select=name");
-            const teamName = result.name;
-            return teamName;
-        } catch (error) {
-            return null;
         }
     }
 

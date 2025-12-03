@@ -47,6 +47,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "ts_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_instructions"): Xrm.Attribute<string>;
       get(name: "ts_name"): Xrm.Attribute<string>;
+      get(name: "ts_openworkorderoncreation"): Xrm.OptionSetAttribute<boolean>;
       get(name: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
       get(name: "ts_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ts_overtime"): Xrm.NumberAttribute;
@@ -109,6 +110,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "ts_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_instructions"): Xrm.StringControl;
       get(name: "ts_name"): Xrm.StringControl;
+      get(name: "ts_openworkorderoncreation"): Xrm.OptionSetControl<boolean>;
       get(name: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
       get(name: "ts_operation1"): Xrm.LookupControl<"ovs_operation">;
       get(name: "ts_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
@@ -175,6 +177,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getAttribute(attributeName: "ts_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_instructions"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_openworkorderoncreation"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
     getAttribute(attributeName: "ts_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ts_overtime"): Xrm.NumberAttribute;
@@ -232,6 +235,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getControl(controlName: "ts_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_instructions"): Xrm.StringControl;
     getControl(controlName: "ts_name"): Xrm.StringControl;
+    getControl(controlName: "ts_openworkorderoncreation"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
     getControl(controlName: "ts_operation1"): Xrm.LookupControl<"ovs_operation">;
     getControl(controlName: "ts_operationtype"): Xrm.LookupControl<"ovs_operationtype">;

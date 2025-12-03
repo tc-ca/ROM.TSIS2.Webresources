@@ -19,8 +19,8 @@ var ROM;
             // If we have a Risk Application, get the values being used
             if (riskApplication != null && riskApplication == true) {
                 console.log("Using Risk Application");
-                var fetchXml = "\n                <fetch top=\"1\">\n                  <entity name=\"ovs_operationtype\">\n                    <attribute name=\"ts_riskapplication\" />\n                    <link-entity name=\"ts_operationactivity\"\n                                 from=\"ts_operationtype\"\n                                 to=\"ovs_operationtypeid\"\n                                 link-type=\"inner\">\n                      <link-entity name=\"ts_operationactivityriskscores\"\n                                   from=\"ts_operationactivity\"\n                                   to=\"ts_operationactivityid\"\n                                   link-type=\"inner\">\n                        <filter>\n                          <condition attribute=\"ts_operationactivityriskscoresid\"\n                                     operator=\"eq\"\n                                     value=\"" + recordId + "\" />\n                        </filter>\n                      </link-entity>\n                    </link-entity>\n                  </entity>\n                </fetch>";
-                Xrm.WebApi.retrieveMultipleRecords("ovs_operationtype", "?fetchXml=" + encodeURIComponent(fetchXml)).then(function (result) {
+                var fetchXml = "\n                <fetch top=\"1\">\n                  <entity name=\"ovs_operationtype\">\n                    <attribute name=\"ts_riskapplication\" />\n                    <link-entity name=\"ts_operationactivity\"\n                                 from=\"ts_operationtype\"\n                                 to=\"ovs_operationtypeid\"\n                                 link-type=\"inner\">\n                      <link-entity name=\"ts_operationactivityriskscores\"\n                                   from=\"ts_operationactivity\"\n                                   to=\"ts_operationactivityid\"\n                                   link-type=\"inner\">\n                        <filter>\n                          <condition attribute=\"ts_operationactivityriskscoresid\"\n                                     operator=\"eq\"\n                                     value=\"".concat(recordId, "\" />\n                        </filter>\n                      </link-entity>\n                    </link-entity>\n                  </entity>\n                </fetch>");
+                Xrm.WebApi.retrieveMultipleRecords("ovs_operationtype", "?fetchXml=".concat(encodeURIComponent(fetchXml))).then(function (result) {
                     if (result.entities.length > 0) {
                         var record = result.entities[0];
                         // Raw numeric value
@@ -29,10 +29,10 @@ var ROM;
                         var label = record["ts_riskapplication@OData.Community.Display.V1.FormattedValue"];
                         console.log("Risk Application (numeric):", numericVal);
                         console.log("Risk Application (label):", label);
-                        var riskApplicationNotificationMessage = "Risk Application in use: " + label + " are being used to calculate the Risk Score.";
+                        var riskApplicationNotificationMessage = "Risk Application in use: ".concat(label, " are being used to calculate the Risk Score.");
                         // If the user language is French, translate the message
                         if (userLanguage === 1036) {
-                            riskApplicationNotificationMessage = "Application de risque en cours d'utilisation : " + label + " sont utilis\u00E9s pour calculer le score de risque.";
+                            riskApplicationNotificationMessage = "Application de risque en cours d'utilisation : ".concat(label, " sont utilis\u00E9s pour calculer le score de risque.");
                         }
                         // show the info banner
                         formContext.ui.setFormNotification(riskApplicationNotificationMessage, "INFO", "riskAppInfo");
