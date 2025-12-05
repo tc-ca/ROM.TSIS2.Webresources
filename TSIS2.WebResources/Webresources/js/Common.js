@@ -2,8 +2,12 @@
 const TEAM_SCHEMA_NAMES = {
   AVIATION_SECURITY_DOMESTIC: "ts_AviationSecurityDirectorateDomesticTeamGUID",
   AVIATION_SECURITY_INTERNATIONAL: "ts_AviationSecurityInternationalTeamGUID",
+  AVIATION_SECURITY: "ts_AviationSecurityTeamGUID",
   ISSO_TEAM: "ts_IntermodalSurfaceSecurityOversightISSOTeamGUID",
   RAIL_SAFETY: "ts_RailSafetyTeamGUID",
+  ROM_RAIL_SAFETY_ADMINISTRATOR: "ts_ROMRailSafetyAdministratorGUID",
+  AVIATION_SECURITY_INTERNATIONAL_DEV: "ts_AviationSecurityInternationalTeamGUID_DEV",
+  ISSO_TEAM_DEV: "ts_IntermodalSurfaceSecurityOversightISSOTeamGUID_DEV",
 };
 
 // Business Unit Schema Name Constants
@@ -12,14 +16,7 @@ const BU_SCHEMA_NAMES = {
   AVIATION_SECURITY_INTERNATIONAL: "ts_AviationSecurityInternationalBusinessUnitGUID",
   ISSO: "ts_IntermodalSurfaceSecurityOversightISSOBusinessUnitGUID",
   TRANSPORT_CANADA: "ts_TransportCanadaBusinessUnitGUID",
-};
-
-// Dev-Specific Hardcoded IDs (To support legacy Dev data without polluting Prod Env Vars)
-const DEV_SPECIFIC_IDS = {
-  AVSEC_TEAM_DEV: "6db920a0-baa3-eb11-b1ac-000d3ae8b98c",
-  AVSEC_BU_DEV: "6cb920a0-baa3-eb11-b1ac-000d3ae8b98c",
-  ISSO_TEAM_DEV: "50f4b827-bead-eb11-8236-000d3ae8b866",
-  // ISSO BU (Dev) is already covered by ts_IntermodalSurfaceSecurityOversightISSOBusinessUnitGUID
+  AVIATION_SECURITY_INTERNATIONAL_DEV: "ts_AviationSecurityInternationalBusinessUnitGUID_DEV",
 };
 
 function userHasRole(rolesName) {
@@ -285,6 +282,12 @@ async function showFieldWarningMessageIfOwnerIsNotISSONorAvSec(formContext) {
   return false;
 }
 
+/**
+ * Check team membership via teammembership join; expects GUID strings.
+ * @param {string} userId - User GUID
+ * @param {string} teamId - Team GUID
+ * @returns {Promise<boolean>} True if user is in team
+ */
 function isUserInTeam(userId, teamId) {
   const fetchXml = [
     "<fetch distinct='false' mapping='logical'>",
@@ -322,9 +325,12 @@ function isUserInTeam(userId, teamId) {
   });
 }
 
-// This helper is intended for GUID-based environment variables.
-// It strips { } and lowercases the value for normalized ID comparison.
-// Do NOT use it for case-sensitive or non-GUID env vars (URLs, keys, etc.)
+/**
+ * Fetch env var and normalize as GUID (lowercase, no braces).
+ * Only valid for GUID-based vars—not URLs, keys, or case-sensitive values.
+ * @param {string} schemaName - The environment variable schema name
+ * @returns {Promise<string|null>} Normalized GUID string or null
+ */
 function getEnvironmentVariableValue(schemaName) {
   var fetchXml = [
     "<fetch top='1'>",
@@ -362,10 +368,9 @@ function getEnvironmentVariableValue(schemaName) {
 }
 
 /**
- * Returns the owner GUID from a record, regardless of shape.
- * - WebApi record: uses `_ownerid_value`
- * - Object with `ownerid.id`: uses that (future-proof)
- * Returns: GUID string or null
+ * Extract owner GUID regardless of shape: WebApi (_ownerid_value) or lookup (ownerid.id).
+ * @param {object} record - The record object (WebApi or form lookup format)
+ * @returns {string|null} Owner GUID string or null
  */
 function getOwnerIdFromRecord(record) {
   if (!record) return null;
@@ -383,156 +388,223 @@ function getOwnerIdFromRecord(record) {
   return null;
 }
 
-async function isOwnedBy(ownerValue, schemaNames) {
-  if (!schemaNames || !schemaNames.length) return false;
 
-  var ownerId = null;
+/**
+ * Polymorphic owner check:
+ * - Accepts lookup array or raw GUID.
+ * - GUID auto-probes as team → user.
+ * - Team match = direct team GUID match OR team's BU matches buSchemaNames.
+ * - User match = user BU matches buSchemaNames.
+ * @param {Array|string} ownerValue - Lookup array [{entityType, id}] or GUID string
+ * @param {object} options - Options object with teamSchemaNames and/or buSchemaNames arrays
+ * @returns {Promise<boolean>} True if owner matches criteria
+ */
+async function matchesOwnerTeamOrBU(ownerValue, options) {
+  if (!ownerValue || !options) return false;
 
-  // Form lookup: [ { id, ... } ]
-  if (Array.isArray(ownerValue) && ownerValue[0] && ownerValue[0].id) {
-    ownerId = ownerValue[0].id;
+  // Normalize input → entityType + id
+  var entityType = null;
+  var id = null;
+
+  // CASE 1: Direct GUID string (could be team OR systemuser)
+  if (typeof ownerValue === "string") {
+    id = ownerValue;
+    // entityType intentionally left null → we will probe team first, then systemuser
   }
-  // Direct GUID string (WebApi usage)
-  else if (typeof ownerValue === "string") {
-    ownerId = ownerValue;
+  // CASE 2: Normal lookup array from a form field
+  else if (Array.isArray(ownerValue) && ownerValue[0]) {
+    entityType = ownerValue[0].entityType;
+    id = ownerValue[0].id;
+  } else {
+    return false;
   }
 
-  if (!ownerId) return false;
+  if (!id) return false;
 
-  ownerId = ownerId.replace(/[{}]/g, "").toLowerCase();
+  var cleanId = id.replace(/[{}]/g, "").toLowerCase();
 
-  for (var i = 0; i < schemaNames.length; i++) {
-    var envId = await getEnvironmentVariableValue(schemaNames[i]);
-    if (envId && ownerId === envId) return true;
+  async function checkBU(buId) {
+    if (!buId) return false;
+
+    if (options.buSchemaNames && options.buSchemaNames.length > 0) {
+      return await isBusinessUnit(buId, options.buSchemaNames);
+    }
+
+    return false;
   }
+
+  async function checkTeamOwner(ownerId, allowFallbackToUser) {
+    // 1) Direct match against team env vars
+    if (options.teamSchemaNames && options.teamSchemaNames.length > 0) {
+      const cleanOwnerId = ownerId;
+      for (var i = 0; i < options.teamSchemaNames.length; i++) {
+        var envId = await getEnvironmentVariableValue(options.teamSchemaNames[i]);
+        if (envId && cleanOwnerId === envId) {
+          return true;
+        }
+      }
+    }
+
+    // 2) Fallback: check the team's Business Unit
+    try {
+      var team = await Xrm.WebApi.retrieveRecord("team", ownerId, "?$select=_businessunitid_value");
+      var buId = team._businessunitid_value;
+      if (!buId) return false;
+
+      return await checkBU(buId);
+    } catch (error) {
+      console.warn("Error in matchesOwnerTeamOrBU checking team owner:", error);
+
+      // In ambiguous string-GUID mode we want to be able to fall back to systemuser
+      if (allowFallbackToUser) {
+        // Signal caller that we couldn't confirm it's a team → try user next
+        return null;
+      }
+
+      return false;
+    }
+  }
+
+  async function checkUserOwner(ownerId) {
+    try {
+      var user = await Xrm.WebApi.retrieveRecord("systemuser", ownerId, "?$select=_businessunitid_value");
+      var buId = user._businessunitid_value;
+      if (!buId) return false;
+
+      return await checkBU(buId);
+    } catch (error) {
+      console.error("Error in matchesOwnerTeamOrBU checking systemuser owner:", error);
+      return false;
+    }
+  }
+
+  // ---- AMBIGUOUS STRING PATH (could be team OR user) ----
+  if (!entityType) {
+    // First, try treating the GUID as a team
+    var teamResult = await checkTeamOwner(cleanId, true);
+    if (teamResult === true) return true;
+    if (teamResult === false) return false;
+    // teamResult === null → not a valid team (or failed to load) → try systemuser
+    var userResult = await checkUserOwner(cleanId);
+    return userResult === true;
+  }
+
+  // ---- EXPLICIT TEAM PATH ----
+  if (entityType === "team") {
+    var explicitTeamResult = await checkTeamOwner(cleanId, false);
+    return explicitTeamResult === true;
+  }
+
+  // ---- EXPLICIT SYSTEMUSER PATH ----
+  if (entityType === "systemuser") {
+    var explicitUserResult = await checkUserOwner(cleanId);
+    return explicitUserResult === true;
+  }
+
   return false;
 }
 
+/**
+ * True if owner belongs to any AvSec team or BU (including *_DEV env-var GUIDs).
+ * @param {Array|string} ownerValue - Owner lookup array or GUID string
+ * @returns {Promise<boolean>} True if owner is AvSec
+ */
 async function isOwnedByAvSec(ownerValue) {
-  if (!ownerValue) return false;
-
-  // CASE 1: Direct GUID string → treat as team owner
-  if (typeof ownerValue === "string") {
-    return isOwnedBy(ownerValue, [
+  return matchesOwnerTeamOrBU(ownerValue, {
+    teamSchemaNames: [
       TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC,
       TEAM_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL,
-    ]);
-  }
-
-  // CASE 2: Normal lookup array from form
-  if (!ownerValue[0]) return false;
-
-  var owner = ownerValue[0];
-  var entityType = owner.entityType;
-
-  // Owner is a team → compare team ID to env vars, or check team's BU if team GUID doesn't match
-  if (entityType === "team") {
-    var teamId = owner.id ? owner.id.replace(/[{}]/g, "") : null;
-    if (!teamId) return false;
-
-    // First check if team GUID matches AvSec team env vars
-    var teamMatches = await isOwnedBy(ownerValue, [
-      TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC,
-      TEAM_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL,
-    ]);
-    if (teamMatches) return true;
-
-    // Check Dev Specific Team ID
-    if (teamId === DEV_SPECIFIC_IDS.AVSEC_TEAM_DEV) return true;
-
-    // If team GUID doesn't match, check team's BU (fallback for teams in AvSec BU but not in env vars)
-    try {
-      var team = await Xrm.WebApi.retrieveRecord("team", teamId, "?$select=_businessunitid_value");
-      var buId = team._businessunitid_value;
-      if (!buId) return false;
-
-      return await isAvSecBU(buId);
-    } catch (error) {
-      console.error("Error checking team owner for AvSec:", error);
-      return false;
-    }
-  }
-
-  // Owner is a user → load BU, then check BU against AvSec BU env vars
-  if (entityType === "systemuser") {
-    var userId = owner.id ? owner.id.replace(/[{}]/g, "") : null;
-    if (!userId) return false;
-
-    try {
-      var user = await Xrm.WebApi.retrieveRecord("systemuser", userId, "?$select=_businessunitid_value");
-      var buId = user._businessunitid_value;
-      if (!buId) return false;
-
-      return await isAvSecBU(buId);
-    } catch (error) {
-      console.error("Error checking systemuser owner for AvSec:", error);
-      return false;
-    }
-  }
-
-  return false;
+      TEAM_SCHEMA_NAMES.AVIATION_SECURITY,
+      TEAM_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL_DEV,
+    ],
+    buSchemaNames: [
+      BU_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC,
+      BU_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL,
+      BU_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL_DEV,
+    ],
+  });
 }
 
+/**
+ * True only for AvSec Domestic team or Domestic AvSec BU.
+ * @param {Array|string} ownerValue - Owner lookup array or GUID string
+ * @returns {Promise<boolean>} True if owner is AvSec Domestic
+ */
+async function isOwnedByAvSecDomestic(ownerValue) {
+  return matchesOwnerTeamOrBU(ownerValue, {
+    teamSchemaNames: [
+      TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC,],
+    buSchemaNames: [
+      BU_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC,
+    ],
+  });
+}
+
+/**
+ * True only for AvSec International team/BU (including DEV variant).
+ * @param {Array|string} ownerValue - Owner lookup array or GUID string
+ * @returns {Promise<boolean>} True if owner is AvSec International
+ */
+async function isOwnedByAvSecInternational(ownerValue) {
+  return matchesOwnerTeamOrBU(ownerValue, {
+    teamSchemaNames: [
+      TEAM_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL,
+      TEAM_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL_DEV,
+    ],
+    buSchemaNames: [
+      BU_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL,
+      BU_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL_DEV,
+    ],
+  });
+}
+
+/**
+ * True if owner belongs to ISSO team or ISSO BU (including DEV team).
+ * @param {Array|string} ownerValue - Owner lookup array or GUID string
+ * @returns {Promise<boolean>} True if owner is ISSO
+ */
 async function isOwnedByISSO(ownerValue) {
-  if (!ownerValue) return false;
-
-  // CASE 1: Direct GUID string → treat as team owner
-  if (typeof ownerValue === "string") {
-    return isOwnedBy(ownerValue, [TEAM_SCHEMA_NAMES.ISSO_TEAM]);
-  }
-
-  // CASE 2: Normal lookup array from form
-  if (!ownerValue[0]) return false;
-
-  var owner = ownerValue[0];
-  var entityType = owner.entityType;
-
-  // Owner is a team → compare team ID to env vars, or check team's BU if team GUID doesn't match
-  if (entityType === "team") {
-    var teamId = owner.id ? owner.id.replace(/[{}]/g, "") : null;
-    if (!teamId) return false;
-
-    // First check if team GUID matches ISSO team env var
-    var teamMatches = await isOwnedBy(ownerValue, [TEAM_SCHEMA_NAMES.ISSO_TEAM]);
-    if (teamMatches) return true;
-
-    // Check Dev Specific Team ID
-    if (teamId === DEV_SPECIFIC_IDS.ISSO_TEAM_DEV) return true;
-
-    // If team GUID doesn't match, check team's BU (fallback for teams in ISSO BU but not in env vars)
-    try {
-      var team = await Xrm.WebApi.retrieveRecord("team", teamId, "?$select=_businessunitid_value");
-      var buId = team._businessunitid_value;
-      if (!buId) return false;
-
-      return await isISSOBU(buId);
-    } catch (error) {
-      console.error("Error checking team owner for ISSO:", error);
-      return false;
-    }
-  }
-
-  // Owner is a user → load BU, then check BU
-  if (entityType === "systemuser") {
-    var userId = owner.id ? owner.id.replace(/[{}]/g, "") : null;
-    if (!userId) return false;
-
-    try {
-      var user = await Xrm.WebApi.retrieveRecord("systemuser", userId, "?$select=_businessunitid_value");
-      var buId = user._businessunitid_value;
-      if (!buId) return false;
-
-      return await isISSOBU(buId);
-    } catch (error) {
-      console.error("Error checking systemuser owner for ISSO:", error);
-      return false;
-    }
-  }
-
-  return false;
+  return matchesOwnerTeamOrBU(ownerValue, {
+    teamSchemaNames: [
+      TEAM_SCHEMA_NAMES.ISSO_TEAM,
+      TEAM_SCHEMA_NAMES.ISSO_TEAM_DEV,
+    ],
+    buSchemaNames: [
+      BU_SCHEMA_NAMES.ISSO,
+    ],
+  });
 }
 
-// Generic function to check if a BU ID matches any of the provided environment variable schema names
+/**
+ * True if owner is Rail Safety team (team-only).
+ * @param {Array|string} ownerValue - Owner lookup array or GUID string
+ * @returns {Promise<boolean>} True if owner is Rail Safety team
+ */
+async function isOwnedByRailSafety(ownerValue) {
+  return matchesOwnerTeamOrBU(ownerValue, {
+    teamSchemaNames: [TEAM_SCHEMA_NAMES.RAIL_SAFETY],
+    buSchemaNames: [],
+  });
+}
+
+/**
+ * True if owner is Rail Safety Administrator team (team-only).
+ * @param {Array|string} ownerValue - Owner lookup array or GUID string
+ * @returns {Promise<boolean>} True if owner is Rail Safety Administrator team
+ */
+async function isOwnedByRailSafetyAdministrator(ownerValue) {
+  return matchesOwnerTeamOrBU(ownerValue, {
+    teamSchemaNames: [TEAM_SCHEMA_NAMES.ROM_RAIL_SAFETY_ADMINISTRATOR],
+    buSchemaNames: [],
+  });
+}
+
+/**
+ * BU matches any GUID stored in provided env-var schema names.
+ * @param {string} buId - Business Unit GUID
+ * @param {string[]} schemaNames - Array of environment variable schema names
+ * @returns {Promise<boolean>} True if BU matches any schema name
+ */
 async function isBusinessUnit(buId, schemaNames) {
   if (!buId || !Array.isArray(schemaNames) || schemaNames.length === 0) return false;
   var id = buId.toString().replace(/[{}]/g, "").toLowerCase();
@@ -544,18 +616,24 @@ async function isBusinessUnit(buId, schemaNames) {
   return false;
 }
 
-// Checks if a BU ID is one of the AvSec Business Units
+/**
+ * True if BU is an AvSec BU (domestic, international, or DEV).
+ * @param {string} buId - Business Unit GUID
+ * @returns {Promise<boolean>} True if BU is AvSec
+ */
 async function isAvSecBU(buId) {
-  // Check Dev Specific BU ID
-  if (buId && buId.toString().replace(/[{}]/g, "").toLowerCase() === DEV_SPECIFIC_IDS.AVSEC_BU_DEV) return true;
-
   return isBusinessUnit(buId, [
     BU_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC,
     BU_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL,
+    BU_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL_DEV,
   ]);
 }
 
-// Checks if a BU ID is the ISSO Business Unit
+/**
+ * True if BU is the ISSO BU.
+ * @param {string} buId - Business Unit GUID
+ * @returns {Promise<boolean>} True if BU is ISSO
+ */
 async function isISSOBU(buId) {
   return isBusinessUnit(buId, [BU_SCHEMA_NAMES.ISSO]);
 }
@@ -564,8 +642,8 @@ async function isISSOBU(buId) {
 async function getAvSecBUGUIDs() {
   var guids = [];
 
-  // Add Dev ID
-  guids.push(DEV_SPECIFIC_IDS.AVSEC_BU_DEV);
+  var devGuid = await getEnvironmentVariableValue(BU_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL_DEV);
+  if (devGuid) guids.push(devGuid);
 
   var guid1 = await getEnvironmentVariableValue(BU_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC);
   if (guid1) guids.push(guid1);
@@ -586,7 +664,11 @@ async function getISSOBUGUIDs() {
   return guids;
 }
 
-// Checks if a BU ID is the Transport Canada Business Unit
+/**
+ * True if BU is the Transport Canada BU.
+ * @param {string} buId - Business Unit GUID
+ * @returns {Promise<boolean>} True if BU is Transport Canada
+ */
 async function isTCBU(buId) {
   return isBusinessUnit(buId, [BU_SCHEMA_NAMES.TRANSPORT_CANADA]);
 }
@@ -604,7 +686,11 @@ async function isUserInTCBU(userBuId) {
   return isTCBU(userBuId);
 }
 
-// Checks if the given user (or current user) is in any AvSec team
+/**
+ * True if user is in any AvSec team (domestic, intl, intl-DEV, main AvSec).
+ * @param {string} [userId] - User GUID (optional, defaults to current user)
+ * @returns {Promise<boolean>} True if user is in any AvSec team
+ */
 async function isUserInAvSecTeam(userId) {
   if (!userId) {
     userId = Xrm.Utility.getGlobalContext().userSettings.userId;
@@ -614,22 +700,26 @@ async function isUserInAvSecTeam(userId) {
 
   const domesticTeamId = await getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC);
   const internationalTeamId = await getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL);
+  const devInternationalTeamId = await getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL_DEV);
+  const mainAvSecTeamId = await getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.AVIATION_SECURITY);
 
-  let inDomestic = false;
-  let inInternational = false;
+  const teamIds = [domesticTeamId, internationalTeamId, devInternationalTeamId, mainAvSecTeamId].filter(Boolean);
 
-  if (domesticTeamId) {
-    inDomestic = await isUserInTeam(userId, domesticTeamId);
+  for (let i = 0; i < teamIds.length; i++) {
+    const teamId = teamIds[i];
+    if (await isUserInTeam(userId, teamId)) {
+      return true;
+    }
   }
 
-  if (!inDomestic && internationalTeamId) {
-    inInternational = await isUserInTeam(userId, internationalTeamId);
-  }
-
-  return inDomestic || inInternational;
+  return false;
 }
 
-// Checks if the given user (or current user) is in the ISSO team
+/**
+ * True if user is in ISSO team (prod or DEV).
+ * @param {string} [userId] - User GUID (optional, defaults to current user)
+ * @returns {Promise<boolean>} True if user is in ISSO team
+ */
 async function isUserInISSOTeam(userId) {
   if (!userId) {
     userId = Xrm.Utility.getGlobalContext().userSettings.userId;
@@ -638,17 +728,26 @@ async function isUserInISSOTeam(userId) {
   userId = userId.replace(/[{}]/g, "").toLowerCase();
 
   const issoTeamId = await getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.ISSO_TEAM);
-  if (!issoTeamId) return false;
+  const issoTeamDevId = await getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.ISSO_TEAM_DEV);
 
-  return isUserInTeam(userId, issoTeamId);
+  const teamIds = [issoTeamId, issoTeamDevId].filter(Boolean);
+
+  for (let i = 0; i < teamIds.length; i++) {
+    const teamId = teamIds[i];
+    if (await isUserInTeam(userId, teamId)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 // Retrieve actual AvSec BU name from the database for display purposes
 async function getAvSecBUName() {
-  var guid = await getEnvironmentVariableValue(BU_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC);
-  if (!guid) {
-    guid = await getEnvironmentVariableValue(BU_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL);
-  }
+  let guid =
+    (await getEnvironmentVariableValue(BU_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC)) ||
+    (await getEnvironmentVariableValue(BU_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL)) ||
+    (await getEnvironmentVariableValue(BU_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL_DEV));
 
   if (guid) {
     try {
@@ -679,7 +778,7 @@ async function getISSOBUName() {
 }
 
 /**
- * Toggle a section in a tab based on the environment variable ts_TurnoffDocumentCentre
+ * Show/hide section based on ts_TurnoffDocumentCentre ("yes" hides, "no" shows).
  * @param {Xrm.ExecutionContext} executionContext - Form execution context
  * @param {string} tabName - Name of the tab to toggle
  * @param {string} sectionName - Name of the section to toggle
@@ -728,11 +827,11 @@ async function getTeamNameById(teamId) {
 }
 
 /**
- * Check if current user is a member of a team (by env var schema name)
+ * True if user is in team identified by env-var GUID.
  * @param {string} teamSchemaName - The environment variable schema name for the team GUID
  * @returns {Promise<boolean>} True if user is a member
  */
-async function isCurrentUserInTeamByEnvVar(teamSchemaName) {
+async function isUserInTeamByEnvVar(teamSchemaName) {
   try {
     var teamGuid = await getEnvironmentVariableValue(teamSchemaName);
     if (!teamGuid) return false;
@@ -746,14 +845,14 @@ async function isCurrentUserInTeamByEnvVar(teamSchemaName) {
 }
 
 /**
- * Set owner to a team and save the form (typically called on load)
+ * If user belongs to that team (env-var GUID), set owner to the team and auto-save.
  * @param {object} formContext - The form context
  * @param {string} teamSchemaName - The environment variable schema name for the team GUID
  * @returns {Promise<void>}
  */
 async function setOwnerToTeamAndSave(formContext, teamSchemaName) {
   try {
-    var isMember = await isCurrentUserInTeamByEnvVar(teamSchemaName);
+    var isMember = await isUserInTeamByEnvVar(teamSchemaName);
     if (!isMember) return;
 
     var teamGuid = await getEnvironmentVariableValue(teamSchemaName);
@@ -762,7 +861,6 @@ async function setOwnerToTeamAndSave(formContext, teamSchemaName) {
     var ownerAttribute = formContext.getAttribute("ownerid");
     var currentOwner = ownerAttribute.getValue();
 
-    // Skip if already owned by this team
     if (currentOwner && currentOwner[0] && currentOwner[0].entityType === "team") {
       var currentOwnerId = currentOwner[0].id.replace(/[{}]/g, "").toLowerCase();
       if (currentOwnerId === teamGuid) {
@@ -770,7 +868,6 @@ async function setOwnerToTeamAndSave(formContext, teamSchemaName) {
       }
     }
 
-    // Set owner to team
     var teamName = (await getTeamNameById(teamGuid)) || "";
     ownerAttribute.setValue([
       {
@@ -780,7 +877,6 @@ async function setOwnerToTeamAndSave(formContext, teamSchemaName) {
       },
     ]);
 
-    // Save the form with the new owner
     try {
       await formContext.data.save();
     } catch (saveError) {
@@ -792,7 +888,7 @@ async function setOwnerToTeamAndSave(formContext, teamSchemaName) {
 }
 
 /**
- * Apply tab visibility based on team membership
+ * For users in given team: show only tabs in visibleTabs; hide the rest.
  * @param {object} formContext - The form context
  * @param {string} teamSchemaName - The environment variable schema name for the team GUID
  * @param {string[]} visibleTabs - Array of tab names to show (all others will be hidden)
@@ -800,7 +896,7 @@ async function setOwnerToTeamAndSave(formContext, teamSchemaName) {
  */
 async function applyTabVisibilityForTeam(formContext, teamSchemaName, visibleTabs) {
   try {
-    var isMember = await isCurrentUserInTeamByEnvVar(teamSchemaName);
+    var isMember = await isUserInTeamByEnvVar(teamSchemaName);
     if (!isMember) return;
 
     var tabs = formContext.ui.tabs.get();

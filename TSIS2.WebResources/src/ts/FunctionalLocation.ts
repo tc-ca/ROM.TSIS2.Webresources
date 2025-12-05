@@ -58,7 +58,7 @@ namespace ROM.FunctionalLocation {
 
             // Detect if the record is owned by the Rail Safety Team
             if (ownerAttributeValue != null && ownerAttributeValue != undefined && ownerAttributeValue[0].entityType == "team") {
-                isOwnedBy(ownerAttributeValue[0].id, [TEAM_SCHEMA_NAMES.RAIL_SAFETY]).then(async (isRailSafety) => {
+                isOwnedByRailSafety(ownerAttributeValue).then(async (isRailSafety) => {
                     if (isRailSafety) {
                         const teamName = await getTeamNameById(ownerAttributeValue[0].id);
                         console.log(`This record belongs to ${teamName}`);
@@ -131,12 +131,25 @@ namespace ROM.FunctionalLocation {
             console.error("Error in setOwnerToTeamAndSave:", error);
         });
 
-        //Lock for non Admin users
-        if (!userHasRole("System Administrator|ROM - Business Admin")) {
-            form.getControl("msdyn_name").setDisabled(true);
-            form.getControl("ts_functionallocationnameenglish").setDisabled(true);
-            form.getControl("ts_functionallocationnamefrench").setDisabled(true);
-        }
+        // Lock for non-Admin users, unless the current user is a member of the ROM Rail Safety Administrator team
+        (async function () {
+            try {
+                const isRailSafetyAdmin = await isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.ROM_RAIL_SAFETY_ADMINISTRATOR);
+                if (!userHasRole("System Administrator|ROM - Business Admin") && !isRailSafetyAdmin) {
+                    form.getControl("msdyn_name").setDisabled(true);
+                    form.getControl("ts_functionallocationnameenglish").setDisabled(true);
+                    form.getControl("ts_functionallocationnamefrench").setDisabled(true);
+                }
+            } catch (err) {
+                console.error("Error checking Rail Safety admin team membership:", err);
+                // Fallback to original behavior if check fails
+                if (!userHasRole("System Administrator|ROM - Business Admin")) {
+                    form.getControl("msdyn_name").setDisabled(true);
+                    form.getControl("ts_functionallocationnameenglish").setDisabled(true);
+                    form.getControl("ts_functionallocationnamefrench").setDisabled(true);
+                }
+            }
+        })();
     }
 
     export function IATACodeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {

@@ -38,7 +38,7 @@ namespace ROM.Account {
         try {
             const ownerVal = ownerAttribute?.getValue();
             if (ownerVal && ownerVal[0] && ownerVal[0].entityType === "team") {
-                const isRailSafetyOwned = await isOwnedBy(ownerVal[0].id, [TEAM_SCHEMA_NAMES.RAIL_SAFETY]);
+                const isRailSafetyOwned = await isOwnedByRailSafety(ownerVal);
                 if (isRailSafetyOwned) {
                     const teamName = await getTeamNameById(ownerVal[0].id);
                     console.log(`This record belongs to ${teamName}`);
@@ -51,15 +51,31 @@ namespace ROM.Account {
             console.error("Rail Safety tab/owner check error:", e);
         }
 
-        //Lock for non Admin users
-        if (!userHasRole("System Administrator|ROM - Business Admin")) {
-            form.getControl("name").setDisabled(true);
-            form.getControl("ovs_legalname").setDisabled(true);
-        }
-        else {
-            form.getControl("ovs_accountnameenglish").setVisible(true);
-            form.getControl("ovs_accountnamefrench").setVisible(true);
-        }
+        //Lock for non Admin users, unless the current user is a member of the ROM Rail Safety Administrator team
+        (async function () {
+            try {
+                const isRailSafetyAdmin = await isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.ROM_RAIL_SAFETY_ADMINISTRATOR);
+                if (!userHasRole("System Administrator|ROM - Business Admin") && !isRailSafetyAdmin) {
+                    form.getControl("name").setDisabled(true);
+                    form.getControl("ovs_legalname").setDisabled(true);
+                }
+                else {
+                    form.getControl("ovs_accountnameenglish").setVisible(true);
+                    form.getControl("ovs_accountnamefrench").setVisible(true);
+                }
+            } catch (err) {
+                console.error("Error checking Rail Safety admin team membership:", err);
+                // Fallback to original behavior if check fails
+                if (!userHasRole("System Administrator|ROM - Business Admin")) {
+                    form.getControl("name").setDisabled(true);
+                    form.getControl("ovs_legalname").setDisabled(true);
+                }
+                else {
+                    form.getControl("ovs_accountnameenglish").setVisible(true);
+                    form.getControl("ovs_accountnamefrench").setVisible(true);
+                }
+            }
+        })();
 
         //If owner is Aviation Security
         const ownerValue = form.getAttribute("ownerid").getValue();

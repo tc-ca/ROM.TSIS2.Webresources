@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -77,14 +77,14 @@ var ROM;
                             _a.trys.push([2, 7, , 8]);
                             ownerVal = ownerAttribute === null || ownerAttribute === void 0 ? void 0 : ownerAttribute.getValue();
                             if (!(ownerVal && ownerVal[0] && ownerVal[0].entityType === "team")) return [3 /*break*/, 5];
-                            return [4 /*yield*/, isOwnedBy(ownerVal[0].id, [TEAM_SCHEMA_NAMES.RAIL_SAFETY])];
+                            return [4 /*yield*/, isOwnedByRailSafety(ownerVal)];
                         case 3:
                             isRailSafetyOwned = _a.sent();
                             if (!isRailSafetyOwned) return [3 /*break*/, 5];
                             return [4 /*yield*/, getTeamNameById(ownerVal[0].id)];
                         case 4:
                             teamName = _a.sent();
-                            console.log("This record belongs to ".concat(teamName));
+                            console.log("This record belongs to " + teamName);
                             _a.label = 5;
                         case 5: 
                         // Show only specific tabs for Rail Safety team members
@@ -98,15 +98,44 @@ var ROM;
                             console.error("Rail Safety tab/owner check error:", e_1);
                             return [3 /*break*/, 8];
                         case 8:
-                            //Lock for non Admin users
-                            if (!userHasRole("System Administrator|ROM - Business Admin")) {
-                                form.getControl("name").setDisabled(true);
-                                form.getControl("ovs_legalname").setDisabled(true);
-                            }
-                            else {
-                                form.getControl("ovs_accountnameenglish").setVisible(true);
-                                form.getControl("ovs_accountnamefrench").setVisible(true);
-                            }
+                            //Lock for non Admin users, unless the current user is a member of the ROM Rail Safety Administrator team
+                            (function () {
+                                return __awaiter(this, void 0, void 0, function () {
+                                    var isRailSafetyAdmin, err_1;
+                                    return __generator(this, function (_a) {
+                                        switch (_a.label) {
+                                            case 0:
+                                                _a.trys.push([0, 2, , 3]);
+                                                return [4 /*yield*/, isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.ROM_RAIL_SAFETY_ADMINISTRATOR)];
+                                            case 1:
+                                                isRailSafetyAdmin = _a.sent();
+                                                if (!userHasRole("System Administrator|ROM - Business Admin") && !isRailSafetyAdmin) {
+                                                    form.getControl("name").setDisabled(true);
+                                                    form.getControl("ovs_legalname").setDisabled(true);
+                                                }
+                                                else {
+                                                    form.getControl("ovs_accountnameenglish").setVisible(true);
+                                                    form.getControl("ovs_accountnamefrench").setVisible(true);
+                                                }
+                                                return [3 /*break*/, 3];
+                                            case 2:
+                                                err_1 = _a.sent();
+                                                console.error("Error checking Rail Safety admin team membership:", err_1);
+                                                // Fallback to original behavior if check fails
+                                                if (!userHasRole("System Administrator|ROM - Business Admin")) {
+                                                    form.getControl("name").setDisabled(true);
+                                                    form.getControl("ovs_legalname").setDisabled(true);
+                                                }
+                                                else {
+                                                    form.getControl("ovs_accountnameenglish").setVisible(true);
+                                                    form.getControl("ovs_accountnamefrench").setVisible(true);
+                                                }
+                                                return [3 /*break*/, 3];
+                                            case 3: return [2 /*return*/];
+                                        }
+                                    });
+                                });
+                            })();
                             ownerValue = form.getAttribute("ownerid").getValue();
                             return [4 /*yield*/, isOwnedByAvSec(ownerValue)];
                         case 9:
@@ -129,12 +158,12 @@ var ROM;
             var statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
             if (statusStartDateValue != null) {
                 if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_stakeholderstatus").setValue(717750001 /* ts_stakeholderstatus.NonOperational */);
+                    form.getAttribute("ts_stakeholderstatus").setValue(717750001 /* NonOperational */);
                 }
             }
             if (statusEndDateValue != null) {
                 if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_stakeholderstatus").setValue(717750000 /* ts_stakeholderstatus.Operational */);
+                    form.getAttribute("ts_stakeholderstatus").setValue(717750000 /* Operational */);
                 }
             }
         }

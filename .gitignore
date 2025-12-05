@@ -343,3 +343,5 @@ healthchecksdb
 .cursor/
 .vscode/
 TSIS2.WebResources/spkl/deploy-changed.ps1
+TSIS2.WebResources/spkl/context-map.json
+TSIS2.WebResources/spkl/open-context.ps1

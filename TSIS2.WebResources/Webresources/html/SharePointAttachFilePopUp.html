@@ -661,12 +661,21 @@
                         associateManyToManyRecord("ts_Files_Incidents", "ts_files", fileId, "incidents", recordId);
                         break;
                     case "account":
+                        fileData = {
+                            "ts_Stakeholder@odata.bind": `/accounts(${recordId})`
+                        };
                         associateManyToManyRecord("ts_Files_Accounts", "ts_files", fileId, "accounts", recordId);
                         break;
                     case "ovs_operation":
+                        fileData = {
+                            "ts_ovs_operation@odata.bind": `/ovs_operations(${recordId})`
+                        };
                         associateManyToManyRecord("ts_Files_ovs_operations", "ts_files", fileId, "ovs_operations", recordId);
                         break;
                     case "msdyn_functionallocation":
+                        fileData = {
+                            "ts_Site@odata.bind": `/msdyn_functionallocations(${recordId})`
+                        };
                         associateManyToManyRecord("ts_Files_msdyn_FunctionalLocations", "ts_files", fileId, "msdyn_functionallocations", recordId);
                         break;
                     case "ts_securityincident":
@@ -685,6 +694,9 @@
                         };
                         break;
                     case "ts_trip":
+                        fileData = {
+                            "ts_Trip@odata.bind": `/ts_trips(${recordId})`
+                        };
                         associateManyToManyRecord("ts_ts_file_ts_trip", "ts_files", fileId, "ts_trips", recordId);
                 }
                 console.log(fileData);

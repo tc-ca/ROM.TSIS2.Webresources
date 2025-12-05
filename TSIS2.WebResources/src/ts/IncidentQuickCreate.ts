@@ -1,20 +1,19 @@
-/* eslint-disable @typescript-eslint/triple-slash-reference */
 namespace ROM.IncidentQuickCreate {
     // EVENTS
-    export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
+    export async function onLoad(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
         const form = <Form.incident.QuickCreate.CaseQuickCreate>eContext.getFormContext();
 
         switch (form.ui.getFormType()) {
-            //Create
+            // Create
             case 1:
                 setRegion(eContext);
-                form.getAttribute('ownerid').setValue();
-                let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+                form.getAttribute("ownerid").setValue(null);
+
+                const userId = Xrm.Utility.getGlobalContext().userSettings.userId;
 
                 let currentUserBusinessUnitFetchXML = [
-                    "<fetch>",
+                    "<fetch top='1'>",
                     "  <entity name='businessunit'>",
-                    "    <attribute name='name' />",
                     "    <attribute name='businessunitid' />",
                     "    <link-entity name='systemuser' from='businessunitid' to='businessunitid'>",
                     "      <filter>",
@@ -26,50 +25,46 @@ namespace ROM.IncidentQuickCreate {
                 ].join("");
                 currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
 
-                Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(
-                    function (businessunit) {
-                        let team;
-                        // TODO: Need to verify which Aviation Security team we should use for team name lookup.
-                        // There are multiple teams with similar names:
-                        //   - "Aviation Security" (hardcoded name used here) - in "Aviation Security Directorate - Domestic" business unit (e2e3910d-a41f-ec11-b6e6-0022483cb5c7)
-                        //   - "Aviation Security Directorate - Domestic" - in "Aviation Security Directorate - Domestic" business unit (8444831b-bead-eb11-8236-000d3ae8b866)
-                        //   - "Aviation Security Directorate" - in "Aviation Security Directorate" business unit (3b8513c3-b426-ec11-b6e6-000d3af4f86f)
-                        // We need to determine which team name is correct for this use case.
-                        if (businessunit.entities[0].name.startsWith('Aviation')) {
-                            team = {
-                                "name": "Aviation Security",
-                                "entityType": "team"
-                            };
-                        }
-                        else if (businessunit.entities[0].name.startsWith('Intermodal')) {
-                            team = {
-                                "name": "Intermodal Surface Security Oversight (ISSO)",
-                                "entityType": "team"
-                            };
-                        }
-
-                        var teamfetchXml = [
-                            "<fetch>",
-                            "  <entity name='team'>",
-                            "    <attribute name='name'/>",
-                            "    <attribute name='teamid'/>",
-                            "    <filter>",
-                            "      <condition attribute='name' operator='eq' value='", team.name, "'/>",
-                            "    </filter>",
-                            "  </entity>",
-                            "</fetch>"
-                        ].join("");
-
-                        teamfetchXml = "?fetchXml=" + encodeURIComponent(teamfetchXml);
-
-                        Xrm.WebApi.retrieveMultipleRecords('team', teamfetchXml).then(
-                            function success(result) {
-                                team.id = result.entities[0].teamid;
-                                form.getAttribute('ownerid').setValue([team]);
-                            }
-                        );
-                    }
+                const businessunit = await Xrm.WebApi.retrieveMultipleRecords(
+                    "businessunit",
+                    currentUserBusinessUnitFetchXML
                 );
+
+                if (!businessunit.entities.length) {
+                    return;
+                }
+
+                const userBusinessUnitId = businessunit.entities[0].businessunitid;
+
+                // Classify BU using GUID-based helpers from common.js
+                const isAvSec = await isAvSecBU(userBusinessUnitId);
+                const isIsso = !isAvSec && (await isISSOBU(userBusinessUnitId));
+
+                let teamSchemaName: string | null = null;
+
+                if (isAvSec) {
+                    teamSchemaName = TEAM_SCHEMA_NAMES.AVIATION_SECURITY;
+                } else if (isIsso) {
+                    teamSchemaName = TEAM_SCHEMA_NAMES.ISSO_TEAM;
+                } else {
+                    return;
+                }
+
+                const teamGuid = await getEnvironmentVariableValue(teamSchemaName);
+                if (!teamGuid) {
+                    return;
+                }
+
+                const teamName = (await getTeamNameById(teamGuid)) || "";
+
+                form.getAttribute("ownerid").setValue([
+                    {
+                        id: teamGuid,
+                        entityType: "team",
+                        name: teamName,
+                    },
+                ]);
+
                 break;
         }
     }
