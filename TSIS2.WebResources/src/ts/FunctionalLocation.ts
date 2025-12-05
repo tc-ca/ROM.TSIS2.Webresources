@@ -58,7 +58,7 @@ namespace ROM.FunctionalLocation {
 
             // Detect if the record is owned by the Rail Safety Team
             if (ownerAttributeValue != null && ownerAttributeValue != undefined && ownerAttributeValue[0].entityType == "team") {
-                isOwnedBy(ownerAttributeValue[0].id, [TEAM_SCHEMA_NAMES.RAIL_SAFETY]).then(async (isRailSafety) => {
+                isOwnedByRailSafety(ownerAttributeValue).then(async (isRailSafety) => {
                     if (isRailSafety) {
                         const teamName = await getTeamNameById(ownerAttributeValue[0].id);
                         console.log(`This record belongs to ${teamName}`);

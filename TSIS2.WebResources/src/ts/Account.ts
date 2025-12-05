@@ -38,7 +38,7 @@ namespace ROM.Account {
         try {
             const ownerVal = ownerAttribute?.getValue();
             if (ownerVal && ownerVal[0] && ownerVal[0].entityType === "team") {
-                const isRailSafetyOwned = await isOwnedBy(ownerVal[0].id, [TEAM_SCHEMA_NAMES.RAIL_SAFETY]);
+                const isRailSafetyOwned = await isOwnedByRailSafety(ownerVal);
                 if (isRailSafetyOwned) {
                     const teamName = await getTeamNameById(ownerVal[0].id);
                     console.log(`This record belongs to ${teamName}`);
