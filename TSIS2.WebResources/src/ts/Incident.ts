@@ -56,18 +56,43 @@ namespace ROM.Incident {
 
         fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
 
-        Xrm.WebApi.retrieveMultipleRecords("incident", fetchXML).then(
-            function success(result) {
-                if (result.entities.length > 0) {
-                    form.getControl("ovs_region").setDisabled(true);
-                    form.getControl("ts_country").setDisabled(true);
-                    form.getControl("ts_tradenameid").setDisabled(true);
-                    form.getControl("msdyn_functionallocation").setDisabled(true);
-                }
-            },
-            function (error) {
+        // Lock fields if there are associated WOs OR if user is not Rail Safety Admin
+        (async function () {
+            try {
+                const isRailSafetyAdmin = await isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.ROM_RAIL_SAFETY_ADMINISTRATOR);
+                const shouldLock = !isRailSafetyAdmin;
+
+                // Check for associated work orders
+                Xrm.WebApi.retrieveMultipleRecords("incident", fetchXML).then(
+                    function success(result) {
+                        const hasAssociatedWOs = result.entities.length > 0;
+                        
+                        if (hasAssociatedWOs || shouldLock) {
+                            form.getControl("ovs_region").setDisabled(true);
+                            form.getControl("ts_country").setDisabled(true);
+                            form.getControl("ts_tradenameid").setDisabled(true);
+                            form.getControl("msdyn_functionallocation").setDisabled(true);
+                        }
+                    },
+                    function (error) {
+                        // On error, apply the admin lock if needed
+                        if (shouldLock) {
+                            form.getControl("ovs_region").setDisabled(true);
+                            form.getControl("ts_country").setDisabled(true);
+                            form.getControl("ts_tradenameid").setDisabled(true);
+                            form.getControl("msdyn_functionallocation").setDisabled(true);
+                        }
+                    }
+                );
+            } catch (err) {
+                console.error("Error checking Rail Safety admin team membership:", err);
+                // Fallback: lock fields on error
+                form.getControl("ovs_region").setDisabled(true);
+                form.getControl("ts_country").setDisabled(true);
+                form.getControl("ts_tradenameid").setDisabled(true);
+                form.getControl("msdyn_functionallocation").setDisabled(true);
             }
-        );
+        })();
 
         //Hide Associate Evidence for AvSec users
         //Set Overtime field visible for AvSec
