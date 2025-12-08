@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -43,7 +43,7 @@ var ROM;
         var RAIL_SAFETY_VISIBLE_TABS = ["SUMMARY_TAB", "DETAILS_TAB", "tab_contacts", "Work Orders"];
         function onLoad(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var form, addressControl, ownerAttribute, ownerAttributeValue, isISSOOwner, operationView, ownerVal, isRailSafetyOwned, teamName, e_1, ownerValue, isAvSec;
+                var form, addressControl, ownerAttribute, ownerAttributeValue, isISSOOwner, operationView, ownerValue, isAvSec;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -74,30 +74,13 @@ var ROM;
                             }
                             _a.label = 2;
                         case 2:
-                            _a.trys.push([2, 7, , 8]);
-                            ownerVal = ownerAttribute === null || ownerAttribute === void 0 ? void 0 : ownerAttribute.getValue();
-                            if (!(ownerVal && ownerVal[0] && ownerVal[0].entityType === "team")) return [3 /*break*/, 5];
-                            return [4 /*yield*/, isOwnedByRailSafety(ownerVal)];
+                            // Log Rail Safety ownership status to console
+                            logRailSafetyOwnershipStatus(form);
+                            // Show only specific tabs for Rail Safety team members
+                            return [4 /*yield*/, applyTabVisibilityForTeam(form, TEAM_SCHEMA_NAMES.RAIL_SAFETY, RAIL_SAFETY_VISIBLE_TABS)];
                         case 3:
-                            isRailSafetyOwned = _a.sent();
-                            if (!isRailSafetyOwned) return [3 /*break*/, 5];
-                            return [4 /*yield*/, getTeamNameById(ownerVal[0].id)];
-                        case 4:
-                            teamName = _a.sent();
-                            console.log("This record belongs to " + teamName);
-                            _a.label = 5;
-                        case 5: 
-                        // Show only specific tabs for Rail Safety team members
-                        return [4 /*yield*/, applyTabVisibilityForTeam(form, TEAM_SCHEMA_NAMES.RAIL_SAFETY, RAIL_SAFETY_VISIBLE_TABS)];
-                        case 6:
                             // Show only specific tabs for Rail Safety team members
                             _a.sent();
-                            return [3 /*break*/, 8];
-                        case 7:
-                            e_1 = _a.sent();
-                            console.error("Rail Safety tab/owner check error:", e_1);
-                            return [3 /*break*/, 8];
-                        case 8:
                             //Lock for non Admin users, unless the current user is a member of the ROM Rail Safety Administrator team
                             (function () {
                                 return __awaiter(this, void 0, void 0, function () {
@@ -138,34 +121,71 @@ var ROM;
                             })();
                             ownerValue = form.getAttribute("ownerid").getValue();
                             return [4 /*yield*/, isOwnedByAvSec(ownerValue)];
-                        case 9:
+                        case 4:
                             isAvSec = _a.sent();
                             form.ui.tabs.get("tab_Risk").setVisible(isAvSec);
-                            // Set owner to Rail Safety team if user is a member (on load, then save)
-                            return [4 /*yield*/, setOwnerToTeamAndSave(form, TEAM_SCHEMA_NAMES.RAIL_SAFETY)];
-                        case 10:
-                            // Set owner to Rail Safety team if user is a member (on load, then save)
-                            _a.sent();
                             return [2 /*return*/];
                     }
                 });
             });
         }
         Account.onLoad = onLoad;
+        // Flag to prevent re-entry when we manually call save()
+        var _isProcessingRailSafetySave = false;
+        /**
+         * OnSave event handler for Account form.
+         * Add any async save logic here that needs to complete before the record saves.
+         * @param eContext - The execution context
+         */
         function onSave(eContext) {
-            var form = eContext.getFormContext();
-            var statusStartDateValue = form.getAttribute("ts_statusstartdate").getValue();
-            var statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
-            if (statusStartDateValue != null) {
-                if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_stakeholderstatus").setValue(717750001 /* NonOperational */);
-                }
-            }
-            if (statusEndDateValue != null) {
-                if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_stakeholderstatus").setValue(717750000 /* Operational */);
-                }
-            }
+            return __awaiter(this, void 0, void 0, function () {
+                var form, eventArgs, statusStartDateValue, statusEndDateValue, railSafetyModified, formWasModified, error_1;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            form = eContext.getFormContext();
+                            eventArgs = eContext.getEventArgs();
+                            // Skip if we're in a re-entrant save
+                            if (_isProcessingRailSafetySave) {
+                                _isProcessingRailSafetySave = false;
+                                return [2 /*return*/];
+                            }
+                            statusStartDateValue = form.getAttribute("ts_statusstartdate").getValue();
+                            statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
+                            if (statusStartDateValue != null) {
+                                if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
+                                    form.getAttribute("ts_stakeholderstatus").setValue(717750001 /* ts_stakeholderstatus.NonOperational */);
+                                }
+                            }
+                            if (statusEndDateValue != null) {
+                                if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
+                                    form.getAttribute("ts_stakeholderstatus").setValue(717750000 /* ts_stakeholderstatus.Operational */);
+                                }
+                            }
+                            _a.label = 1;
+                        case 1:
+                            _a.trys.push([1, 5, , 6]);
+                            return [4 /*yield*/, assignRailSafetyOwnershipOnSave(form)];
+                        case 2:
+                            railSafetyModified = _a.sent();
+                            formWasModified = railSafetyModified;
+                            if (!formWasModified) return [3 /*break*/, 4];
+                            eventArgs.preventDefault();
+                            _isProcessingRailSafetySave = true;
+                            return [4 /*yield*/, form.data.save()];
+                        case 3:
+                            _a.sent();
+                            _a.label = 4;
+                        case 4: return [3 /*break*/, 6];
+                        case 5:
+                            error_1 = _a.sent();
+                            _isProcessingRailSafetySave = false;
+                            console.error("[Account.onSave] Error:", error_1);
+                            return [3 /*break*/, 6];
+                        case 6: return [2 /*return*/];
+                    }
+                });
+            });
         }
         Account.onSave = onSave;
         function regionOnChange(eContext) {

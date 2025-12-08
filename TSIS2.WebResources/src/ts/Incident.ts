@@ -8,6 +8,10 @@ namespace ROM.Incident {
         //Set required fields
         form.getAttribute("msdyn_functionallocation").setRequiredLevel("required");
         addEmailTemplateOnChange(eContext);
+        
+        // Log Rail Safety ownership status to console
+        logRailSafetyOwnershipStatus(form);
+
         switch (form.ui.getFormType()) {
             case 1:
                 setRegion(eContext);
@@ -35,7 +39,14 @@ namespace ROM.Incident {
 
         if (form.ui.getFormType() == 1 || form.ui.getFormType() == 2) {
             if (ownerControl != null) {
-                ownerControl.setEntityTypes(["systemuser"]);
+                // Only allow team ownership if user is in Rail Safety Team
+                isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.RAIL_SAFETY).then(function(isRailSafety) {
+                    if (isRailSafety) {
+                        ownerControl.setEntityTypes(["systemuser", "team"]);
+                    } else {
+                        ownerControl.setEntityTypes(["systemuser"]);
+                    }
+                });
                 var defaultViewId = "29bd662e-52e7-ec11-bb3c-0022483d86ce";
                 ownerControl.setDefaultView(defaultViewId);
             }
@@ -684,6 +695,48 @@ namespace ROM.Incident {
                 form.getAttribute("ts_inspectiontype2").setValue(null);
                 form.getAttribute("ts_dateofinspection2").setValue(null);
             }
+        }
+    }
+
+    // Flag to prevent re-entry when we manually call save()
+    let _isProcessingRailSafetySave = false;
+
+    /**
+     * OnSave event handler for Case form.
+     * Add any async save logic here that needs to complete before the record saves.
+     * @param eContext - The execution context
+     */
+    export async function onSave(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
+        const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
+        const eventArgs = eContext.getEventArgs();
+
+        // Skip if we're in a re-entrant save
+        if (_isProcessingRailSafetySave) {
+            _isProcessingRailSafetySave = false;
+            return;
+        }
+
+        try {
+            // ============================================
+            // Add async save handlers here
+            // Each should return true if it modified the form
+            // ============================================
+            const railSafetyModified = await assignRailSafetyOwnershipOnSave(form);
+            // Add more handlers here as needed:
+            // const otherModified = await someOtherHandler(form);
+
+            const formWasModified = railSafetyModified; // || otherModified || ...
+
+            // If any handler modified the form, we need to re-save
+            if (formWasModified) {
+                eventArgs.preventDefault();
+                _isProcessingRailSafetySave = true;
+                await form.data.save();
+            }
+
+        } catch (error) {
+            _isProcessingRailSafetySave = false;
+            console.error("[Incident.onSave] Error:", error);
         }
     }
 }

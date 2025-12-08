@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -42,7 +42,6 @@ var ROM;
         // Rail Safety tab visibility configuration for Functional Location (Site) form
         var RAIL_SAFETY_VISIBLE_TABS = ["tab_3", "Work Orders"]; // Summary and Work Orders
         function onLoad(eContext) {
-            var _this = this;
             var form = eContext.getFormContext();
             // Rail Safety: Show only specific tabs for Rail Safety team members
             applyTabVisibilityForTeam(form, TEAM_SCHEMA_NAMES.RAIL_SAFETY, RAIL_SAFETY_VISIBLE_TABS).catch(function (err) {
@@ -79,24 +78,8 @@ var ROM;
                         });
                     }
                 }
-                // Detect if the record is owned by the Rail Safety Team
-                if (ownerAttributeValue_1 != null && ownerAttributeValue_1 != undefined && ownerAttributeValue_1[0].entityType == "team") {
-                    isOwnedByRailSafety(ownerAttributeValue_1).then(function (isRailSafety) { return __awaiter(_this, void 0, void 0, function () {
-                        var teamName;
-                        return __generator(this, function (_a) {
-                            switch (_a.label) {
-                                case 0:
-                                    if (!isRailSafety) return [3 /*break*/, 2];
-                                    return [4 /*yield*/, getTeamNameById(ownerAttributeValue_1[0].id)];
-                                case 1:
-                                    teamName = _a.sent();
-                                    console.log("This record belongs to " + teamName);
-                                    _a.label = 2;
-                                case 2: return [2 /*return*/];
-                            }
-                        });
-                    }); });
-                }
+                // Log Rail Safety ownership status to console
+                logRailSafetyOwnershipStatus(form);
                 //If site type is aerodrome, show ICAO and IATA fields
                 //If Region is not International, show Class field
                 var siteTypeAttribute = form.getAttribute("ts_sitetype");
@@ -171,10 +154,6 @@ var ROM;
             }
             riskScoreVisibility(form);
             siteTypesVisibility(eContext);
-            // Set owner to Rail Safety team if user is a member (on load, then save)
-            setOwnerToTeamAndSave(form, TEAM_SCHEMA_NAMES.RAIL_SAFETY).catch(function (error) {
-                console.error("Error in setOwnerToTeamAndSave:", error);
-            });
             // Lock for non-Admin users, unless the current user is a member of the ROM Rail Safety Administrator team
             (function () {
                 return __awaiter(this, void 0, void 0, function () {
@@ -233,24 +212,60 @@ var ROM;
             }
         }
         FunctionalLocation.ICAOCodeOnChange = ICAOCodeOnChange;
+        // Flag to prevent re-entry when we manually call save()
+        var _isProcessingRailSafetySave = false;
+        /**
+         * OnSave event handler for Functional Location (Site) form.
+         * Add any async save logic here that needs to complete before the record saves.
+         * @param eContext - The execution context
+         */
         function onSave(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var form, statusStartDateValue, statusEndDateValue;
+                var form, eventArgs, statusStartDateValue, statusEndDateValue, railSafetyModified, formWasModified, error_1;
                 return __generator(this, function (_a) {
-                    form = eContext.getFormContext();
-                    statusStartDateValue = form.getAttribute("ts_statusstartdate").getValue();
-                    statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
-                    if (statusStartDateValue != null) {
-                        if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                            form.getAttribute("ts_sitestatus").setValue(717750001 /* NonOperational */);
-                        }
+                    switch (_a.label) {
+                        case 0:
+                            form = eContext.getFormContext();
+                            eventArgs = eContext.getEventArgs();
+                            // Skip if we're in a re-entrant save
+                            if (_isProcessingRailSafetySave) {
+                                _isProcessingRailSafetySave = false;
+                                return [2 /*return*/];
+                            }
+                            statusStartDateValue = form.getAttribute("ts_statusstartdate").getValue();
+                            statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
+                            if (statusStartDateValue != null) {
+                                if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
+                                    form.getAttribute("ts_sitestatus").setValue(717750001 /* ts_sitestatus.NonOperational */);
+                                }
+                            }
+                            if (statusEndDateValue != null) {
+                                if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
+                                    form.getAttribute("ts_sitestatus").setValue(717750000 /* ts_sitestatus.Operational */);
+                                }
+                            }
+                            _a.label = 1;
+                        case 1:
+                            _a.trys.push([1, 5, , 6]);
+                            return [4 /*yield*/, assignRailSafetyOwnershipOnSave(form)];
+                        case 2:
+                            railSafetyModified = _a.sent();
+                            formWasModified = railSafetyModified;
+                            if (!formWasModified) return [3 /*break*/, 4];
+                            eventArgs.preventDefault();
+                            _isProcessingRailSafetySave = true;
+                            return [4 /*yield*/, form.data.save()];
+                        case 3:
+                            _a.sent();
+                            _a.label = 4;
+                        case 4: return [3 /*break*/, 6];
+                        case 5:
+                            error_1 = _a.sent();
+                            _isProcessingRailSafetySave = false;
+                            console.error("[FunctionalLocation.onSave] Error:", error_1);
+                            return [3 /*break*/, 6];
+                        case 6: return [2 /*return*/];
                     }
-                    if (statusEndDateValue != null) {
-                        if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                            form.getAttribute("ts_sitestatus").setValue(717750000 /* Operational */);
-                        }
-                    }
-                    return [2 /*return*/];
                 });
             });
         }
@@ -352,7 +367,7 @@ var ROM;
         //Shows the Risk Score field only when the Class is 2 or 3
         function riskScoreVisibility(form) {
             var siteClass = form.getAttribute("ts_class").getValue();
-            if (siteClass == 717750002 /* _2 */ || siteClass == 717750003 /* _3 */) {
+            if (siteClass == 717750002 /* ts_msdyn_functionallocation_ts_class._2 */ || siteClass == 717750003 /* ts_msdyn_functionallocation_ts_class._3 */) {
                 form.getControl("ts_riskscore").setVisible(true);
                 form.getControl("ts_lpdtounitedstates").setVisible(true);
             }

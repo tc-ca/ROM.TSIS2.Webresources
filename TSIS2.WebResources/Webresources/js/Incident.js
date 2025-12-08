@@ -48,6 +48,8 @@ var ROM;
             //Set required fields
             form.getAttribute("msdyn_functionallocation").setRequiredLevel("required");
             addEmailTemplateOnChange(eContext);
+            // Log Rail Safety ownership status to console
+            logRailSafetyOwnershipStatus(form);
             switch (form.ui.getFormType()) {
                 case 1:
                     setRegion(eContext);
@@ -73,7 +75,15 @@ var ROM;
             }
             if (form.ui.getFormType() == 1 || form.ui.getFormType() == 2) {
                 if (ownerControl != null) {
-                    ownerControl.setEntityTypes(["systemuser"]);
+                    // Only allow team ownership if user is in Rail Safety Team
+                    isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.RAIL_SAFETY).then(function (isRailSafety) {
+                        if (isRailSafety) {
+                            ownerControl.setEntityTypes(["systemuser", "team"]);
+                        }
+                        else {
+                            ownerControl.setEntityTypes(["systemuser"]);
+                        }
+                    });
                     var defaultViewId = "29bd662e-52e7-ec11-bb3c-0022483d86ce";
                     ownerControl.setDefaultView(defaultViewId);
                 }
@@ -677,5 +687,51 @@ var ROM;
             }
         }
         Incident.addEmailTemplateOnChange = addEmailTemplateOnChange;
+        // Flag to prevent re-entry when we manually call save()
+        var _isProcessingRailSafetySave = false;
+        /**
+         * OnSave event handler for Case form.
+         * Add any async save logic here that needs to complete before the record saves.
+         * @param eContext - The execution context
+         */
+        function onSave(eContext) {
+            return __awaiter(this, void 0, void 0, function () {
+                var form, eventArgs, railSafetyModified, formWasModified, error_1;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            form = eContext.getFormContext();
+                            eventArgs = eContext.getEventArgs();
+                            // Skip if we're in a re-entrant save
+                            if (_isProcessingRailSafetySave) {
+                                _isProcessingRailSafetySave = false;
+                                return [2 /*return*/];
+                            }
+                            _a.label = 1;
+                        case 1:
+                            _a.trys.push([1, 5, , 6]);
+                            return [4 /*yield*/, assignRailSafetyOwnershipOnSave(form)];
+                        case 2:
+                            railSafetyModified = _a.sent();
+                            formWasModified = railSafetyModified;
+                            if (!formWasModified) return [3 /*break*/, 4];
+                            eventArgs.preventDefault();
+                            _isProcessingRailSafetySave = true;
+                            return [4 /*yield*/, form.data.save()];
+                        case 3:
+                            _a.sent();
+                            _a.label = 4;
+                        case 4: return [3 /*break*/, 6];
+                        case 5:
+                            error_1 = _a.sent();
+                            _isProcessingRailSafetySave = false;
+                            console.error("[Incident.onSave] Error:", error_1);
+                            return [3 /*break*/, 6];
+                        case 6: return [2 /*return*/];
+                    }
+                });
+            });
+        }
+        Incident.onSave = onSave;
     })(Incident = ROM.Incident || (ROM.Incident = {}));
 })(ROM || (ROM = {}));

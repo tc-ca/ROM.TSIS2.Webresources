@@ -908,3 +908,64 @@ async function applyTabVisibilityForTeam(formContext, teamSchemaName, visibleTab
     console.error("Error applying tab visibility for team:", error);
   }
 }
+
+/**
+ * Assigns Rail Safety Team ownership if user is a Rail Safety team member.
+ * Does not call save() - caller is responsible for save.
+ * @param {object} formContext - The form context
+ * @returns {Promise<boolean>} True if the form was modified, false otherwise
+ */
+async function assignRailSafetyOwnershipOnSave(formContext) {
+  try {
+    var isMember = await isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.RAIL_SAFETY);
+    if (!isMember) return false;
+
+    var teamGuid = await getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.RAIL_SAFETY);
+    if (!teamGuid) return false;
+
+    var ownerAttribute = formContext.getAttribute("ownerid");
+    var currentOwner = ownerAttribute.getValue();
+
+    // Check if already owned by Rail Safety team
+    if (currentOwner && currentOwner[0] && currentOwner[0].entityType === "team" &&
+        currentOwner[0].id.replace(/[{}]/g, "").toLowerCase() === teamGuid) {
+      return false;
+    }
+
+    var teamName = (await getTeamNameById(teamGuid)) || "";
+    ownerAttribute.setValue([
+      {
+        id: teamGuid,
+        entityType: "team",
+        name: teamName,
+      },
+    ]);
+    return true;
+  } catch (error) {
+    console.error("[Rail Safety] Error in assignRailSafetyOwnershipOnSave:", error);
+    return false;
+  }
+}
+
+/**
+ * Checks if the current record is owned by the Rail Safety Team and logs to console.
+ * @param {object} formContext - The form context
+ * @returns {Promise<void>}
+ */
+async function logRailSafetyOwnershipStatus(formContext) {
+  try {
+    var ownerAttribute = formContext.getAttribute("ownerid");
+    var ownerValue = ownerAttribute.getValue();
+
+    if (!ownerValue) {
+      return;
+    }
+
+    var isRailSafety = await isOwnedByRailSafety(ownerValue);
+    if (isRailSafety) {
+      console.log("This record belongs to Rail Safety.");
+    }
+  } catch (error) {
+    console.error("Error checking Rail Safety ownership:", error);
+  }
+}
