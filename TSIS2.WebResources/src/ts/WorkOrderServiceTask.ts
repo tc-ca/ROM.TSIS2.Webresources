@@ -1,7 +1,6 @@
 namespace ROM.WorkOrderServiceTask {
     // EVENTS
     var mode = '';
-    const appUrl = Xrm.Utility.getGlobalContext().getClientUrl();
     const lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
     var enterStartDateToProceedText = "Enter a start date to proceed";
     var enterTaskTypeToProccedText = "Enter a task type to proceed";
@@ -25,7 +24,8 @@ namespace ROM.WorkOrderServiceTask {
         if (Form.getAttribute("msdyn_workorder").getValue() != null) {
             setTaskTypeFilteredView(Form);
             showHideFieldsByIncidentType(Form);
-            aircraftManufacturerOnChange(eContext);
+            // Commented out below to remove the "discard changes" prompt. Moved to WOST Workspace
+            //aircraftManufacturerOnChange(eContext);
         }
 
         var taskType = Form.getAttribute("msdyn_tasktype").getValue();
@@ -136,122 +136,124 @@ namespace ROM.WorkOrderServiceTask {
         } catch (e) {
             console.warn("Skip flag check failed: " + (e as any).message);
         }
-        if (appUrl) {
-            const formContext = <Form.msdyn_workorderservicetask.Main.Information>eContext.getFormContext();
 
-            const serviceTaskStartDateAttr = formContext.getAttribute("ts_servicetaskstartdate");
-            const serviceTaskStartDate = serviceTaskStartDateAttr ? (<Xrm.Attribute<any>>serviceTaskStartDateAttr).getValue() : null;
+        const formContext = <Form.msdyn_workorderservicetask.Main.Information>eContext.getFormContext();
+        const serviceTaskStartDateAttr = formContext.getAttribute("ts_servicetaskstartdate");
+        const serviceTaskStartDate = serviceTaskStartDateAttr ? (<Xrm.Attribute<any>>serviceTaskStartDateAttr).getValue() : null;
+        const entityId = formContext.data.entity.getId();
+        const entityIdClean = entityId.replace(/{|}/g, "");
 
-            const entityId = formContext.data.entity.getId();
-            const entityIdClean = entityId.replace(/{|}/g, "");
+        const openExistingWorkspaceDialog = (workspaceId: string) => {
+            const pageInput: any = {
+                pageType: "entityrecord",
+                entityName: "ts_workorderservicetaskworkspace",
+                entityId: workspaceId
+            };
+            const navigationOptions: Xrm.NavigationOptions = {
+                target: 2,
+                width: { value: 80, unit: "%" },
+                height: { value: 80, unit: "%" },
+                position: 1
+            };
+            Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+                () => formContext.ui.close(),
+                (error) => console.error("Error opening existing workspace modal: ", error.message)
+            );
+        };
 
-            const openExistingWorkspaceDialog = (workspaceId: string) => {
-                const pageInput: any = {
-                    pageType: "entityrecord",
-                    entityName: "ts_workorderservicetaskworkspace",
-                    entityId: workspaceId
-                };
-                const navigationOptions: Xrm.NavigationOptions = {
-                    target: 2,
-                    width: { value: 80, unit: "%" },
-                    height: { value: 80, unit: "%" },
-                    position: 1
-                };
-                Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
-                    () => formContext.ui.close(),
-                    (error) => console.error("Error opening existing workspace modal: ", error.message)
-                );
+        const openWorkspaceCreateDialog = () => {
+            const entityName = formContext.getAttribute("msdyn_name")?.getValue();
+            const workOrderLookup = formContext.getAttribute("msdyn_workorder")?.getValue();
+            const workOrderId = workOrderLookup && workOrderLookup.length > 0 ? workOrderLookup[0].id.replace(/{|}/g, "") : null;
+            const workOrderName = workOrderLookup && workOrderLookup.length > 0 ? workOrderLookup[0].name : null;
+            const taskTypeLookup = formContext.getAttribute("msdyn_tasktype")?.getValue();
+            const taskTypeId = taskTypeLookup && taskTypeLookup.length > 0 ? taskTypeLookup[0].id.replace(/{|}/g, "") : null;
+            const taskTypeName = taskTypeLookup && taskTypeLookup.length > 0 ? taskTypeLookup[0].name : null;
+
+            const pageInput: any = {
+                pageType: "entityrecord",
+                entityName: "ts_workorderservicetaskworkspace",
+                formType: 2,
+                useQuickCreateForm: true,
+                data: {
+                    ts_name: entityName,
+                    "ts_workorderservicetask@odata.bind": `/msdyn_workorderservicetasks(${entityIdClean})`,
+                    ts_workorder: workOrderId ? {
+                        id: workOrderId,
+                        name: workOrderName,
+                        entityType: "msdyn_workorder"
+                    } : undefined,
+                    ts_tasktype: taskTypeId ? {
+                        id: taskTypeId,
+                        name: taskTypeName,
+                        entityType: "msdyn_servicetasktype"
+                    } : undefined
+                },
+                createFromEntity: {
+                    entityType: "msdyn_workorderservicetask",
+                    id: entityId,
+                    name: entityName
+                }
             };
 
-            const openWorkspaceCreateDialog = () => {
-                const entityName = formContext.getAttribute("msdyn_name")?.getValue();
-                const workOrderLookup = formContext.getAttribute("msdyn_workorder")?.getValue();
-                const workOrderId = workOrderLookup && workOrderLookup.length > 0 ? workOrderLookup[0].id.replace(/{|}/g, "") : null;
-                const workOrderName = workOrderLookup && workOrderLookup.length > 0 ? workOrderLookup[0].name : null;
-                const taskTypeLookup = formContext.getAttribute("msdyn_tasktype")?.getValue();
-                const taskTypeId = taskTypeLookup && taskTypeLookup.length > 0 ? taskTypeLookup[0].id.replace(/{|}/g, "") : null;
-                const taskTypeName = taskTypeLookup && taskTypeLookup.length > 0 ? taskTypeLookup[0].name : null;
-
-                const pageInput: any = {
-                    pageType: "entityrecord",
-                    entityName: "ts_workorderservicetaskworkspace",
-                    formType: 2,
-                    useQuickCreateForm: true,
-                    data: {
-                        ts_name: entityName,
-                        "ts_workorderservicetask@odata.bind": `/msdyn_workorderservicetasks(${entityIdClean})`,
-                        ts_workorder: workOrderId ? {
-                            id: workOrderId,
-                            name: workOrderName,
-                            entityType: "msdyn_workorder"
-                        } : undefined,
-                        ts_tasktype: taskTypeId ? {
-                            id: taskTypeId,
-                            name: taskTypeName,
-                            entityType: "msdyn_servicetasktype"
-                        } : undefined
-                    },
-                    createFromEntity: {
-                        entityType: "msdyn_workorderservicetask",
-                        id: entityId,
-                        name: entityName
-                    }
-                };
-
-                const navigationOptions: Xrm.NavigationOptions = {
-                    target: 2,
-                    width: { value: 80, unit: "%" },
-                    height: { value: 80, unit: "%" },
-                    position: 1
-                };
-
-                Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
-                    () => formContext.ui.close(),
-                    (error) => console.error("Error opening create workspace modal: ", error.message)
-                );
+            const navigationOptions: Xrm.NavigationOptions = {
+                target: 2,
+                width: { value: 80, unit: "%" },
+                height: { value: 80, unit: "%" },
+                position: 1
             };
 
-            // Always check first if a related workspace already exists (default case: open it)
-            const fetchExisting = [
-                "<fetch top='1'>",
-                "  <entity name='ts_workorderservicetaskworkspace'>",
-                "    <attribute name='ts_workorderservicetaskworkspaceid' />",
-                "    <order attribute='createdon' descending='true' />",
-                "    <filter>",
-                "      <condition attribute='ts_workorderservicetask' operator='eq' value='", entityIdClean, "'/>",
-                "    </filter>",
-                "  </entity>",
-                "</fetch>"
-            ].join("");
+            Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+                () => formContext.ui.close(),
+                (error) => console.error("Error opening create workspace modal: ", error.message)
+            );
+        };
 
-            Xrm.WebApi.retrieveMultipleRecords("ts_workorderservicetaskworkspace", "?fetchXml=" + encodeURIComponent(fetchExisting))
-                .then(result => {
-                    if (result.entities && result.entities.length > 0) {
-                        // Existing workspace: open it regardless of start date value
-                        openExistingWorkspaceDialog(result.entities[0].ts_workorderservicetaskworkspaceid);
-                        return;
-                    }
+        // Always check first if a related workspace already exists (default case: open it)
+        const fetchExisting = [
+            "<fetch top='1'>",
+            "  <entity name='ts_workorderservicetaskworkspace'>",
+            "    <attribute name='ts_workorderservicetaskworkspaceid' />",
+            "    <order attribute='createdon' descending='true' />",
+            "    <filter>",
+            "      <condition attribute='ts_workorderservicetask' operator='eq' value='", entityIdClean, "'/>",
+            "    </filter>",
+            "  </entity>",
+            "</fetch>"
+        ].join("");
 
-                    // If no related workspace AND status is In Progress or Complete, stay on WOST (do not open/create workspace)
-                    const statusReason = (formContext.getAttribute as any)("statuscode")?.getValue();
-                    const isInProgressOrComplete = statusReason === 918640004 /* In Progress */ || statusReason === 918640002 /* Complete */;
-                    if (isInProgressOrComplete) {
-                        return;
-                    }
+        Xrm.WebApi.retrieveMultipleRecords("ts_workorderservicetaskworkspace", "?fetchXml=" + encodeURIComponent(fetchExisting))
+            .then(result => {
+                if (result.entities && result.entities.length > 0) {
+                    // Existing workspace: open it regardless of start date value
+                    openExistingWorkspaceDialog(result.entities[0].ts_workorderservicetaskworkspaceid);
+                    return;
+                }
 
-                    // No existing workspace: create new workspace only if start date is null
-                    if (serviceTaskStartDate === null) {
-                        // Create when start date is null
-                        openWorkspaceCreateDialog();
-                    } else {
-                        // Offline Mode: Create when start date has value but no workspace exists
-                        openWorkspaceCreateDialog();
-                    }
-                })
-                .catch(err => console.error("Error querying existing workspace: ", err.message));
-        } else {
-            return;
-        }
+                // If no related workspace AND status is Complete, stay on WOST (do not open/create workspace)
+                const statusReason = (formContext.getAttribute as any)("statuscode")?.getValue();
+                const isComplete = statusReason === 918640002 /* Complete */;
+                if (isComplete) {
+                    return;
+                }
+
+                // If no related workspace AND status is In Progress, create new workspace and copy fields
+                const isInProgress = statusReason === 918640004 /* In Progress */;
+                if (isInProgress) {
+                    return;
+                }
+
+                // No existing workspace: create new workspace only if start date is null
+                if (serviceTaskStartDate === null) {
+                    // Create when start date is null
+                    openWorkspaceCreateDialog();
+                } else {
+                    // Offline Mode: Create when start date has value but no workspace exists
+                    openWorkspaceCreateDialog();
+                }
+            })
+            .catch(err => console.error("Error querying existing workspace: ", err.message));
+
     }
     function applyMandatoryFieldFromTaskType(eContext) {
         var fc = eContext.getFormContext();
