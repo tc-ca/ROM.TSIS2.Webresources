@@ -72,25 +72,16 @@ namespace ROM.Account {
         form.ui.tabs.get("tab_Risk").setVisible(isAvSec);
     }
 
-    // Flag to prevent re-entry when we manually call save()
-    let _isProcessingRailSafetySave = false;
-
     /**
      * OnSave event handler for Account form.
-     * Add any async save logic here that needs to complete before the record saves.
+     * Sets the owner to Rail Safety team for Rail Safety users.
+     * With Async save handler enabled, attribute changes are included in the save.
      * @param eContext - The execution context
      */
     export async function onSave(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
         const form = <Form.account.Main.ROMInformation>eContext.getFormContext();
-        const eventArgs = eContext.getEventArgs();
 
-        // Skip if we're in a re-entrant save
-        if (_isProcessingRailSafetySave) {
-            _isProcessingRailSafetySave = false;
-            return;
-        }
-
-        // Synchronous status date logic (runs before async handlers)
+        // Synchronous status date logic
         const statusStartDateValue = form.getAttribute("ts_statusstartdate").getValue();
         const statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
         if (statusStartDateValue != null) {
@@ -105,25 +96,11 @@ namespace ROM.Account {
         }
 
         try {
-            // ============================================
-            // Add async save handlers here
-            // Each should return true if it modified the form
-            // ============================================
-            const railSafetyModified = await assignRailSafetyOwnershipOnSave(form);
-            // Add more handlers here as needed:
-            // const otherModified = await someOtherHandler(form);
-
-            const formWasModified = railSafetyModified; // || otherModified || ...
-
-            // If any handler modified the form, we need to re-save
-            if (formWasModified) {
-                eventArgs.preventDefault();
-                _isProcessingRailSafetySave = true;
-                await form.data.save();
-            }
+            // Rail Safety ownership assignment
+            // With Async save handler enabled, attribute changes are included in the save
+            await assignRailSafetyOwnershipOnSave(form);
 
         } catch (error) {
-            _isProcessingRailSafetySave = false;
             console.error("[Account.onSave] Error:", error);
         }
     }

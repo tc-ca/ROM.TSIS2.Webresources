@@ -29,7 +29,6 @@ declare function isUserInTCBU(userBuId: string): Promise<boolean>;
 declare function getAvSecBUGUIDs(): Promise<string[]>;
 declare function getISSOBUGUIDs(): Promise<string[]>;
 declare function getTeamNameById(teamId: string): Promise<string | null>;
-declare function setOwnerToTeamAndSave(formContext: any, teamSchemaName: string): Promise<void>;
 declare function applyTabVisibilityForTeam(formContext: any, teamSchemaName: string, visibleTabs: string[]): Promise<void>;
 declare function assignRailSafetyOwnershipOnSave(formContext: any): Promise<boolean>;
 declare function logRailSafetyOwnershipStatus(formContext: any): Promise<void>;
