@@ -56,15 +56,8 @@ namespace ROM.FunctionalLocation {
                 }
             }
 
-            // Detect if the record is owned by the Rail Safety Team
-            if (ownerAttributeValue != null && ownerAttributeValue != undefined && ownerAttributeValue[0].entityType == "team") {
-                isOwnedByRailSafety(ownerAttributeValue).then(async (isRailSafety) => {
-                    if (isRailSafety) {
-                        const teamName = await getTeamNameById(ownerAttributeValue[0].id);
-                        console.log(`This record belongs to ${teamName}`);
-                    }
-                });
-            }
+            // Log Rail Safety ownership status to console
+            logRailSafetyOwnershipStatus(form);
 
             //If site type is aerodrome, show ICAO and IATA fields
             //If Region is not International, show Class field
@@ -126,11 +119,6 @@ namespace ROM.FunctionalLocation {
         riskScoreVisibility(form);
         siteTypesVisibility(eContext);
 
-        // Set owner to Rail Safety team if user is a member (on load, then save)
-        setOwnerToTeamAndSave(form, TEAM_SCHEMA_NAMES.RAIL_SAFETY).catch((error) => {
-            console.error("Error in setOwnerToTeamAndSave:", error);
-        });
-
         // Lock for non-Admin users, unless the current user is a member of the ROM Rail Safety Administrator team
         (async function () {
             try {
@@ -180,11 +168,18 @@ namespace ROM.FunctionalLocation {
         }
     }
 
+    /**
+     * OnSave event handler for Functional Location (Site) form.
+     * Sets the owner to Rail Safety team for Rail Safety users.
+     * With Async save handler enabled, attribute changes are included in the save.
+     * @param eContext - The execution context
+     */
     export async function onSave(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
         const form = <Form.msdyn_functionallocation.Main.Information>eContext.getFormContext();
+
+        // Synchronous status date logic
         const statusStartDateValue = form.getAttribute("ts_statusstartdate").getValue();
         const statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
-        
         if (statusStartDateValue != null) {
             if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
                 form.getAttribute("ts_sitestatus").setValue(ts_sitestatus.NonOperational);
@@ -194,6 +189,15 @@ namespace ROM.FunctionalLocation {
             if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
                 form.getAttribute("ts_sitestatus").setValue(ts_sitestatus.Operational);
             }
+        }
+
+        try {
+            // Rail Safety ownership assignment
+            // With Async save handler enabled, attribute changes are included in the save
+            await assignRailSafetyOwnershipOnSave(form);
+
+        } catch (error) {
+            console.error("[FunctionalLocation.onSave] Error:", error);
         }
     }
 

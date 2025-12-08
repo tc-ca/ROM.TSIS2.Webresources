@@ -8,6 +8,22 @@ namespace ROM.Incident {
         //Set required fields
         form.getAttribute("msdyn_functionallocation").setRequiredLevel("required");
         addEmailTemplateOnChange(eContext);
+        
+        // Log Rail Safety ownership status to console
+        logRailSafetyOwnershipStatus(form);
+
+        // Hide document tab for Rail Safety team members
+        (async function () {
+            try {
+                const isRailSafety = await isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.RAIL_SAFETY);
+                if (isRailSafety) {
+                    form.ui.tabs.get("case_document_tab").setVisible(false);
+                }
+            } catch (err) {
+                console.error("Error hiding document tab for Rail Safety:", err);
+            }
+        })();
+
         switch (form.ui.getFormType()) {
             case 1:
                 setRegion(eContext);
@@ -35,7 +51,14 @@ namespace ROM.Incident {
 
         if (form.ui.getFormType() == 1 || form.ui.getFormType() == 2) {
             if (ownerControl != null) {
-                ownerControl.setEntityTypes(["systemuser"]);
+                // Only allow team ownership if user is in Rail Safety Team
+                isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.RAIL_SAFETY).then(function(isRailSafety) {
+                    if (isRailSafety) {
+                        ownerControl.setEntityTypes(["systemuser", "team"]);
+                    } else {
+                        ownerControl.setEntityTypes(["systemuser"]);
+                    }
+                });
                 var defaultViewId = "29bd662e-52e7-ec11-bb3c-0022483d86ce";
                 ownerControl.setDefaultView(defaultViewId);
             }
@@ -45,18 +68,43 @@ namespace ROM.Incident {
 
         fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
 
-        Xrm.WebApi.retrieveMultipleRecords("incident", fetchXML).then(
-            function success(result) {
-                if (result.entities.length > 0) {
-                    form.getControl("ovs_region").setDisabled(true);
-                    form.getControl("ts_country").setDisabled(true);
-                    form.getControl("ts_tradenameid").setDisabled(true);
-                    form.getControl("msdyn_functionallocation").setDisabled(true);
-                }
-            },
-            function (error) {
+        // Lock fields if there are associated WOs OR if user is not Rail Safety Admin
+        (async function () {
+            try {
+                const isRailSafetyAdmin = await isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.ROM_RAIL_SAFETY_ADMINISTRATOR);
+                const shouldLock = !isRailSafetyAdmin;
+
+                // Check for associated work orders
+                Xrm.WebApi.retrieveMultipleRecords("incident", fetchXML).then(
+                    function success(result) {
+                        const hasAssociatedWOs = result.entities.length > 0;
+                        
+                        if (hasAssociatedWOs || shouldLock) {
+                            form.getControl("ovs_region").setDisabled(true);
+                            form.getControl("ts_country").setDisabled(true);
+                            form.getControl("ts_tradenameid").setDisabled(true);
+                            form.getControl("msdyn_functionallocation").setDisabled(true);
+                        }
+                    },
+                    function (error) {
+                        // On error, apply the admin lock if needed
+                        if (shouldLock) {
+                            form.getControl("ovs_region").setDisabled(true);
+                            form.getControl("ts_country").setDisabled(true);
+                            form.getControl("ts_tradenameid").setDisabled(true);
+                            form.getControl("msdyn_functionallocation").setDisabled(true);
+                        }
+                    }
+                );
+            } catch (err) {
+                console.error("Error checking Rail Safety admin team membership:", err);
+                // Fallback: lock fields on error
+                form.getControl("ovs_region").setDisabled(true);
+                form.getControl("ts_country").setDisabled(true);
+                form.getControl("ts_tradenameid").setDisabled(true);
+                form.getControl("msdyn_functionallocation").setDisabled(true);
             }
-        );
+        })();
 
         //Hide Associate Evidence for AvSec users
         //Set Overtime field visible for AvSec
@@ -684,6 +732,25 @@ namespace ROM.Incident {
                 form.getAttribute("ts_inspectiontype2").setValue(null);
                 form.getAttribute("ts_dateofinspection2").setValue(null);
             }
+        }
+    }
+
+    /**
+     * OnSave event handler for Case form.
+     * Sets the owner to Rail Safety team for Rail Safety users.
+     * With Async save handler enabled, attribute changes are included in the save.
+     * @param eContext - The execution context
+     */
+    export async function onSave(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
+        const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
+
+        try {
+            // Rail Safety ownership assignment
+            // With Async save handler enabled, attribute changes are included in the save
+            await assignRailSafetyOwnershipOnSave(form);
+
+        } catch (error) {
+            console.error("[Incident.onSave] Error:", error);
         }
     }
 }
