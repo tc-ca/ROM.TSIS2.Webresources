@@ -212,26 +212,19 @@ var ROM;
             }
         }
         FunctionalLocation.ICAOCodeOnChange = ICAOCodeOnChange;
-        // Flag to prevent re-entry when we manually call save()
-        var _isProcessingRailSafetySave = false;
         /**
          * OnSave event handler for Functional Location (Site) form.
-         * Add any async save logic here that needs to complete before the record saves.
+         * Sets the owner to Rail Safety team for Rail Safety users.
+         * With Async save handler enabled, attribute changes are included in the save.
          * @param eContext - The execution context
          */
         function onSave(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var form, eventArgs, statusStartDateValue, statusEndDateValue, railSafetyModified, formWasModified, error_1;
+                var form, statusStartDateValue, statusEndDateValue, error_1;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
                             form = eContext.getFormContext();
-                            eventArgs = eContext.getEventArgs();
-                            // Skip if we're in a re-entrant save
-                            if (_isProcessingRailSafetySave) {
-                                _isProcessingRailSafetySave = false;
-                                return [2 /*return*/];
-                            }
                             statusStartDateValue = form.getAttribute("ts_statusstartdate").getValue();
                             statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
                             if (statusStartDateValue != null) {
@@ -246,25 +239,22 @@ var ROM;
                             }
                             _a.label = 1;
                         case 1:
-                            _a.trys.push([1, 5, , 6]);
+                            _a.trys.push([1, 3, , 4]);
+                            console.log("[FunctionalLocation.onSave] Starting onSave handler");
+                            // Rail Safety ownership assignment
+                            // With Async save handler enabled, attribute changes are included in the save
                             return [4 /*yield*/, assignRailSafetyOwnershipOnSave(form)];
                         case 2:
-                            railSafetyModified = _a.sent();
-                            formWasModified = railSafetyModified;
-                            if (!formWasModified) return [3 /*break*/, 4];
-                            eventArgs.preventDefault();
-                            _isProcessingRailSafetySave = true;
-                            return [4 /*yield*/, form.data.save()];
-                        case 3:
+                            // Rail Safety ownership assignment
+                            // With Async save handler enabled, attribute changes are included in the save
                             _a.sent();
-                            _a.label = 4;
-                        case 4: return [3 /*break*/, 6];
-                        case 5:
+                            console.log("[FunctionalLocation.onSave] Handler completed");
+                            return [3 /*break*/, 4];
+                        case 3:
                             error_1 = _a.sent();
-                            _isProcessingRailSafetySave = false;
                             console.error("[FunctionalLocation.onSave] Error:", error_1);
-                            return [3 /*break*/, 6];
-                        case 6: return [2 /*return*/];
+                            return [3 /*break*/, 4];
+                        case 4: return [2 /*return*/];
                     }
                 });
             });
