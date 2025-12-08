@@ -1,9 +1,6 @@
 namespace ROM.WorkOrderServiceTask {
     // EVENTS
     var mode = '';
-    const DEV_URL = "https://romts-gsrst-dev-tcd365.crm3.dynamics.com";
-    const QA_URL = "https://romts-gsrst-qa-tcd365.crm3.dynamics.com";
-    const INT_URL = "https://romts-gsrst-integration-tcd365.crm3.dynamics.com";
     const appUrl = Xrm.Utility.getGlobalContext().getClientUrl();
     const lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
     var enterStartDateToProceedText = "Enter a start date to proceed";
@@ -139,7 +136,7 @@ namespace ROM.WorkOrderServiceTask {
         } catch (e) {
             console.warn("Skip flag check failed: " + (e as any).message);
         }
-        if (appUrl === DEV_URL || appUrl === QA_URL || appUrl === INT_URL) {
+        if (appUrl) {
             const formContext = <Form.msdyn_workorderservicetask.Main.Information>eContext.getFormContext();
 
             const serviceTaskStartDateAttr = formContext.getAttribute("ts_servicetaskstartdate");
