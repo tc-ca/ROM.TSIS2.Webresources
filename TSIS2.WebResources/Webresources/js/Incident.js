@@ -50,6 +50,30 @@ var ROM;
             addEmailTemplateOnChange(eContext);
             // Log Rail Safety ownership status to console
             logRailSafetyOwnershipStatus(form);
+            // Hide document tab for Rail Safety team members
+            (function () {
+                return __awaiter(this, void 0, void 0, function () {
+                    var isRailSafety, err_1;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                _a.trys.push([0, 2, , 3]);
+                                return [4 /*yield*/, isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.RAIL_SAFETY)];
+                            case 1:
+                                isRailSafety = _a.sent();
+                                if (isRailSafety) {
+                                    form.ui.tabs.get("case_document_tab").setVisible(false);
+                                }
+                                return [3 /*break*/, 3];
+                            case 2:
+                                err_1 = _a.sent();
+                                console.error("Error hiding document tab for Rail Safety:", err_1);
+                                return [3 /*break*/, 3];
+                            case 3: return [2 /*return*/];
+                        }
+                    });
+                });
+            })();
             switch (form.ui.getFormType()) {
                 case 1:
                     setRegion(eContext);
@@ -94,7 +118,7 @@ var ROM;
             // Lock fields if there are associated WOs OR if user is not Rail Safety Admin
             (function () {
                 return __awaiter(this, void 0, void 0, function () {
-                    var isRailSafetyAdmin, shouldLock_1, err_1;
+                    var isRailSafetyAdmin, shouldLock_1, err_2;
                     return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0:
@@ -123,8 +147,8 @@ var ROM;
                                 });
                                 return [3 /*break*/, 3];
                             case 2:
-                                err_1 = _a.sent();
-                                console.error("Error checking Rail Safety admin team membership:", err_1);
+                                err_2 = _a.sent();
+                                console.error("Error checking Rail Safety admin team membership:", err_2);
                                 // Fallback: lock fields on error
                                 form.getControl("ovs_region").setDisabled(true);
                                 form.getControl("ts_country").setDisabled(true);
