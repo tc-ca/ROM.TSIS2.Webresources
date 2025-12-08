@@ -845,49 +845,6 @@ async function isUserInTeamByEnvVar(teamSchemaName) {
 }
 
 /**
- * If user belongs to that team (env-var GUID), set owner to the team and auto-save.
- * @param {object} formContext - The form context
- * @param {string} teamSchemaName - The environment variable schema name for the team GUID
- * @returns {Promise<void>}
- */
-async function setOwnerToTeamAndSave(formContext, teamSchemaName) {
-  try {
-    var isMember = await isUserInTeamByEnvVar(teamSchemaName);
-    if (!isMember) return;
-
-    var teamGuid = await getEnvironmentVariableValue(teamSchemaName);
-    if (!teamGuid) return;
-
-    var ownerAttribute = formContext.getAttribute("ownerid");
-    var currentOwner = ownerAttribute.getValue();
-
-    if (currentOwner && currentOwner[0] && currentOwner[0].entityType === "team") {
-      var currentOwnerId = currentOwner[0].id.replace(/[{}]/g, "").toLowerCase();
-      if (currentOwnerId === teamGuid) {
-        return;
-      }
-    }
-
-    var teamName = (await getTeamNameById(teamGuid)) || "";
-    ownerAttribute.setValue([
-      {
-        id: teamGuid,
-        entityType: "team",
-        name: teamName,
-      },
-    ]);
-
-    try {
-      await formContext.data.save();
-    } catch (saveError) {
-      console.error("Error saving team owner:", saveError);
-    }
-  } catch (error) {
-    console.error("Error setting team ownership:", error);
-  }
-}
-
-/**
  * For users in given team: show only tabs in visibleTabs; hide the rest.
  * @param {object} formContext - The form context
  * @param {string} teamSchemaName - The environment variable schema name for the team GUID
