@@ -34,22 +34,11 @@ namespace ROM.Account {
             }
         }
 
-        // Rail Safety: Detect if record is owned by Rail Safety Team and configure tab visibility
-        try {
-            const ownerVal = ownerAttribute?.getValue();
-            if (ownerVal && ownerVal[0] && ownerVal[0].entityType === "team") {
-                const isRailSafetyOwned = await isOwnedByRailSafety(ownerVal);
-                if (isRailSafetyOwned) {
-                    const teamName = await getTeamNameById(ownerVal[0].id);
-                    console.log(`This record belongs to ${teamName}`);
-                }
-            }
+        // Log Rail Safety ownership status to console
+        logRailSafetyOwnershipStatus(form);
 
-            // Show only specific tabs for Rail Safety team members
-            await applyTabVisibilityForTeam(form, TEAM_SCHEMA_NAMES.RAIL_SAFETY, RAIL_SAFETY_VISIBLE_TABS);
-        } catch (e) {
-            console.error("Rail Safety tab/owner check error:", e);
-        }
+        // Show only specific tabs for Rail Safety team members
+        await applyTabVisibilityForTeam(form, TEAM_SCHEMA_NAMES.RAIL_SAFETY, RAIL_SAFETY_VISIBLE_TABS);
 
         //Lock for non Admin users, unless the current user is a member of the ROM Rail Safety Administrator team
         (async function () {
@@ -81,13 +70,27 @@ namespace ROM.Account {
         const ownerValue = form.getAttribute("ownerid").getValue();
         var isAvSec = await isOwnedByAvSec(ownerValue);
         form.ui.tabs.get("tab_Risk").setVisible(isAvSec);
-
-        // Set owner to Rail Safety team if user is a member (on load, then save)
-        await setOwnerToTeamAndSave(form, TEAM_SCHEMA_NAMES.RAIL_SAFETY);
     }
 
-    export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
+    // Flag to prevent re-entry when we manually call save()
+    let _isProcessingRailSafetySave = false;
+
+    /**
+     * OnSave event handler for Account form.
+     * Add any async save logic here that needs to complete before the record saves.
+     * @param eContext - The execution context
+     */
+    export async function onSave(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
         const form = <Form.account.Main.ROMInformation>eContext.getFormContext();
+        const eventArgs = eContext.getEventArgs();
+
+        // Skip if we're in a re-entrant save
+        if (_isProcessingRailSafetySave) {
+            _isProcessingRailSafetySave = false;
+            return;
+        }
+
+        // Synchronous status date logic (runs before async handlers)
         const statusStartDateValue = form.getAttribute("ts_statusstartdate").getValue();
         const statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
         if (statusStartDateValue != null) {
@@ -99,6 +102,29 @@ namespace ROM.Account {
             if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
                 form.getAttribute("ts_stakeholderstatus").setValue(ts_stakeholderstatus.Operational);
             }
+        }
+
+        try {
+            // ============================================
+            // Add async save handlers here
+            // Each should return true if it modified the form
+            // ============================================
+            const railSafetyModified = await assignRailSafetyOwnershipOnSave(form);
+            // Add more handlers here as needed:
+            // const otherModified = await someOtherHandler(form);
+
+            const formWasModified = railSafetyModified; // || otherModified || ...
+
+            // If any handler modified the form, we need to re-save
+            if (formWasModified) {
+                eventArgs.preventDefault();
+                _isProcessingRailSafetySave = true;
+                await form.data.save();
+            }
+
+        } catch (error) {
+            _isProcessingRailSafetySave = false;
+            console.error("[Account.onSave] Error:", error);
         }
     }
 
