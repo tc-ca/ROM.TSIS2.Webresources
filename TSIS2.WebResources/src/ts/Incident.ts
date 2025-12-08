@@ -12,6 +12,18 @@ namespace ROM.Incident {
         // Log Rail Safety ownership status to console
         logRailSafetyOwnershipStatus(form);
 
+        // Hide document tab for Rail Safety team members
+        (async function () {
+            try {
+                const isRailSafety = await isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.RAIL_SAFETY);
+                if (isRailSafety) {
+                    form.ui.tabs.get("case_document_tab").setVisible(false);
+                }
+            } catch (err) {
+                console.error("Error hiding document tab for Rail Safety:", err);
+            }
+        })();
+
         switch (form.ui.getFormType()) {
             case 1:
                 setRegion(eContext);
