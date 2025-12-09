@@ -418,29 +418,45 @@ function exportWorkOrder(primaryControl) {
   );
 }
 
+/// <summary>
+/// Opens a lookup dialog to add users to the Access Team of a Work Order or
+/// Unplanned Work Order.
+/// Detects the entity type, selects the correct Team Template, filters out users
+/// already in the team, and calls the custom action ts_AddUserToAccessTeam for
+/// each selected user. Refreshes the subgrid when done.
+/// </summary>
+/// <remarks>
+/// Supports msdyn_workorder and ts_unplannedworkorder.
+/// Filters out existing team members, the owner, and applies inspector-team rules.
+/// </remarks
 function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, selectedControl) {
-  const formContext = primaryControl;
+    const formContext = primaryControl;
+    const currentWorkOrderRecordOwnerId = formContext.getAttribute("ownerid").getValue()[0].id.replace(/({|})/g, "");
+    const parentEntityName = formContext.data.entity.getEntityName();
 
-  const userId = Xrm.Utility.getGlobalContext().userSettings.userId;
-  const currentWorkOrderRecordOwnerId = Xrm.Page.ui.formContext.getAttribute("ownerid").getValue()[0].id;
-  const teamTemplateId = "bddf1d45-706d-ec11-8f8e-0022483da5aa";
-  // Determine the incident type (fallback from msdyn_primaryincidenttype (WO) to ts_primaryincidenttype (Unplanned WO))
-  let incidentTypeId = null;
-  let currentWorkOrderRecordId = null;
-  const primaryIncidentAttr = formContext.getAttribute("msdyn_primaryincidenttype");
-  if (primaryIncidentAttr && primaryIncidentAttr.getValue() && primaryIncidentAttr.getValue().length > 0) {
-    incidentTypeId = primaryIncidentAttr.getValue()[0].id.replace(/({|})/g, "");
-    currentWorkOrderRecordId = formContext.data.entity.getId().replace(/({|})/g, "");
-  } else {
-    const fallbackIncidentAttr = formContext.getAttribute("ts_primaryincidenttype");
-    if (fallbackIncidentAttr && fallbackIncidentAttr.getValue() && fallbackIncidentAttr.getValue().length > 0) {
-      incidentTypeId = fallbackIncidentAttr.getValue()[0].id.replace(/({|})/g, "");
-      const tsNameAttr = formContext.getAttribute("ts_workorder");
-      if (tsNameAttr && tsNameAttr.getValue() && tsNameAttr.getValue().length > 0) {
-        currentWorkOrderRecordId = tsNameAttr.getValue()[0].id.replace(/({|})/g, "");
-      }
+    let teamTemplateId = null;
+    let incidentTypeId = null;
+    let currentWorkOrderRecordId = null;
+    let incidentTypeAttr = null;
+
+    if (parentEntityName === "msdyn_workorder") {
+        incidentTypeAttr = formContext.getAttribute("msdyn_primaryincidenttype");
+
+        if (incidentTypeAttr?.getValue()?.length > 0) {
+            incidentTypeId = incidentTypeAttr.getValue()[0].id.replace(/({|})/g, "");
+            currentWorkOrderRecordId = formContext.data.entity.getId().replace(/({|})/g, "");
+        }
+        teamTemplateId = "bddf1d45-706d-ec11-8f8e-0022483da5aa"; // Work Order Access Team Template
     }
-  }
+    else if (parentEntityName === "ts_unplannedworkorder") {
+        incidentTypeAttr = formContext.getAttribute("ts_primaryincidenttype");
+
+        if (incidentTypeAttr?.getValue()?.length > 0) {
+            incidentTypeId = incidentTypeAttr.getValue()[0].id.replace(/({|})/g, "");
+            currentWorkOrderRecordId = formContext.data.entity.getId().replace(/({|})/g, "");
+        }
+        teamTemplateId = "8d50ad8f-dfb0-f011-bbd3-7c1e52549bb6"; // Unplanned Work Order Access Team Template
+    }
 
   //Identify WO (ISSO or AvSec) with the activity type field
   Xrm.WebApi.retrieveRecord("msdyn_incidenttype", incidentTypeId, "?$select=_ownerid_value").then(async function (
@@ -457,11 +473,37 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
         '<condition entityname="aa" attribute="name" operator="like" value="Aviation%Inspectors" />';
     } else if (isISSO) {
       inspectorTeamConditions = '<condition entityname="aa" attribute="name" operator="eq" value="ISSO%Inspectors" />';
-    }
+      }
+
+      let entityName = parentEntityName;
+      let entityNameId= parentEntityName + "id";
+      let alreadyExistingUsersInAccessTeamFetchXML =
+          `<fetch>
+        <entity name="systemuser">
+            <attribute name="systemuserid"/>
+            <link-entity name="teammembership" from="systemuserid" to="systemuserid" link-type="inner" intersect="true">
+                <link-entity name="team" from="teamid" to="teamid" link-type="inner">
+                    <link-entity name="teamtemplate" from="teamtemplateid" to="teamtemplateid" link-type="inner">
+                        <attribute name="teamtemplateid"/>
+                        <filter>
+                            <condition attribute="teamtemplateid" operator="eq" value="${teamTemplateId}"/>
+                        </filter>
+                    </link-entity>
+                    <link-entity name="principalobjectaccess" from="principalid" to="teamid" link-type="inner">
+                        <link-entity name="${entityName}" from="${entityNameId}" to="objectid" link-type="inner">
+                            <attribute name="${entityNameId}"/>
+                            <filter>
+                                <condition attribute="${entityNameId}" operator="eq" value="${currentWorkOrderRecordId}"/>
+                            </filter>
+                        </link-entity>
+                    </link-entity>
+                </link-entity>
+            </link-entity>
+        </entity>
+    </fetch>`;
 
     let alreadyExistingUsersInAccessTeamCondition;
-    const alreadyExistingUsersInAccessTeamFetchXML = `<fetch><entity name="systemuser"><attribute name="systemuserid"/><link-entity name="teammembership" from="systemuserid" to="systemuserid" link-type="inner" intersect="true"><link-entity name="team" from="teamid" to="teamid" link-type="inner"><link-entity name="teamtemplate" from="teamtemplateid" to="teamtemplateid" link-type="inner"><attribute name="teamtemplateid"/><filter><condition attribute="teamtemplateid" operator="eq" value="${teamTemplateId}"/></filter></link-entity><link-entity name="principalobjectaccess" from="principalid" to="teamid" link-type="inner"><link-entity name="msdyn_workorder" from="msdyn_workorderid" to="objectid" link-type="inner"><attribute name="msdyn_workorderid"/><filter><condition attribute="msdyn_workorderid" operator="eq" value="${currentWorkOrderRecordId}"/></filter></link-entity></link-entity></link-entity></link-entity></entity></fetch>`;
-
+ 
     Xrm.WebApi.retrieveMultipleRecords(
       "systemuser",
       "?fetchXml=" + encodeURIComponent(alreadyExistingUsersInAccessTeamFetchXML)
@@ -495,63 +537,64 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
             },
           ],
         };
+        // Add selected user(s) to Work Order via custom action
+        Xrm.Utility.lookupObjects(lookupOptions).then(async function (result) {
 
-        //Add selected user(s) to the WO team
-        Xrm.Utility.lookupObjects(lookupOptions).then(
-          function (result) {
-            for (var i = 0; i < result.length; i++) {
-              var req = new XMLHttpRequest();
-              req.open(
-                "POST",
-                formContext.context.getClientUrl() +
-                  "/api/data/v9.0/" +
-                  "systemusers" +
-                  "(" +
-                  result[i].id.replace(/({|})/g, "") +
-                  ")" +
-                  "/Microsoft.Dynamics.CRM.AddUserToRecordTeam",
-                i != 0
-              );
+            // Build list of promises
+            const requests = [];
 
-              req.setRequestHeader("Content-Type", "application/json");
-              req.setRequestHeader("Accept", "application/json");
-              req.setRequestHeader("OData-MaxVersion", "4.0");
-              req.setRequestHeader("OData-Version", "4.0");
+            for (let i = 0; i < result.length; i++) {
 
-              let payload = {
-                entity: {
-                  "@odata.type": "Microsoft.Dynamics.CRM.systemuser",
-                  systemuserid: result[i].id.replace(/({|})/g, ""),
-                },
-                Record: {
-                  "@odata.type": "Microsoft.Dynamics.CRM.msdyn_workorder",
-                  msdyn_workorderid: currentWorkOrderRecordId,
-                },
-                TeamTemplate: {
-                  "@odata.type": "Microsoft.Dynamics.CRM.teamtemplate",
-                  teamtemplateid: "bddf1d45-706d-ec11-8f8e-0022483da5aa",
-                },
-              };
+                requests.push(new Promise((resolve, reject) => {
 
-              req.onreadystatechange = function () {
-                if (this.readyState === 4) {
-                  req.onreadystatechange = null;
-                  if (this.status === 200) {
-                  } else {
-                    var alertStrings = { text: req.status + " " + req.responseText };
-                    var alertOptions = { height: 120, width: 260 };
-                    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () {});
-                  }
-                }
-              };
-              req.send(JSON.stringify(payload));
+                    var userId = result[i].id.replace(/({|})/g, "");
+
+                    var payload = {
+                        Record: {
+                            "@odata.type": `Microsoft.Dynamics.CRM.${parentEntityName}`,
+                            [`${parentEntityName}id`]: currentWorkOrderRecordId
+                        },
+                        TeamTemplate: {
+                            "@odata.type": "Microsoft.Dynamics.CRM.teamtemplate",
+                            teamtemplateid: teamTemplateId
+                        }
+                    };
+
+                    var req = new XMLHttpRequest();
+                    req.open(
+                        "POST",
+                        formContext.context.getClientUrl() +
+                        "/api/data/v9.0/systemusers(" + userId + ")/Microsoft.Dynamics.CRM.ts_AddUserToAccessTeam",
+                        true
+                    );
+                    req.setRequestHeader("Content-Type", "application/json");
+                    req.setRequestHeader("Accept", "application/json");
+                    req.setRequestHeader("OData-MaxVersion", "4.0");
+                    req.setRequestHeader("OData-Version", "4.0");
+
+                    req.onreadystatechange = function () {
+                        if (this.readyState === 4) {
+                            req.onreadystatechange = null;
+
+                            if (this.status === 200 || this.status === 204) {
+                                console.log(`User ${userId} added successfully.`);
+                                resolve(); // Mark request as complete
+                            } else {
+                                var alertStrings = { text: this.status + " " + this.responseText };
+                                var alertOptions = { height: 120, width: 260 };
+                                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+                                reject(); // mark failure
+                            }
+                        }
+                    };
+                    req.send(JSON.stringify(payload));
+                }));
             }
+            await Promise.all(requests);
             selectedControl.refresh();
-          },
-          function (error) {
+        }, function (error) {
             showErrorMessageAlert(error);
-          }
-        );
+        });
       },
       function (error) {
         console.log(error.message);
