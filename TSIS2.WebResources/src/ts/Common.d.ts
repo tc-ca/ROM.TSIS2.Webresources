@@ -32,3 +32,5 @@ declare function getTeamNameById(teamId: string): Promise<string | null>;
 declare function applyTabVisibilityForTeam(formContext: any, teamSchemaName: string, visibleTabs: string[]): Promise<void>;
 declare function assignRailSafetyOwnershipOnSave(formContext: any): Promise<boolean>;
 declare function logRailSafetyOwnershipStatus(formContext: any): Promise<void>;
+declare function getModelDrivenAppIdFromParams(): string | null;
+declare function isUserUsingRailSafetyApp(): boolean;

@@ -19,6 +19,11 @@ const BU_SCHEMA_NAMES = {
   AVIATION_SECURITY_INTERNATIONAL_DEV: "ts_AviationSecurityInternationalBusinessUnitGUID_DEV",
 };
 
+// Model Driven App Names
+const MDA_NAMES = {
+    ROM_RAIL_SAFETY: "ts_ROMRailSafetyAppId"
+}
+
 function userHasRole(rolesName) {
   var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
   var hasRole = false;
@@ -926,3 +931,40 @@ async function logRailSafetyOwnershipStatus(formContext) {
     console.error("Error checking Rail Safety ownership:", error);
   }
 }
+
+/**
+ * Gets the Model-Driven App ID from the URL parameters.
+ * @returns {Promise<string|null>} The Model-Driven App ID or null if not found}
+ */
+async function getModelDrivenAppIdFromParams() {
+    try {
+        // ALWAYS use window.top — not window — to get the shell URL
+        const topUrl = new URL(window.top.location.href);
+        const appId = topUrl.searchParams.get("appid");
+
+        if (!appId) return null;
+
+        // Strip braces and normalize
+        return appId.replace(/[{}]/g, "").toLowerCase();
+
+    } catch (error) {
+        console.error("Error retrieving Model-Driven App ID:", error);
+        return null;
+    }
+}
+
+/**
+ * Determines if the current user is using the Rail Safety App.
+ * @returns {Promise<boolean>} True if the user is using the Rail Safety App}
+ */
+async function isUserUsingRailSafetyApp() {
+    try {
+        const appId = await getModelDrivenAppIdFromParams();
+        const railSafetyAppId = await getEnvironmentVariableValue(MDA_NAMES.ROM_RAIL_SAFETY);
+        if (!appId || !railSafetyAppId) return false;
+        return appId === railSafetyAppId;
+    } catch (error) {
+        console.error("Error checking Rail Safety App usage:", error);
+        return false;
+    }
+})
