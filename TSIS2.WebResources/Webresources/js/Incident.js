@@ -48,6 +48,32 @@ var ROM;
             //Set required fields
             form.getAttribute("msdyn_functionallocation").setRequiredLevel("required");
             addEmailTemplateOnChange(eContext);
+            // Log Rail Safety ownership status to console
+            logRailSafetyOwnershipStatus(form);
+            // Hide document tab for Rail Safety team members
+            (function () {
+                return __awaiter(this, void 0, void 0, function () {
+                    var isRailSafety, err_1;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                _a.trys.push([0, 2, , 3]);
+                                return [4 /*yield*/, isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.RAIL_SAFETY)];
+                            case 1:
+                                isRailSafety = _a.sent();
+                                if (isRailSafety) {
+                                    form.ui.tabs.get("case_document_tab").setVisible(false);
+                                }
+                                return [3 /*break*/, 3];
+                            case 2:
+                                err_1 = _a.sent();
+                                console.error("Error hiding document tab for Rail Safety:", err_1);
+                                return [3 /*break*/, 3];
+                            case 3: return [2 /*return*/];
+                        }
+                    });
+                });
+            })();
             switch (form.ui.getFormType()) {
                 case 1:
                     setRegion(eContext);
@@ -73,7 +99,15 @@ var ROM;
             }
             if (form.ui.getFormType() == 1 || form.ui.getFormType() == 2) {
                 if (ownerControl != null) {
-                    ownerControl.setEntityTypes(["systemuser"]);
+                    // Only allow team ownership if user is in Rail Safety Team
+                    isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.RAIL_SAFETY).then(function (isRailSafety) {
+                        if (isRailSafety) {
+                            ownerControl.setEntityTypes(["systemuser", "team"]);
+                        }
+                        else {
+                            ownerControl.setEntityTypes(["systemuser"]);
+                        }
+                    });
                     var defaultViewId = "29bd662e-52e7-ec11-bb3c-0022483d86ce";
                     ownerControl.setDefaultView(defaultViewId);
                 }
@@ -81,15 +115,51 @@ var ROM;
             // Lock some fields if there are associated WOs
             var fetchXML = "<fetch> <entity name=\"incident\" > <attribute name=\"incidentid\" /> <filter> <condition attribute=\"incidentid\" operator=\"eq\" value=\"".concat(form.data.entity.getId(), "\" /> </filter> <link-entity name=\"msdyn_workorder\" from=\"msdyn_servicerequest\" to=\"incidentid\" /> </entity> </fetch>");
             fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
-            Xrm.WebApi.retrieveMultipleRecords("incident", fetchXML).then(function success(result) {
-                if (result.entities.length > 0) {
-                    form.getControl("ovs_region").setDisabled(true);
-                    form.getControl("ts_country").setDisabled(true);
-                    form.getControl("ts_tradenameid").setDisabled(true);
-                    form.getControl("msdyn_functionallocation").setDisabled(true);
-                }
-            }, function (error) {
-            });
+            // Lock fields if there are associated WOs OR if user is not Rail Safety Admin
+            (function () {
+                return __awaiter(this, void 0, void 0, function () {
+                    var isRailSafetyAdmin, shouldLock_1, err_2;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                _a.trys.push([0, 2, , 3]);
+                                return [4 /*yield*/, isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.ROM_RAIL_SAFETY_ADMINISTRATOR)];
+                            case 1:
+                                isRailSafetyAdmin = _a.sent();
+                                shouldLock_1 = !isRailSafetyAdmin;
+                                // Check for associated work orders
+                                Xrm.WebApi.retrieveMultipleRecords("incident", fetchXML).then(function success(result) {
+                                    var hasAssociatedWOs = result.entities.length > 0;
+                                    if (hasAssociatedWOs || shouldLock_1) {
+                                        form.getControl("ovs_region").setDisabled(true);
+                                        form.getControl("ts_country").setDisabled(true);
+                                        form.getControl("ts_tradenameid").setDisabled(true);
+                                        form.getControl("msdyn_functionallocation").setDisabled(true);
+                                    }
+                                }, function (error) {
+                                    // On error, apply the admin lock if needed
+                                    if (shouldLock_1) {
+                                        form.getControl("ovs_region").setDisabled(true);
+                                        form.getControl("ts_country").setDisabled(true);
+                                        form.getControl("ts_tradenameid").setDisabled(true);
+                                        form.getControl("msdyn_functionallocation").setDisabled(true);
+                                    }
+                                });
+                                return [3 /*break*/, 3];
+                            case 2:
+                                err_2 = _a.sent();
+                                console.error("Error checking Rail Safety admin team membership:", err_2);
+                                // Fallback: lock fields on error
+                                form.getControl("ovs_region").setDisabled(true);
+                                form.getControl("ts_country").setDisabled(true);
+                                form.getControl("ts_tradenameid").setDisabled(true);
+                                form.getControl("msdyn_functionallocation").setDisabled(true);
+                                return [3 /*break*/, 3];
+                            case 3: return [2 /*return*/];
+                        }
+                    });
+                });
+            })();
             //Hide Associate Evidence for AvSec users
             //Set Overtime field visible for AvSec
             var userBusinessUnitName;
@@ -677,5 +747,39 @@ var ROM;
             }
         }
         Incident.addEmailTemplateOnChange = addEmailTemplateOnChange;
+        /**
+         * OnSave event handler for Case form.
+         * Sets the owner to Rail Safety team for Rail Safety users.
+         * With Async save handler enabled, attribute changes are included in the save.
+         * @param eContext - The execution context
+         */
+        function onSave(eContext) {
+            return __awaiter(this, void 0, void 0, function () {
+                var form, error_1;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            form = eContext.getFormContext();
+                            _a.label = 1;
+                        case 1:
+                            _a.trys.push([1, 3, , 4]);
+                            // Rail Safety ownership assignment
+                            // With Async save handler enabled, attribute changes are included in the save
+                            return [4 /*yield*/, assignRailSafetyOwnershipOnSave(form)];
+                        case 2:
+                            // Rail Safety ownership assignment
+                            // With Async save handler enabled, attribute changes are included in the save
+                            _a.sent();
+                            return [3 /*break*/, 4];
+                        case 3:
+                            error_1 = _a.sent();
+                            console.error("[Incident.onSave] Error:", error_1);
+                            return [3 /*break*/, 4];
+                        case 4: return [2 /*return*/];
+                    }
+                });
+            });
+        }
+        Incident.onSave = onSave;
     })(Incident = ROM.Incident || (ROM.Incident = {}));
 })(ROM || (ROM = {}));
