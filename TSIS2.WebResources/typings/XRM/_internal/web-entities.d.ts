@@ -1136,6 +1136,29 @@ interface ts_msdyn_workorder_ovs_operation_Create extends ts_msdyn_workorder_ovs
 }
 interface ts_msdyn_workorder_ovs_operation_Update extends ts_msdyn_workorder_ovs_operation {
 }
+interface ts_msdyn_workorder_Team_Base extends WebEntity {
+}
+interface ts_msdyn_workorder_Team_Fixed extends WebEntity_Fixed {
+  ts_msdyn_workorder_teamid: string;
+}
+interface ts_msdyn_workorder_Team extends ts_msdyn_workorder_Team_Base, ts_msdyn_workorder_Team_Relationships {
+}
+interface ts_msdyn_workorder_Team_Relationships {
+}
+interface ts_msdyn_workorder_Team_Result extends ts_msdyn_workorder_Team_Base, ts_msdyn_workorder_Team_Relationships {
+}
+interface ts_msdyn_workorder_Team_FormattedResult {
+}
+interface ts_msdyn_workorder_Team_Select {
+}
+interface ts_msdyn_workorder_Team_Expand {
+}
+interface ts_msdyn_workorder_Team_Filter {
+}
+interface ts_msdyn_workorder_Team_Create extends ts_msdyn_workorder_Team {
+}
+interface ts_msdyn_workorder_Team_Update extends ts_msdyn_workorder_Team {
+}
 interface ts_msdyn_workorder_ts_operationcontact_Base extends WebEntity {
 }
 interface ts_msdyn_workorder_ts_operationcontact_Fixed extends WebEntity_Fixed {
@@ -1779,6 +1802,29 @@ interface ts_unplannedworkorder_Filter {
 interface ts_unplannedworkorder_Create extends ts_unplannedworkorder {
 }
 interface ts_unplannedworkorder_Update extends ts_unplannedworkorder {
+}
+interface ts_unplannedworkorder_Team_Base extends WebEntity {
+}
+interface ts_unplannedworkorder_Team_Fixed extends WebEntity_Fixed {
+  ts_unplannedworkorder_teamid: string;
+}
+interface ts_unplannedworkorder_Team extends ts_unplannedworkorder_Team_Base, ts_unplannedworkorder_Team_Relationships {
+}
+interface ts_unplannedworkorder_Team_Relationships {
+}
+interface ts_unplannedworkorder_Team_Result extends ts_unplannedworkorder_Team_Base, ts_unplannedworkorder_Team_Relationships {
+}
+interface ts_unplannedworkorder_Team_FormattedResult {
+}
+interface ts_unplannedworkorder_Team_Select {
+}
+interface ts_unplannedworkorder_Team_Expand {
+}
+interface ts_unplannedworkorder_Team_Filter {
+}
+interface ts_unplannedworkorder_Team_Create extends ts_unplannedworkorder_Team {
+}
+interface ts_unplannedworkorder_Team_Update extends ts_unplannedworkorder_Team {
 }
 interface ts_UserRegistration_Base extends WebEntity {
 }

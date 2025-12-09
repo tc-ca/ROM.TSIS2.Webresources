@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -279,12 +279,12 @@ var ROM;
                             issoBUFilterConditions = '';
                             if (issoBUGUIDs.length > 0) {
                                 if (issoBUGUIDs.length === 1) {
-                                    issoBUFilterConditions = "<condition attribute=\"businessunitid\" operator=\"eq\" value=\"".concat(issoBUGUIDs[0], "\"/>");
+                                    issoBUFilterConditions = "<condition attribute=\"businessunitid\" operator=\"eq\" value=\"" + issoBUGUIDs[0] + "\"/>";
                                 }
                                 else {
                                     issoBUFilterConditions = '<filter type="or">';
                                     for (i = 0; i < issoBUGUIDs.length; i++) {
-                                        issoBUFilterConditions += "<condition attribute=\"businessunitid\" operator=\"eq\" value=\"".concat(issoBUGUIDs[i], "\"/>");
+                                        issoBUFilterConditions += "<condition attribute=\"businessunitid\" operator=\"eq\" value=\"" + issoBUGUIDs[i] + "\"/>";
                                     }
                                     issoBUFilterConditions += '</filter>';
                                 }
