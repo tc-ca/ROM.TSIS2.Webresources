@@ -12,6 +12,11 @@ namespace ROM.WorkOrder {
     // EVENTS
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+
+        if (isUserUsingRailSafetyApp()) {
+            setWorkOrderTypeFilteredViewRailSecurity(form);
+        }
+
         const state = form.getAttribute("statecode").getValue() ?? null;
 
         const regionAttribute = form.getAttribute("ts_region");
@@ -86,12 +91,11 @@ namespace ROM.WorkOrder {
             if (userTeams != null && userTeams.entities.length > 0) {
                 for (var i = 0; i < userTeams.entities.length; i++) {
                     if (userTeams.entities[i]["name"].indexOf("International - Inspectors") > 0) {
-                        form.getControl("ovs_rational").setDisabled(false);
-                        break;
-                    }
-                }
-            }
-        });
+                            form.getControl("ovs_rational").setDisabled(false);
+                        }
+                            }
+                        }
+            });
 
         //Keep track of the current system status, to be used when cancelling a status change.
         currentStatus = form.getAttribute("ts_state").getValue();
@@ -2770,5 +2774,17 @@ namespace ROM.WorkOrder {
             .catch(error => {
                 console.error("Error retrieving subgrid users: ", error.message);
             });
+    }
+
+    async function setWorkOrderTypeFilteredViewRailSecurity(form: Form.msdyn_workorder.Main.ROMOversightActivity ): Promise<void> {
+        const railSecurityTeamId = await getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.RAIL_SAFETY);
+
+        // Custom view
+        const viewId = '{4197D34A-2D73-4BED-AB2A-B44799E98C62}';
+        const entityName = "msdyn_workordertype";
+        const viewDisplayName = "Filtered Work Order Types";
+        const fetchXml = '<fetch xmlns:generator="MarkMpn.SQL4CDS"><entity name="msdyn_workordertype"><attribute name="msdyn_workordertypeid" /><attribute name="msdyn_name" /><filter><condition attribute="ownerid" operator="eq" value="' + railSecurityTeamId + '" /></filter></entity></fetch>';
+        const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_workordertypeid"><cell name="msdyn_name" width="200" /></row></grid>';
+        form.getControl("msdyn_workordertype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
     }
 }
