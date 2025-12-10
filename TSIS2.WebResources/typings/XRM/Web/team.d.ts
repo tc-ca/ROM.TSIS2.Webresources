@@ -103,6 +103,7 @@ interface Team_Relationships {
   ts_enforcementaction_team_owningteam?: ts_enforcementaction_Result[] | null;
   ts_infraction_RATEApprovingTeam_team?: ts_infraction_Result[] | null;
   ts_msdyn_functionallocation_AccountableTeam_team?: msdyn_FunctionalLocation_Result[] | null;
+  ts_msdyn_workorder_Team_Team?: msdyn_workorder_Result[] | null;
   ts_operationactivity_accountableteam_team?: ts_OperationActivity_Result[] | null;
   ts_ovs_Finding_NCATApprovingTeam_Team?: ovs_Finding_Result[] | null;
   ts_ovs_Finding_RATEApprovingTeam_Team?: ovs_Finding_Result[] | null;
@@ -111,6 +112,7 @@ interface Team_Relationships {
   ts_team_msdyn_workorder_AccountableTeam?: msdyn_workorder_Result[] | null;
   ts_ts_planningdata_Team_team?: ts_PlanningData_Result[] | null;
   ts_ts_teamplanningdata_Team_team?: ts_TeamPlanningData_Result[] | null;
+  ts_unplannedworkorder_Team_Team?: ts_unplannedworkorder_Result[] | null;
   ts_unplannedworkorder_accountableteam_team?: ts_unplannedworkorder_Result[] | null;
 }
 interface Team extends Team_Base, Team_Relationships {
@@ -296,6 +298,7 @@ interface Team_Expand {
   ts_enforcementaction_team_owningteam: WebExpand<Team_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_enforcementaction_team_owningteam: ts_enforcementaction_Result[] }>;
   ts_infraction_RATEApprovingTeam_team: WebExpand<Team_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_infraction_RATEApprovingTeam_team: ts_infraction_Result[] }>;
   ts_msdyn_functionallocation_AccountableTeam_team: WebExpand<Team_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_msdyn_functionallocation_AccountableTeam_team: msdyn_FunctionalLocation_Result[] }>;
+  ts_msdyn_workorder_Team_Team: WebExpand<Team_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder_Team_Team: msdyn_workorder_Result[] }>;
   ts_operationactivity_accountableteam_team: WebExpand<Team_Expand, ts_OperationActivity_Select, ts_OperationActivity_Filter, { ts_operationactivity_accountableteam_team: ts_OperationActivity_Result[] }>;
   ts_ovs_Finding_NCATApprovingTeam_Team: WebExpand<Team_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_NCATApprovingTeam_Team: ovs_Finding_Result[] }>;
   ts_ovs_Finding_RATEApprovingTeam_Team: WebExpand<Team_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_ovs_Finding_RATEApprovingTeam_Team: ovs_Finding_Result[] }>;
@@ -304,6 +307,7 @@ interface Team_Expand {
   ts_team_msdyn_workorder_AccountableTeam: WebExpand<Team_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_team_msdyn_workorder_AccountableTeam: msdyn_workorder_Result[] }>;
   ts_ts_planningdata_Team_team: WebExpand<Team_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { ts_ts_planningdata_Team_team: ts_PlanningData_Result[] }>;
   ts_ts_teamplanningdata_Team_team: WebExpand<Team_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { ts_ts_teamplanningdata_Team_team: ts_TeamPlanningData_Result[] }>;
+  ts_unplannedworkorder_Team_Team: WebExpand<Team_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { ts_unplannedworkorder_Team_Team: ts_unplannedworkorder_Result[] }>;
   ts_unplannedworkorder_accountableteam_team: WebExpand<Team_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { ts_unplannedworkorder_accountableteam_team: ts_unplannedworkorder_Result[] }>;
 }
 interface Team_FormattedResult {
@@ -428,6 +432,7 @@ interface Team_RelatedMany {
   ts_enforcementaction_team_owningteam: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_infraction_RATEApprovingTeam_team: WebMappingRetrieve<ts_infraction_Select,ts_infraction_Expand,ts_infraction_Filter,ts_infraction_Fixed,ts_infraction_Result,ts_infraction_FormattedResult>;
   ts_msdyn_functionallocation_AccountableTeam_team: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  ts_msdyn_workorder_Team_Team: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_operationactivity_accountableteam_team: WebMappingRetrieve<ts_OperationActivity_Select,ts_OperationActivity_Expand,ts_OperationActivity_Filter,ts_OperationActivity_Fixed,ts_OperationActivity_Result,ts_OperationActivity_FormattedResult>;
   ts_ovs_Finding_NCATApprovingTeam_Team: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ovs_Finding_RATEApprovingTeam_Team: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
@@ -436,6 +441,7 @@ interface Team_RelatedMany {
   ts_team_msdyn_workorder_AccountableTeam: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_ts_planningdata_Team_team: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   ts_ts_teamplanningdata_Team_team: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
+  ts_unplannedworkorder_Team_Team: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
   ts_unplannedworkorder_accountableteam_team: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
