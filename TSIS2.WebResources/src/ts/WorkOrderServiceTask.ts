@@ -143,7 +143,7 @@ namespace ROM.WorkOrderServiceTask {
         const entityId = formContext.data.entity.getId();
         const entityIdClean = entityId.replace(/{|}/g, "");
 
-        const openExistingWorkspaceDialog = (workspaceId: string) => {
+        const openExistingWorkspace = (workspaceId: string) => {
             const pageInput: any = {
                 pageType: "entityrecord",
                 entityName: "ts_workorderservicetaskworkspace",
@@ -161,53 +161,54 @@ namespace ROM.WorkOrderServiceTask {
             );
         };
 
-        const openWorkspaceCreateDialog = () => {
-            const entityName = formContext.getAttribute("msdyn_name")?.getValue();
-            const workOrderLookup = formContext.getAttribute("msdyn_workorder")?.getValue();
-            const workOrderId = workOrderLookup && workOrderLookup.length > 0 ? workOrderLookup[0].id.replace(/{|}/g, "") : null;
-            const workOrderName = workOrderLookup && workOrderLookup.length > 0 ? workOrderLookup[0].name : null;
-            const taskTypeLookup = formContext.getAttribute("msdyn_tasktype")?.getValue();
-            const taskTypeId = taskTypeLookup && taskTypeLookup.length > 0 ? taskTypeLookup[0].id.replace(/{|}/g, "") : null;
-            const taskTypeName = taskTypeLookup && taskTypeLookup.length > 0 ? taskTypeLookup[0].name : null;
+        // Replaced with createWorkOrderServiceTaskWorkspaceFromWOST function
+        //const openWorkspaceCreate = () => {
+        //    const entityName = formContext.getAttribute("msdyn_name")?.getValue();
+        //    const workOrderLookup = formContext.getAttribute("msdyn_workorder")?.getValue();
+        //    const workOrderId = workOrderLookup && workOrderLookup.length > 0 ? workOrderLookup[0].id.replace(/{|}/g, "") : null;
+        //    const workOrderName = workOrderLookup && workOrderLookup.length > 0 ? workOrderLookup[0].name : null;
+        //    const taskTypeLookup = formContext.getAttribute("msdyn_tasktype")?.getValue();
+        //    const taskTypeId = taskTypeLookup && taskTypeLookup.length > 0 ? taskTypeLookup[0].id.replace(/{|}/g, "") : null;
+        //    const taskTypeName = taskTypeLookup && taskTypeLookup.length > 0 ? taskTypeLookup[0].name : null;
 
-            const pageInput: any = {
-                pageType: "entityrecord",
-                entityName: "ts_workorderservicetaskworkspace",
-                formType: 2,
-                useQuickCreateForm: true,
-                data: {
-                    ts_name: entityName,
-                    "ts_workorderservicetask@odata.bind": `/msdyn_workorderservicetasks(${entityIdClean})`,
-                    ts_workorder: workOrderId ? {
-                        id: workOrderId,
-                        name: workOrderName,
-                        entityType: "msdyn_workorder"
-                    } : undefined,
-                    ts_tasktype: taskTypeId ? {
-                        id: taskTypeId,
-                        name: taskTypeName,
-                        entityType: "msdyn_servicetasktype"
-                    } : undefined
-                },
-                createFromEntity: {
-                    entityType: "msdyn_workorderservicetask",
-                    id: entityId,
-                    name: entityName
-                }
-            };
+        //    const pageInput: any = {
+        //        pageType: "entityrecord",
+        //        entityName: "ts_workorderservicetaskworkspace",
+        //        formType: 2,
+        //        useQuickCreateForm: true,
+        //        data: {
+        //            ts_name: entityName,
+        //            "ts_workorderservicetask@odata.bind": `/msdyn_workorderservicetasks(${entityIdClean})`,
+        //            ts_workorder: workOrderId ? {
+        //                id: workOrderId,
+        //                name: workOrderName,
+        //                entityType: "msdyn_workorder"
+        //            } : undefined,
+        //            ts_tasktype: taskTypeId ? {
+        //                id: taskTypeId,
+        //                name: taskTypeName,
+        //                entityType: "msdyn_servicetasktype"
+        //            } : undefined
+        //        },
+        //        createFromEntity: {
+        //            entityType: "msdyn_workorderservicetask",
+        //            id: entityId,
+        //            name: entityName
+        //        }
+        //    };
 
-            const navigationOptions: Xrm.NavigationOptions = {
-                target: 2,
-                width: { value: 80, unit: "%" },
-                height: { value: 80, unit: "%" },
-                position: 1
-            };
+        //    const navigationOptions: Xrm.NavigationOptions = {
+        //        target: 2,
+        //        width: { value: 80, unit: "%" },
+        //        height: { value: 80, unit: "%" },
+        //        position: 1
+        //    };
 
-            Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
-                () => formContext.ui.close(),
-                (error) => console.error("Error opening create workspace modal: ", error.message)
-            );
-        };
+        //    Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+        //        () => formContext.ui.close(),
+        //        (error) => console.error("Error opening create workspace modal: ", error.message)
+        //    );
+        //};
 
         // Always check first if a related workspace already exists (default case: open it)
         const fetchExisting = [
@@ -226,7 +227,7 @@ namespace ROM.WorkOrderServiceTask {
             .then(result => {
                 if (result.entities && result.entities.length > 0) {
                     // Existing workspace: open it regardless of start date value
-                    openExistingWorkspaceDialog(result.entities[0].ts_workorderservicetaskworkspaceid);
+                    openExistingWorkspace(result.entities[0].ts_workorderservicetaskworkspaceid);
                     return;
                 }
 
@@ -237,23 +238,300 @@ namespace ROM.WorkOrderServiceTask {
                     return;
                 }
 
-                // If no related workspace AND status is In Progress, create new workspace and copy fields
-                const isInProgress = statusReason === 918640004 /* In Progress */;
-                if (isInProgress) {
-                    return;
-                }
-
-                // No existing workspace: create new workspace only if start date is null
-                if (serviceTaskStartDate === null) {
-                    // Create when start date is null
-                    openWorkspaceCreateDialog();
-                } else {
-                    // Offline Mode: Create when start date has value but no workspace exists
-                    openWorkspaceCreateDialog();
+                else {
+                    // Create new workspace and copy fields
+                    createWorkOrderServiceTaskWorkspaceFromWOST(formContext, entityIdClean, lang);
                 }
             })
             .catch(err => console.error("Error querying existing workspace: ", err.message));
+    }
+    function createWorkOrderServiceTaskWorkspaceFromWOST(formContext: any, currentWOSTId: string, lang: number): void {
+        // Retrieve work order service task data to transfer fields
+        Xrm.WebApi.retrieveRecord("msdyn_workorderservicetask", currentWOSTId,
+            "?$select=msdyn_name,_msdyn_tasktype_value,ts_servicetaskstartdate,ts_servicetaskenddate,msdyn_percentcomplete,statuscode,ts_mandatory,ovs_questionnairedefinition,ovs_questionnaireresponse,ts_fromoffline,ts_location,ts_flightnumber,_ts_origin_value,_ts_destination_value,ts_flightcategory,ts_flighttype,ts_reportdetails,ts_scheduledtime,ts_actualtime,ts_paxonboard,ts_paxboarded,ts_cbonboard,ts_cbloaded,ts_aircraftmark,ts_aircraftmanufacturer,ts_aircraftmodel,ts_aircraftmodelother,ts_brandname,_ts_aocoperation_value,_ts_aocstakeholder_value,_ts_aocoperationtype_value,_ts_aocsite_value,_ts_passengerservices_value,_ts_rampservices_value,_ts_cargoservices_value,_ts_cateringservices_value,_ts_groomingservices_value,_ts_securitysearchservices_value,_ts_accesscontrolsecurityservices_value,_ts_othersecurityservices_value,ts_accesscontrol,_msdyn_workorder_value,statecode"
+        ).then(
+            function success(wost) {
+                // Prepare data for creating the workspace record
+                var workspaceData: any = {
+                    ts_name: wost.msdyn_name
+                };
 
+                // Add lookup fields only if they exist
+                // Core Fields
+                if (currentWOSTId) {
+                    workspaceData["ts_WorkOrderServiceTask@odata.bind"] = "/msdyn_workorderservicetasks(" + currentWOSTId + ")";
+                }
+                if (wost._msdyn_tasktype_value) {
+                    workspaceData["ts_TaskType@odata.bind"] = "/msdyn_servicetasktypes(" + wost._msdyn_tasktype_value + ")";
+                }
+                if (wost._msdyn_workorder_value) {
+                    workspaceData["ts_WorkOrder@odata.bind"] = "/msdyn_workorders(" + wost._msdyn_workorder_value + ")";
+                }
+
+                // Oversight/Flight Fields - Lookups
+                if (wost._ts_origin_value) {
+                    workspaceData["ts_Origin@odata.bind"] = "/msdyn_functionallocations(" + wost._ts_origin_value + ")";
+                }
+                if (wost._ts_destination_value) {
+                    workspaceData["ts_Destination@odata.bind"] = "/msdyn_functionallocations(" + wost._ts_destination_value + ")";
+                }
+
+                // AOC Fields - Lookups
+                if (wost._ts_aocoperation_value) {
+                    workspaceData["ts_AOCOperation@odata.bind"] = "/ovs_operations(" + wost._ts_aocoperation_value + ")";
+                }
+                if (wost._ts_aocstakeholder_value) {
+                    workspaceData["ts_AOCStakeholder@odata.bind"] = "/accounts(" + wost._ts_aocstakeholder_value + ")";
+                }
+                if (wost._ts_aocoperationtype_value) {
+                    workspaceData["ts_AOCOperationType@odata.bind"] = "/ovs_operationtypes(" + wost._ts_aocoperationtype_value + ")";
+                }
+                if (wost._ts_aocsite_value) {
+                    workspaceData["ts_AOCSite@odata.bind"] = "/msdyn_functionallocations(" + wost._ts_aocsite_value + ")";
+                }
+
+                // Service Provider Fields - Lookups
+                if (wost._ts_passengerservices_value) {
+                    workspaceData["ts_PassengerServices@odata.bind"] = "/accounts(" + wost._ts_passengerservices_value + ")";
+                }
+                if (wost._ts_rampservices_value) {
+                    workspaceData["ts_RampServices@odata.bind"] = "/accounts(" + wost._ts_rampservices_value + ")";
+                }
+                if (wost._ts_cargoservices_value) {
+                    workspaceData["ts_CargoServices@odata.bind"] = "/accounts(" + wost._ts_cargoservices_value + ")";
+                }
+                if (wost._ts_cateringservices_value) {
+                    workspaceData["ts_CateringServices@odata.bind"] = "/accounts(" + wost._ts_cateringservices_value + ")";
+                }
+                if (wost._ts_groomingservices_value) {
+                    workspaceData["ts_GroomingServices@odata.bind"] = "/accounts(" + wost._ts_groomingservices_value + ")";
+                }
+                if (wost._ts_securitysearchservices_value) {
+                    workspaceData["ts_SecuritySearchServices@odata.bind"] = "/accounts(" + wost._ts_securitysearchservices_value + ")";
+                }
+                if (wost._ts_accesscontrolsecurityservices_value) {
+                    workspaceData["ts_AccessControlSecurityServices@odata.bind"] = "/accounts(" + wost._ts_accesscontrolsecurityservices_value + ")";
+                }
+                if (wost._ts_othersecurityservices_value) {
+                    workspaceData["ts_OtherSecurityServices@odata.bind"] = "/accounts(" + wost._ts_othersecurityservices_value + ")";
+                }
+
+                // Add simple fields only if they exist
+                // Core Fields
+                if (wost.ts_servicetaskstartdate) {
+                    workspaceData.ts_workorderservicetaskstartdate = wost.ts_servicetaskstartdate;
+                }
+                if (wost.ts_servicetaskenddate) {
+                    workspaceData.ts_workorderservicetaskenddate = wost.ts_servicetaskenddate;
+                }
+                if (wost.msdyn_percentcomplete !== null && wost.msdyn_percentcomplete !== undefined) {
+                    workspaceData.ts_percentcomplete = wost.msdyn_percentcomplete;
+                }
+                // Map WOST status code to Workspace status code
+                if (wost.statuscode !== null && wost.statuscode !== undefined) {
+                    let workspaceStatusCode;
+                    switch (wost.statuscode) {
+                        case 918640002: // WOST Complete
+                            workspaceStatusCode = 741130001; // Workspace Complete
+                            break;
+                        case 918640004: // WOST In Progress
+                            workspaceStatusCode = 741130002; // Workspace In Progress
+                            break;
+                        case 918640005: // WOST New
+                            workspaceStatusCode = 741130003; // Workspace New
+                            break;
+                        default:
+                            workspaceStatusCode = wost.statuscode; // Keep original if no mapping found
+                            break;
+                    }
+                    workspaceData.statuscode = workspaceStatusCode;
+                }
+                if (wost.ts_mandatory !== null && wost.ts_mandatory !== undefined) {
+                    workspaceData.ts_mandatory = wost.ts_mandatory;
+                }
+                if (wost.ovs_questionnairedefinition) {
+                    workspaceData.ts_questionnairedefinition = wost.ovs_questionnairedefinition;
+                }
+                if (wost.ovs_questionnaireresponse) {
+                    workspaceData.ts_questionnaireresponse = wost.ovs_questionnaireresponse;
+                }
+                if (wost.ts_fromoffline !== null && wost.ts_fromoffline !== undefined) {
+                    workspaceData.ts_fromoffline = wost.ts_fromoffline;
+                }
+
+                // Oversight/Flight Fields
+                if (wost.ts_location) {
+                    workspaceData.ts_location = wost.ts_location;
+                }
+                if (wost.ts_flightnumber) {
+                    workspaceData.ts_flightnumber = wost.ts_flightnumber;
+                }
+                if (wost.ts_flightcategory !== null && wost.ts_flightcategory !== undefined) {
+                    workspaceData.ts_flightcategory = wost.ts_flightcategory;
+                }
+                if (wost.ts_flighttype !== null && wost.ts_flighttype !== undefined) {
+                    workspaceData.ts_flighttype = wost.ts_flighttype;
+                }
+                if (wost.ts_reportdetails) {
+                    workspaceData.ts_reportdetails = wost.ts_reportdetails;
+                }
+                if (wost.ts_scheduledtime) {
+                    workspaceData.ts_scheduledtime = wost.ts_scheduledtime;
+                }
+                if (wost.ts_actualtime) {
+                    workspaceData.ts_actualtime = wost.ts_actualtime;
+                }
+
+                // Passenger/Cargo Fields
+                if (wost.ts_paxonboard) {
+                    workspaceData.ts_paxonboard = wost.ts_paxonboard;
+                }
+                if (wost.ts_paxboarded) {
+                    workspaceData.ts_paxboarded = wost.ts_paxboarded;
+                }
+                if (wost.ts_cbonboard) {
+                    workspaceData.ts_cbonboard = wost.ts_cbonboard;
+                }
+                if (wost.ts_cbloaded) {
+                    workspaceData.ts_cbloaded = wost.ts_cbloaded;
+                }
+
+                // Aircraft Fields
+                if (wost.ts_aircraftmark) {
+                    workspaceData.ts_aircraftmark = wost.ts_aircraftmark;
+                }
+                if (wost.ts_aircraftmanufacturer !== null && wost.ts_aircraftmanufacturer !== undefined) {
+                    workspaceData.ts_aircraftmanufacturer = wost.ts_aircraftmanufacturer;
+                }
+                if (wost.ts_aircraftmodel !== null && wost.ts_aircraftmodel !== undefined) {
+                    workspaceData.ts_aircraftmodel = wost.ts_aircraftmodel;
+                }
+                if (wost.ts_aircraftmodelother) {
+                    workspaceData.ts_aircraftmodelother = wost.ts_aircraftmodelother;
+                }
+                if (wost.ts_brandname !== null && wost.ts_brandname !== undefined) {
+                    workspaceData.ts_brandname = wost.ts_brandname;
+                }
+
+                // Questionnaire Access Control
+                if (wost.ts_accesscontrol !== null && wost.ts_accesscontrol !== undefined) {
+                    workspaceData.ts_accesscontrol = wost.ts_accesscontrol;
+                }
+
+                // State Code
+                if (wost.statecode !== null && wost.statecode !== undefined) {
+                    workspaceData.statecode = wost.statecode;
+                }
+
+                const ownerBindingPromise = getWorkOrderOwnerBinding(wost._msdyn_workorder_value);
+
+                ownerBindingPromise.then(ownerBinding => {
+                    if (ownerBinding) {
+                        workspaceData["ownerid@odata.bind"] = ownerBinding;
+                    }
+                }).catch(error => {
+                    console.warn("Unable to resolve work order owner binding: ", error);
+                }).then(() => {
+                    // Create the workspace record
+                    Xrm.WebApi.createRecord("ts_workorderservicetaskworkspace", workspaceData).then(
+                        function success(result) {
+                            console.log("Work Order Service Task Workspace created successfully with ID: " + result.id);
+
+                            // Open the saved record in modal
+                            const pageInput: any = {
+                                pageType: "entityrecord",
+                                entityName: "ts_workorderservicetaskworkspace",
+                                entityId: result.id,
+                                formType: 2 // Edit form
+                            };
+
+                            const navigationOptions: Xrm.NavigationOptions = {
+                                target: 2,
+                                width: { value: 80, unit: "%" },
+                                height: { value: 80, unit: "%" },
+                                position: 1
+                            };
+
+                            Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+                                () => formContext.ui.close(),
+                                (error) => console.error("Error opening saved workspace:", error.message)
+                            );
+                        },
+                        function error(err) {
+                            console.error("Error creating workspace:", err);
+                            const alertStrings = {
+                                text: (lang == 1036) ?
+                                    "Erreur lors de la création de l'espace de travail. Veuillez contacter l'administrateur. Détails: " + err.message :
+                                    "Error creating workspace. Please contact administrator. Details: " + err.message,
+                                title: (lang == 1036) ? "Erreur de création" : "Creation Error"
+                            };
+                            const alertOptions = { height: 150, width: 400 };
+                            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+                        }
+                    );
+                });
+            },
+            function error(err) {
+                console.error("Error retrieving work order service task data:", err);
+                const alertStrings = {
+                    text: (lang == 1036) ?
+                        "Erreur lors de la récupération des données de la tâche. Veuillez contacter l'administrateur. Détails: " + err.message :
+                        "Error retrieving work order service task data. Please contact administrator. Details: " + err.message,
+                    title: (lang == 1036) ? "Erreur de récupération" : "Retrieval Error"
+                };
+                const alertOptions = { height: 150, width: 400 };
+                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+            }
+        );
+    }
+
+    function getWorkOrderOwnerBinding(workOrderId: string): Promise<string | null> {
+        if (!workOrderId) {
+            return Promise.resolve(null);
+        }
+
+        const cleanWorkOrderId = workOrderId.replace(/[{}]/g, "");
+        return Xrm.WebApi.retrieveRecord("msdyn_workorder", cleanWorkOrderId, "?$select=_ownerid_value").then(workOrder => {
+            const ownerId = workOrder._ownerid_value;
+            if (!ownerId) {
+                return null;
+            }
+
+            const cleanOwnerId = ownerId.replace(/[{}]/g, "");
+            const lookupLogicalName = workOrder["_ownerid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+            const entitySetName = getEntitySetNameFromLogicalName(lookupLogicalName);
+
+            if (entitySetName) {
+                return `/${entitySetName}(${cleanOwnerId})`;
+            }
+
+            return resolveOwnerBindingByEntityType(cleanOwnerId);
+        });
+    }
+
+    function resolveOwnerBindingByEntityType(ownerId: string): Promise<string | null> {
+        return Xrm.WebApi.retrieveRecord("systemuser", ownerId, "?$select=systemuserid").then(() => {
+            return `/systemusers(${ownerId})`;
+        }).catch(() => {
+            return Xrm.WebApi.retrieveRecord("team", ownerId, "?$select=teamid").then(() => {
+                return `/teams(${ownerId})`;
+            }).catch(() => null);
+        });
+    }
+
+    function getEntitySetNameFromLogicalName(logicalName: string | undefined): string | null {
+        if (!logicalName) {
+            return null;
+        }
+
+        switch (logicalName.toLowerCase()) {
+            case "systemuser":
+                return "systemusers";
+            case "team":
+                return "teams";
+            default:
+                return `${logicalName.toLowerCase()}s`;
+        }
     }
     function applyMandatoryFieldFromTaskType(eContext) {
         var fc = eContext.getFormContext();
@@ -1440,5 +1718,3 @@ function setAllFieldsDisabled(eContext) {
         }
     });
 }
-
-
