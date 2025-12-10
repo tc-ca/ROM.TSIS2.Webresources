@@ -13,9 +13,15 @@ namespace ROM.WorkOrder {
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
 
-        if (isUserUsingRailSafetyApp()) {
-            setWorkOrderTypeFilteredViewRailSecurity(form);
-        }
+        //Check if user is using Rail Safety App to set filtered view for Work Order Type
+        isUserUsingRailSafetyApp().then(isUsing => {
+            if (isUsing) {
+                setWorkOrderTypeFilteredView(form, true);
+            }
+            else {
+                setWorkOrderTypeFilteredView(form, false);
+            }
+        });
 
         const state = form.getAttribute("statecode").getValue() ?? null;
 
@@ -2776,15 +2782,41 @@ namespace ROM.WorkOrder {
             });
     }
 
-    async function setWorkOrderTypeFilteredViewRailSecurity(form: Form.msdyn_workorder.Main.ROMOversightActivity ): Promise<void> {
+    async function setWorkOrderTypeFilteredView(
+        form: Form.msdyn_workorder.Main.ROMOversightActivity,
+        useRailSafetyTypes: boolean
+    ): Promise<void> {
+
         const railSecurityTeamId = await getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.RAIL_SAFETY);
 
-        // Custom view
-        const viewId = '{4197D34A-2D73-4BED-AB2A-B44799E98C62}';
+        const viewId = useRailSafetyTypes
+            ? '{4197D34A-2D73-4BED-AB2A-B44799E98C62}' // Rail Safety
+            : '{4197D34B-2D73-4BED-AB2C-B44799E98C62}' // Default
+
+        const op = useRailSafetyTypes ? "eq" : "ne";
+
         const entityName = "msdyn_workordertype";
         const viewDisplayName = "Filtered Work Order Types";
-        const fetchXml = '<fetch xmlns:generator="MarkMpn.SQL4CDS"><entity name="msdyn_workordertype"><attribute name="msdyn_workordertypeid" /><attribute name="msdyn_name" /><filter><condition attribute="ownerid" operator="eq" value="' + railSecurityTeamId + '" /></filter></entity></fetch>';
-        const layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_workordertypeid"><cell name="msdyn_name" width="200" /></row></grid>';
-        form.getControl("msdyn_workordertype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+
+        const fetchXml =
+            '<fetch xmlns:generator="MarkMpn.SQL4CDS">' +
+            '  <entity name="msdyn_workordertype">' +
+            '    <attribute name="msdyn_workordertypeid" />' +
+            '    <attribute name="msdyn_name" />' +
+            '    <filter>' +
+            `      <condition attribute="ownerid" operator="${op}" value="${railSecurityTeamId}" />` +
+            '    </filter>' +
+            '  </entity>' +
+            '</fetch>';
+
+        const layoutXml =
+            '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1">' +
+            '  <row name="result" id="msdyn_workordertypeid">' +
+            '    <cell name="msdyn_name" width="200" />' +
+            '  </row>' +
+            '</grid>';
+
+        form.getControl("msdyn_workordertype")
+            .addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
     }
 }
