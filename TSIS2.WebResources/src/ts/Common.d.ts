@@ -33,4 +33,4 @@ declare function applyTabVisibilityForTeam(formContext: any, teamSchemaName: str
 declare function assignRailSafetyOwnershipOnSave(formContext: any): Promise<boolean>;
 declare function logRailSafetyOwnershipStatus(formContext: any): Promise<void>;
 declare function getModelDrivenAppIdFromParams(): string | null;
-declare function isUserUsingRailSafetyApp(): boolean;
+declare function isUserUsingRailSafetyApp(): Promise<boolean>;

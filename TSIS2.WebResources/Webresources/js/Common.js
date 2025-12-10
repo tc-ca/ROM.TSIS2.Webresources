@@ -936,7 +936,7 @@ async function logRailSafetyOwnershipStatus(formContext) {
  * Gets the Model-Driven App ID from the URL parameters.
  * @returns {Promise<string|null>} The Model-Driven App ID or null if not found}
  */
-async function getModelDrivenAppIdFromParams() {
+function getModelDrivenAppIdFromParams() {
     try {
         // ALWAYS use window.top — not window — to get the shell URL
         const topUrl = new URL(window.top.location.href);
@@ -959,7 +959,7 @@ async function getModelDrivenAppIdFromParams() {
  */
 async function isUserUsingRailSafetyApp() {
     try {
-        const appId = await getModelDrivenAppIdFromParams();
+        const appId = getModelDrivenAppIdFromParams();
         const railSafetyAppId = await getEnvironmentVariableValue(MDA_NAMES.ROM_RAIL_SAFETY);
         if (!appId || !railSafetyAppId) return false;
         return appId === railSafetyAppId;
@@ -967,4 +967,4 @@ async function isUserUsingRailSafetyApp() {
         console.error("Error checking Rail Safety App usage:", error);
         return false;
     }
-})
+}
