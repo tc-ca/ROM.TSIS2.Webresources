@@ -64,7 +64,7 @@ function isROMRole() {
 
 function isSystemAdministrator() {
   var roles = Xrm.Utility.getGlobalContext().userSettings.roles;
-  var enable = true;
+  var enable = false;
   roles.forEach(function (item) {
     if (item.name == "System Administrator" || isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.ROM_RAIL_SAFETY_ADMINISTRATOR)) enable = true;
   });
