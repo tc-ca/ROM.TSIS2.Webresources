@@ -61,6 +61,7 @@ interface ts_WorkOrderServiceTaskWorkspace_Relationships {
   ts_WorkOrderServiceTaskWorkspace_qm_rclegislation_qm_rclegislation?: qm_rclegislation_Result[] | null;
   ts_WorkOrderServiceTaskWorkspace_ts_WorkOrderServiceTaskWorkspace_ovs_Finding?: ovs_Finding_Result[] | null;
   ts_WorkOrderServiceTaskWorkspace_ts_WorkOrderServiceTaskWorkspace_ts_action?: ts_action_Result[] | null;
+  ts_WorkOrderWorkspace?: ts_unplannedworkorder_Result | null;
 }
 interface ts_WorkOrderServiceTaskWorkspace extends ts_WorkOrderServiceTaskWorkspace_Base, ts_WorkOrderServiceTaskWorkspace_Relationships {
   crc77_Incident_bind$incidents?: string | null;
@@ -85,6 +86,7 @@ interface ts_WorkOrderServiceTaskWorkspace extends ts_WorkOrderServiceTaskWorksp
   ts_SecuritySearchServices_bind$accounts?: string | null;
   ts_TaskType_bind$msdyn_servicetasktypes?: string | null;
   ts_WorkOrderServiceTask_bind$msdyn_workorderservicetasks?: string | null;
+  ts_WorkOrderWorkspace_bind$ts_unplannedworkorders?: string | null;
   ts_WorkOrder_bind$msdyn_workorders?: string | null;
 }
 interface ts_WorkOrderServiceTaskWorkspace_Create extends ts_WorkOrderServiceTaskWorkspace {
@@ -156,6 +158,7 @@ interface ts_WorkOrderServiceTaskWorkspace_Select {
   ts_workorderservicetaskenddate: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { ts_workorderservicetaskenddate: Date | null }, { ts_workorderservicetaskenddate_formatted?: string }>;
   ts_workorderservicetaskstartdate: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { ts_workorderservicetaskstartdate: Date | null }, { ts_workorderservicetaskstartdate_formatted?: string }>;
   ts_workorderservicetaskworkspaceid: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { ts_workorderservicetaskworkspaceid: string | null }, {  }>;
+  ts_workorderworkspace_guid: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { ts_workorderworkspace_guid: string | null }, { ts_workorderworkspace_formatted?: string }>;
   utcconversiontimezonecode: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { utcconversiontimezonecode: number | null }, {  }>;
   versionnumber: WebAttribute<ts_WorkOrderServiceTaskWorkspace_Select, { versionnumber: number | null }, {  }>;
 }
@@ -224,6 +227,7 @@ interface ts_WorkOrderServiceTaskWorkspace_Filter {
   ts_workorderservicetaskenddate: Date;
   ts_workorderservicetaskstartdate: Date;
   ts_workorderservicetaskworkspaceid: XQW.Guid;
+  ts_workorderworkspace_guid: XQW.Guid;
   utcconversiontimezonecode: number;
   versionnumber: number;
 }
@@ -258,6 +262,7 @@ interface ts_WorkOrderServiceTaskWorkspace_Expand {
   ts_WorkOrderServiceTaskWorkspace_qm_rclegislation_qm_rclegislation: WebExpand<ts_WorkOrderServiceTaskWorkspace_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { ts_WorkOrderServiceTaskWorkspace_qm_rclegislation_qm_rclegislation: qm_rclegislation_Result[] }>;
   ts_WorkOrderServiceTaskWorkspace_ts_WorkOrderServiceTaskWorkspace_ovs_Finding: WebExpand<ts_WorkOrderServiceTaskWorkspace_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_WorkOrderServiceTaskWorkspace_ts_WorkOrderServiceTaskWorkspace_ovs_Finding: ovs_Finding_Result[] }>;
   ts_WorkOrderServiceTaskWorkspace_ts_WorkOrderServiceTaskWorkspace_ts_action: WebExpand<ts_WorkOrderServiceTaskWorkspace_Expand, ts_action_Select, ts_action_Filter, { ts_WorkOrderServiceTaskWorkspace_ts_WorkOrderServiceTaskWorkspace_ts_action: ts_action_Result[] }>;
+  ts_WorkOrderWorkspace: WebExpand<ts_WorkOrderServiceTaskWorkspace_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { ts_WorkOrderWorkspace: ts_unplannedworkorder_Result }>;
 }
 interface ts_WorkOrderServiceTaskWorkspace_FormattedResult {
   crc77_incident_formatted?: string;
@@ -305,6 +310,7 @@ interface ts_WorkOrderServiceTaskWorkspace_FormattedResult {
   ts_workorderservicetask_formatted?: string;
   ts_workorderservicetaskenddate_formatted?: string;
   ts_workorderservicetaskstartdate_formatted?: string;
+  ts_workorderworkspace_formatted?: string;
 }
 interface ts_WorkOrderServiceTaskWorkspace_Result extends ts_WorkOrderServiceTaskWorkspace_Base, ts_WorkOrderServiceTaskWorkspace_Relationships {
   "@odata.etag": string;
@@ -337,6 +343,7 @@ interface ts_WorkOrderServiceTaskWorkspace_Result extends ts_WorkOrderServiceTas
   ts_tasktype_guid: string | null;
   ts_workorder_guid: string | null;
   ts_workorderservicetask_guid: string | null;
+  ts_workorderworkspace_guid: string | null;
 }
 interface ts_WorkOrderServiceTaskWorkspace_RelatedOne {
   crc77_Incident: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
@@ -365,6 +372,7 @@ interface ts_WorkOrderServiceTaskWorkspace_RelatedOne {
   ts_TaskType: WebMappingRetrieve<msdyn_servicetasktype_Select,msdyn_servicetasktype_Expand,msdyn_servicetasktype_Filter,msdyn_servicetasktype_Fixed,msdyn_servicetasktype_Result,msdyn_servicetasktype_FormattedResult>;
   ts_WorkOrder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_WorkOrderServiceTask: WebMappingRetrieve<msdyn_workorderservicetask_Select,msdyn_workorderservicetask_Expand,msdyn_workorderservicetask_Filter,msdyn_workorderservicetask_Fixed,msdyn_workorderservicetask_Result,msdyn_workorderservicetask_FormattedResult>;
+  ts_WorkOrderWorkspace: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
 }
 interface ts_WorkOrderServiceTaskWorkspace_RelatedMany {
   ts_WorkOrderServiceTaskWorkspace_SystemUser_SystemUser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;

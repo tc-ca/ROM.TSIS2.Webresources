@@ -63,11 +63,13 @@ interface ts_unplannedworkorder_Relationships {
   ts_unplannedworkorder_Emails?: Email_Result[] | null;
   ts_unplannedworkorder_PostFollows?: PostFollow_Result[] | null;
   ts_unplannedworkorder_ServiceAppointments?: ServiceAppointment_Result[] | null;
+  ts_unplannedworkorder_Team_Team?: Team_Result[] | null;
   ts_unplannedworkorder_Teams?: Team_Result[] | null;
   ts_unplannedworkorder_UnplannedWorkOrder_ts_workordertimetracking?: ts_workordertimetracking_Result[] | null;
   ts_unplannedworkorder_connections1?: Connection_Result[] | null;
   ts_unplannedworkorder_connections2?: Connection_Result[] | null;
   ts_unplannedworkorder_ts_enforcementactions?: ts_enforcementaction_Result[] | null;
+  ts_workorderservicetaskworkspace_WorkOrderWorkspace_ts_unplannedworkorder?: ts_WorkOrderServiceTaskWorkspace_Result[] | null;
 }
 interface ts_unplannedworkorder extends ts_unplannedworkorder_Base, ts_unplannedworkorder_Relationships {
   ownerid_bind$systemusers?: string | null;
@@ -300,11 +302,13 @@ interface ts_unplannedworkorder_Expand {
   ts_unplannedworkorder_Emails: WebExpand<ts_unplannedworkorder_Expand, Email_Select, Email_Filter, { ts_unplannedworkorder_Emails: Email_Result[] }>;
   ts_unplannedworkorder_PostFollows: WebExpand<ts_unplannedworkorder_Expand, PostFollow_Select, PostFollow_Filter, { ts_unplannedworkorder_PostFollows: PostFollow_Result[] }>;
   ts_unplannedworkorder_ServiceAppointments: WebExpand<ts_unplannedworkorder_Expand, ServiceAppointment_Select, ServiceAppointment_Filter, { ts_unplannedworkorder_ServiceAppointments: ServiceAppointment_Result[] }>;
+  ts_unplannedworkorder_Team_Team: WebExpand<ts_unplannedworkorder_Expand, Team_Select, Team_Filter, { ts_unplannedworkorder_Team_Team: Team_Result[] }>;
   ts_unplannedworkorder_Teams: WebExpand<ts_unplannedworkorder_Expand, Team_Select, Team_Filter, { ts_unplannedworkorder_Teams: Team_Result[] }>;
   ts_unplannedworkorder_UnplannedWorkOrder_ts_workordertimetracking: WebExpand<ts_unplannedworkorder_Expand, ts_workordertimetracking_Select, ts_workordertimetracking_Filter, { ts_unplannedworkorder_UnplannedWorkOrder_ts_workordertimetracking: ts_workordertimetracking_Result[] }>;
   ts_unplannedworkorder_connections1: WebExpand<ts_unplannedworkorder_Expand, Connection_Select, Connection_Filter, { ts_unplannedworkorder_connections1: Connection_Result[] }>;
   ts_unplannedworkorder_connections2: WebExpand<ts_unplannedworkorder_Expand, Connection_Select, Connection_Filter, { ts_unplannedworkorder_connections2: Connection_Result[] }>;
   ts_unplannedworkorder_ts_enforcementactions: WebExpand<ts_unplannedworkorder_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_unplannedworkorder_ts_enforcementactions: ts_enforcementaction_Result[] }>;
+  ts_workorderservicetaskworkspace_WorkOrderWorkspace_ts_unplannedworkorder: WebExpand<ts_unplannedworkorder_Expand, ts_WorkOrderServiceTaskWorkspace_Select, ts_WorkOrderServiceTaskWorkspace_Filter, { ts_workorderservicetaskworkspace_WorkOrderWorkspace_ts_unplannedworkorder: ts_WorkOrderServiceTaskWorkspace_Result[] }>;
 }
 interface ts_unplannedworkorder_FormattedResult {
   createdby_formatted?: string;
@@ -424,11 +428,13 @@ interface ts_unplannedworkorder_RelatedMany {
   ts_unplannedworkorder_Emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   ts_unplannedworkorder_PostFollows: WebMappingRetrieve<PostFollow_Select,PostFollow_Expand,PostFollow_Filter,PostFollow_Fixed,PostFollow_Result,PostFollow_FormattedResult>;
   ts_unplannedworkorder_ServiceAppointments: WebMappingRetrieve<ServiceAppointment_Select,ServiceAppointment_Expand,ServiceAppointment_Filter,ServiceAppointment_Fixed,ServiceAppointment_Result,ServiceAppointment_FormattedResult>;
+  ts_unplannedworkorder_Team_Team: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   ts_unplannedworkorder_Teams: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   ts_unplannedworkorder_UnplannedWorkOrder_ts_workordertimetracking: WebMappingRetrieve<ts_workordertimetracking_Select,ts_workordertimetracking_Expand,ts_workordertimetracking_Filter,ts_workordertimetracking_Fixed,ts_workordertimetracking_Result,ts_workordertimetracking_FormattedResult>;
   ts_unplannedworkorder_connections1: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   ts_unplannedworkorder_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   ts_unplannedworkorder_ts_enforcementactions: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
+  ts_workorderservicetaskworkspace_WorkOrderWorkspace_ts_unplannedworkorder: WebMappingRetrieve<ts_WorkOrderServiceTaskWorkspace_Select,ts_WorkOrderServiceTaskWorkspace_Expand,ts_WorkOrderServiceTaskWorkspace_Filter,ts_WorkOrderServiceTaskWorkspace_Fixed,ts_WorkOrderServiceTaskWorkspace_Result,ts_WorkOrderServiceTaskWorkspace_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ts_unplannedworkorders: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
