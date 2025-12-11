@@ -933,20 +933,17 @@ async function logRailSafetyOwnershipStatus(formContext) {
 }
 
 /**
- * Gets the Model-Driven App ID from the URL parameters.
+ * Gets the Model-Driven App ID.
  * @returns {Promise<string|null>} The Model-Driven App ID or null if not found}
  */
-function getModelDrivenAppIdFromParams() {
+async function getModelDrivenAppId() {
     try {
-        // ALWAYS use window.top — not window — to get the shell URL
-        const topUrl = new URL(window.top.location.href);
-        const appId = topUrl.searchParams.get("appid");
+        const gc = Xrm.Utility.getGlobalContext();
+        const appProps = await gc.getCurrentAppProperties(); // MUST await this
 
-        if (!appId) return null;
+        if (!appProps || !appProps.appId) return null;
 
-        // Strip braces and normalize
-        return appId.replace(/[{}]/g, "").toLowerCase();
-
+        return appProps.appId.replace(/[{}]/g, "").toLowerCase(); // normalize
     } catch (error) {
         console.error("Error retrieving Model-Driven App ID:", error);
         return null;
@@ -959,10 +956,10 @@ function getModelDrivenAppIdFromParams() {
  */
 async function isUserUsingRailSafetyApp() {
     try {
-        const appId = getModelDrivenAppIdFromParams();
+        const appId = await getModelDrivenAppId();  
         const railSafetyAppId = await getEnvironmentVariableValue(MDA_NAMES.ROM_RAIL_SAFETY);
         if (!appId || !railSafetyAppId) return false;
-        return appId === railSafetyAppId;
+        return appId === railSafetyAppId; 
     } catch (error) {
         console.error("Error checking Rail Safety App usage:", error);
         return false;
