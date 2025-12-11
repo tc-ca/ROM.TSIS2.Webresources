@@ -66,7 +66,7 @@ function isSystemAdministrator() {
   var roles = Xrm.Utility.getGlobalContext().userSettings.roles;
   var enable = false;
   roles.forEach(function (item) {
-    if (item.name == "System Administrator") enable = true;
+    if (item.name == "System Administrator" || item.name == "ROM - Rail Safety Administrator") enable = true;
   });
   return enable;
 }

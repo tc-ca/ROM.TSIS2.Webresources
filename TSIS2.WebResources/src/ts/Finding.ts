@@ -36,6 +36,17 @@
 
         formContext.getAttribute("ts_ncatfactorguide").setValue(false);
 
+        // Log Rail Safety ownership status to console
+        logRailSafetyOwnershipStatus(formContext);
+
+        // Visible tabs for Rail Safety users (logical names)
+        const RAIL_SAFETY_VISIBLE_TABS = ['summary', 'wo_details', 'tab_6'];
+
+        // Show only those tabs for Rail Safety users
+        applyTabVisibilityForTeam(formContext, TEAM_SCHEMA_NAMES.RAIL_SAFETY, RAIL_SAFETY_VISIBLE_TABS).catch((err) => {
+            console.error("Error applying Rail Safety tab visibility:", err);
+        });
+
         let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
         let currentUserBusinessUnitFetchXML = [
             "<fetch top='50'>",
@@ -203,7 +214,7 @@
     }
 
 
-    export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
+    export async function onSave(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
         let formContext = <Form.ovs_finding.Main.Information>eContext.getFormContext();
         const statusCodeAttribute = formContext.getAttribute("statuscode");
         const statusCodeValue = statusCodeAttribute.getValue();
@@ -221,6 +232,12 @@
             statusCodeAttribute.setValue(ovs_finding_statuscode.Pending)
         } else {
             statusCodeAttribute.setValue(ovs_finding_statuscode.InProgress)
+        }
+
+        try {
+            await assignRailSafetyOwnershipOnSave(formContext);
+        } catch (error) {
+            console.error("[Finding.onSave] Error:", error);
         }
     }
 
