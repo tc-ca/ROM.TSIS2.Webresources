@@ -51,6 +51,15 @@ var ROM;
         function onLoad(eContext) {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j;
             var form = eContext.getFormContext();
+            //Check if user is using Rail Safety App to set filtered view for Work Order Type
+            isUserUsingRailSafetyApp().then(function (isUsing) {
+                if (isUsing) {
+                    setWorkOrderTypeFilteredView(form, true);
+                }
+                else {
+                    setWorkOrderTypeFilteredView(form, false);
+                }
+            });
             var state = (_a = form.getAttribute("statecode").getValue()) !== null && _a !== void 0 ? _a : null;
             // Check flag and navigate to WO if needed
             var flagAttr = form.getAttribute("ts_openworkorderoncreation");
@@ -2463,6 +2472,42 @@ var ROM;
                     justificationAttribute.setValue(null);
                 }
             }
+        }
+        function setWorkOrderTypeFilteredView(form, useRailSafetyTypes) {
+            return __awaiter(this, void 0, void 0, function () {
+                var railSecurityTeamId, viewId, op, entityName, viewDisplayName, fetchXml, layoutXml;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.RAIL_SAFETY)];
+                        case 1:
+                            railSecurityTeamId = _a.sent();
+                            viewId = useRailSafetyTypes
+                                ? '{4197D34A-2D73-4BED-AB2A-B44799E98C62}' // Rail Safety
+                                : '{4197D34B-2D73-4BED-AB2C-B44799E98C62}' // Default
+                            ;
+                            op = useRailSafetyTypes ? "eq" : "ne";
+                            entityName = "msdyn_workordertype";
+                            viewDisplayName = "Filtered Work Order Types";
+                            fetchXml = '<fetch xmlns:generator="MarkMpn.SQL4CDS">' +
+                                '  <entity name="msdyn_workordertype">' +
+                                '    <attribute name="msdyn_workordertypeid" />' +
+                                '    <attribute name="msdyn_name" />' +
+                                '    <filter>' +
+                                ("      <condition attribute=\"ownerid\" operator=\"" + op + "\" value=\"" + railSecurityTeamId + "\" />") +
+                                '    </filter>' +
+                                '  </entity>' +
+                                '</fetch>';
+                            layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1">' +
+                                '  <row name="result" id="msdyn_workordertypeid">' +
+                                '    <cell name="msdyn_name" width="200" />' +
+                                '  </row>' +
+                                '</grid>';
+                            form.getControl("ts_workordertype")
+                                .addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                            return [2 /*return*/];
+                    }
+                });
+            });
         }
     })(UnplannedWorkOrder = ROM.UnplannedWorkOrder || (ROM.UnplannedWorkOrder = {}));
 })(ROM || (ROM = {}));
