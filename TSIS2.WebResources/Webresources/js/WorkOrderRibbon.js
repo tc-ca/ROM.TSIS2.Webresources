@@ -446,7 +446,9 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
             incidentTypeId = incidentTypeAttr.getValue()[0].id.replace(/({|})/g, "");
             currentWorkOrderRecordId = formContext.data.entity.getId().replace(/({|})/g, "");
         }
-        teamTemplateId = "bddf1d45-706d-ec11-8f8e-0022483da5aa"; // Work Order Access Team Template
+        getTeamTemplateId("Work Order Access Team", function (id) {
+            teamTemplateId = id;
+        });
     }
     else if (parentEntityName === "ts_unplannedworkorder") {
         incidentTypeAttr = formContext.getAttribute("ts_primaryincidenttype");
@@ -455,7 +457,9 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
             incidentTypeId = incidentTypeAttr.getValue()[0].id.replace(/({|})/g, "");
             currentWorkOrderRecordId = formContext.data.entity.getId().replace(/({|})/g, "");
         }
-        teamTemplateId = "8d50ad8f-dfb0-f011-bbd3-7c1e52549bb6"; // Unplanned Work Order Access Team Template
+        getTeamTemplateId("Unplanned Work Order Access Team", function (id) {
+            teamTemplateId = id;
+        });
     }
 
   //Identify WO (ISSO or AvSec) with the activity type field
@@ -577,7 +581,6 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
                             req.onreadystatechange = null;
 
                             if (this.status === 200 || this.status === 204) {
-                                console.log(`User ${userId} added successfully.`);
                                 resolve(); // Mark request as complete
                             } else {
                                 var alertStrings = { text: this.status + " " + this.responseText };
@@ -601,6 +604,25 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
       }
     );
   });
+}
+
+function getTeamTemplateId(teamTemplateName, callback) {
+    const query = `?$select=teamtemplateid&$filter=teamtemplatename eq '${teamTemplateName}'`;
+
+    Xrm.WebApi.retrieveMultipleRecords("teamtemplate", query).then(
+        function success(result) {
+            if (result.entities.length > 0) {
+                callback(result.entities[0].teamtemplateid);
+            } else {
+                console.error("Team template not found:", teamTemplateName);
+                callback(null);
+            }
+        },
+        function error(error) {
+            console.error("Error fetching team template:", error);
+            callback(null);
+        }
+    );
 }
 
 function planningWorkOrder(data) {
