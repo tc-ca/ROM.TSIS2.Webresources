@@ -1,5 +1,872 @@
 <html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AvSec Quarterly Report Dashboard</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 16px;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* WCAG Accessible Focus Styles */
+        *:focus {
+            outline: 3px solid #4A90E2;
+            outline-offset: 2px;
+        }
+
+        button:focus, input:focus, select:focus, textarea:focus {
+            box-shadow: inset 0 0 0 3px #4A90E2;
+            outline: none;
+        }
+
+        /* Skip to main content link */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #000;
+            color: #fff;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 100;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Header Control Panel */
+        .control-panel {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 12px 16px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .control-panel h2 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .admin-badge {
+            display: inline-block;
+            background-color: #d32f2f;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .control-panel.admin-only {
+            background-color: #fff3e0;
+            border-bottom: 2px solid #ff9800;
+        }
+
+        .controls-container {
+            display: flex;
+            gap: 12px;
+            flex-wrap: nowrap;
+            align-items: center;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: row;
+            gap: 6px;
+            align-items: center;
+            min-width: auto;
+            flex: 0 1 auto;
+        }
+
+        label {
+            font-weight: 500;
+            color: #555;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .required::after {
+            content: " *";
+            color: #d32f2f;
+            aria-label: "required";
+        }
+
+        input[type="text"],
+        input[type="url"],
+        select {
+            padding: 6px 8px;
+            border: 1px solid #d0d0d0;
+            border-radius: 3px;
+            font-size: 13px;
+            transition: border-color 0.2s;
+            min-width: 280px;
+        }
+
+        input[type="text"]:hover,
+        input[type="url"]:hover,
+        select:hover {
+            border-color: #999;
+        }
+
+        input[type="text"]:focus,
+        input[type="url"]:focus,
+        select:focus {
+            border-color: #4A90E2;
+            background-color: #fff;
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
+        }
+
+        button {
+            padding: 6px 14px;
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+        }
+
+        button:hover {
+            background-color: #106ebe;
+        }
+
+        button:active {
+            background-color: #0d47a1;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Dashboard Container */
+        .dashboard-container {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        iframe {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .controls-container {
+                flex-direction: column;
+            }
+
+            .control-group {
+                min-width: 100%;
+            }
+        }
+
+        /* Accessibility - High Contrast Mode */
+        @media (prefers-contrast: more) {
+            button, input, select {
+                border-width: 3px;
+            }
+        }
+
+        /* Accessibility - Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 20px;
+            border-radius: 4px;
+            border-left: 4px solid;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            font-size: 14px;
+            z-index: 999;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .toast-error {
+            background-color: #ffebee;
+            border-color: #d32f2f;
+            color: #c62828;
+        }
+
+        .toast-success {
+            background-color: #e8f5e9;
+            border-color: #388e3c;
+            color: #2e7d32;
+        }
+
+        .toast-info {
+            background-color: #e3f2fd;
+            border-color: #1976d2;
+            color: #1565c0;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        /* Debug Panel */
+        #debug-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: #1e1e1e;
+            border-top: 2px solid #444;
+        }
+
+        #debug-panel.show {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        #debug-output {
+            flex: 1;
+            padding: 10px;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+
+        .debug-toggle {
+            background: #333;
+            color: #00ff00;
+            border: none;
+            border-top: 1px solid #444;
+            padding: 8px 12px;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.2s;
+        }
+
+        .debug-toggle:hover {
+            background: #444;
+        }
+
+        .debug-toggle::before {
+            content: '▶ ';
+            display: inline-block;
+            margin-right: 6px;
+            transition: transform 0.2s;
+        }
+
+        #debug-panel.show ~ .debug-toggle::before {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
 <body>
-    <iframe title="AvSec Quarterly Report" width="1140" height="541.25" src=https://app.powerbi.com/reportEmbed?reportId=aa85f4ef-006d-4534-b980-de988a253280&appId=eaf22071-895b-4a2e-a634-6c5e7615b9b5&autoAuth=true&ctid=2008ffa9-c9b2-4d97-9ad9-4ace25386be7 frameborder="0" allowFullScreen="true"></iframe>
+    <a href="#main-dashboard" class="skip-link">Skip to main dashboard</a>
+
+    <!-- Control Panel -->
+    <div id="control-panel" class="control-panel" role="region" aria-label="Dashboard controls">
+        <h2>Power BI Report Configuration <span id="admin-badge" class="admin-badge" style="display: none;">Admin Only</span></h2>
+        <div class="controls-container">
+            <div class="control-group">
+                <label for="report-url" class="required">Report URL or ID</label>
+                <input 
+                    type="text" 
+                    id="report-url" 
+                    placeholder="Paste Power BI URL or Report ID"
+                    aria-label="Power BI report URL or ID"
+                    aria-describedby="url-help"
+                >
+            </div>
+            <div class="control-group">
+                <button id="update-btn" aria-label="Update the Power BI report with new URL">
+                    Update Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="main-dashboard" class="dashboard-container">
+        <iframe id="report-iframe" title="AvSec Quarterly Report - Power BI Dashboard"></iframe>
+    </div>
+
+    <!-- Debug Container -->
+    <div id="debug-panel">
+        <div id="debug-output"></div>
+    </div>
+    <button class="debug-toggle" id="debug-toggle" aria-label="Toggle debug panel">Debug Console</button>
+
+    <script src="../js/Common.js"></script>
+    <script>
+        // Debug logging function
+        function debugLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const prefix = type === 'error' ? '❌' : type === 'success' ? '✓' : 'ℹ';
+            const fullMessage = `[${timestamp}] ${prefix} ${message}`;
+            
+            console.log(fullMessage);
+            
+            const debugOutput = document.getElementById('debug-output');
+            if (debugOutput) {
+                const line = document.createElement('div');
+                line.textContent = fullMessage;
+                if (type === 'error') {
+                    line.style.color = '#ff4444';
+                } else if (type === 'success') {
+                    line.style.color = '#00ff00';
+                }
+                debugOutput.appendChild(line);
+                debugOutput.parentElement.scrollTop = debugOutput.parentElement.scrollHeight;
+            }
+        }
+
+        // Configuration
+        const CONFIG = {
+            appId: 'eaf22071-895b-4a2e-a634-6c5e7615b9b5',
+            ctid: '2008ffa9-c9b2-4d97-9ad9-4ace25386be7'
+        };
+
+        // DOM Elements
+        const elements = {
+            controlPanel: document.getElementById('control-panel'),
+            adminBadge: document.getElementById('admin-badge'),
+            reportUrlInput: document.getElementById('report-url'),
+            updateBtn: document.getElementById('update-btn'),
+            reportIframe: document.getElementById('report-iframe')
+        };
+
+        // Initialize with delay to ensure DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initDashboard);
+        } else {
+            // DOM already loaded
+            setTimeout(initDashboard, 100);
+        }
+
+        function initDashboard() {
+            try {
+                checkAdminAccess();
+                loadInitialReport();
+                attachEventListeners();
+            } catch (error) {
+                // If admin check fails, still try to load the report
+                loadInitialReport();
+                attachEventListeners();
+            }
+        }
+
+        function checkAdminAccess() {
+            try {
+                const isAdmin = isSystemAdministrator();
+                
+                const controlPanel = document.getElementById('control-panel');
+                const debugPanel = document.getElementById('debug-panel');
+                const debugToggle = document.getElementById('debug-toggle');
+                
+                if (isAdmin) {
+                    // Show admin controls and debug panel
+                    if (controlPanel) controlPanel.style.display = 'block';
+                    if (debugPanel) debugPanel.style.display = 'block';
+                    if (debugToggle) debugToggle.style.display = 'block';
+                    
+                    elements.adminBadge.style.display = 'inline-block';
+                    elements.controlPanel.classList.add('admin-only');
+                    elements.reportUrlInput.disabled = false;
+                    elements.updateBtn.disabled = false;
+                } else {
+                    // Hide admin controls for non-admins
+                    if (controlPanel) controlPanel.style.display = 'none';
+                    if (debugPanel) debugPanel.style.display = 'none';
+                    if (debugToggle) debugToggle.style.display = 'none';
+                }
+            } catch (error) {
+                // If admin check fails, enable controls anyway
+                elements.reportUrlInput.disabled = false;
+                elements.updateBtn.disabled = false;
+            }
+        }
+
+        function isSystemAdministrator() {
+            let isAdmin = false;
+            
+            try {
+                let globalContext = null;
+                
+                // Webresources run in iframes, so check multiple Xrm contexts
+                if (typeof Xrm !== 'undefined' && Xrm.Utility?.getGlobalContext) {
+                    globalContext = Xrm.Utility.getGlobalContext();
+                } else if (typeof parent !== 'undefined' && parent.Xrm?.Utility?.getGlobalContext) {
+                    globalContext = parent.Xrm.Utility.getGlobalContext();
+                } else if (typeof window.parent !== 'undefined' && window.parent.Xrm?.Utility?.getGlobalContext) {
+                    globalContext = window.parent.Xrm.Utility.getGlobalContext();
+                }
+                
+                if (globalContext) {
+                    const roles = globalContext.userSettings?.roles || [];
+                    roles.forEach(function(role) {
+                        if (role.name === 'System Administrator') {
+                            isAdmin = true;
+                        }
+                    });
+                }
+            } catch (error) {
+                isAdmin = true; // Default to true so admins can always access
+            }
+            
+            // Log the result to debug console
+            try {
+                const globalContext = Xrm?.Utility?.getGlobalContext?.() || parent?.Xrm?.Utility?.getGlobalContext?.();
+                if (globalContext) {
+                    const roles = globalContext.userSettings?.roles || [];
+                    const roleNames = roles.map(r => r.name).join(', ') || 'None';
+                    if (isAdmin) {
+                        debugLog(`✓ System Administrator check: PASSED (Role: System Administrator)`, 'success');
+                    } else {
+                        debugLog(`✗ System Administrator check: FAILED (Current roles: ${roleNames})`, 'error');
+                    }
+                }
+            } catch (error) {
+                // Silent fail
+            }
+            
+            return isAdmin;
+        }
+
+        function attachEventListeners() {
+            elements.updateBtn.addEventListener('click', updateReport);
+            elements.reportUrlInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') updateReport();
+            });
+
+            // Debug panel toggle
+            const debugToggle = document.getElementById('debug-toggle');
+            const debugPanel = document.getElementById('debug-panel');
+            if (debugToggle) {
+                debugToggle.addEventListener('click', function() {
+                    debugPanel.classList.toggle('show');
+                });
+            }
+        }
+
+        function loadInitialReport() {
+            // Load the active report on page load
+            loadActiveReport();
+        }
+
+        async function loadActiveReport() {
+            try {
+                const orgUrl = parent.Xrm?.Utility?.getGlobalContext?.()?.getClientUrl?.();
+                if (!orgUrl) return;
+
+                debugLog('Loading active report configuration...');
+                
+                // Query for active record only (statecode = 0)
+                const queryUrl = `${orgUrl}/api/data/v9.2/ts_rompowerbiconfigs?$filter=statecode eq 0&$select=ts_rompowerbiconfigid,ts_name,ts_reportid,ts_reporturl&$top=1`;
+                
+                const response = await fetch(queryUrl, {
+                    method: 'GET',
+                    headers: {
+                        'OData-MaxVersion': '4.0',
+                        'OData-Version': '4.0',
+                        'Accept': 'application/json'
+                    },
+                    credentials: 'include'
+                });
+
+                if (!response.ok) {
+                    debugLog(`Error loading active report: ${response.status}`, 'error');
+                    return;
+                }
+
+                const data = await response.json();
+                
+                if (data.value && data.value.length > 0) {
+                    const activeRecord = data.value[0];
+                    debugLog(`Found active report: ${activeRecord.ts_name}`, 'success');
+                    const reportId = activeRecord.ts_reportid;
+                    if (reportId && isValidGuid(reportId)) {
+                        loadReport(reportId);
+                    }
+                } else {
+                    debugLog('No active report configured - waiting for user input', 'info');
+                }
+            } catch (error) {
+                debugLog(`Exception loading active report: ${error.message}`, 'error');
+            }
+        }
+
+        function loadReport(reportId) {
+            if (!reportId) {
+                showMessage('No report ID provided', 'error');
+                return;
+            }
+
+            const url = `https://app.powerbi.com/reportEmbed?reportId=${reportId}&appId=${CONFIG.appId}&autoAuth=true&ctid=${CONFIG.ctid}`;
+            elements.reportIframe.src = url;
+        }
+
+        function updateReport() {
+            const input = elements.reportUrlInput.value.trim();
+            if (!input) {
+                showMessage('Please enter a report URL or ID', 'error');
+                return;
+            }
+
+            let reportId = extractReportId(input);
+
+            if (!reportId || !isValidGuid(reportId)) {
+                showMessage('Invalid report ID format. Please paste a valid Power BI URL or report ID.', 'error');
+                return;
+            }
+
+            checkAndCreateConfig(reportId, input);
+            loadReport(reportId);
+        }
+
+        // Check if report config already exists, create/update as needed
+        async function checkAndCreateConfig(reportId, reportUrl) {
+            try {
+                debugLog('Starting checkAndCreateConfig...');
+                
+                const orgUrl = parent.Xrm?.Utility?.getGlobalContext?.()?.getClientUrl?.();
+                
+                if (!orgUrl) {
+                    debugLog('Could not get org URL for saving config', 'error');
+                    return;
+                }
+
+                const existingRecord = await findExistingRecord(orgUrl, reportId);
+
+                if (existingRecord) {
+                    debugLog(`Found existing record: ${existingRecord.ts_rompowerbiconfigid}`, 'info');
+                    await deactivateOtherRecords(orgUrl, existingRecord.ts_rompowerbiconfigid);
+                    
+                    if (existingRecord.statecode !== 0) {
+                        await activateRecord(orgUrl, existingRecord.ts_rompowerbiconfigid);
+                    }
+                } else {
+                    await deactivateActiveRecords(orgUrl);
+                    await createConfigRecord(orgUrl, reportId, reportUrl);
+                }
+            } catch (error) {
+                debugLog(`Exception in checkAndCreateConfig: ${error.message}`, 'error');
+            }
+        }
+
+        // Find existing record by reportId
+        async function findExistingRecord(orgUrl, reportId) {
+            try {
+                const queryUrl = `${orgUrl}/api/data/v9.2/ts_rompowerbiconfigs?$filter=ts_reportid eq '${reportId}'&$select=ts_rompowerbiconfigid,ts_name,statecode,statuscode`;
+                
+                const response = await fetch(queryUrl, {
+                    method: 'GET',
+                    headers: {
+                        'OData-MaxVersion': '4.0',
+                        'OData-Version': '4.0',
+                        'Accept': 'application/json'
+                    },
+                    credentials: 'include'
+                });
+
+                if (!response.ok) {
+                    debugLog(`Error querying for existing record: ${response.status}`, 'error');
+                    return null;
+                }
+
+                const data = await response.json();
+                return data.value && data.value.length > 0 ? data.value[0] : null;
+
+            } catch (error) {
+                debugLog(`Exception in findExistingRecord: ${error.message}`, 'error');
+                return null;
+            }
+        }
+
+        // Only one report config should be active at a time
+        async function deactivateOtherRecords(orgUrl, excludeRecordId) {
+            try {
+                // Query for all active records EXCEPT the specified one
+                const queryUrl = `${orgUrl}/api/data/v9.2/ts_rompowerbiconfigs?$filter=statecode eq 0 and ts_rompowerbiconfigid ne ${excludeRecordId}&$select=ts_rompowerbiconfigid`;
+                
+                const response = await fetch(queryUrl, {
+                    method: 'GET',
+                    headers: {
+                        'OData-MaxVersion': '4.0',
+                        'OData-Version': '4.0',
+                        'Accept': 'application/json'
+                    },
+                    credentials: 'include'
+                });
+
+                if (!response.ok) {
+                    debugLog(`Error querying other active records: ${response.status}`, 'error');
+                    return;
+                }
+
+                const data = await response.json();
+                
+                if (data.value && data.value.length > 0) {
+                    debugLog(`Found ${data.value.length} other active record(s) to deactivate`);
+                    
+                    for (const record of data.value) {
+                        const recordId = record.ts_rompowerbiconfigid;
+                        const updateUrl = `${orgUrl}/api/data/v9.2/ts_rompowerbiconfigs(${recordId})`;
+                        
+                        const updateResponse = await fetch(updateUrl, {
+                            method: 'PATCH',
+                            headers: {
+                                'OData-MaxVersion': '4.0',
+                                'OData-Version': '4.0',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ statecode: 1, statuscode: 2 }),
+                            credentials: 'include'
+                        });
+
+                        if (updateResponse.ok || updateResponse.status === 204) {
+                            debugLog(`Deactivated record: ${recordId}`, 'success');
+                        } else {
+                            debugLog(`Failed to deactivate ${recordId}: ${updateResponse.status}`, 'error');
+                        }
+                    }
+                }
+
+            } catch (error) {
+                debugLog(`Exception in deactivateOtherRecords: ${error.message}`, 'error');
+            }
+        }
+
+        // Activate a specific record
+        async function activateRecord(orgUrl, recordId) {
+            try {
+                const updateUrl = `${orgUrl}/api/data/v9.2/ts_rompowerbiconfigs(${recordId})`;
+                
+                const response = await fetch(updateUrl, {
+                    method: 'PATCH',
+                    headers: {
+                        'OData-MaxVersion': '4.0',
+                        'OData-Version': '4.0',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ statecode: 0, statuscode: 1 }),
+                    credentials: 'include'
+                });
+
+                if (response.ok || response.status === 204) {
+                    debugLog(`Activated record: ${recordId}`, 'success');
+                } else {
+                    debugLog(`Failed to activate ${recordId}: ${response.status}`, 'error');
+                }
+
+            } catch (error) {
+                debugLog(`Exception in activateRecord: ${error.message}`, 'error');
+            }
+        }
+
+        // Deactivate all currently active records
+        async function deactivateActiveRecords(orgUrl) {
+            try {
+                // Query for all active records
+                const queryUrl = `${orgUrl}/api/data/v9.2/ts_rompowerbiconfigs?$filter=statecode eq 0&$select=ts_rompowerbiconfigid`;
+                
+                const response = await fetch(queryUrl, {
+                    method: 'GET',
+                    headers: {
+                        'OData-MaxVersion': '4.0',
+                        'OData-Version': '4.0',
+                        'Accept': 'application/json'
+                    },
+                    credentials: 'include'
+                });
+
+                if (!response.ok) {
+                    debugLog(`Error querying active records: ${response.status}`, 'error');
+                    return;
+                }
+
+                const data = await response.json();
+                
+                // Deactivate each active record
+                if (data.value && data.value.length > 0) {
+                    debugLog(`Found ${data.value.length} active record(s) to deactivate`);
+                    
+                    for (const record of data.value) {
+                        const recordId = record.ts_rompowerbiconfigid;
+                        const updateUrl = `${orgUrl}/api/data/v9.2/ts_rompowerbiconfigs(${recordId})`;
+                        
+                        const updateResponse = await fetch(updateUrl, {
+                            method: 'PATCH',
+                            headers: {
+                                'OData-MaxVersion': '4.0',
+                                'OData-Version': '4.0',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ statecode: 1, statuscode: 2 }),
+                            credentials: 'include'
+                        });
+
+                        if (updateResponse.ok || updateResponse.status === 204) {
+                            debugLog(`Deactivated record: ${recordId}`, 'success');
+                        } else {
+                            debugLog(`Failed to deactivate ${recordId}: ${updateResponse.status}`, 'error');
+                        }
+                    }
+                } else {
+                    debugLog('No active records to deactivate');
+                }
+
+            } catch (error) {
+                debugLog(`Exception in deactivateActiveRecords: ${error.message}`, 'error');
+            }
+        }
+
+        // Create new config record
+        async function createConfigRecord(orgUrl, reportId, reportUrl) {
+            try {
+                debugLog('Creating new config record...');
+                
+                const newRecord = {
+                    ts_name: `Power BI Report - ${reportId.substring(0, 8)}...`,
+                    ts_reportid: reportId,
+                    ts_reporturl: reportUrl,
+                    statecode: 0,
+                    statuscode: 1
+                };
+
+                debugLog(`Record data: name=${newRecord.ts_name}, id=${newRecord.ts_reportid}, url=${newRecord.ts_reporturl}`);
+
+                const createUrl = `${orgUrl}/api/data/v9.2/ts_rompowerbiconfigs`;
+                debugLog(`POST URL: ${createUrl}`);
+                
+                const response = await fetch(createUrl, {
+                    method: 'POST',
+                    headers: {
+                        'OData-MaxVersion': '4.0',
+                        'OData-Version': '4.0',
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newRecord),
+                    credentials: 'include'
+                });
+
+                debugLog(`POST Response Status: ${response.status} ${response.statusText}`);
+
+                if (response.ok || response.status === 204) {
+                    debugLog('Record created successfully!', 'success');
+                    showMessage('✓ Report saved to database successfully!', 'success');
+                } else {
+                    const errorData = await response.text();
+                    debugLog(`Error creating record: ${response.status} - ${errorData}`, 'error');
+                    showMessage('Error saving report to database: ' + response.statusText, 'error');
+                }
+
+            } catch (error) {
+                debugLog(`Exception in createConfigRecord: ${error.message}`, 'error');
+                showMessage('Error saving report configuration', 'error');
+            }
+        }
+
+        function extractReportId(input) {
+            // Try to find a GUID from various Power BI URL formats
+            if (isValidGuid(input)) {
+                return input;
+            }
+
+            let match = input.match(/reportId=([a-f0-9\-]+)/i);
+            if (match) return match[1];
+
+            match = input.match(/\/reports\/([a-f0-9\-]+)/i);
+            if (match) return match[1];
+
+            match = input.match(/\/groups\/[^\/]+\/reports\/([a-f0-9\-]+)/i);
+            if (match) return match[1];
+
+            match = input.match(/\/groups\/[a-f0-9\-]+\/reports\/([a-f0-9\-]+)/i);
+            if (match) return match[1];
+
+            match = input.match(/appId=([a-f0-9\-]+)/i);
+            if (match && isValidGuid(match[1])) return match[1];
+
+            match = input.match(/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})/i);
+            if (match && match[1]) {
+                return match[1];
+            }
+
+            return null;
+        }
+
+        function isValidGuid(guid) {
+            const guidRegex = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
+            return guidRegex.test(guid);
+        }
+
+        function showMessage(message, type) {
+            const toastClass = `toast toast-${type}`;
+            const toast = document.createElement('div');
+            toast.className = toastClass;
+            toast.setAttribute('role', 'alert');
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            // Remove toast after 4 seconds
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s ease-out forwards';
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 4000);
+        }
+    </script>
 </body>
 </html>
