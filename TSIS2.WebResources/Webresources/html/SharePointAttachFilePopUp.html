@@ -136,6 +136,7 @@
         let usersManagerEmail = "";
         let usersEmail = "";
         let sharePointFolderID = "";
+        let businessUnitId = "";
 
         // Label Text
         let noFilesText = "";
@@ -186,6 +187,7 @@
                     usersManagerEmail = jsonData.usersManagerEmail;
                     usersEmail = jsonData.usersEmail;
                     sharePointFolderID = jsonData.sharePointFolderID;
+                    businessUnitId = jsonData.businessUnitId;
 
                     // Set the language for all the labels
                     setLanguage();
@@ -502,7 +504,8 @@
                 SharePointFileID: sharePointFileID,
                 ManagerEmail: usersManagerEmail,
                 UserEmail: usersEmail,
-                SharePointFolderID: selectedFolder.toString()
+                SharePointFolderID: selectedFolder.toString(),
+                BusinessUnitId: businessUnitId
 
             };
 
@@ -774,7 +777,8 @@
                     headers: {
                         "Content-Type": "application/json",
                         "FlowKey": flowKey,
-                        "UsersEmail": usersEmail
+                        "UsersEmail": usersEmail,
+                        "BusinessUnitId": businessUnitId
                     }
                 });
 
