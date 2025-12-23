@@ -1097,7 +1097,7 @@ function disableEditButtonOnWorkOrder(primaryControl) {
         ? primaryControl.getAttribute("msdyn_systemstatus")
         : null;
     var status = attr ? attr.getValue() : null;
-    if (status === 690970000 || status === 741130001) {
+    if (status === 690970000 || status === 741130001 || status === 741130000) {
         return true; // Enable Edit button
     }
     else {
@@ -1124,7 +1124,6 @@ function disableEditButtonOnWorkOrder(primaryControl) {
  * If not, it falls back to a shared flag that indicates whether the
  * user has access through an Access Team (e.g., Additional Inspectors).
  */
-
 function enableEditWorkOrderButtonForOwnerOrInspector(primaryControl) {
     const formContext = primaryControl;
     const currentUserId = Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, "");
@@ -1136,5 +1135,20 @@ function enableEditWorkOrderButtonForOwnerOrInspector(primaryControl) {
         }
     }
 
+    if (canEditWorkOrderWorkspace()) {
+        return validUser = true;
+    }
+
     return ROM.WorkOrder.isEditWorkOrderEnabled;
+}
+
+function canEditWorkOrderWorkspace() {
+    var roles = Xrm.Utility.getGlobalContext().userSettings.roles;
+    var enable = false;
+    roles.forEach(function (item) {
+        if (item.name == "System Administrator" || item.name == "ROM - Manager" || item.name == "ROM - Planner" || item.name == "ROM - Business Admin") {
+            enable = true;
+        } 
+    });
+    return enable;
 }
