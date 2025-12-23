@@ -2776,6 +2776,7 @@ namespace ROM.WorkOrder {
                     }
                    
                 }
+                form.ui.refreshRibbon();
             })
             .catch(error => {
                 console.error("Error retrieving subgrid users: ", error.message);
