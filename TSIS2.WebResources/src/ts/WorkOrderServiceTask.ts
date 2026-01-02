@@ -24,8 +24,7 @@ namespace ROM.WorkOrderServiceTask {
         if (Form.getAttribute("msdyn_workorder").getValue() != null) {
             setTaskTypeFilteredView(Form);
             showHideFieldsByIncidentType(Form);
-            // Commented out below to remove the "discard changes" prompt. Moved to WOST Workspace
-            //aircraftManufacturerOnChange(eContext);
+            aircraftManufacturerOnChange(eContext);
         }
 
         var taskType = Form.getAttribute("msdyn_tasktype").getValue();
@@ -161,55 +160,6 @@ namespace ROM.WorkOrderServiceTask {
             );
         };
 
-        // Replaced with createWorkOrderServiceTaskWorkspaceFromWOST function
-        //const openWorkspaceCreate = () => {
-        //    const entityName = formContext.getAttribute("msdyn_name")?.getValue();
-        //    const workOrderLookup = formContext.getAttribute("msdyn_workorder")?.getValue();
-        //    const workOrderId = workOrderLookup && workOrderLookup.length > 0 ? workOrderLookup[0].id.replace(/{|}/g, "") : null;
-        //    const workOrderName = workOrderLookup && workOrderLookup.length > 0 ? workOrderLookup[0].name : null;
-        //    const taskTypeLookup = formContext.getAttribute("msdyn_tasktype")?.getValue();
-        //    const taskTypeId = taskTypeLookup && taskTypeLookup.length > 0 ? taskTypeLookup[0].id.replace(/{|}/g, "") : null;
-        //    const taskTypeName = taskTypeLookup && taskTypeLookup.length > 0 ? taskTypeLookup[0].name : null;
-
-        //    const pageInput: any = {
-        //        pageType: "entityrecord",
-        //        entityName: "ts_workorderservicetaskworkspace",
-        //        formType: 2,
-        //        useQuickCreateForm: true,
-        //        data: {
-        //            ts_name: entityName,
-        //            "ts_workorderservicetask@odata.bind": `/msdyn_workorderservicetasks(${entityIdClean})`,
-        //            ts_workorder: workOrderId ? {
-        //                id: workOrderId,
-        //                name: workOrderName,
-        //                entityType: "msdyn_workorder"
-        //            } : undefined,
-        //            ts_tasktype: taskTypeId ? {
-        //                id: taskTypeId,
-        //                name: taskTypeName,
-        //                entityType: "msdyn_servicetasktype"
-        //            } : undefined
-        //        },
-        //        createFromEntity: {
-        //            entityType: "msdyn_workorderservicetask",
-        //            id: entityId,
-        //            name: entityName
-        //        }
-        //    };
-
-        //    const navigationOptions: Xrm.NavigationOptions = {
-        //        target: 2,
-        //        width: { value: 80, unit: "%" },
-        //        height: { value: 80, unit: "%" },
-        //        position: 1
-        //    };
-
-        //    Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
-        //        () => formContext.ui.close(),
-        //        (error) => console.error("Error opening create workspace modal: ", error.message)
-        //    );
-        //};
-
         // Always check first if a related workspace already exists (default case: open it)
         const fetchExisting = [
             "<fetch top='1'>",
@@ -231,13 +181,6 @@ namespace ROM.WorkOrderServiceTask {
                     return;
                 }
 
-                // If no related workspace AND status is Complete, stay on WOST (do not open/create workspace)
-                const statusReason = (formContext.getAttribute as any)("statuscode")?.getValue();
-                const isComplete = statusReason === 918640002 /* Complete */;
-                if (isComplete) {
-                    return;
-                }
-
                 else {
                     // Create new workspace and copy fields
                     createWorkOrderServiceTaskWorkspaceFromWOST(formContext, entityIdClean, lang);
@@ -248,7 +191,7 @@ namespace ROM.WorkOrderServiceTask {
     function createWorkOrderServiceTaskWorkspaceFromWOST(formContext: any, currentWOSTId: string, lang: number): void {
         // Retrieve work order service task data to transfer fields
         Xrm.WebApi.retrieveRecord("msdyn_workorderservicetask", currentWOSTId,
-            "?$select=msdyn_name,_msdyn_tasktype_value,ts_servicetaskstartdate,ts_servicetaskenddate,msdyn_percentcomplete,statuscode,ts_mandatory,ovs_questionnairedefinition,ovs_questionnaireresponse,ts_fromoffline,ts_location,ts_flightnumber,_ts_origin_value,_ts_destination_value,ts_flightcategory,ts_flighttype,ts_reportdetails,ts_scheduledtime,ts_actualtime,ts_paxonboard,ts_paxboarded,ts_cbonboard,ts_cbloaded,ts_aircraftmark,ts_aircraftmanufacturer,ts_aircraftmodel,ts_aircraftmodelother,ts_brandname,_ts_aocoperation_value,_ts_aocstakeholder_value,_ts_aocoperationtype_value,_ts_aocsite_value,_ts_passengerservices_value,_ts_rampservices_value,_ts_cargoservices_value,_ts_cateringservices_value,_ts_groomingservices_value,_ts_securitysearchservices_value,_ts_accesscontrolsecurityservices_value,_ts_othersecurityservices_value,ts_accesscontrol,_msdyn_workorder_value,statecode"
+            "?$select=msdyn_name,_msdyn_tasktype_value,ts_servicetaskstartdate,ts_servicetaskenddate,msdyn_percentcomplete,statuscode,ts_mandatory,ovs_questionnairedefinition,ovs_questionnaireresponse,ts_fromoffline,ts_location,ts_flightnumber,_ts_origin_value,_ts_destination_value,ts_flightcategory,ts_flighttype,ts_reportdetails,ts_scheduledtime,ts_actualtime,ts_paxonboard,ts_paxboarded,ts_cbonboard,ts_cbloaded,ts_aircraftmark,ts_aircraftmanufacturer,ts_aircraftmodel,ts_aircraftmodelother,ts_brandname,_ts_aocoperation_value,_ts_aocstakeholder_value,_ts_aocoperationtype_value,_ts_aocsite_value,_ts_passengerservices_value,_ts_rampservices_value,_ts_cargoservices_value,_ts_cateringservices_value,_ts_groomingservices_value,_ts_securitysearchservices_value,_ts_accesscontrolsecurityservices_value,_ts_othersecurityservices_value,ts_accesscontrol,_msdyn_workorder_value,_ovs_caseid_value,statecode"
         ).then(
             function success(wost) {
                 // Prepare data for creating the workspace record
@@ -267,7 +210,9 @@ namespace ROM.WorkOrderServiceTask {
                 if (wost._msdyn_workorder_value) {
                     workspaceData["ts_WorkOrder@odata.bind"] = "/msdyn_workorders(" + wost._msdyn_workorder_value + ")";
                 }
-
+                if (wost._ovs_caseid_value) {
+                    workspaceData["crc77_Incident@odata.bind"] = "/incidents(" + wost._ovs_caseid_value + ")";
+                }
                 // Oversight/Flight Fields - Lookups
                 if (wost._ts_origin_value) {
                     workspaceData["ts_Origin@odata.bind"] = "/msdyn_functionallocations(" + wost._ts_origin_value + ")";
