@@ -24,7 +24,7 @@ namespace ROM.WorkOrderServiceTask {
         if (Form.getAttribute("msdyn_workorder").getValue() != null) {
             setTaskTypeFilteredView(Form);
             showHideFieldsByIncidentType(Form);
-            aircraftManufacturerOnChange(eContext);
+            //aircraftManufacturerOnChange(eContext);
         }
 
         var taskType = Form.getAttribute("msdyn_tasktype").getValue();
