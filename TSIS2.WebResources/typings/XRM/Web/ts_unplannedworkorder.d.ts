@@ -43,6 +43,7 @@ interface ts_unplannedworkorder_Base extends WebEntity {
   ts_totaltraveltime?: number | null;
   ts_totaltraveltime_date?: Date | null;
   ts_totaltraveltime_state?: number | null;
+  ts_ts_othercanceledjustification?: string | null;
   ts_unplannedworkorderid?: string | null;
   ts_woconductingoversight?: number | null;
   ts_wopreparationtime?: number | null;
@@ -176,6 +177,7 @@ interface ts_unplannedworkorder_Select {
   ts_totaltraveltime_state: WebAttribute<ts_unplannedworkorder_Select, { ts_totaltraveltime_state: number | null }, {  }>;
   ts_tradename_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_tradename_guid: string | null }, { ts_tradename_formatted?: string }>;
   ts_trip_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_trip_guid: string | null }, { ts_trip_formatted?: string }>;
+  ts_ts_othercanceledjustification: WebAttribute<ts_unplannedworkorder_Select, { ts_ts_othercanceledjustification: string | null }, {  }>;
   ts_unplannedworkorderid: WebAttribute<ts_unplannedworkorder_Select, { ts_unplannedworkorderid: string | null }, {  }>;
   ts_woconductingoversight: WebAttribute<ts_unplannedworkorder_Select, { ts_woconductingoversight: number | null }, {  }>;
   ts_wopreparationtime: WebAttribute<ts_unplannedworkorder_Select, { ts_wopreparationtime: number | null }, {  }>;
@@ -261,6 +263,7 @@ interface ts_unplannedworkorder_Filter {
   ts_totaltraveltime_state: number;
   ts_tradename_guid: XQW.Guid;
   ts_trip_guid: XQW.Guid;
+  ts_ts_othercanceledjustification: string;
   ts_unplannedworkorderid: XQW.Guid;
   ts_woconductingoversight: any;
   ts_wopreparationtime: any;

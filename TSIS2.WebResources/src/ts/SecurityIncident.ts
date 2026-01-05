@@ -38,8 +38,31 @@ namespace ROM.SecurityIncident {
         }
 
         unlockRecordLogFieldsIfUserIsSystemAdmin(formContext);
-        lockAllSummaryFieldsWhenStatusClosed(eContext);
-        restrictStatusFieldWhenStatusClosed(eContext);
+
+        // find out if the user is a member of the ROM Security Incident Team
+        let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+
+        getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.ROM_SECURITY_INCIDENT_TEAM)
+            .then(function (teamId) {
+                if (!teamId) {
+                    return null;
+                }
+                return isUserInTeam(userId, teamId);
+            })
+            .then(function (isMember) {
+                if (isMember) {
+                    //Enable the Security Incident Status change
+                }
+                else {
+                    lockAllSummaryFieldsWhenStatusClosed(eContext);
+                    restrictStatusFieldWhenStatusClosed(eContext);
+                }
+            })
+            .catch(function (error) {
+                console.error("Error checking ROM Security Incident team membership:", error);
+                lockAllSummaryFieldsWhenStatusClosed(eContext);
+                restrictStatusFieldWhenStatusClosed(eContext);
+            });
     }
 
     export function StatusOfRailwayOwnerOnChange(eContext: Xrm.ExecutionContext<any, any>): void {

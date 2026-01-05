@@ -76,6 +76,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "ts_totaltraveltime"): Xrm.NumberAttribute;
       get(name: "ts_tradename"): Xrm.LookupAttribute<"ts_tradename">;
       get(name: "ts_trip"): Xrm.LookupAttribute<"ts_trip">;
+      get(name: "ts_ts_othercanceledjustification"): Xrm.Attribute<string>;
       get(name: "ts_woconductingoversight"): Xrm.NumberAttribute;
       get(name: "ts_wopreparationtime"): Xrm.NumberAttribute;
       get(name: "ts_woreportinganddocumentation"): Xrm.NumberAttribute;
@@ -139,6 +140,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "ts_totaltraveltime"): Xrm.NumberControl;
       get(name: "ts_tradename"): Xrm.LookupControl<"ts_tradename">;
       get(name: "ts_trip"): Xrm.LookupControl<"ts_trip">;
+      get(name: "ts_ts_othercanceledjustification"): Xrm.StringControl;
       get(name: "ts_woconductingoversight"): Xrm.NumberControl;
       get(name: "ts_wopreparationtime"): Xrm.NumberControl;
       get(name: "ts_woreportinganddocumentation"): Xrm.NumberControl;
@@ -206,6 +208,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getAttribute(attributeName: "ts_totaltraveltime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_tradename"): Xrm.LookupAttribute<"ts_tradename">;
     getAttribute(attributeName: "ts_trip"): Xrm.LookupAttribute<"ts_trip">;
+    getAttribute(attributeName: "ts_ts_othercanceledjustification"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_woconductingoversight"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_wopreparationtime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_woreportinganddocumentation"): Xrm.NumberAttribute;
@@ -264,6 +267,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getControl(controlName: "ts_totaltraveltime"): Xrm.NumberControl;
     getControl(controlName: "ts_tradename"): Xrm.LookupControl<"ts_tradename">;
     getControl(controlName: "ts_trip"): Xrm.LookupControl<"ts_trip">;
+    getControl(controlName: "ts_ts_othercanceledjustification"): Xrm.StringControl;
     getControl(controlName: "ts_woconductingoversight"): Xrm.NumberControl;
     getControl(controlName: "ts_wopreparationtime"): Xrm.NumberControl;
     getControl(controlName: "ts_woreportinganddocumentation"): Xrm.NumberControl;
