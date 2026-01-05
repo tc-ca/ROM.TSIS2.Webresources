@@ -68,7 +68,7 @@ var ROM;
                             if (Form.getAttribute("msdyn_workorder").getValue() != null) {
                                 setTaskTypeFilteredView(Form);
                                 showHideFieldsByIncidentType(Form);
-                                aircraftManufacturerOnChange(eContext);
+                                //aircraftManufacturerOnChange(eContext);
                             }
                             taskType = Form.getAttribute("msdyn_tasktype").getValue();
                             //Lock Task Type field if it has a value.
