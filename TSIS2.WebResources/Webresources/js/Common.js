@@ -25,6 +25,11 @@ const MDA_NAMES = {
     ROM_RAIL_SAFETY: "ts_ROMRailSafetyAppId"
 }
 
+// Operation Type Configuration
+const OPERATION_TYPE_NAMES = {
+    RAILWAY_CARRIER: "ts_RailwayCarrierOperationTypeId"
+}
+
 function userHasRole(rolesName) {
   var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
   var hasRole = false;
