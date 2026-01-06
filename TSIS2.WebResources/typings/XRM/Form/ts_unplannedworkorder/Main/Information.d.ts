@@ -53,6 +53,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "ts_othercancelledjustification"): Xrm.Attribute<string>;
       get(name: "ts_overtime"): Xrm.NumberAttribute;
       get(name: "ts_overtimerequired"): Xrm.OptionSetAttribute<boolean>;
+      get(name: "ts_parentworkorder"): Xrm.LookupAttribute<"msdyn_workorder">;
       get(name: "ts_plannedfiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
       get(name: "ts_plannedfiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
       get(name: "ts_primaryincidentdescription"): Xrm.Attribute<string>;
@@ -120,6 +121,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "ts_othercancelledjustification"): Xrm.StringControl;
       get(name: "ts_overtime"): Xrm.NumberControl;
       get(name: "ts_overtimerequired"): Xrm.OptionSetControl<boolean>;
+      get(name: "ts_parentworkorder"): Xrm.LookupControl<"msdyn_workorder">;
       get(name: "ts_plannedfiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "ts_plannedfiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
       get(name: "ts_primaryincidentdescription"): Xrm.StringControl;
@@ -133,7 +135,9 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "ts_scheduledquarterjustification"): Xrm.LookupControl<"ts_justification">;
       get(name: "ts_scheduledquarterjustificationcomment"): Xrm.StringControl;
       get(name: "ts_securityincident"): Xrm.LookupControl<"ts_securityincident">;
+      get(name: "ts_securityincident1"): Xrm.LookupControl<"ts_securityincident">;
       get(name: "ts_servicerequest"): Xrm.LookupControl<"incident">;
+      get(name: "ts_servicerequest1"): Xrm.LookupControl<"incident">;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_skipplugin"): Xrm.OptionSetControl<boolean>;
       get(name: "ts_stakeholder"): Xrm.LookupControl<"account">;
@@ -145,6 +149,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "ts_totaltraveltime"): Xrm.NumberControl;
       get(name: "ts_tradename"): Xrm.LookupControl<"ts_tradename">;
       get(name: "ts_trip"): Xrm.LookupControl<"ts_trip">;
+      get(name: "ts_trip1"): Xrm.LookupControl<"ts_trip">;
       get(name: "ts_woconductingoversight"): Xrm.NumberControl;
       get(name: "ts_wopreparationtime"): Xrm.NumberControl;
       get(name: "ts_woreportinganddocumentation"): Xrm.NumberControl;
@@ -189,6 +194,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getAttribute(attributeName: "ts_othercancelledjustification"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_overtime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_overtimerequired"): Xrm.OptionSetAttribute<boolean>;
+    getAttribute(attributeName: "ts_parentworkorder"): Xrm.LookupAttribute<"msdyn_workorder">;
     getAttribute(attributeName: "ts_plannedfiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
     getAttribute(attributeName: "ts_plannedfiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
     getAttribute(attributeName: "ts_primaryincidentdescription"): Xrm.Attribute<string>;
@@ -251,6 +257,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getControl(controlName: "ts_othercancelledjustification"): Xrm.StringControl;
     getControl(controlName: "ts_overtime"): Xrm.NumberControl;
     getControl(controlName: "ts_overtimerequired"): Xrm.OptionSetControl<boolean>;
+    getControl(controlName: "ts_parentworkorder"): Xrm.LookupControl<"msdyn_workorder">;
     getControl(controlName: "ts_plannedfiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "ts_plannedfiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
     getControl(controlName: "ts_primaryincidentdescription"): Xrm.StringControl;
@@ -264,7 +271,9 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getControl(controlName: "ts_scheduledquarterjustification"): Xrm.LookupControl<"ts_justification">;
     getControl(controlName: "ts_scheduledquarterjustificationcomment"): Xrm.StringControl;
     getControl(controlName: "ts_securityincident"): Xrm.LookupControl<"ts_securityincident">;
+    getControl(controlName: "ts_securityincident1"): Xrm.LookupControl<"ts_securityincident">;
     getControl(controlName: "ts_servicerequest"): Xrm.LookupControl<"incident">;
+    getControl(controlName: "ts_servicerequest1"): Xrm.LookupControl<"incident">;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_skipplugin"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: "ts_stakeholder"): Xrm.LookupControl<"account">;
@@ -276,6 +285,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getControl(controlName: "ts_totaltraveltime"): Xrm.NumberControl;
     getControl(controlName: "ts_tradename"): Xrm.LookupControl<"ts_tradename">;
     getControl(controlName: "ts_trip"): Xrm.LookupControl<"ts_trip">;
+    getControl(controlName: "ts_trip1"): Xrm.LookupControl<"ts_trip">;
     getControl(controlName: "ts_woconductingoversight"): Xrm.NumberControl;
     getControl(controlName: "ts_wopreparationtime"): Xrm.NumberControl;
     getControl(controlName: "ts_woreportinganddocumentation"): Xrm.NumberControl;

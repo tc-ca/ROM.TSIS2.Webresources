@@ -897,7 +897,7 @@ function editUnplannedWorkOrder(primaryControl) {
 function createWorkOrderWorkspaceFromWorkOrder(formContext, currentWorkOrderId, lang) {
   // Retrieve work order data to transfer fields
   Xrm.WebApi.retrieveRecord("msdyn_workorder", currentWorkOrderId,
-    "?$select=msdyn_name,_ownerid_value,_msdyn_workordertype_value,_ts_region_value,_ts_country_value,_ovs_operationtypeid_value,ts_aircraftclassification,_ts_tradenameid_value,_msdyn_serviceaccount_value,_ts_contact_value,_ts_site_value,_msdyn_functionallocation_value,_ts_subsubsite_value,_ts_reason_value,_ts_workorderjustification_value,_ovs_operationid_value,msdyn_worklocation,_ovs_rational_value,ts_businessowner,_msdyn_primaryincidenttype_value,msdyn_primaryincidentdescription,msdyn_primaryincidentestimatedduration,ts_overtimerequired,ts_reportdetails,_ts_canceledinspectionjustification_value,_ovs_revisedquarterid_value,_ts_scheduledquarterjustification_value,ts_justificationcomment,ts_details,msdyn_instructions,ts_preparationtime,ts_woreportinganddocumentation,ts_comments,ts_overtime,ts_conductingoversight,ts_traveltime,_msdyn_servicerequest_value,_ts_securityincident_value,_ts_trip_value,msdyn_systemstatus"
+    "?$select=msdyn_name,_ownerid_value,_msdyn_workordertype_value,_ts_region_value,_ts_country_value,_ovs_operationtypeid_value,ts_aircraftclassification,_ts_tradenameid_value,_msdyn_serviceaccount_value,_ts_contact_value,_ts_site_value,_msdyn_functionallocation_value,_ts_subsubsite_value,_ts_reason_value,_ts_workorderjustification_value,_ovs_operationid_value,msdyn_worklocation,_ovs_rational_value,ts_businessowner,_msdyn_primaryincidenttype_value,msdyn_primaryincidentdescription,msdyn_primaryincidentestimatedduration,ts_overtimerequired,ts_reportdetails,_ts_canceledinspectionjustification_value,_ovs_revisedquarterid_value,_ts_scheduledquarterjustification_value,ts_justificationcomment,ts_details,msdyn_instructions,ts_preparationtime,ts_woreportinganddocumentation,ts_comments,ts_overtime,ts_conductingoversight,ts_traveltime,_msdyn_servicerequest_value,_ts_securityincident_value,_ts_trip_value,_msdyn_parentworkorder_value,msdyn_systemstatus"
   ).then(
     function success(workOrder) {
       // Prepare data for creating the unplanned work order record
@@ -979,6 +979,9 @@ function createWorkOrderWorkspaceFromWorkOrder(formContext, currentWorkOrderId, 
       }
       if (workOrder._ts_trip_value) {
         unplannedWorkOrderData["ts_Trip@odata.bind"] = "/ts_trips(" + workOrder._ts_trip_value + ")";
+      }
+      if (workOrder._msdyn_parentworkorder_value) {
+        unplannedWorkOrderData["ts_ParentWorkOrder@odata.bind"] = "/msdyn_workorders(" + workOrder._msdyn_parentworkorder_value + ")";
       }
       // Add simple fields only if they exist
       // Summary
