@@ -65,7 +65,6 @@ interface Team_Relationships {
   team_ts_canceledinspectionjustification?: ts_canceledinspectionjustification_Result[] | null;
   team_ts_case?: ts_case_Result[] | null;
   team_ts_causefinding?: ts_causefinding_Result[] | null;
-  team_ts_dutyinspectors?: ts_dutyinspectors_Result[] | null;
   team_ts_dutyinspectorschedule?: ts_DutyInspectorSchedule_Result[] | null;
   team_ts_entityrisk?: ts_EntityRisk_Result[] | null;
   team_ts_entityriskfrequency?: ts_EntityRiskFrequency_Result[] | null;
@@ -81,6 +80,7 @@ interface Team_Relationships {
   team_ts_plan?: ts_Plan_Result[] | null;
   team_ts_planningdata?: ts_PlanningData_Result[] | null;
   team_ts_planningsettings?: ts_planningsettings_Result[] | null;
+  team_ts_prescribedfrequencyoverride?: ts_PrescribedFrequencyOverride_Result[] | null;
   team_ts_questionnaireresponse?: ts_questionnaireresponse_Result[] | null;
   team_ts_questionnaireversion?: ts_questionnaireversion_Result[] | null;
   team_ts_riskcategory?: ts_RiskCategory_Result[] | null;
@@ -260,7 +260,6 @@ interface Team_Expand {
   team_ts_canceledinspectionjustification: WebExpand<Team_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { team_ts_canceledinspectionjustification: ts_canceledinspectionjustification_Result[] }>;
   team_ts_case: WebExpand<Team_Expand, ts_case_Select, ts_case_Filter, { team_ts_case: ts_case_Result[] }>;
   team_ts_causefinding: WebExpand<Team_Expand, ts_causefinding_Select, ts_causefinding_Filter, { team_ts_causefinding: ts_causefinding_Result[] }>;
-  team_ts_dutyinspectors: WebExpand<Team_Expand, ts_dutyinspectors_Select, ts_dutyinspectors_Filter, { team_ts_dutyinspectors: ts_dutyinspectors_Result[] }>;
   team_ts_dutyinspectorschedule: WebExpand<Team_Expand, ts_DutyInspectorSchedule_Select, ts_DutyInspectorSchedule_Filter, { team_ts_dutyinspectorschedule: ts_DutyInspectorSchedule_Result[] }>;
   team_ts_entityrisk: WebExpand<Team_Expand, ts_EntityRisk_Select, ts_EntityRisk_Filter, { team_ts_entityrisk: ts_EntityRisk_Result[] }>;
   team_ts_entityriskfrequency: WebExpand<Team_Expand, ts_EntityRiskFrequency_Select, ts_EntityRiskFrequency_Filter, { team_ts_entityriskfrequency: ts_EntityRiskFrequency_Result[] }>;
@@ -276,6 +275,7 @@ interface Team_Expand {
   team_ts_plan: WebExpand<Team_Expand, ts_Plan_Select, ts_Plan_Filter, { team_ts_plan: ts_Plan_Result[] }>;
   team_ts_planningdata: WebExpand<Team_Expand, ts_PlanningData_Select, ts_PlanningData_Filter, { team_ts_planningdata: ts_PlanningData_Result[] }>;
   team_ts_planningsettings: WebExpand<Team_Expand, ts_planningsettings_Select, ts_planningsettings_Filter, { team_ts_planningsettings: ts_planningsettings_Result[] }>;
+  team_ts_prescribedfrequencyoverride: WebExpand<Team_Expand, ts_PrescribedFrequencyOverride_Select, ts_PrescribedFrequencyOverride_Filter, { team_ts_prescribedfrequencyoverride: ts_PrescribedFrequencyOverride_Result[] }>;
   team_ts_questionnaireresponse: WebExpand<Team_Expand, ts_questionnaireresponse_Select, ts_questionnaireresponse_Filter, { team_ts_questionnaireresponse: ts_questionnaireresponse_Result[] }>;
   team_ts_questionnaireversion: WebExpand<Team_Expand, ts_questionnaireversion_Select, ts_questionnaireversion_Filter, { team_ts_questionnaireversion: ts_questionnaireversion_Result[] }>;
   team_ts_riskcategory: WebExpand<Team_Expand, ts_RiskCategory_Select, ts_RiskCategory_Filter, { team_ts_riskcategory: ts_RiskCategory_Result[] }>;
@@ -394,7 +394,6 @@ interface Team_RelatedMany {
   team_ts_canceledinspectionjustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
   team_ts_case: WebMappingRetrieve<ts_case_Select,ts_case_Expand,ts_case_Filter,ts_case_Fixed,ts_case_Result,ts_case_FormattedResult>;
   team_ts_causefinding: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
-  team_ts_dutyinspectors: WebMappingRetrieve<ts_dutyinspectors_Select,ts_dutyinspectors_Expand,ts_dutyinspectors_Filter,ts_dutyinspectors_Fixed,ts_dutyinspectors_Result,ts_dutyinspectors_FormattedResult>;
   team_ts_dutyinspectorschedule: WebMappingRetrieve<ts_DutyInspectorSchedule_Select,ts_DutyInspectorSchedule_Expand,ts_DutyInspectorSchedule_Filter,ts_DutyInspectorSchedule_Fixed,ts_DutyInspectorSchedule_Result,ts_DutyInspectorSchedule_FormattedResult>;
   team_ts_entityrisk: WebMappingRetrieve<ts_EntityRisk_Select,ts_EntityRisk_Expand,ts_EntityRisk_Filter,ts_EntityRisk_Fixed,ts_EntityRisk_Result,ts_EntityRisk_FormattedResult>;
   team_ts_entityriskfrequency: WebMappingRetrieve<ts_EntityRiskFrequency_Select,ts_EntityRiskFrequency_Expand,ts_EntityRiskFrequency_Filter,ts_EntityRiskFrequency_Fixed,ts_EntityRiskFrequency_Result,ts_EntityRiskFrequency_FormattedResult>;
@@ -410,6 +409,7 @@ interface Team_RelatedMany {
   team_ts_plan: WebMappingRetrieve<ts_Plan_Select,ts_Plan_Expand,ts_Plan_Filter,ts_Plan_Fixed,ts_Plan_Result,ts_Plan_FormattedResult>;
   team_ts_planningdata: WebMappingRetrieve<ts_PlanningData_Select,ts_PlanningData_Expand,ts_PlanningData_Filter,ts_PlanningData_Fixed,ts_PlanningData_Result,ts_PlanningData_FormattedResult>;
   team_ts_planningsettings: WebMappingRetrieve<ts_planningsettings_Select,ts_planningsettings_Expand,ts_planningsettings_Filter,ts_planningsettings_Fixed,ts_planningsettings_Result,ts_planningsettings_FormattedResult>;
+  team_ts_prescribedfrequencyoverride: WebMappingRetrieve<ts_PrescribedFrequencyOverride_Select,ts_PrescribedFrequencyOverride_Expand,ts_PrescribedFrequencyOverride_Filter,ts_PrescribedFrequencyOverride_Fixed,ts_PrescribedFrequencyOverride_Result,ts_PrescribedFrequencyOverride_FormattedResult>;
   team_ts_questionnaireresponse: WebMappingRetrieve<ts_questionnaireresponse_Select,ts_questionnaireresponse_Expand,ts_questionnaireresponse_Filter,ts_questionnaireresponse_Fixed,ts_questionnaireresponse_Result,ts_questionnaireresponse_FormattedResult>;
   team_ts_questionnaireversion: WebMappingRetrieve<ts_questionnaireversion_Select,ts_questionnaireversion_Expand,ts_questionnaireversion_Filter,ts_questionnaireversion_Fixed,ts_questionnaireversion_Result,ts_questionnaireversion_FormattedResult>;
   team_ts_riskcategory: WebMappingRetrieve<ts_RiskCategory_Select,ts_RiskCategory_Expand,ts_RiskCategory_Filter,ts_RiskCategory_Fixed,ts_RiskCategory_Result,ts_RiskCategory_FormattedResult>;

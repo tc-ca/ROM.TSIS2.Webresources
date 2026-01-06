@@ -56,6 +56,7 @@ interface ts_unplannedworkorder_Base extends WebEntity {
 interface ts_unplannedworkorder_Relationships {
   ts_CancelledInspectionJustification?: ts_canceledinspectionjustification_Result | null;
   ts_Contact_ts_unplannedworkorder_ts_unplannedworkorder?: Contact_Result[] | null;
+  ts_ParentWorkOrder?: msdyn_workorder_Result | null;
   ts_PlannedFiscalQuarter?: tc_TCFiscalQuarter_Result | null;
   ts_PlannedFiscalYear?: tc_TCFiscalYear_Result | null;
   ts_SecurityIncident?: ts_securityincident_Result | null;
@@ -79,6 +80,7 @@ interface ts_unplannedworkorder extends ts_unplannedworkorder_Base, ts_unplanned
   ownerid_bind$teams?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
   ts_CancelledInspectionJustification_bind$ts_canceledinspectionjustifications?: string | null;
+  ts_ParentWorkOrder_bind$msdyn_workorders?: string | null;
   ts_PlannedFiscalQuarter_bind$tc_tcfiscalquarters?: string | null;
   ts_PlannedFiscalYear_bind$tc_tcfiscalyears?: string | null;
   ts_ScheduledQuarterJustification_bind$ts_justifications?: string | null;
@@ -148,6 +150,7 @@ interface ts_unplannedworkorder_Select {
   ts_othercancelledjustification: WebAttribute<ts_unplannedworkorder_Select, { ts_othercancelledjustification: string | null }, {  }>;
   ts_overtime: WebAttribute<ts_unplannedworkorder_Select, { ts_overtime: number | null }, {  }>;
   ts_overtimerequired: WebAttribute<ts_unplannedworkorder_Select, { ts_overtimerequired: boolean | null }, {  }>;
+  ts_parentworkorder_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_parentworkorder_guid: string | null }, { ts_parentworkorder_formatted?: string }>;
   ts_plannedcost: WebAttribute<ts_unplannedworkorder_Select, { ts_plannedcost: number | null; transactioncurrencyid_guid: string | null }, { ts_plannedcost_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_plannedcost_base: WebAttribute<ts_unplannedworkorder_Select, { ts_plannedcost_base: number | null; transactioncurrencyid_guid: string | null }, { ts_plannedcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_plannedfiscalquarter_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_plannedfiscalquarter_guid: string | null }, { ts_plannedfiscalquarter_formatted?: string }>;
@@ -236,6 +239,7 @@ interface ts_unplannedworkorder_Filter {
   ts_othercancelledjustification: string;
   ts_overtime: any;
   ts_overtimerequired: boolean;
+  ts_parentworkorder_guid: XQW.Guid;
   ts_plannedcost: number;
   ts_plannedcost_base: number;
   ts_plannedfiscalquarter_guid: XQW.Guid;
@@ -294,6 +298,7 @@ interface ts_unplannedworkorder_Expand {
   owninguser: WebExpand<ts_unplannedworkorder_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_CancelledInspectionJustification: WebExpand<ts_unplannedworkorder_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { ts_CancelledInspectionJustification: ts_canceledinspectionjustification_Result }>;
   ts_Contact_ts_unplannedworkorder_ts_unplannedworkorder: WebExpand<ts_unplannedworkorder_Expand, Contact_Select, Contact_Filter, { ts_Contact_ts_unplannedworkorder_ts_unplannedworkorder: Contact_Result[] }>;
+  ts_ParentWorkOrder: WebExpand<ts_unplannedworkorder_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_ParentWorkOrder: msdyn_workorder_Result }>;
   ts_PlannedFiscalQuarter: WebExpand<ts_unplannedworkorder_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ts_PlannedFiscalQuarter: tc_TCFiscalQuarter_Result }>;
   ts_PlannedFiscalYear: WebExpand<ts_unplannedworkorder_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_PlannedFiscalYear: tc_TCFiscalYear_Result }>;
   ts_SecurityIncident: WebExpand<ts_unplannedworkorder_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_SecurityIncident: ts_securityincident_Result }>;
@@ -349,6 +354,7 @@ interface ts_unplannedworkorder_FormattedResult {
   ts_functionallocation_formatted?: string;
   ts_operation_formatted?: string;
   ts_operationtype_formatted?: string;
+  ts_parentworkorder_formatted?: string;
   ts_plannedcost_base_formatted?: string;
   ts_plannedcost_formatted?: string;
   ts_plannedfiscalquarter_formatted?: string;
@@ -395,6 +401,7 @@ interface ts_unplannedworkorder_Result extends ts_unplannedworkorder_Base, ts_un
   ts_functionallocation_guid: string | null;
   ts_operation_guid: string | null;
   ts_operationtype_guid: string | null;
+  ts_parentworkorder_guid: string | null;
   ts_plannedfiscalquarter_guid: string | null;
   ts_plannedfiscalyear_guid: string | null;
   ts_primaryincidenttype_guid: string | null;
@@ -423,6 +430,7 @@ interface ts_unplannedworkorder_RelatedOne {
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_CancelledInspectionJustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
+  ts_ParentWorkOrder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_PlannedFiscalQuarter: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   ts_PlannedFiscalYear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
   ts_SecurityIncident: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
