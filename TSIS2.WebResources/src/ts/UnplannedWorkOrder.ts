@@ -465,7 +465,17 @@ namespace ROM.UnplannedWorkOrder {
         //Lock Cancelled Inspection Justification field if WO is cancelled
         if (currentSystemStatus == msdyn_wosystemstatus.Cancelled) {
             form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
+
+            let selectedCanceledWorkOrderReason = form.getAttribute("ts_cancelledinspectionjustification").getValue();
+            const selectedOther = "{A8D7125C-7F24-ED11-9DB2-002248AE429C}";
+
+            //If 'Other' is selected as a reason, make ts_othercanceledjustification visible
+            if (selectedCanceledWorkOrderReason != null && selectedCanceledWorkOrderReason[0].id.toUpperCase() == selectedOther) {
+                form.getControl("ts_othercancelledjustification").setVisible(true);
+                form.getAttribute("ts_othercancelledjustification").setRequiredLevel("required");
+            }
         }
+
 
         //  unlockRecordLogFieldsIfUserIsSystemAdmin(form);
         RemoveOptionCancel(eContext);
@@ -2203,23 +2213,23 @@ namespace ROM.UnplannedWorkOrder {
     //    setScheduledQuarterFilter(form);
     //}
 
-    //export function canceledWorkOrderReasonOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-    //    const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+    export function canceledWorkOrderReasonOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ts_unplannedworkorder.Main.Information>eContext.getFormContext();
 
-    //    let selectedCanceledWorkOrderReason = form.getAttribute("ts_canceledinspectionjustification").getValue();
+        let selectedCanceledWorkOrderReason = form.getAttribute("ts_cancelledinspectionjustification").getValue();
 
-    //    const selectedOther = "{A8D7125C-7F24-ED11-9DB2-002248AE429C}";
+        const selectedOther = "{A8D7125C-7F24-ED11-9DB2-002248AE429C}";
 
-    //    //If 'Other' is selected as a reason, make ts_othercanceledjustification visible
-    //    if (selectedCanceledWorkOrderReason != null && selectedCanceledWorkOrderReason[0].id.toUpperCase() == selectedOther) {
-    //        form.getControl("ts_othercanceledjustification").setVisible(true);
-    //        form.getAttribute("ts_othercanceledjustification").setRequiredLevel("required");
-    //    } else {
-    //        form.getControl("ts_othercanceledjustification").setVisible(false);
-    //        form.getAttribute("ts_othercanceledjustification").setValue(null);
-    //        form.getAttribute("ts_othercanceledjustification").setRequiredLevel("none");
-    //    }
-    //}
+        //If 'Other' is selected as a reason, make ts_othercanceledjustification visible
+        if (selectedCanceledWorkOrderReason != null && selectedCanceledWorkOrderReason[0].id.toUpperCase() == selectedOther) {
+            form.getControl("ts_othercancelledjustification").setVisible(true);
+            form.getAttribute("ts_othercancelledjustification").setRequiredLevel("required");
+        } else {
+            form.getControl("ts_othercancelledjustification").setVisible(false);
+            form.getAttribute("ts_othercancelledjustification").setValue(null);
+            form.getAttribute("ts_othercancelledjustification").setRequiredLevel("none");
+        }
+    }
 
     function populateOperationField(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_unplannedworkorder.Main.Information>eContext.getFormContext();
