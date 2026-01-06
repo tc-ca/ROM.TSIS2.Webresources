@@ -20,6 +20,7 @@ interface ts_unplannedworkorder_Base extends WebEntity {
   ts_instructions?: string | null;
   ts_name?: string | null;
   ts_openworkorderoncreation?: boolean | null;
+  ts_othercancelledjustification?: string | null;
   ts_overtime?: number | null;
   ts_overtimerequired?: boolean | null;
   ts_plannedcost?: number | null;
@@ -43,7 +44,6 @@ interface ts_unplannedworkorder_Base extends WebEntity {
   ts_totaltraveltime?: number | null;
   ts_totaltraveltime_date?: Date | null;
   ts_totaltraveltime_state?: number | null;
-  ts_ts_othercanceledjustification?: string | null;
   ts_unplannedworkorderid?: string | null;
   ts_woconductingoversight?: number | null;
   ts_wopreparationtime?: number | null;
@@ -56,6 +56,8 @@ interface ts_unplannedworkorder_Base extends WebEntity {
 interface ts_unplannedworkorder_Relationships {
   ts_CancelledInspectionJustification?: ts_canceledinspectionjustification_Result | null;
   ts_Contact_ts_unplannedworkorder_ts_unplannedworkorder?: Contact_Result[] | null;
+  ts_PlannedFiscalQuarter?: tc_TCFiscalQuarter_Result | null;
+  ts_PlannedFiscalYear?: tc_TCFiscalYear_Result | null;
   ts_SecurityIncident?: ts_securityincident_Result | null;
   ts_Trip?: ts_trip_Result | null;
   ts_WorkOrder?: msdyn_workorder_Result | null;
@@ -77,6 +79,8 @@ interface ts_unplannedworkorder extends ts_unplannedworkorder_Base, ts_unplanned
   ownerid_bind$teams?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
   ts_CancelledInspectionJustification_bind$ts_canceledinspectionjustifications?: string | null;
+  ts_PlannedFiscalQuarter_bind$tc_tcfiscalquarters?: string | null;
+  ts_PlannedFiscalYear_bind$tc_tcfiscalyears?: string | null;
   ts_ScheduledQuarterJustification_bind$ts_justifications?: string | null;
   ts_SecurityIncident_bind$ts_securityincidents?: string | null;
   ts_TradeName_bind$ts_tradenames?: string | null;
@@ -141,10 +145,13 @@ interface ts_unplannedworkorder_Select {
   ts_openworkorderoncreation: WebAttribute<ts_unplannedworkorder_Select, { ts_openworkorderoncreation: boolean | null }, {  }>;
   ts_operation_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_operation_guid: string | null }, { ts_operation_formatted?: string }>;
   ts_operationtype_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_operationtype_guid: string | null }, { ts_operationtype_formatted?: string }>;
+  ts_othercancelledjustification: WebAttribute<ts_unplannedworkorder_Select, { ts_othercancelledjustification: string | null }, {  }>;
   ts_overtime: WebAttribute<ts_unplannedworkorder_Select, { ts_overtime: number | null }, {  }>;
   ts_overtimerequired: WebAttribute<ts_unplannedworkorder_Select, { ts_overtimerequired: boolean | null }, {  }>;
   ts_plannedcost: WebAttribute<ts_unplannedworkorder_Select, { ts_plannedcost: number | null; transactioncurrencyid_guid: string | null }, { ts_plannedcost_formatted?: string; transactioncurrencyid_formatted?: string }>;
   ts_plannedcost_base: WebAttribute<ts_unplannedworkorder_Select, { ts_plannedcost_base: number | null; transactioncurrencyid_guid: string | null }, { ts_plannedcost_base_formatted?: string; transactioncurrencyid_formatted?: string }>;
+  ts_plannedfiscalquarter_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_plannedfiscalquarter_guid: string | null }, { ts_plannedfiscalquarter_formatted?: string }>;
+  ts_plannedfiscalyear_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_plannedfiscalyear_guid: string | null }, { ts_plannedfiscalyear_formatted?: string }>;
   ts_primaryincidentdescription: WebAttribute<ts_unplannedworkorder_Select, { ts_primaryincidentdescription: string | null }, {  }>;
   ts_primaryincidentestimatedduration: WebAttribute<ts_unplannedworkorder_Select, { ts_primaryincidentestimatedduration: number | null }, {  }>;
   ts_primaryincidenttype_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_primaryincidenttype_guid: string | null }, { ts_primaryincidenttype_formatted?: string }>;
@@ -177,7 +184,6 @@ interface ts_unplannedworkorder_Select {
   ts_totaltraveltime_state: WebAttribute<ts_unplannedworkorder_Select, { ts_totaltraveltime_state: number | null }, {  }>;
   ts_tradename_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_tradename_guid: string | null }, { ts_tradename_formatted?: string }>;
   ts_trip_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_trip_guid: string | null }, { ts_trip_formatted?: string }>;
-  ts_ts_othercanceledjustification: WebAttribute<ts_unplannedworkorder_Select, { ts_ts_othercanceledjustification: string | null }, {  }>;
   ts_unplannedworkorderid: WebAttribute<ts_unplannedworkorder_Select, { ts_unplannedworkorderid: string | null }, {  }>;
   ts_woconductingoversight: WebAttribute<ts_unplannedworkorder_Select, { ts_woconductingoversight: number | null }, {  }>;
   ts_wopreparationtime: WebAttribute<ts_unplannedworkorder_Select, { ts_wopreparationtime: number | null }, {  }>;
@@ -227,10 +233,13 @@ interface ts_unplannedworkorder_Filter {
   ts_openworkorderoncreation: boolean;
   ts_operation_guid: XQW.Guid;
   ts_operationtype_guid: XQW.Guid;
+  ts_othercancelledjustification: string;
   ts_overtime: any;
   ts_overtimerequired: boolean;
   ts_plannedcost: number;
   ts_plannedcost_base: number;
+  ts_plannedfiscalquarter_guid: XQW.Guid;
+  ts_plannedfiscalyear_guid: XQW.Guid;
   ts_primaryincidentdescription: string;
   ts_primaryincidentestimatedduration: number;
   ts_primaryincidenttype_guid: XQW.Guid;
@@ -263,7 +272,6 @@ interface ts_unplannedworkorder_Filter {
   ts_totaltraveltime_state: number;
   ts_tradename_guid: XQW.Guid;
   ts_trip_guid: XQW.Guid;
-  ts_ts_othercanceledjustification: string;
   ts_unplannedworkorderid: XQW.Guid;
   ts_woconductingoversight: any;
   ts_wopreparationtime: any;
@@ -286,6 +294,8 @@ interface ts_unplannedworkorder_Expand {
   owninguser: WebExpand<ts_unplannedworkorder_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_CancelledInspectionJustification: WebExpand<ts_unplannedworkorder_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { ts_CancelledInspectionJustification: ts_canceledinspectionjustification_Result }>;
   ts_Contact_ts_unplannedworkorder_ts_unplannedworkorder: WebExpand<ts_unplannedworkorder_Expand, Contact_Select, Contact_Filter, { ts_Contact_ts_unplannedworkorder_ts_unplannedworkorder: Contact_Result[] }>;
+  ts_PlannedFiscalQuarter: WebExpand<ts_unplannedworkorder_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ts_PlannedFiscalQuarter: tc_TCFiscalQuarter_Result }>;
+  ts_PlannedFiscalYear: WebExpand<ts_unplannedworkorder_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_PlannedFiscalYear: tc_TCFiscalYear_Result }>;
   ts_SecurityIncident: WebExpand<ts_unplannedworkorder_Expand, ts_securityincident_Select, ts_securityincident_Filter, { ts_SecurityIncident: ts_securityincident_Result }>;
   ts_Trip: WebExpand<ts_unplannedworkorder_Expand, ts_trip_Select, ts_trip_Filter, { ts_Trip: ts_trip_Result }>;
   ts_WorkOrder: WebExpand<ts_unplannedworkorder_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_WorkOrder: msdyn_workorder_Result }>;
@@ -341,6 +351,8 @@ interface ts_unplannedworkorder_FormattedResult {
   ts_operationtype_formatted?: string;
   ts_plannedcost_base_formatted?: string;
   ts_plannedcost_formatted?: string;
+  ts_plannedfiscalquarter_formatted?: string;
+  ts_plannedfiscalyear_formatted?: string;
   ts_primaryincidenttype_formatted?: string;
   ts_rational_formatted?: string;
   ts_reason_formatted?: string;
@@ -383,6 +395,8 @@ interface ts_unplannedworkorder_Result extends ts_unplannedworkorder_Base, ts_un
   ts_functionallocation_guid: string | null;
   ts_operation_guid: string | null;
   ts_operationtype_guid: string | null;
+  ts_plannedfiscalquarter_guid: string | null;
+  ts_plannedfiscalyear_guid: string | null;
   ts_primaryincidenttype_guid: string | null;
   ts_rational_guid: string | null;
   ts_reason_guid: string | null;
@@ -409,6 +423,8 @@ interface ts_unplannedworkorder_RelatedOne {
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_CancelledInspectionJustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
+  ts_PlannedFiscalQuarter: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
+  ts_PlannedFiscalYear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
   ts_SecurityIncident: WebMappingRetrieve<ts_securityincident_Select,ts_securityincident_Expand,ts_securityincident_Filter,ts_securityincident_Fixed,ts_securityincident_Result,ts_securityincident_FormattedResult>;
   ts_Trip: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
   ts_WorkOrder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;

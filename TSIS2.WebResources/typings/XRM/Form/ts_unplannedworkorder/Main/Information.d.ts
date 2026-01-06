@@ -50,8 +50,11 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "ts_openworkorderoncreation"): Xrm.OptionSetAttribute<boolean>;
       get(name: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
       get(name: "ts_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
+      get(name: "ts_othercancelledjustification"): Xrm.Attribute<string>;
       get(name: "ts_overtime"): Xrm.NumberAttribute;
       get(name: "ts_overtimerequired"): Xrm.OptionSetAttribute<boolean>;
+      get(name: "ts_plannedfiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
+      get(name: "ts_plannedfiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
       get(name: "ts_primaryincidentdescription"): Xrm.Attribute<string>;
       get(name: "ts_primaryincidentestimatedduration"): Xrm.NumberAttribute;
       get(name: "ts_primaryincidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
@@ -76,7 +79,6 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "ts_totaltraveltime"): Xrm.NumberAttribute;
       get(name: "ts_tradename"): Xrm.LookupAttribute<"ts_tradename">;
       get(name: "ts_trip"): Xrm.LookupAttribute<"ts_trip">;
-      get(name: "ts_ts_othercanceledjustification"): Xrm.Attribute<string>;
       get(name: "ts_woconductingoversight"): Xrm.NumberAttribute;
       get(name: "ts_wopreparationtime"): Xrm.NumberAttribute;
       get(name: "ts_woreportinganddocumentation"): Xrm.NumberAttribute;
@@ -115,8 +117,11 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
       get(name: "ts_operation1"): Xrm.LookupControl<"ovs_operation">;
       get(name: "ts_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
+      get(name: "ts_othercancelledjustification"): Xrm.StringControl;
       get(name: "ts_overtime"): Xrm.NumberControl;
       get(name: "ts_overtimerequired"): Xrm.OptionSetControl<boolean>;
+      get(name: "ts_plannedfiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
+      get(name: "ts_plannedfiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
       get(name: "ts_primaryincidentdescription"): Xrm.StringControl;
       get(name: "ts_primaryincidentestimatedduration"): Xrm.NumberControl;
       get(name: "ts_primaryincidenttype"): Xrm.LookupControl<"msdyn_incidenttype">;
@@ -140,7 +145,6 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "ts_totaltraveltime"): Xrm.NumberControl;
       get(name: "ts_tradename"): Xrm.LookupControl<"ts_tradename">;
       get(name: "ts_trip"): Xrm.LookupControl<"ts_trip">;
-      get(name: "ts_ts_othercanceledjustification"): Xrm.StringControl;
       get(name: "ts_woconductingoversight"): Xrm.NumberControl;
       get(name: "ts_wopreparationtime"): Xrm.NumberControl;
       get(name: "ts_woreportinganddocumentation"): Xrm.NumberControl;
@@ -182,8 +186,11 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getAttribute(attributeName: "ts_openworkorderoncreation"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
     getAttribute(attributeName: "ts_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
+    getAttribute(attributeName: "ts_othercancelledjustification"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_overtime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_overtimerequired"): Xrm.OptionSetAttribute<boolean>;
+    getAttribute(attributeName: "ts_plannedfiscalquarter"): Xrm.LookupAttribute<"tc_tcfiscalquarter">;
+    getAttribute(attributeName: "ts_plannedfiscalyear"): Xrm.LookupAttribute<"tc_tcfiscalyear">;
     getAttribute(attributeName: "ts_primaryincidentdescription"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_primaryincidentestimatedduration"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_primaryincidenttype"): Xrm.LookupAttribute<"msdyn_incidenttype">;
@@ -208,7 +215,6 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getAttribute(attributeName: "ts_totaltraveltime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_tradename"): Xrm.LookupAttribute<"ts_tradename">;
     getAttribute(attributeName: "ts_trip"): Xrm.LookupAttribute<"ts_trip">;
-    getAttribute(attributeName: "ts_ts_othercanceledjustification"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_woconductingoversight"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_wopreparationtime"): Xrm.NumberAttribute;
     getAttribute(attributeName: "ts_woreportinganddocumentation"): Xrm.NumberAttribute;
@@ -242,8 +248,11 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getControl(controlName: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
     getControl(controlName: "ts_operation1"): Xrm.LookupControl<"ovs_operation">;
     getControl(controlName: "ts_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
+    getControl(controlName: "ts_othercancelledjustification"): Xrm.StringControl;
     getControl(controlName: "ts_overtime"): Xrm.NumberControl;
     getControl(controlName: "ts_overtimerequired"): Xrm.OptionSetControl<boolean>;
+    getControl(controlName: "ts_plannedfiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
+    getControl(controlName: "ts_plannedfiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
     getControl(controlName: "ts_primaryincidentdescription"): Xrm.StringControl;
     getControl(controlName: "ts_primaryincidentestimatedduration"): Xrm.NumberControl;
     getControl(controlName: "ts_primaryincidenttype"): Xrm.LookupControl<"msdyn_incidenttype">;
@@ -267,7 +276,6 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getControl(controlName: "ts_totaltraveltime"): Xrm.NumberControl;
     getControl(controlName: "ts_tradename"): Xrm.LookupControl<"ts_tradename">;
     getControl(controlName: "ts_trip"): Xrm.LookupControl<"ts_trip">;
-    getControl(controlName: "ts_ts_othercanceledjustification"): Xrm.StringControl;
     getControl(controlName: "ts_woconductingoversight"): Xrm.NumberControl;
     getControl(controlName: "ts_wopreparationtime"): Xrm.NumberControl;
     getControl(controlName: "ts_woreportinganddocumentation"): Xrm.NumberControl;
