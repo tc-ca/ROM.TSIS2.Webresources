@@ -69,6 +69,7 @@ namespace ROM.WorkOrder {
                 form.getControl("ts_actualcost").setVisible(false);
                 form.getControl("ts_costexplanation").setVisible(false);
                 form.getControl("ts_cantcompleteinspection").setVisible(false);
+                form.getControl("msdyn_servicerequest").setVisible(false);
 
                 // Hide overtime toggle for AvSec users in ROM20 form
                 if (isROM20Form) {
