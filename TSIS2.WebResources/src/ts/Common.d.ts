@@ -8,6 +8,10 @@ declare const BU_SCHEMA_NAMES: {
     [key: string]: string;
 };
 
+declare const OPERATION_TYPE_NAMES: {
+    [key: string]: string;
+};
+
 declare function userHasRole(rolesName: string): boolean;
 declare function setOwnerToUserBusinessUnit(formContext: Xrm.FormContext): void;
 declare function showFieldWarningMessageIfOwnerIsNotISSONorAvSec(formContext: Xrm.FormContext): Promise<boolean>;

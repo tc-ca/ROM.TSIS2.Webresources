@@ -105,6 +105,15 @@ namespace ROM.WorkOrder {
 
         //Keep track of the current system status, to be used when cancelling a status change.
         currentStatus = form.getAttribute("ts_state").getValue();
+        
+        // Auto-populate State field to Committed for Rail Safety users
+        isUserUsingRailSafetyApp().then(isRailSafety => {
+            if (isRailSafety) {
+                form.getAttribute("ts_state").setValue(717750001); // Committed
+                form.getControl("ts_state").setVisible(false);
+            }
+        });
+        
         form.getControl("msdyn_worklocation").removeOption(690970001);  //Remove Facility Work Location Option
         updateCaseView(eContext);
 
@@ -625,7 +634,26 @@ namespace ROM.WorkOrder {
 
                     // Enable direct dependent field
                     if (regionAttributeValue[0].name != "International") {
-                        setOperationTypeFilteredView(form, regionAttributeValue[0].id, "", workOrderTypeAttributeValue[0].id, "", "");
+                        
+                        // Check if user is in Rail Safety team
+                        isUserUsingRailSafetyApp().then(async isRailSafety => {
+                            if (isRailSafety) {
+                                // Auto-set Operation Type to Railway Carrier for Rail Safety users
+                                const railwayCarrierId = await getEnvironmentVariableValue(OPERATION_TYPE_NAMES.RAILWAY_CARRIER);
+                                if (railwayCarrierId) {
+                                    const railwayCarrierOperationType = new Array();
+                                    railwayCarrierOperationType[0] = new Object();
+                                    railwayCarrierOperationType[0].id = `{${railwayCarrierId}}`;
+                                    railwayCarrierOperationType[0].name = "Railway Carrier";
+                                    railwayCarrierOperationType[0].entityType = "ovs_operationtype";
+                                    form.getAttribute("ovs_operationtypeid").setValue(railwayCarrierOperationType);
+                                    form.getControl("ovs_operationtypeid").setVisible(false);
+                                }
+                            } else {
+                                // Normal flow for non-Rail Safety users
+                                setOperationTypeFilteredView(form, regionAttributeValue[0].id, "", workOrderTypeAttributeValue[0].id, "", "");
+                            }
+                        });
 
                     } else {
                         form.getControl("ts_country").setDisabled(false);
