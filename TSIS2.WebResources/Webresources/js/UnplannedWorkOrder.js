@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -146,7 +146,7 @@ var ROM;
                                     if (isROM20Form) {
                                         form.getControl("ts_overtimerequired").setVisible(false);
                                     }
-                                    if (currentSystemStatus == 741130000 /* Closed */ || currentSystemStatus == 690970005 /* Cancelled */) {
+                                    if (currentSystemStatus == msdyn_wosystemstatus.Closed || currentSystemStatus == msdyn_wosystemstatus.Cancelled) {
                                         if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager")) {
                                             form.getControl("header_ts_recordstatus").setDisabled(true);
                                         }
@@ -228,9 +228,9 @@ var ROM;
             //else { //If the work order is active, show the active views
             //    setWorkOrderServiceTasksView(form, true);
             //}
-            //if (form.getAttribute("ts_fiscalquarter").getValue() != null && form.getAttribute("ts_revisedquarter").getValue() == null)
-            //    form.getAttribute("ovs_revisedquarterid").setValue(form.getAttribute("ovs_fiscalquarter").getValue());
-            //setScheduledQuarterFilter(form);
+            if (form.getAttribute("ts_plannedfiscalquarter").getValue() != null && form.getAttribute("ts_revisedquarterid").getValue() == null)
+                form.getAttribute("ts_revisedquarterid").setValue(form.getAttribute("ts_plannedfiscalquarter").getValue());
+            setScheduledQuarterFilter(form);
             switch (form.ui.getFormType()) {
                 case 1: //Create New Work Order
                     //If work order is New (case 1) and it already has a case on form load, the work order must be coming from a case
@@ -241,7 +241,7 @@ var ROM;
                     //    isFromSecurityIncident = true;
                     //}
                     // Set default values
-                    //          setDefaultFiscalYear(form);
+                    setDefaultFiscalYear(form);
                     setRegion(form);
                     //If the new work order is coming from a case, set default rational to planned
                     if (isFromCase) {
@@ -255,11 +255,11 @@ var ROM;
                     else {
                         var lookup = new Array();
                         lookup[0] = new Object();
-                        lookup[0].id = "{" + UNPLANNED_CATEGORY_ID + "}";
+                        lookup[0].id = "{".concat(UNPLANNED_CATEGORY_ID, "}");
                         lookup[0].name = "Unplanned";
                         lookup[0].entityType = "ovs_tyrational";
                         form.getAttribute("ts_rational").setValue(lookup); //Unplanned
-                        //                setFiscalQuarter(form);
+                        setFiscalQuarter(form);
                     }
                     // Disable all operation related fields
                     form.getControl("ts_region").setDisabled(true);
@@ -354,7 +354,7 @@ var ROM;
                     break;
             }
             // Lock some fields if there exist a Case that has this WO associated to it
-            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"" + form.data.entity.getId() + "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>";
+            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"".concat(form.data.entity.getId(), "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>");
             fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
             Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", fetchXML).then(function success(result) {
                 if (result.entities.length > 0) {
@@ -431,7 +431,7 @@ var ROM;
                 });
             }
             //Lock Cancelled Inspection Justification field if WO is cancelled
-            if (currentSystemStatus == 690970005 /* Cancelled */) {
+            if (currentSystemStatus == msdyn_wosystemstatus.Cancelled) {
                 form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
                 var selectedCanceledWorkOrderReason = form.getAttribute("ts_cancelledinspectionjustification").getValue();
                 var selectedOther = "{A8D7125C-7F24-ED11-9DB2-002248AE429C}";
@@ -495,7 +495,7 @@ var ROM;
             var systemStatus = form.getAttribute("ts_recordstatus").getValue();
             var cancelledInspectionJustification = form.getAttribute("ts_cancelledinspectionjustification").getValue();
             var workOrderServiceTaskData;
-            if (systemStatus == 690970004 /* ClosedInactive */) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
+            if (systemStatus == msdyn_wosystemstatus.ClosedInactive) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
                 workOrderServiceTaskData =
                     {
                         "statecode": 1,
@@ -511,7 +511,7 @@ var ROM;
             //Post a note on ScheduledQuarter Change
             //  postNoteOnScheduledQuarterChange(form);
             if (cancelledInspectionJustification != null) {
-                form.getAttribute("ts_recordstatus").setValue(690970005 /* Cancelled */);
+                form.getAttribute("ts_recordstatus").setValue(msdyn_wosystemstatus.Cancelled);
                 form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
             }
         }
@@ -1508,39 +1508,40 @@ var ROM;
             }
         }
         UnplannedWorkOrder.scheduledQuarterOnChange = scheduledQuarterOnChange;
-        ////Sets the Scheduled Quarter filter to show quarters in the planned fiscal year and the year after
-        //export function setScheduledQuarterFilter(form: Form.msdyn_workorder.Main.ROMOversightActivity): void {
-        //    //Get name of planned fiscal year
-        //    const fiscalYearValue = form.getAttribute("ovs_fiscalyear").getValue();
-        //    if (fiscalYearValue != null) {
-        //        const fiscalYearName = fiscalYearValue[0].name;
-        //        if (fiscalYearName != null) {
-        //            const nextFiscalYearName = fiscalYearName.split("-")[1] + "-" + (Number(fiscalYearName.split("-")[1]) + 1);
-        //            const viewId = '{8982C38D-8BB4-4C95-BD05-493398F' + Date.now().toString().slice(-5) + '}'; //If this function is called again, this guid needs to be unique
-        //            const entityName = "tc_tcfiscalquarter";
-        //            const viewDisplayName = "Fiscal Quarters";
-        //            //All Active Stakeholders/Accounts that have an Operation with a matching Operation Type
-        //            var fetchXml = [
-        //                "<fetch>",
-        //                "  <entity name='tc_tcfiscalquarter'>",
-        //                "    <attribute name='tc_name'/>",
-        //                "    <attribute name='tc_tcfiscalyearid'/>",
-        //                "    <order attribute='tc_tcfiscalyearid'/>",
-        //                "    <link-entity name='tc_tcfiscalyear' from='tc_tcfiscalyearid' to='tc_tcfiscalyearid' alias='fiscalyear'>",
-        //                "      <attribute name='tc_fiscalyearlonglbl'/>",
-        //                "      <filter type='or'>",
-        //                "        <condition attribute='tc_name' operator='eq' value='", fiscalYearName, "'/>",
-        //                "        <condition attribute='tc_name' operator='eq' value='", nextFiscalYearName, "'/>",
-        //                "      </filter>",
-        //                "    </link-entity>",
-        //                "  </entity>",
-        //                "</fetch>"
-        //            ].join("");
-        //            const layoutXml = '<grid name="resultset" jump="tc_name" select="1" icon="1" preview="1"> <row name="result" id="fiscalquarterid"> <cell name="tc_name" width="100" />< cell name = "fiscalyear.tc_fiscalyearlonglbl" width = "167" /></row> </grid>';
-        //            form.getControl("ovs_revisedquarterid").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
-        //        }
-        //    }
-        //}
+        //Sets the Scheduled Quarter filter to show quarters in the planned fiscal year and the year after
+        function setScheduledQuarterFilter(form) {
+            //Get name of planned fiscal year
+            var fiscalYearValue = form.getAttribute("ts_plannedfiscalquarter").getValue();
+            if (fiscalYearValue != null) {
+                var fiscalYearName = fiscalYearValue[0].name;
+                if (fiscalYearName != null) {
+                    var nextFiscalYearName = fiscalYearName.split("-")[1] + "-" + (Number(fiscalYearName.split("-")[1]) + 1);
+                    var viewId = '{8982C38D-8BB4-4C95-BD05-493398F' + Date.now().toString().slice(-5) + '}'; //If this function is called again, this guid needs to be unique
+                    var entityName = "tc_tcfiscalquarter";
+                    var viewDisplayName = "Fiscal Quarters";
+                    //All Active Stakeholders/Accounts that have an Operation with a matching Operation Type
+                    var fetchXml = [
+                        "<fetch>",
+                        "  <entity name='tc_tcfiscalquarter'>",
+                        "    <attribute name='tc_name'/>",
+                        "    <attribute name='tc_tcfiscalyearid'/>",
+                        "    <order attribute='tc_tcfiscalyearid'/>",
+                        "    <link-entity name='tc_tcfiscalyear' from='tc_tcfiscalyearid' to='tc_tcfiscalyearid' alias='fiscalyear'>",
+                        "      <attribute name='tc_fiscalyearlonglbl'/>",
+                        "      <filter type='or'>",
+                        "        <condition attribute='tc_name' operator='eq' value='", fiscalYearName, "'/>",
+                        "        <condition attribute='tc_name' operator='eq' value='", nextFiscalYearName, "'/>",
+                        "      </filter>",
+                        "    </link-entity>",
+                        "  </entity>",
+                        "</fetch>"
+                    ].join("");
+                    var layoutXml = '<grid name="resultset" jump="tc_name" select="1" icon="1" preview="1"> <row name="result" id="fiscalquarterid"> <cell name="tc_name" width="100" />< cell name = "fiscalyear.tc_fiscalyearlonglbl" width = "167" /></row> </grid>';
+                    form.getControl("ts_revisedquarterid").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                }
+            }
+        }
+        UnplannedWorkOrder.setScheduledQuarterFilter = setScheduledQuarterFilter;
         // FUNCTIONS
         function postNoteOnScheduledQuarterChange(form) {
             if (scheduledQuarterAttributeValueChanged) {
@@ -1585,24 +1586,23 @@ var ROM;
                 .select(function (x) { return [x.tc_name]; })
                 .filter(function (x) { return Filter.equals(x.tc_iscurrentfiscalyear, true); })
                 .execute(function (fiscalYears) {
-                //should only return one fiscal year record as the current
-                if (fiscalYears.length === 1) {
-                    var targetedFiscalYear = fiscalYears[0];
-                    var lookup = new Array();
-                    lookup[0] = new Object();
-                    lookup[0].id = targetedFiscalYear.tc_tcfiscalyearid;
-                    lookup[0].name = targetedFiscalYear.tc_name;
-                    lookup[0].entityType = 'tc_tcfiscalyear';
-                    form.getAttribute('ovs_fiscalyear').setValue(lookup);
+                // There are 2 records: one year fiscal year and five year fiscal year.
+                if (!fiscalYears || fiscalYears.length === 0) {
+                    return; // nothing to set
                 }
-                else {
-                    // do not set a default if multiple records are found, error.
-                }
+                // set to one year fiscal year.
+                var targetedFiscalYear = fiscalYears[0];
+                var lookup = new Array();
+                lookup[0] = new Object();
+                lookup[0].id = targetedFiscalYear.tc_tcfiscalyearid;
+                lookup[0].name = targetedFiscalYear.tc_name;
+                lookup[0].entityType = 'tc_tcfiscalyear';
+                form.getAttribute('ts_plannedfiscalyear').setValue(lookup);
             });
         }
         function removeSelectedFiscalQuarter(eContext) {
             var form = eContext.getFormContext();
-            form.getAttribute('ovs_fiscalquarter').setValue(null);
+            form.getAttribute('ts_plannedfiscalquarter').setValue(null);
         }
         function setRegion(form) {
             var regionAttribute = form.getAttribute("ts_region");
@@ -1921,7 +1921,7 @@ var ROM;
                             var wost = _a[_i];
                             if (wost.statecode == 0) {
                                 workOrderHasActiveWost = true;
-                                if (wost.statuscode == 918640005 /* New */)
+                                if (wost.statuscode == msdyn_workorderservicetask_statuscode.New)
                                     workOrderHasNewWost = true;
                             }
                         }
@@ -1980,7 +1980,7 @@ var ROM;
                         var wost = _a[_i];
                         if (wost.statecode == 0) {
                             workOrderHasActiveWost = true;
-                            if (wost.statuscode == 918640005 /* New */)
+                            if (wost.statuscode == msdyn_workorderservicetask_statuscode.New)
                                 workOrderHasNewWost = true;
                         }
                     }
@@ -2021,12 +2021,13 @@ var ROM;
         //        form.getAttribute("ts_incompleteworkorderreasonforother").setRequiredLevel("none");
         //    }
         //}
-        //export function fiscalQuarterOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        //    const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
-        //    //Check if the Work Order is past the Planned Fiscal Quarter
-        //    setCantCompleteinspectionVisibility(form);
-        //    setScheduledQuarterFilter(form);
-        //}
+        function fiscalQuarterOnChange(eContext) {
+            var form = eContext.getFormContext();
+            //Check if the Work Order is past the Planned Fiscal Quarter
+            //setCantCompleteinspectionVisibility(form);
+            setScheduledQuarterFilter(form);
+        }
+        UnplannedWorkOrder.fiscalQuarterOnChange = fiscalQuarterOnChange;
         function canceledWorkOrderReasonOnChange(eContext) {
             var form = eContext.getFormContext();
             var selectedCanceledWorkOrderReason = form.getAttribute("ts_cancelledinspectionjustification").getValue();
@@ -2197,23 +2198,20 @@ var ROM;
                 });
             });
         }
-        //function setFiscalQuarter(form: Form.msdyn_workorder.Main.ROMOversightActivity) {
-        //    let currentDate = new Date();
-        //    let currentDateString = currentDate.toISOString();
-        //    let fetchXml = `<fetch top="1"><entity name="tc_tcfiscalquarter"><attribute name="tc_name"/><attribute name="tc_tcfiscalquarterid"/><filter type="and"><condition attribute="tc_quarterstart" operator="le" value="${currentDateString}"/><condition attribute="tc_quarterend" operator="ge" value="${currentDateString}"/></filter></entity></fetch>`;
-        //    let lookup = new Array();
-        //    Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalquarter", "?fetchXml=" + fetchXml).then(
-        //        function success(result) {
-        //            lookup[0] = new Object();
-        //            lookup[0].entityType = "tc_tcfiscalquarter";
-        //            lookup[0].name = result.entities[0].tc_name;
-        //            lookup[0].id = result.entities[0].tc_tcfiscalquarterid;
-        //            form.getAttribute("ovs_fiscalquarter").setValue(lookup);
-        //        },
-        //        function (error) {
-        //        }
-        //    );
-        //}
+        function setFiscalQuarter(form) {
+            var currentDate = new Date();
+            var currentDateString = currentDate.toISOString();
+            var fetchXml = "<fetch top=\"1\"><entity name=\"tc_tcfiscalquarter\"><attribute name=\"tc_name\"/><attribute name=\"tc_tcfiscalquarterid\"/><filter type=\"and\"><condition attribute=\"tc_quarterstart\" operator=\"le\" value=\"".concat(currentDateString, "\"/><condition attribute=\"tc_quarterend\" operator=\"ge\" value=\"").concat(currentDateString, "\"/></filter></entity></fetch>");
+            var lookup = new Array();
+            Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalquarter", "?fetchXml=" + fetchXml).then(function success(result) {
+                lookup[0] = new Object();
+                lookup[0].entityType = "tc_tcfiscalquarter";
+                lookup[0].name = result.entities[0].tc_name;
+                lookup[0].id = result.entities[0].tc_tcfiscalquarterid;
+                form.getAttribute("ts_plannedfiscalquarter").setValue(lookup);
+            }, function (error) {
+            });
+        }
         //function setCaseLookupClickNavigation(eContext) {
         //    const formContext = eContext.getFormContext();
         //    formContext.getControl("msdyn_servicerequest").addOnLookupTagClick(function (eContext) {
@@ -2326,7 +2324,7 @@ var ROM;
                     if (operationTypeAttributeValue[0].id.toLowerCase() == "{8b614ef0-c651-eb11-a812-000d3af3ac0d}") { //Air Carrier (Passenger)
                         form.getControl("ts_aircraftclassification").setVisible(true);
                         if (form.getAttribute("ts_aircraftclassification").getValue() == null) {
-                            form.getAttribute("ts_aircraftclassification").setValue(741130000 /* PassengerPAX */);
+                            form.getAttribute("ts_aircraftclassification").setValue(ts_aircraftclassification.PassengerPAX);
                         }
                         //if (isROM20Form) {
                         //    formROM2.ui.tabs.get("tab_workspace").sections.get("tab_workspace_flightdetails").setVisible(true);
@@ -2378,16 +2376,16 @@ var ROM;
                         distinationCountry = result2._ts_country_value;
                         if (distinationCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7" && originCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7") { // Canada
                             // Domestic
-                            form.getAttribute("ts_airserviceclassification").setValue(741130000 /* Domestic */);
+                            form.getAttribute("ts_airserviceclassification").setValue(ts_airserviceclassification.Domestic);
                         }
                         else if ((distinationCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && distinationCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")
                             || (originCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && originCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")) { //Not in USA or Canada
                             //International
-                            form.getAttribute("ts_airserviceclassification").setValue(741130001 /* International */);
+                            form.getAttribute("ts_airserviceclassification").setValue(ts_airserviceclassification.International);
                         }
                         else {
                             //Transborder
-                            form.getAttribute("ts_airserviceclassification").setValue(741130002 /* Transborder */);
+                            form.getAttribute("ts_airserviceclassification").setValue(ts_airserviceclassification.Transborder);
                         }
                     }, function error(error) {
                         Xrm.Navigation.openAlertDialog({ text: error.message });
@@ -2504,7 +2502,7 @@ var ROM;
                                 '    <attribute name="msdyn_workordertypeid" />' +
                                 '    <attribute name="msdyn_name" />' +
                                 '    <filter>' +
-                                ("      <condition attribute=\"ownerid\" operator=\"" + op + "\" value=\"" + railSecurityTeamId + "\" />") +
+                                "      <condition attribute=\"ownerid\" operator=\"".concat(op, "\" value=\"").concat(railSecurityTeamId, "\" />") +
                                 '    </filter>' +
                                 '  </entity>' +
                                 '</fetch>';

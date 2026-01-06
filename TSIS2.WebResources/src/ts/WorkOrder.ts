@@ -1720,8 +1720,12 @@ namespace ROM.WorkOrder {
             .select((x) => [x.tc_name])
             .filter((x) => Filter.equals(x.tc_iscurrentfiscalyear, true))
             .execute((fiscalYears) => {
-                //should only return one fiscal year record as the current
-                if (fiscalYears.length === 1) {
+                // There are 2 records: one year fiscal year and five year fiscal year.
+                if (!fiscalYears || fiscalYears.length === 0) {
+                    return; // nothing to set
+                }
+
+                // set to one year fiscal year.
                     const targetedFiscalYear = fiscalYears[0];
                     const lookup = new Array();
                     lookup[0] = new Object();
@@ -1730,9 +1734,6 @@ namespace ROM.WorkOrder {
                     lookup[0].entityType = 'tc_tcfiscalyear';
 
                     form.getAttribute('ovs_fiscalyear').setValue(lookup);
-                } else {
-                    // do not set a default if multiple records are found, error.
-                }
             });
     }
 

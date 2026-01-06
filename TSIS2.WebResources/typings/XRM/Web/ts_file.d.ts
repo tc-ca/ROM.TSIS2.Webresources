@@ -18,6 +18,7 @@ interface ts_File_Base extends WebEntity {
   ts_programaccessteamnameid?: string | null;
   ts_sensitivitylevel?: ts_sensitivitylevel | null;
   ts_sharepointfileidentifier?: string | null;
+  ts_sharepointlineofbusiness?: string | null;
   ts_sharepointlink?: string | null;
   ts_uploadedtosharepoint?: boolean | null;
   ts_visibletootherprograms?: boolean | null;
@@ -106,6 +107,7 @@ interface ts_File_Select {
   ts_securityincident_guid: WebAttribute<ts_File_Select, { ts_securityincident_guid: string | null }, { ts_securityincident_formatted?: string }>;
   ts_sensitivitylevel: WebAttribute<ts_File_Select, { ts_sensitivitylevel: ts_sensitivitylevel | null }, { ts_sensitivitylevel_formatted?: string }>;
   ts_sharepointfileidentifier: WebAttribute<ts_File_Select, { ts_sharepointfileidentifier: string | null }, {  }>;
+  ts_sharepointlineofbusiness: WebAttribute<ts_File_Select, { ts_sharepointlineofbusiness: string | null }, {  }>;
   ts_sharepointlink: WebAttribute<ts_File_Select, { ts_sharepointlink: string | null }, {  }>;
   ts_site_guid: WebAttribute<ts_File_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_site_site_guid: WebAttribute<ts_File_Select, { ts_site_site_guid: string | null }, { ts_site_site_formatted?: string }>;
@@ -154,6 +156,7 @@ interface ts_File_Filter {
   ts_securityincident_guid: XQW.Guid;
   ts_sensitivitylevel: ts_sensitivitylevel;
   ts_sharepointfileidentifier: string;
+  ts_sharepointlineofbusiness: string;
   ts_sharepointlink: string;
   ts_site_guid: XQW.Guid;
   ts_site_site_guid: XQW.Guid;

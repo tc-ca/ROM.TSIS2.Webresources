@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -42,73 +42,73 @@ var ROM;
         var isISSO = false;
         //Ideally we should retrieve the values automatically from the form so we don't have to update this file every time the option sets changes. getOptionSets and retrieveOptionSetValues *should* do this but no values are retrieved onLoad, could be because the form is not fully loaded/initiated yet or something with async. To check. 
         var allDeliveryMethodOptions = [
-            { text: "Verbal", value: 741130000 /* Verbal */ },
-            { text: "In Person", value: 741130006 /* InPerson */ },
-            { text: "Telephone", value: 741130007 /* Telephone */ },
-            { text: "Email", value: 741130001 /* Email */ },
-            { text: "SSCIMS", value: 741130002 /* SSCIMS */ },
-            { text: "Letter - Hand delivered", value: 741130003 /* LetterHandDelivered */ },
-            { text: "Letter - Mail", value: 741130004 /* LetterMail */ },
-            { text: "Letter - Registered Mail", value: 741130005 /* LetterRegisteredMail */ }
+            { text: "Verbal", value: ts_deliverymethod.Verbal },
+            { text: "In Person", value: ts_deliverymethod.InPerson },
+            { text: "Telephone", value: ts_deliverymethod.Telephone },
+            { text: "Email", value: ts_deliverymethod.Email },
+            { text: "SSCIMS", value: ts_deliverymethod.SSCIMS },
+            { text: "Letter - Hand delivered", value: ts_deliverymethod.LetterHandDelivered },
+            { text: "Letter - Mail", value: ts_deliverymethod.LetterMail },
+            { text: "Letter - Registered Mail", value: ts_deliverymethod.LetterRegisteredMail }
         ];
         var allActionCategoryOptions = [
-            { text: "Administrative Action", value: 741130000 /* AdministrativeAction */ },
-            { text: "Corrective Action", value: 741130001 /* CorrectiveAction */ },
-            { text: "Enforcement Action", value: 741130002 /* EnforcementAction */ },
-            { text: "Immediate Harm Reduction Measure", value: 741130003 /* ImmediateHarmReductionMeasure */ },
+            { text: "Administrative Action", value: ts_actioncategory.AdministrativeAction },
+            { text: "Corrective Action", value: ts_actioncategory.CorrectiveAction },
+            { text: "Enforcement Action", value: ts_actioncategory.EnforcementAction },
+            { text: "Immediate Harm Reduction Measure", value: ts_actioncategory.ImmediateHarmReductionMeasure },
             // { text: "Legal Action", value: ts_actioncategory.LegalAction },
-            { text: "REU Enforcement Action", value: 741130006 /* REUEnforcementAction */ },
+            { text: "REU Enforcement Action", value: ts_actioncategory.REUEnforcementAction },
             // { text: "TATC Action", value: ts_actioncategory.TATCAction },
         ];
         var allActionStatus = [
-            { text: "Consulted", value: 741130000 /* Consulted */ },
-            { text: "Convened", value: 741130001 /* Convened */ },
-            { text: "Delivered", value: 741130002 /* Delivered */ },
-            { text: "Received", value: 741130003 /* Received */ },
-            { text: "Referred", value: 741130006 /* Referred */ },
-            { text: "Requested", value: 741130004 /* Requested */ },
-            { text: "Sworn", value: 741130005 /* Sworn */ }
+            { text: "Consulted", value: ts_actionstatus.Consulted },
+            { text: "Convened", value: ts_actionstatus.Convened },
+            { text: "Delivered", value: ts_actionstatus.Delivered },
+            { text: "Received", value: ts_actionstatus.Received },
+            { text: "Referred", value: ts_actionstatus.Referred },
+            { text: "Requested", value: ts_actionstatus.Requested },
+            { text: "Sworn", value: ts_actionstatus.Sworn }
         ];
         var allActionTypes = [
-            { text: "AMP", value: 741130029 /* AMP */ },
-            { text: "Administrative monetary penalty", value: 741130001 /* Administrativemonetarypenalty */ },
-            { text: "Affidavit Of Service | Sworn", value: 741130025 /* AffidavitofServiceSworn */ },
+            { text: "AMP", value: ts_actiontype.AMP },
+            { text: "Administrative monetary penalty", value: ts_actiontype.Administrativemonetarypenalty },
+            { text: "Affidavit Of Service | Sworn", value: ts_actiontype.AffidavitofServiceSworn },
             //{ text: "Affidavit Of Service | Cancellation/Suspension of CAD", value: ts_actiontype.AffidavitOfServiceCancellationSuspensionofCAD },
-            { text: "Affidavit of Service", value: 741130000 /* AffidavitofService */ },
-            { text: "AMP Payment | Received", value: 741130007 /* AMPPaymentReceived */ },
+            { text: "Affidavit of Service", value: ts_actiontype.AffidavitofService },
+            { text: "AMP Payment | Received", value: ts_actiontype.AMPPaymentReceived },
             //{ text: "Corrective Action Plan | Requested", value: ts_actiontype.CorrectiveActionPlan },
             //{ text: "Correspondence", value: ts_actiontype.Correspondence },
-            { text: "Detention of Aircraft", value: 741130014 /* DetentionofAircraft */ },
-            { text: "Informal Meeting | Offered", value: 741130002 /* InformalMeetingOffered */ },
-            { text: "Informal Meeting | Convened", value: 741130031 /* InformalMeetingConvened */ },
-            { text: "Legal Counsel | Consulted", value: 741130016 /* LegalCounselConsulted */ },
-            { text: "Letter - Commitment | Received", value: 741130004 /* LetterCommitmentReceived */ },
-            { text: "Letter - Non-Compliance | Sent", value: 741130005 /* LetterNonComplianceSent */ },
-            { text: "Letter - SSC OSA Further Action | Sent", value: 741130006 /* LetterSSCOSAFurtherActionSent */ },
-            { text: "Letter - Non-Compliance | Response received", value: 741130032 /* LetterNonComplianceResponsereceived */ },
+            { text: "Detention of Aircraft", value: ts_actiontype.DetentionofAircraft },
+            { text: "Informal Meeting | Offered", value: ts_actiontype.InformalMeetingOffered },
+            { text: "Informal Meeting | Convened", value: ts_actiontype.InformalMeetingConvened },
+            { text: "Legal Counsel | Consulted", value: ts_actiontype.LegalCounselConsulted },
+            { text: "Letter - Commitment | Received", value: ts_actiontype.LetterCommitmentReceived },
+            { text: "Letter - Non-Compliance | Sent", value: ts_actiontype.LetterNonComplianceSent },
+            { text: "Letter - SSC OSA Further Action | Sent", value: ts_actiontype.LetterSSCOSAFurtherActionSent },
+            { text: "Letter - Non-Compliance | Response received", value: ts_actiontype.LetterNonComplianceResponsereceived },
             // { text: "Notification | Non-compliance", value: ts_actiontype.NotificationNoncompliance },
-            { text: "Notice of Assessment of Monetary Penalty", value: 741130009 /* NoticeofAssessmentofMonetaryPenalty */ },
-            { text: "Other", value: 741130015 /* Other */ },
-            { text: "Prosecution", value: 741130010 /* Prosecution */ },
-            { text: "Punitive Suspension of CAD", value: 741130011 /* PunitiveSuspensionofCAD */ },
-            { text: "Regional Enforcement Unit (REU) | Consulted", value: 741130017 /* RegionalEnforcementUnitREUConsulted */ },
+            { text: "Notice of Assessment of Monetary Penalty", value: ts_actiontype.NoticeofAssessmentofMonetaryPenalty },
+            { text: "Other", value: ts_actiontype.Other },
+            { text: "Prosecution", value: ts_actiontype.Prosecution },
+            { text: "Punitive Suspension of CAD", value: ts_actiontype.PunitiveSuspensionofCAD },
+            { text: "Regional Enforcement Unit (REU) | Consulted", value: ts_actiontype.RegionalEnforcementUnitREUConsulted },
             // { text: "TATC | Appeal Application", value: ts_actiontype.TATCAppealApplication },
             // { text: "TATC | Appeal Determination", value: ts_actiontype.TATCAppealDetermination },
             // { text: "TATC | Appeal Hearing", value: ts_actiontype.TATCAppealHearing },
             // { text: "TATC | Certificate for unpaid AMP", value: ts_actiontype.TATCCertificateforunpaidAMP },
             // { text: "TATC | Determination", value: ts_actiontype.TATCDetermination },
             // { text: "TATC | Review Application", value: ts_actiontype.TATCReviewApplication },
-            { text: "TATC - Hearing | Convened", value: 741130024 /* TATCHearingConvened */ },
-            { text: "Verbal Warning", value: 741130012 /* VerbalWarning */ },
+            { text: "TATC - Hearing | Convened", value: ts_actiontype.TATCHearingConvened },
+            { text: "Verbal Warning", value: ts_actiontype.VerbalWarning },
             // { text: "Written Notice", value: ts_actiontype.WrittenNotice },
-            { text: "Written Warning", value: 741130013 /* WrittenWarning */ },
-            { text: "Corrective Action Plan | Received", value: 741130030 /* CorrectiveActionPlanReceived */ },
-            { text: "Corrective Action Plan | Requested", value: 741130008 /* CorrectiveActionPlanRequested */ },
-            { text: "Informal Meeting | Convened", value: 741130031 /* InformalMeetingConvened */ },
+            { text: "Written Warning", value: ts_actiontype.WrittenWarning },
+            { text: "Corrective Action Plan | Received", value: ts_actiontype.CorrectiveActionPlanReceived },
+            { text: "Corrective Action Plan | Requested", value: ts_actiontype.CorrectiveActionPlanRequested },
+            { text: "Informal Meeting | Convened", value: ts_actiontype.InformalMeetingConvened },
             //{ text: "Letter - Non-Compliance | Response received", value: ts_actiontype.LetterNonComplianceResponseReceived },
-            { text: "Regional Enforcement Unit (REU) | Referral", value: 741130033 /* RegionalEnforcementUnitREUReferral */ },
-            { text: "TATC - Correspondence | Sent", value: 741130034 /* TATCCorrespondenceSent */ },
-            { text: "TATC - Correspondence | Received", value: 741130035 /* TATCCorrespondenceReceived */ }
+            { text: "Regional Enforcement Unit (REU) | Referral", value: ts_actiontype.RegionalEnforcementUnitREUReferral },
+            { text: "TATC - Correspondence | Sent", value: ts_actiontype.TATCCorrespondenceSent },
+            { text: "TATC - Correspondence | Received", value: ts_actiontype.TATCCorrespondenceReceived }
         ];
         function onLoad(eContext) {
             return __awaiter(this, void 0, void 0, function () {
@@ -219,36 +219,36 @@ var ROM;
             var filteredActionTypeOptions = allActionTypes;
             if (isISSO) {
                 switch (actionCategoryAttributeValue) {
-                    case 741130001 /* CorrectiveAction */:
-                        filteredActionTypeOptions = createFilteredOptions([741130008 /* CorrectiveActionPlanRequested */], allActionTypes);
+                    case ts_actioncategory.CorrectiveAction:
+                        filteredActionTypeOptions = createFilteredOptions([ts_actiontype.CorrectiveActionPlanRequested], allActionTypes);
                         break;
-                    case 741130002 /* EnforcementAction */:
+                    case ts_actioncategory.EnforcementAction:
                         filteredActionTypeOptions = createFilteredOptions([
-                            741130012 /* VerbalWarning */,
-                            741130017 /* RegionalEnforcementUnitREUConsulted */,
-                            741130013 /* WrittenWarning */,
+                            ts_actiontype.VerbalWarning,
+                            ts_actiontype.RegionalEnforcementUnitREUConsulted,
+                            ts_actiontype.WrittenWarning,
                         ], allActionTypes);
                         break;
                 }
             }
             else {
                 switch (actionCategoryAttributeValue) {
-                    case 741130000 /* AdministrativeAction */:
+                    case ts_actioncategory.AdministrativeAction:
                         filteredActionTypeOptions = createFilteredOptions([
-                            741130025 /* AffidavitofServiceSworn */,
-                            741130007 /* AMPPaymentReceived */,
-                            741130002 /* InformalMeetingOffered */,
-                            741130031 /* InformalMeetingConvened */,
-                            741130006 /* LetterSSCOSAFurtherActionSent */,
-                            741130005 /* LetterNonComplianceSent */,
-                            741130032 /* LetterNonComplianceResponsereceived */,
-                            741130004 /* LetterCommitmentReceived */,
-                            741130016 /* LegalCounselConsulted */,
-                            741130017 /* RegionalEnforcementUnitREUConsulted */,
-                            741130033 /* RegionalEnforcementUnitREUReferral */,
-                            741130024 /* TATCHearingConvened */,
-                            741130034 /* TATCCorrespondenceSent */,
-                            741130035 /* TATCCorrespondenceReceived */,
+                            ts_actiontype.AffidavitofServiceSworn,
+                            ts_actiontype.AMPPaymentReceived,
+                            ts_actiontype.InformalMeetingOffered,
+                            ts_actiontype.InformalMeetingConvened,
+                            ts_actiontype.LetterSSCOSAFurtherActionSent,
+                            ts_actiontype.LetterNonComplianceSent,
+                            ts_actiontype.LetterNonComplianceResponsereceived,
+                            ts_actiontype.LetterCommitmentReceived,
+                            ts_actiontype.LegalCounselConsulted,
+                            ts_actiontype.RegionalEnforcementUnitREUConsulted,
+                            ts_actiontype.RegionalEnforcementUnitREUReferral,
+                            ts_actiontype.TATCHearingConvened,
+                            ts_actiontype.TATCCorrespondenceSent,
+                            ts_actiontype.TATCCorrespondenceReceived,
                             //ts_actiontype.AffidavitOfServiceAMP,
                             //ts_actiontype.AffidavitOfServiceCancellationSuspensionofCAD,
                             //ts_actiontype.AMPPayment,
@@ -269,37 +269,37 @@ var ROM;
                             //ts_actiontype.WrittenNotice,
                         ], allActionTypes);
                         break;
-                    case 741130001 /* CorrectiveAction */:
+                    case ts_actioncategory.CorrectiveAction:
                         filteredActionTypeOptions = createFilteredOptions([
-                            741130008 /* CorrectiveActionPlanRequested */,
-                            741130030 /* CorrectiveActionPlanReceived */,
+                            ts_actiontype.CorrectiveActionPlanRequested,
+                            ts_actiontype.CorrectiveActionPlanReceived,
                         ], allActionTypes);
                         break;
-                    case 741130002 /* EnforcementAction */:
+                    case ts_actioncategory.EnforcementAction:
                         filteredActionTypeOptions = createFilteredOptions([
-                            741130029 /* AMP */,
-                            741130010 /* Prosecution */,
-                            741130011 /* PunitiveSuspensionofCAD */,
-                            741130012 /* VerbalWarning */,
-                            741130013 /* WrittenWarning */,
+                            ts_actiontype.AMP,
+                            ts_actiontype.Prosecution,
+                            ts_actiontype.PunitiveSuspensionofCAD,
+                            ts_actiontype.VerbalWarning,
+                            ts_actiontype.WrittenWarning,
                         ], allActionTypes);
                         break;
-                    case 741130003 /* ImmediateHarmReductionMeasure */:
+                    case ts_actioncategory.ImmediateHarmReductionMeasure:
                         filteredActionTypeOptions = createFilteredOptions([
-                            741130014 /* DetentionofAircraft */,
-                            741130015 /* Other */
+                            ts_actiontype.DetentionofAircraft,
+                            ts_actiontype.Other
                         ], allActionTypes);
                         break;
                     //case ts_actioncategory.LegalAction:
                     //    filteredActionTypeOptions = createFilteredOptions([ts_actiontype.RegionalEnforcementUnitREU, ts_actiontype.LegalCounsel], allActionTypes);
                     //    break;
-                    case 741130006 /* REUEnforcementAction */:
+                    case ts_actioncategory.REUEnforcementAction:
                         filteredActionTypeOptions = createFilteredOptions([
-                            741130029 /* AMP */,
-                            741130010 /* Prosecution */,
-                            741130011 /* PunitiveSuspensionofCAD */,
-                            741130012 /* VerbalWarning */,
-                            741130013 /* WrittenWarning */,
+                            ts_actiontype.AMP,
+                            ts_actiontype.Prosecution,
+                            ts_actiontype.PunitiveSuspensionofCAD,
+                            ts_actiontype.VerbalWarning,
+                            ts_actiontype.WrittenWarning,
                         ], allActionTypes);
                         break;
                     //case ts_actioncategory.TATCAction:
@@ -344,9 +344,9 @@ var ROM;
             var filteredDeliveryOptions = allDeliveryMethodOptions;
             var filteredActionStatusOptions = allActionStatus;
             switch (actionCategoryAttributeValue) {
-                case 741130002 /* EnforcementAction */:
+                case ts_actioncategory.EnforcementAction:
                     switch (actionTypeAttributeValue) {
-                        case 741130012 /* VerbalWarning */:
+                        case ts_actiontype.VerbalWarning:
                             form.getControl("ts_stakeholder").setVisible(true);
                             form.getControl("ts_contact").setVisible(true);
                             form.getControl("ts_deliverymethod").setVisible(true);
@@ -355,11 +355,11 @@ var ROM;
                             form.getControl("ts_location").setVisible(false);
                             form.getControl("ts_duedate").setVisible(false);
                             filteredDeliveryOptions = createFilteredOptions([
-                                741130006 /* InPerson */, 741130007 /* Telephone */, 741130001 /* Email */
+                                ts_deliverymethod.InPerson, ts_deliverymethod.Telephone, ts_deliverymethod.Email
                             ], allDeliveryMethodOptions);
-                            filteredActionStatusOptions = createFilteredOptions([741130002 /* Delivered */], allActionStatus);
+                            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered], allActionStatus);
                             break;
-                        case 741130013 /* WrittenWarning */:
+                        case ts_actiontype.WrittenWarning:
                             form.getControl("ts_stakeholder").setVisible(true);
                             form.getControl("ts_contact").setVisible(true);
                             form.getControl("ts_deliverymethod").setVisible(true);
@@ -368,15 +368,15 @@ var ROM;
                             form.getControl("ts_location").setVisible(false);
                             form.getControl("ts_duedate").setVisible(false);
                             filteredDeliveryOptions = createFilteredOptions([
-                                741130001 /* Email */,
-                                741130003 /* LetterHandDelivered */,
-                                741130004 /* LetterMail */,
-                                741130005 /* LetterRegisteredMail */,
-                                741130002 /* SSCIMS */
+                                ts_deliverymethod.Email,
+                                ts_deliverymethod.LetterHandDelivered,
+                                ts_deliverymethod.LetterMail,
+                                ts_deliverymethod.LetterRegisteredMail,
+                                ts_deliverymethod.SSCIMS
                             ], allDeliveryMethodOptions);
-                            filteredActionStatusOptions = createFilteredOptions([741130002 /* Delivered */], allActionStatus);
+                            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Delivered], allActionStatus);
                             break;
-                        case 741130017 /* RegionalEnforcementUnitREUConsulted */:
+                        case ts_actiontype.RegionalEnforcementUnitREUConsulted:
                             form.getControl("ts_stakeholder").setVisible(false);
                             form.getControl("ts_contact").setVisible(false);
                             form.getControl("ts_deliverymethod").setVisible(false);
@@ -384,15 +384,15 @@ var ROM;
                             form.getControl("ts_duedate").setVisible(false);
                             form.getControl("ts_timedate").setVisible(true);
                             form.getControl("ts_details").setVisible(true);
-                            filteredActionStatusOptions = createFilteredOptions([741130006 /* Referred */], allActionStatus);
+                            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Referred], allActionStatus);
                             break;
                         default:
                             resetFieldsVisibility(form);
                     }
                     break;
-                case 741130001 /* CorrectiveAction */:
+                case ts_actioncategory.CorrectiveAction:
                     switch (actionTypeAttributeValue) {
-                        case 741130030 /* CorrectiveActionPlanReceived */:
+                        case ts_actiontype.CorrectiveActionPlanReceived:
                             form.getControl("ts_stakeholder").setVisible(true);
                             form.getControl("ts_contact").setVisible(true);
                             form.getControl("ts_duedate").setVisible(true);
@@ -400,7 +400,7 @@ var ROM;
                             form.getControl("ts_details").setVisible(true);
                             form.getControl("ts_location").setVisible(false);
                             form.getControl("ts_deliverymethod").setVisible(false);
-                            filteredActionStatusOptions = createFilteredOptions([741130004 /* Requested */, 741130003 /* Received */], allActionStatus);
+                            filteredActionStatusOptions = createFilteredOptions([ts_actionstatus.Requested, ts_actionstatus.Received], allActionStatus);
                             break;
                         default:
                             resetFieldsVisibility(form);
@@ -547,7 +547,7 @@ var ROM;
             //if (!valueExists) {
             //    form.getAttribute("ts_actionstatus").setValue(null);
             //}
-            if (actionTypeAttributeValue == 741130029 /* AMP */ || actionTypeAttributeValue == 741130007 /* AMPPaymentReceived */) {
+            if (actionTypeAttributeValue == ts_actiontype.AMP || actionTypeAttributeValue == ts_actiontype.AMPPaymentReceived) {
                 form.getControl("ts_amtamount").setVisible(true);
             }
             else {
@@ -557,7 +557,7 @@ var ROM;
         function actionStatusOnChange(eContext) {
             var form = eContext.getFormContext();
             var actionStatus = form.getAttribute("ts_actionstatus").getValue();
-            if (actionStatus != null && (actionStatus == 741130000 /* Consulted */ || actionStatus == 741130001 /* Convened */ || actionStatus == 741130006 /* Referred */)) {
+            if (actionStatus != null && (actionStatus == ts_actionstatus.Consulted || actionStatus == ts_actionstatus.Convened || actionStatus == ts_actionstatus.Referred)) {
                 form.getControl("ts_deliverymethod").setVisible(false);
                 form.getControl("ts_amtamount").setVisible(false);
                 form.getControl("ts_duedate").setVisible(false);
@@ -567,9 +567,9 @@ var ROM;
                 form.getControl("ts_amtamount").setVisible(true);
                 form.getControl("ts_duedate").setVisible(true);
                 var actionType = form.getAttribute("ts_actiontype").getValue();
-                if (actionType != null && actionType == 741130007 /* AMPPaymentReceived */) {
+                if (actionType != null && actionType == ts_actiontype.AMPPaymentReceived) {
                     form.getControl("ts_amtamount").setVisible(true);
-                    if (actionStatus != null && actionStatus == 741130004 /* Requested */) {
+                    if (actionStatus != null && actionStatus == ts_actionstatus.Requested) {
                         form.getControl("ts_duedate").setVisible(true);
                     }
                     else {
@@ -594,8 +594,8 @@ var ROM;
             if (onLoad === void 0) { onLoad = false; }
             if (isISSO) {
                 setOptions(form.getControl("ts_actioncategory"), createFilteredOptions([
-                    741130001 /* CorrectiveAction */,
-                    741130002 /* EnforcementAction */,
+                    ts_actioncategory.CorrectiveAction,
+                    ts_actioncategory.EnforcementAction,
                 ], allActionCategoryOptions));
             }
             //if (form.getAttribute("ts_actioncategory").getValue() != null && form.getAttribute("ts_actiontype").getValue() == null && form.getAttribute("ts_actionstatus").getValue() == null)
@@ -650,7 +650,7 @@ var ROM;
                 return;
             }
             else {
-                var fetchXml = "<link-entity name=\"ts_actionfinding\" from=\"ts_ovs_finding\" to=\"ovs_findingid\" link-type=\"inner\" alias=\"aa\"><attribute name=\"ts_ovs_finding\"/><filter type=\"and\"><condition attribute=\"ts_ovs_finding\" operator=\"not-null\"/></filter><link-entity name=\"ts_action\" from=\"ts_actionid\" to=\"ts_action\" link-type=\"inner\" alias=\"ab\"><attribute name=\"ts_actionid\"/><filter type=\"and\"><condition attribute=\"ts_actionid\" operator=\"eq\" value=\"" + actionId + "\"/></filter></link-entity></link-entity>";
+                var fetchXml = "<link-entity name=\"ts_actionfinding\" from=\"ts_ovs_finding\" to=\"ovs_findingid\" link-type=\"inner\" alias=\"aa\"><attribute name=\"ts_ovs_finding\"/><filter type=\"and\"><condition attribute=\"ts_ovs_finding\" operator=\"not-null\"/></filter><link-entity name=\"ts_action\" from=\"ts_actionid\" to=\"ts_action\" link-type=\"inner\" alias=\"ab\"><attribute name=\"ts_actionid\"/><filter type=\"and\"><condition attribute=\"ts_actionid\" operator=\"eq\" value=\"".concat(actionId, "\"/></filter></link-entity></link-entity>");
                 ROM.Utils.setSubgridFilterXml(form, "subgrid_related_findings", fetchXml);
             }
         }
