@@ -223,10 +223,10 @@ namespace ROM.UnplannedWorkOrder {
         //    setWorkOrderServiceTasksView(form, true);
         //}
 
-        //if (form.getAttribute("ts_fiscalquarter").getValue() != null && form.getAttribute("ts_revisedquarter").getValue() == null)
-        //    form.getAttribute("ovs_revisedquarterid").setValue(form.getAttribute("ovs_fiscalquarter").getValue());
+        if (form.getAttribute("ts_plannedfiscalquarter").getValue() != null && form.getAttribute("ts_revisedquarterid").getValue() == null)
+            form.getAttribute("ts_revisedquarterid").setValue(form.getAttribute("ts_plannedfiscalquarter").getValue());
 
-        //setScheduledQuarterFilter(form);
+        setScheduledQuarterFilter(form);
 
         switch (form.ui.getFormType()) {
             case 1:  //Create New Work Order
@@ -240,7 +240,7 @@ namespace ROM.UnplannedWorkOrder {
                 //}
 
                 // Set default values
-                //          setDefaultFiscalYear(form);
+                setDefaultFiscalYear(form);
                 setRegion(form);
 
                 //If the new work order is coming from a case, set default rational to planned
@@ -259,7 +259,7 @@ namespace ROM.UnplannedWorkOrder {
                     lookup[0].entityType = "ovs_tyrational";
                     form.getAttribute("ts_rational").setValue(lookup); //Unplanned
 
-                    //                setFiscalQuarter(form);
+                    setFiscalQuarter(form);
                 }
 
                 // Disable all operation related fields
@@ -1642,40 +1642,40 @@ namespace ROM.UnplannedWorkOrder {
         }
     }
 
-    ////Sets the Scheduled Quarter filter to show quarters in the planned fiscal year and the year after
-    //export function setScheduledQuarterFilter(form: Form.msdyn_workorder.Main.ROMOversightActivity): void {
-    //    //Get name of planned fiscal year
-    //    const fiscalYearValue = form.getAttribute("ovs_fiscalyear").getValue();
-    //    if (fiscalYearValue != null) {
-    //        const fiscalYearName = fiscalYearValue[0].name;
-    //        if (fiscalYearName != null) {
-    //            const nextFiscalYearName = fiscalYearName.split("-")[1] + "-" + (Number(fiscalYearName.split("-")[1]) + 1);
-    //            const viewId = '{8982C38D-8BB4-4C95-BD05-493398F' + Date.now().toString().slice(-5) + '}'; //If this function is called again, this guid needs to be unique
-    //            const entityName = "tc_tcfiscalquarter";
-    //            const viewDisplayName = "Fiscal Quarters";
+    //Sets the Scheduled Quarter filter to show quarters in the planned fiscal year and the year after
+    export function setScheduledQuarterFilter(form: Form.ts_unplannedworkorder.Main.Information): void {
+        //Get name of planned fiscal year
+        const fiscalYearValue = form.getAttribute("ts_plannedfiscalquarter").getValue();
+        if (fiscalYearValue != null) {
+            const fiscalYearName = fiscalYearValue[0].name;
+            if (fiscalYearName != null) {
+                const nextFiscalYearName = fiscalYearName.split("-")[1] + "-" + (Number(fiscalYearName.split("-")[1]) + 1);
+                const viewId = '{8982C38D-8BB4-4C95-BD05-493398F' + Date.now().toString().slice(-5) + '}'; //If this function is called again, this guid needs to be unique
+                const entityName = "tc_tcfiscalquarter";
+                const viewDisplayName = "Fiscal Quarters";
 
-    //            //All Active Stakeholders/Accounts that have an Operation with a matching Operation Type
-    //            var fetchXml = [
-    //                "<fetch>",
-    //                "  <entity name='tc_tcfiscalquarter'>",
-    //                "    <attribute name='tc_name'/>",
-    //                "    <attribute name='tc_tcfiscalyearid'/>",
-    //                "    <order attribute='tc_tcfiscalyearid'/>",
-    //                "    <link-entity name='tc_tcfiscalyear' from='tc_tcfiscalyearid' to='tc_tcfiscalyearid' alias='fiscalyear'>",
-    //                "      <attribute name='tc_fiscalyearlonglbl'/>",
-    //                "      <filter type='or'>",
-    //                "        <condition attribute='tc_name' operator='eq' value='", fiscalYearName, "'/>",
-    //                "        <condition attribute='tc_name' operator='eq' value='", nextFiscalYearName, "'/>",
-    //                "      </filter>",
-    //                "    </link-entity>",
-    //                "  </entity>",
-    //                "</fetch>"
-    //            ].join("");
-    //            const layoutXml = '<grid name="resultset" jump="tc_name" select="1" icon="1" preview="1"> <row name="result" id="fiscalquarterid"> <cell name="tc_name" width="100" />< cell name = "fiscalyear.tc_fiscalyearlonglbl" width = "167" /></row> </grid>';
-    //            form.getControl("ovs_revisedquarterid").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
-    //        }
-    //    }
-    //}
+                //All Active Stakeholders/Accounts that have an Operation with a matching Operation Type
+                var fetchXml = [
+                    "<fetch>",
+                    "  <entity name='tc_tcfiscalquarter'>",
+                    "    <attribute name='tc_name'/>",
+                    "    <attribute name='tc_tcfiscalyearid'/>",
+                    "    <order attribute='tc_tcfiscalyearid'/>",
+                    "    <link-entity name='tc_tcfiscalyear' from='tc_tcfiscalyearid' to='tc_tcfiscalyearid' alias='fiscalyear'>",
+                    "      <attribute name='tc_fiscalyearlonglbl'/>",
+                    "      <filter type='or'>",
+                    "        <condition attribute='tc_name' operator='eq' value='", fiscalYearName, "'/>",
+                    "        <condition attribute='tc_name' operator='eq' value='", nextFiscalYearName, "'/>",
+                    "      </filter>",
+                    "    </link-entity>",
+                    "  </entity>",
+                    "</fetch>"
+                ].join("");
+                const layoutXml = '<grid name="resultset" jump="tc_name" select="1" icon="1" preview="1"> <row name="result" id="fiscalquarterid"> <cell name="tc_name" width="100" />< cell name = "fiscalyear.tc_fiscalyearlonglbl" width = "167" /></row> </grid>';
+                form.getControl("ts_revisedquarterid").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+            }
+        }
+    }
 
     // FUNCTIONS
     function postNoteOnScheduledQuarterChange(form: Form.msdyn_workorder.Main.ROMOversightActivity): void {
@@ -1723,30 +1723,32 @@ namespace ROM.UnplannedWorkOrder {
         Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
     }
 
-    function setDefaultFiscalYear(form: Form.msdyn_workorder.Main.ROMOversightActivity): void {
+    function setDefaultFiscalYear(form: Form.ts_unplannedworkorder.Main.Information): void {
         XrmQuery.retrieveMultiple((x) => x.tc_tcfiscalyears)
             .select((x) => [x.tc_name])
             .filter((x) => Filter.equals(x.tc_iscurrentfiscalyear, true))
             .execute((fiscalYears) => {
-                //should only return one fiscal year record as the current
-                if (fiscalYears.length === 1) {
-                    const targetedFiscalYear = fiscalYears[0];
-                    const lookup = new Array();
-                    lookup[0] = new Object();
-                    lookup[0].id = targetedFiscalYear.tc_tcfiscalyearid;
-                    lookup[0].name = targetedFiscalYear.tc_name;
-                    lookup[0].entityType = 'tc_tcfiscalyear';
-
-                    form.getAttribute('ovs_fiscalyear').setValue(lookup);
-                } else {
-                    // do not set a default if multiple records are found, error.
+                // There are 2 records: one year fiscal year and five year fiscal year.
+                if (!fiscalYears || fiscalYears.length === 0) {
+                    return; // nothing to set
                 }
+
+                // set to one year fiscal year.
+                const targetedFiscalYear = fiscalYears[0];
+                const lookup = new Array();
+                lookup[0] = new Object();
+                lookup[0].id = targetedFiscalYear.tc_tcfiscalyearid;
+                lookup[0].name = targetedFiscalYear.tc_name;
+                lookup[0].entityType = 'tc_tcfiscalyear';
+
+                form.getAttribute('ts_plannedfiscalyear').setValue(lookup);
+
             });
     }
 
     function removeSelectedFiscalQuarter(eContext: Xrm.ExecutionContext<any, any>): void {
-        const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
-        form.getAttribute('ovs_fiscalquarter').setValue(null);
+        const form = <Form.ts_unplannedworkorder.Main.Information>eContext.getFormContext();
+        form.getAttribute('ts_plannedfiscalquarter').setValue(null);
     }
 
     function setRegion(form: Form.ts_unplannedworkorder.Main.Information): void {
@@ -2206,13 +2208,13 @@ namespace ROM.UnplannedWorkOrder {
     //    }
     //}
 
-    //export function fiscalQuarterOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-    //    const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+    export function fiscalQuarterOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ts_unplannedworkorder.Main.Information>eContext.getFormContext();
 
-    //    //Check if the Work Order is past the Planned Fiscal Quarter
-    //    setCantCompleteinspectionVisibility(form);
-    //    setScheduledQuarterFilter(form);
-    //}
+        //Check if the Work Order is past the Planned Fiscal Quarter
+        //setCantCompleteinspectionVisibility(form);
+        setScheduledQuarterFilter(form);
+    }
 
     export function canceledWorkOrderReasonOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_unplannedworkorder.Main.Information>eContext.getFormContext();
@@ -2394,26 +2396,26 @@ namespace ROM.UnplannedWorkOrder {
         return await isAvSecBU(userBusinessUnitId);
     }
 
-    //function setFiscalQuarter(form: Form.msdyn_workorder.Main.ROMOversightActivity) {
-    //    let currentDate = new Date();
-    //    let currentDateString = currentDate.toISOString();
+    function setFiscalQuarter(form: Form.ts_unplannedworkorder.Main.Information) {
+        let currentDate = new Date();
+        let currentDateString = currentDate.toISOString();
 
-    //    let fetchXml = `<fetch top="1"><entity name="tc_tcfiscalquarter"><attribute name="tc_name"/><attribute name="tc_tcfiscalquarterid"/><filter type="and"><condition attribute="tc_quarterstart" operator="le" value="${currentDateString}"/><condition attribute="tc_quarterend" operator="ge" value="${currentDateString}"/></filter></entity></fetch>`;
+        let fetchXml = `<fetch top="1"><entity name="tc_tcfiscalquarter"><attribute name="tc_name"/><attribute name="tc_tcfiscalquarterid"/><filter type="and"><condition attribute="tc_quarterstart" operator="le" value="${currentDateString}"/><condition attribute="tc_quarterend" operator="ge" value="${currentDateString}"/></filter></entity></fetch>`;
 
-    //    let lookup = new Array();
-    //    Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalquarter", "?fetchXml=" + fetchXml).then(
-    //        function success(result) {
-    //            lookup[0] = new Object();
-    //            lookup[0].entityType = "tc_tcfiscalquarter";
-    //            lookup[0].name = result.entities[0].tc_name;
-    //            lookup[0].id = result.entities[0].tc_tcfiscalquarterid;
+        let lookup = new Array();
+        Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalquarter", "?fetchXml=" + fetchXml).then(
+            function success(result) {
+                lookup[0] = new Object();
+                lookup[0].entityType = "tc_tcfiscalquarter";
+                lookup[0].name = result.entities[0].tc_name;
+                lookup[0].id = result.entities[0].tc_tcfiscalquarterid;
 
-    //            form.getAttribute("ovs_fiscalquarter").setValue(lookup);
-    //        },
-    //        function (error) {
-    //        }
-    //    );
-    //}
+                form.getAttribute("ts_plannedfiscalquarter").setValue(lookup);
+            },
+            function (error) {
+            }
+        );
+    }
 
     //function setCaseLookupClickNavigation(eContext) {
     //    const formContext = eContext.getFormContext();
