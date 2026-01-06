@@ -135,6 +135,7 @@ var ROM;
                                 }
                                 else {
                                     form.getControl("ts_details").setVisible(true);
+                                    form.getControl("ts_servicerequest").setVisible(false);
                                     //form.getControl("ts_instructions").setVisible(true);
                                     //form.getControl("ts_accountableteam").setVisible(true);
                                     //form.getControl("ts_plannedcost").setVisible(false);
