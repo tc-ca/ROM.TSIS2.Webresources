@@ -1490,19 +1490,19 @@ namespace ROM.UnplannedWorkOrder {
     //        }
     //}
 
-    //export function caseOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-    //    const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+    export function caseOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        const form = <Form.ts_unplannedworkorder.Main.Information>eContext.getFormContext();
 
-    //    const caseAttribute = form.getAttribute("msdyn_servicerequest");
+        const caseAttribute = form.getAttribute("ts_stakeholder");
 
-    //    if (caseAttribute.getValue() == null) {
-    //        form.getControl("ts_region").setDisabled(false);
-    //        form.getControl("ts_country").setDisabled(false);
-    //        //form.getControl("ts_tradenameid").setDisabled(false);
-    //        form.getControl("msdyn_serviceaccount").setDisabled(false);
-    //        form.getControl("ts_site").setDisabled(false);
-    //    }
-    //}
+        if (caseAttribute.getValue() == null) {
+            form.getControl("ts_region").setDisabled(false);
+            form.getControl("ts_country").setDisabled(false);
+            //form.getControl("ts_tradenameid").setDisabled(false);
+            form.getControl("ts_stakeholder").setDisabled(false);
+            form.getControl("ts_site").setDisabled(false);
+        }
+    }
 
     //export function stateCodeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
     //    const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();

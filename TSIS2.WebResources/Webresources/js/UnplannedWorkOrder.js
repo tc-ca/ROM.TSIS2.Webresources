@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -145,7 +145,7 @@ var ROM;
                                     if (isROM20Form) {
                                         form.getControl("ts_overtimerequired").setVisible(false);
                                     }
-                                    if (currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */ || currentSystemStatus == 690970005 /* msdyn_wosystemstatus.Cancelled */) {
+                                    if (currentSystemStatus == 741130000 /* Closed */ || currentSystemStatus == 690970005 /* Cancelled */) {
                                         if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager")) {
                                             form.getControl("header_ts_recordstatus").setDisabled(true);
                                         }
@@ -254,7 +254,7 @@ var ROM;
                     else {
                         var lookup = new Array();
                         lookup[0] = new Object();
-                        lookup[0].id = "{".concat(UNPLANNED_CATEGORY_ID, "}");
+                        lookup[0].id = "{" + UNPLANNED_CATEGORY_ID + "}";
                         lookup[0].name = "Unplanned";
                         lookup[0].entityType = "ovs_tyrational";
                         form.getAttribute("ts_rational").setValue(lookup); //Unplanned
@@ -353,7 +353,7 @@ var ROM;
                     break;
             }
             // Lock some fields if there exist a Case that has this WO associated to it
-            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"".concat(form.data.entity.getId(), "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>");
+            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"" + form.data.entity.getId() + "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>";
             fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
             Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", fetchXML).then(function success(result) {
                 if (result.entities.length > 0) {
@@ -430,7 +430,7 @@ var ROM;
                 });
             }
             //Lock Cancelled Inspection Justification field if WO is cancelled
-            if (currentSystemStatus == 690970005 /* msdyn_wosystemstatus.Cancelled */) {
+            if (currentSystemStatus == 690970005 /* Cancelled */) {
                 form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
                 var selectedCanceledWorkOrderReason = form.getAttribute("ts_cancelledinspectionjustification").getValue();
                 var selectedOther = "{A8D7125C-7F24-ED11-9DB2-002248AE429C}";
@@ -494,7 +494,7 @@ var ROM;
             var systemStatus = form.getAttribute("ts_recordstatus").getValue();
             var cancelledInspectionJustification = form.getAttribute("ts_cancelledinspectionjustification").getValue();
             var workOrderServiceTaskData;
-            if (systemStatus == 690970004 /* msdyn_wosystemstatus.ClosedInactive */) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
+            if (systemStatus == 690970004 /* ClosedInactive */) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
                 workOrderServiceTaskData =
                     {
                         "statecode": 1,
@@ -510,7 +510,7 @@ var ROM;
             //Post a note on ScheduledQuarter Change
             //  postNoteOnScheduledQuarterChange(form);
             if (cancelledInspectionJustification != null) {
-                form.getAttribute("ts_recordstatus").setValue(690970005 /* msdyn_wosystemstatus.Cancelled */);
+                form.getAttribute("ts_recordstatus").setValue(690970005 /* Cancelled */);
                 form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
             }
         }
@@ -1375,17 +1375,18 @@ var ROM;
         //            //form.getAttribute("ts_woreportinganddocumentation").setRequiredLevel("none");
         //        }
         //}
-        //export function caseOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        //    const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
-        //    const caseAttribute = form.getAttribute("msdyn_servicerequest");
-        //    if (caseAttribute.getValue() == null) {
-        //        form.getControl("ts_region").setDisabled(false);
-        //        form.getControl("ts_country").setDisabled(false);
-        //        //form.getControl("ts_tradenameid").setDisabled(false);
-        //        form.getControl("msdyn_serviceaccount").setDisabled(false);
-        //        form.getControl("ts_site").setDisabled(false);
-        //    }
-        //}
+        function caseOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var caseAttribute = form.getAttribute("ts_stakeholder");
+            if (caseAttribute.getValue() == null) {
+                form.getControl("ts_region").setDisabled(false);
+                form.getControl("ts_country").setDisabled(false);
+                //form.getControl("ts_tradenameid").setDisabled(false);
+                form.getControl("ts_stakeholder").setDisabled(false);
+                form.getControl("ts_site").setDisabled(false);
+            }
+        }
+        UnplannedWorkOrder.caseOnChange = caseOnChange;
         //export function stateCodeOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
         //    const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
         //    var stateCode = form.getAttribute("statecode").getValue();
@@ -1919,7 +1920,7 @@ var ROM;
                             var wost = _a[_i];
                             if (wost.statecode == 0) {
                                 workOrderHasActiveWost = true;
-                                if (wost.statuscode == 918640005 /* msdyn_workorderservicetask_statuscode.New */)
+                                if (wost.statuscode == 918640005 /* New */)
                                     workOrderHasNewWost = true;
                             }
                         }
@@ -1978,7 +1979,7 @@ var ROM;
                         var wost = _a[_i];
                         if (wost.statecode == 0) {
                             workOrderHasActiveWost = true;
-                            if (wost.statuscode == 918640005 /* msdyn_workorderservicetask_statuscode.New */)
+                            if (wost.statuscode == 918640005 /* New */)
                                 workOrderHasNewWost = true;
                         }
                     }
@@ -2324,7 +2325,7 @@ var ROM;
                     if (operationTypeAttributeValue[0].id.toLowerCase() == "{8b614ef0-c651-eb11-a812-000d3af3ac0d}") { //Air Carrier (Passenger)
                         form.getControl("ts_aircraftclassification").setVisible(true);
                         if (form.getAttribute("ts_aircraftclassification").getValue() == null) {
-                            form.getAttribute("ts_aircraftclassification").setValue(741130000 /* ts_aircraftclassification.PassengerPAX */);
+                            form.getAttribute("ts_aircraftclassification").setValue(741130000 /* PassengerPAX */);
                         }
                         //if (isROM20Form) {
                         //    formROM2.ui.tabs.get("tab_workspace").sections.get("tab_workspace_flightdetails").setVisible(true);
@@ -2376,16 +2377,16 @@ var ROM;
                         distinationCountry = result2._ts_country_value;
                         if (distinationCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7" && originCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7") { // Canada
                             // Domestic
-                            form.getAttribute("ts_airserviceclassification").setValue(741130000 /* ts_airserviceclassification.Domestic */);
+                            form.getAttribute("ts_airserviceclassification").setValue(741130000 /* Domestic */);
                         }
                         else if ((distinationCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && distinationCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")
                             || (originCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && originCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")) { //Not in USA or Canada
                             //International
-                            form.getAttribute("ts_airserviceclassification").setValue(741130001 /* ts_airserviceclassification.International */);
+                            form.getAttribute("ts_airserviceclassification").setValue(741130001 /* International */);
                         }
                         else {
                             //Transborder
-                            form.getAttribute("ts_airserviceclassification").setValue(741130002 /* ts_airserviceclassification.Transborder */);
+                            form.getAttribute("ts_airserviceclassification").setValue(741130002 /* Transborder */);
                         }
                     }, function error(error) {
                         Xrm.Navigation.openAlertDialog({ text: error.message });
@@ -2502,7 +2503,7 @@ var ROM;
                                 '    <attribute name="msdyn_workordertypeid" />' +
                                 '    <attribute name="msdyn_name" />' +
                                 '    <filter>' +
-                                "      <condition attribute=\"ownerid\" operator=\"".concat(op, "\" value=\"").concat(railSecurityTeamId, "\" />") +
+                                ("      <condition attribute=\"ownerid\" operator=\"" + op + "\" value=\"" + railSecurityTeamId + "\" />") +
                                 '    </filter>' +
                                 '  </entity>' +
                                 '</fetch>';
