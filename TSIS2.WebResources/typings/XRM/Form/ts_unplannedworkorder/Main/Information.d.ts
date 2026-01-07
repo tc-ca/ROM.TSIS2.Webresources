@@ -24,7 +24,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface tab_5 extends Xrm.SectionCollectionBase {
+      interface tab_TimeTracking extends Xrm.SectionCollectionBase {
         get(name: "tab_5_section_1"): Xrm.PageSection;
         get(name: "tab_5_section_3"): Xrm.PageSection;
         get(name: string): undefined;
@@ -167,7 +167,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "tab_2"): Xrm.PageTab<Tabs.tab_2>;
       get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
       get(name: "tab_4"): Xrm.PageTab<Tabs.tab_4>;
-      get(name: "tab_5"): Xrm.PageTab<Tabs.tab_5>;
+      get(name: "tab_TimeTracking"): Xrm.PageTab<Tabs.tab_TimeTracking>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
       get(index: number): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>;
