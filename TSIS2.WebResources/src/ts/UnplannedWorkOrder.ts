@@ -1645,7 +1645,7 @@ namespace ROM.UnplannedWorkOrder {
     //Sets the Scheduled Quarter filter to show quarters in the planned fiscal year and the year after
     export function setScheduledQuarterFilter(form: Form.ts_unplannedworkorder.Main.Information): void {
         //Get name of planned fiscal year
-        const fiscalYearValue = form.getAttribute("ts_plannedfiscalquarter").getValue();
+        const fiscalYearValue = form.getAttribute("ts_plannedfiscalyear").getValue();
         if (fiscalYearValue != null) {
             const fiscalYearName = fiscalYearValue[0].name;
             if (fiscalYearName != null) {
