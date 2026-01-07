@@ -146,7 +146,7 @@ var ROM;
                                     if (isROM20Form) {
                                         form.getControl("ts_overtimerequired").setVisible(false);
                                     }
-                                    if (currentSystemStatus == msdyn_wosystemstatus.Closed || currentSystemStatus == msdyn_wosystemstatus.Cancelled) {
+                                    if (currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */ || currentSystemStatus == 690970005 /* msdyn_wosystemstatus.Cancelled */) {
                                         if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager")) {
                                             form.getControl("header_ts_recordstatus").setDisabled(true);
                                         }
@@ -431,7 +431,7 @@ var ROM;
                 });
             }
             //Lock Cancelled Inspection Justification field if WO is cancelled
-            if (currentSystemStatus == msdyn_wosystemstatus.Cancelled) {
+            if (currentSystemStatus == 690970005 /* msdyn_wosystemstatus.Cancelled */) {
                 form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
                 var selectedCanceledWorkOrderReason = form.getAttribute("ts_cancelledinspectionjustification").getValue();
                 var selectedOther = "{A8D7125C-7F24-ED11-9DB2-002248AE429C}";
@@ -495,7 +495,7 @@ var ROM;
             var systemStatus = form.getAttribute("ts_recordstatus").getValue();
             var cancelledInspectionJustification = form.getAttribute("ts_cancelledinspectionjustification").getValue();
             var workOrderServiceTaskData;
-            if (systemStatus == msdyn_wosystemstatus.ClosedInactive) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
+            if (systemStatus == 690970004 /* msdyn_wosystemstatus.ClosedInactive */) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
                 workOrderServiceTaskData =
                     {
                         "statecode": 1,
@@ -511,7 +511,7 @@ var ROM;
             //Post a note on ScheduledQuarter Change
             //  postNoteOnScheduledQuarterChange(form);
             if (cancelledInspectionJustification != null) {
-                form.getAttribute("ts_recordstatus").setValue(msdyn_wosystemstatus.Cancelled);
+                form.getAttribute("ts_recordstatus").setValue(690970005 /* msdyn_wosystemstatus.Cancelled */);
                 form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
             }
         }
@@ -1511,7 +1511,7 @@ var ROM;
         //Sets the Scheduled Quarter filter to show quarters in the planned fiscal year and the year after
         function setScheduledQuarterFilter(form) {
             //Get name of planned fiscal year
-            var fiscalYearValue = form.getAttribute("ts_plannedfiscalquarter").getValue();
+            var fiscalYearValue = form.getAttribute("ts_plannedfiscalyear").getValue();
             if (fiscalYearValue != null) {
                 var fiscalYearName = fiscalYearValue[0].name;
                 if (fiscalYearName != null) {
@@ -1921,7 +1921,7 @@ var ROM;
                             var wost = _a[_i];
                             if (wost.statecode == 0) {
                                 workOrderHasActiveWost = true;
-                                if (wost.statuscode == msdyn_workorderservicetask_statuscode.New)
+                                if (wost.statuscode == 918640005 /* msdyn_workorderservicetask_statuscode.New */)
                                     workOrderHasNewWost = true;
                             }
                         }
@@ -1980,7 +1980,7 @@ var ROM;
                         var wost = _a[_i];
                         if (wost.statecode == 0) {
                             workOrderHasActiveWost = true;
-                            if (wost.statuscode == msdyn_workorderservicetask_statuscode.New)
+                            if (wost.statuscode == 918640005 /* msdyn_workorderservicetask_statuscode.New */)
                                 workOrderHasNewWost = true;
                         }
                     }
@@ -2324,7 +2324,7 @@ var ROM;
                     if (operationTypeAttributeValue[0].id.toLowerCase() == "{8b614ef0-c651-eb11-a812-000d3af3ac0d}") { //Air Carrier (Passenger)
                         form.getControl("ts_aircraftclassification").setVisible(true);
                         if (form.getAttribute("ts_aircraftclassification").getValue() == null) {
-                            form.getAttribute("ts_aircraftclassification").setValue(ts_aircraftclassification.PassengerPAX);
+                            form.getAttribute("ts_aircraftclassification").setValue(741130000 /* ts_aircraftclassification.PassengerPAX */);
                         }
                         //if (isROM20Form) {
                         //    formROM2.ui.tabs.get("tab_workspace").sections.get("tab_workspace_flightdetails").setVisible(true);
@@ -2376,16 +2376,16 @@ var ROM;
                         distinationCountry = result2._ts_country_value;
                         if (distinationCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7" && originCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7") { // Canada
                             // Domestic
-                            form.getAttribute("ts_airserviceclassification").setValue(ts_airserviceclassification.Domestic);
+                            form.getAttribute("ts_airserviceclassification").setValue(741130000 /* ts_airserviceclassification.Domestic */);
                         }
                         else if ((distinationCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && distinationCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")
                             || (originCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && originCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")) { //Not in USA or Canada
                             //International
-                            form.getAttribute("ts_airserviceclassification").setValue(ts_airserviceclassification.International);
+                            form.getAttribute("ts_airserviceclassification").setValue(741130001 /* ts_airserviceclassification.International */);
                         }
                         else {
                             //Transborder
-                            form.getAttribute("ts_airserviceclassification").setValue(ts_airserviceclassification.Transborder);
+                            form.getAttribute("ts_airserviceclassification").setValue(741130002 /* ts_airserviceclassification.Transborder */);
                         }
                     }, function error(error) {
                         Xrm.Navigation.openAlertDialog({ text: error.message });
