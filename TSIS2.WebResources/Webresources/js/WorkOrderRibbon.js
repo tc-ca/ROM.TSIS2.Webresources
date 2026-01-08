@@ -1098,12 +1098,12 @@ function createWorkOrderWorkspaceFromWorkOrder(formContext, currentWorkOrderId, 
   );
 }
 function disableEditButtonOnWorkOrder(primaryControl) {
-    // Disable Edit button on Work Order if the Work Order is not "In Progress" or "New"
+    // Disable Edit button on Work Order if the Work Order is not "In Progress" or "New" or "Closed" or "Cancelled"
     var attr = primaryControl && primaryControl.getAttribute
         ? primaryControl.getAttribute("msdyn_systemstatus")
         : null;
     var status = attr ? attr.getValue() : null;
-    if (status === 690970000 || status === 741130001 || status === 741130000) {
+    if (status === 690970000 || status === 741130001 || status === 741130000 || 690970005) {
         return true; // Enable Edit button
     }
     else {
