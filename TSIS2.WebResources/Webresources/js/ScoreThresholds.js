@@ -14,7 +14,7 @@ var ROM;
             var rateEnforcementHistoryAttribute = Form.getAttribute("ts_rateenforcementhistory");
             //If NCAT Assessment Tool set required for NCAT Enforcement Action
             if (assessmentTool != null) {
-                if (assessmentTool == ts_assessmenttool.NCAT) {
+                if (assessmentTool == 717750000 /* NCAT */) {
                     ncatEnforcementAction.setVisible(true);
                     ncatEnforcementActionAttribute.setRequiredLevel("required");
                 }
@@ -74,7 +74,7 @@ var ROM;
             var rateEnforcementHistory = Form.getControl("ts_rateenforcementhistory");
             var rateEnforcementHistoryAttribute = Form.getAttribute("ts_rateenforcementhistory");
             //For NCAT tool set visible only NCAT Enforcement Action
-            if (assessmentTool == ts_assessmenttool.NCAT) {
+            if (assessmentTool == 717750000 /* NCAT */) {
                 ncatEnforcementAction.setVisible(true);
                 ncatEnforcementActionAttribute.setRequiredLevel("required");
                 rateEnforcementAction.setVisible(false);
@@ -107,7 +107,7 @@ var ROM;
             var messageScoreFrom = Xrm.Utility.getResourceString("ts_/resx/ScoreThresholds", "ScoreFromMessage");
             var messageTo = Xrm.Utility.getResourceString("ts_/resx/ScoreThresholds", "toMessage");
             //Filter by enforcement history if the assessment tool is RATE
-            var enforcementHistoryFetchXMLFilter = (assessmentTool == ts_assessmenttool.RATE) ? "<condition attribute='ts_rateenforcementhistory' operator = 'eq' value = '" + enforcementHistory + "'/>" : "";
+            var enforcementHistoryFetchXMLFilter = (assessmentTool == 717750001 /* RATE */) ? "<condition attribute='ts_rateenforcementhistory' operator = 'eq' value = '" + enforcementHistory + "'/>" : "";
             var fetchXml = [
                 "<fetch>",
                 "<entity name='ts_assessmentscorethredshots'>",

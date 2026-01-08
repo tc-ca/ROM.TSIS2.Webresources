@@ -19,22 +19,22 @@ var ROM;
                     // Set the Entity Name choice
                     switch (parentRecordType) {
                         case "account":
-                            formContext.getAttribute("ts_entityname").setValue(ts_entityrisk_ts_entityname.Stakeholder);
+                            formContext.getAttribute("ts_entityname").setValue(741130004 /* Stakeholder */);
                             break;
                         case "msdyn_functionallocation":
-                            formContext.getAttribute("ts_entityname").setValue(ts_entityrisk_ts_entityname.Site);
+                            formContext.getAttribute("ts_entityname").setValue(741130003 /* Site */);
                             break;
                         case "ovs_operationtype":
-                            formContext.getAttribute("ts_entityname").setValue(ts_entityrisk_ts_entityname.OperationType);
+                            formContext.getAttribute("ts_entityname").setValue(741130002 /* OperationType */);
                             break;
                         case "ovs_operation":
-                            formContext.getAttribute("ts_entityname").setValue(ts_entityrisk_ts_entityname.Operation);
+                            formContext.getAttribute("ts_entityname").setValue(741130001 /* Operation */);
                             break;
                         case "msdyn_incidenttype":
-                            formContext.getAttribute("ts_entityname").setValue(ts_entityrisk_ts_entityname.ActivityType);
+                            formContext.getAttribute("ts_entityname").setValue(741130005 /* ActivityType */);
                             break;
                         case "ts_programarea":
-                            formContext.getAttribute("ts_entityname").setValue(ts_entityrisk_ts_entityname.ProgramArea);
+                            formContext.getAttribute("ts_entityname").setValue(741130000 /* ProgramArea */);
                             break;
                         default:
                             console.log("Unknown Parent Record Type");
@@ -55,7 +55,7 @@ var ROM;
                 setFiscalYearFilteredView(formContext);
             }
             // Check if we are in the edit form
-            if (formContext.ui.getFormType() == 2 /* Xrm.FormType.Update */) {
+            if (formContext.ui.getFormType() == 2 /* Update */) {
                 // check if ts_prescribedfrequencyoverride is empty
                 var prescribedFrequencyOverride = (_a = formContext.getAttribute("ts_prescribedfrequencyoverride")) === null || _a === void 0 ? void 0 : _a.getValue();
                 if (prescribedFrequencyOverride === null || prescribedFrequencyOverride === undefined) {
@@ -70,7 +70,7 @@ var ROM;
             var entityName = (_b = formContext.getAttribute("ts_entityname")) === null || _b === void 0 ? void 0 : _b.getValue();
             // Check if Site Class is already set
             var siteClass = (_c = formContext.getAttribute("ts_siteclass")) === null || _c === void 0 ? void 0 : _c.getValue();
-            if (entityName === ts_entityrisk_ts_entityname.Site) {
+            if (entityName === 741130003 /* Site */) {
                 if (!siteClass) {
                     // Get the ID of the Site
                     var siteId = (_d = formContext.getAttribute("ts_entityid")) === null || _d === void 0 ? void 0 : _d.getValue();
@@ -119,7 +119,7 @@ var ROM;
                 fiscalYearID = fiscalYear[0].id.toString().replace(/{|}/g, '');
             }
             // Fetch existing records to check for duplicates
-            var fetchXml = "\n        <fetch>\n            <entity name=\"ts_entityrisk\">\n                <attribute name=\"ts_entityriskid\" />\n                <filter>\n                    <condition attribute=\"ts_entityid\" operator=\"eq\" value=\"".concat(entityId, "\" />\n                    <condition attribute=\"ts_fiscalyear\" operator=\"eq\" value=\"").concat(fiscalYearID, "\" />\n                </filter>\n            </entity>\n        </fetch>");
+            var fetchXml = "\n        <fetch>\n            <entity name=\"ts_entityrisk\">\n                <attribute name=\"ts_entityriskid\" />\n                <filter>\n                    <condition attribute=\"ts_entityid\" operator=\"eq\" value=\"" + entityId + "\" />\n                    <condition attribute=\"ts_fiscalyear\" operator=\"eq\" value=\"" + fiscalYearID + "\" />\n                </filter>\n            </entity>\n        </fetch>";
             var encodedFetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
             var fiscalYearField = formContext.getControl("ts_fiscalyear");
             // Get the user's language ID
@@ -147,7 +147,7 @@ var ROM;
                 console.error("Error validating uniqueness:", error.message);
             });
             // Check if the form is being saved as a new record
-            if (formContext.ui.getFormType() === 1 /* Xrm.FormType.Create */) {
+            if (formContext.ui.getFormType() === 1 /* Create */) {
                 // Get the Fiscal Year Name
                 var parentRecordName = queryParams["parentrecordname"];
                 var fiscalYear_1 = (_b = formContext.getAttribute("ts_fiscalyear")) === null || _b === void 0 ? void 0 : _b.getValue();
@@ -157,7 +157,7 @@ var ROM;
                 // Get the selected Entity Name
                 var entityName = (_c = formContext.getAttribute("ts_entityname")) === null || _c === void 0 ? void 0 : _c.getValue();
                 // If the Entity Name is Activity Type
-                if (entityName === ts_entityrisk_ts_entityname.ActivityType) {
+                if (entityName === 741130005 /* ActivityType */) {
                     // Get the Fiscal Year value
                     var fiscalYear_2 = (_d = formContext.getAttribute("ts_fiscalyear")) === null || _d === void 0 ? void 0 : _d.getValue();
                     // If Fiscal Year is not null or undefined, get the ID
@@ -168,7 +168,7 @@ var ROM;
                     if (fiscalYear_2 !== null && fiscalYear_2 !== undefined && entityId_1 !== null && entityId_1 !== undefined) {
                         console.log("Entity Risk created with Fiscal Year and Entity ID.");
                         // Fetch XML for getting the ts_prescribedfrequencyoverrideid
-                        var fetchXmlPrescribedFrequencyOverrideId = "\n                        <fetch xmlns:generator='MarkMpn.SQL4CDS'>\n                          <entity name='ts_prescribedfrequencyoverride'>\n                            <attribute name='ts_prescribedfrequencyoverrideid' />\n                            <attribute name='ts_name' />\n                            <link-entity name='msdyn_incidenttype' to='ts_activitytype' from='msdyn_incidenttypeid' alias='msdyn_incidenttype' link-type='inner'>\n                              <filter>\n                                <condition attribute='msdyn_incidenttypeid' operator='eq' value='".concat(entityId_1, "' />\n                              </filter>\n                            </link-entity>\n                            <filter>\n                              <condition attribute='ts_fiscalyear' operator='eq' value='").concat(fiscalYearId, "' />\n                            </filter>\n                          </entity>\n                        </fetch>\n                    ");
+                        var fetchXmlPrescribedFrequencyOverrideId = "\n                        <fetch xmlns:generator='MarkMpn.SQL4CDS'>\n                          <entity name='ts_prescribedfrequencyoverride'>\n                            <attribute name='ts_prescribedfrequencyoverrideid' />\n                            <attribute name='ts_name' />\n                            <link-entity name='msdyn_incidenttype' to='ts_activitytype' from='msdyn_incidenttypeid' alias='msdyn_incidenttype' link-type='inner'>\n                              <filter>\n                                <condition attribute='msdyn_incidenttypeid' operator='eq' value='" + entityId_1 + "' />\n                              </filter>\n                            </link-entity>\n                            <filter>\n                              <condition attribute='ts_fiscalyear' operator='eq' value='" + fiscalYearId + "' />\n                            </filter>\n                          </entity>\n                        </fetch>\n                    ";
                         var fetchXmlEncoded = "?fetchXml=" + encodeURIComponent(fetchXmlPrescribedFrequencyOverrideId);
                         // Retrieve the ts_prescribedfrequencyoverrideid
                         Xrm.WebApi.retrieveMultipleRecords("ts_prescribedfrequencyoverride", fetchXmlEncoded).then(function (result) {
@@ -226,7 +226,7 @@ var ROM;
             var today = new Date();
             var yearsAgo = today.getFullYear() - 2;
             var yearsFromNow = today.getFullYear() + 5;
-            var fetchXml = "<fetch version=\"1.0\" mapping=\"logical\" distinct=\"true\" returntotalrecordcount=\"true\" page=\"1\" count=\"25\" no-lock=\"false\">\n                            <entity name=\"tc_tcfiscalyear\">\n                              <attribute name=\"tc_tcfiscalyearid\" />\n                              <attribute name=\"tc_name\" />\n                              <order attribute=\"tc_fiscalyearnum\" descending=\"false\" />\n                              <filter>\n                                <condition attribute=\"tc_fiscalyearnum\" operator=\"ge\" value=\"".concat(yearsAgo, "\" />\n                                <condition attribute=\"tc_fiscalyearnum\" operator=\"le\" value=\"").concat(yearsFromNow, "\" />\n                              </filter>\n                            </entity>\n                          </fetch>");
+            var fetchXml = "<fetch version=\"1.0\" mapping=\"logical\" distinct=\"true\" returntotalrecordcount=\"true\" page=\"1\" count=\"25\" no-lock=\"false\">\n                            <entity name=\"tc_tcfiscalyear\">\n                              <attribute name=\"tc_tcfiscalyearid\" />\n                              <attribute name=\"tc_name\" />\n                              <order attribute=\"tc_fiscalyearnum\" descending=\"false\" />\n                              <filter>\n                                <condition attribute=\"tc_fiscalyearnum\" operator=\"ge\" value=\"" + yearsAgo + "\" />\n                                <condition attribute=\"tc_fiscalyearnum\" operator=\"le\" value=\"" + yearsFromNow + "\" />\n                              </filter>\n                            </entity>\n                          </fetch>";
             var layoutXml = '<grid name="resultset" object="10010" jump="tc_name" select="1" icon="1" preview="1"><row name="result" id="tc_tcfiscalyearid"><cell name="tc_name" width="200" /></row></grid>';
             formContext.getControl("ts_fiscalyear").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         }
