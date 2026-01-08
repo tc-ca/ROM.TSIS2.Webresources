@@ -1103,7 +1103,7 @@ function disableEditButtonOnWorkOrder(primaryControl) {
         ? primaryControl.getAttribute("msdyn_systemstatus")
         : null;
     var status = attr ? attr.getValue() : null;
-    if (status === 690970000 || status === 741130001 || status === 741130000 || 690970005) {
+    if (status === 690970000 || status === 741130001 || status === 741130000 || status === 690970005) {
         return true; // Enable Edit button
     }
     else {
