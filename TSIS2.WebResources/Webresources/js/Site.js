@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -133,12 +133,12 @@ var ROM;
             var statusEndDateValue = form.getAttribute("ts_statusenddate").getValue();
             if (statusStartDateValue != null) {
                 if (Date.parse(statusStartDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_sitestatus").setValue(ts_sitestatus.NonOperational);
+                    form.getAttribute("ts_sitestatus").setValue(717750001 /* NonOperational */);
                 }
             }
             if (statusEndDateValue != null) {
                 if (Date.parse(statusEndDateValue.toDateString()) <= Date.parse(new Date(Date.now()).toDateString())) {
-                    form.getAttribute("ts_sitestatus").setValue(ts_sitestatus.Operational);
+                    form.getAttribute("ts_sitestatus").setValue(717750000 /* Operational */);
                 }
             }
         }
@@ -240,7 +240,7 @@ var ROM;
         //Shows the Risk Score field only when the Class is 2 or 3
         function riskScoreVisibility(form) {
             var siteClass = form.getAttribute("ts_class").getValue();
-            if (siteClass == ts_ts_site_ts_class._2 || siteClass == ts_ts_site_ts_class._3) {
+            if (siteClass == 717750002 /* _2 */ || siteClass == 717750003 /* _3 */) {
                 form.getControl("ts_riskscore").setVisible(true);
                 form.getControl("ts_lpdtounitedstates").setVisible(true);
             }

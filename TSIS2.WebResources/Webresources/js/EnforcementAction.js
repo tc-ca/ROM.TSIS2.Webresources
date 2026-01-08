@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -163,7 +163,7 @@ var ROM;
         EnforcementAction.typeOnChange = typeOnChange;
         function additionalDetailsVisibility(formContext) {
             var typeAttributeValue = formContext.getAttribute("ts_typeofenforcementaction").getValue();
-            if (typeAttributeValue != null && typeAttributeValue == ts_type.VerbalWarning) {
+            if (typeAttributeValue != null && typeAttributeValue == 717750000 /* VerbalWarning */) {
                 formContext.ui.tabs.get("general").sections.get("additional_details").setVisible(true);
                 formContext.getControl("ts_verbalwarninggivento").setVisible(true);
                 formContext.getControl("ts_individualposition").setVisible(true);
@@ -180,7 +180,7 @@ var ROM;
                 formContext.getAttribute("ts_writtenwarningsentto").setRequiredLevel("none");
                 formContext.getAttribute("ts_writtenwarningdeliverymethod").setRequiredLevel("none");
             }
-            else if (typeAttributeValue != null && typeAttributeValue == ts_type.WrittenWarning) {
+            else if (typeAttributeValue != null && typeAttributeValue == 717750001 /* WrittenWarning */) {
                 formContext.ui.tabs.get("general").sections.get("additional_details").setVisible(true);
                 formContext.getControl("ts_writtenwarningsentto").setVisible(true);
                 formContext.getControl("ts_individualposition").setVisible(true);
