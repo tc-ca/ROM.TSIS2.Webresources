@@ -59,6 +59,7 @@ namespace ROM.WorkOrder {
                 form.getControl("ts_details").setVisible(false);
                 form.getControl("ts_overtime").setVisible(false);
                 form.getControl("ts_overtimerequired").setVisible(true);
+                form.getControl("msdyn_servicerequest").setDisabled(true);
 
             }
             else if (inAvSecBU) {
