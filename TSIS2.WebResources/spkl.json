@@ -305,6 +305,11 @@
                 "description": "ROM TSIS 2.0 Work Order Ribbon Scripts"
             },
             {
+                "uniquename": "ts_/js/WorkOrderWorkspaceBulkEdit.js",
+                "file": "js\\WorkOrderWorkspaceBulkEdit.js",
+                "description": "ROM TSIS 2.0 Work Order Workspace Bulk Edit Scripts"
+            },
+            {
                 "uniquename": "ovs_/js/WorkOrderServiceTask.js",
                 "file": "js\\WorkOrderServiceTask.js",
                 "description": "ROM TSIS 2.0 Work Order Service Task Form Scripts"
