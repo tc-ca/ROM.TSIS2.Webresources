@@ -894,7 +894,7 @@ function editUnplannedWorkOrder(primaryControl) {
     }
   );
 }
-function createWorkOrderWorkspaceFromWorkOrder(formContext, currentWorkOrderId, lang) {
+function createWorkOrderWorkspaceFromWorkOrder(formContext, currentWorkOrderId, lang, openForm = true) {
   // Retrieve work order data to transfer fields
   Xrm.WebApi.retrieveRecord("msdyn_workorder", currentWorkOrderId,
     "?$select=msdyn_name,_ownerid_value,_msdyn_workordertype_value,_ts_region_value,_ts_country_value,_ovs_operationtypeid_value,ts_aircraftclassification,_ts_tradenameid_value,_msdyn_serviceaccount_value,_ts_contact_value,_ts_site_value,_msdyn_functionallocation_value,_ts_subsubsite_value,_ts_reason_value,_ts_workorderjustification_value,_ovs_operationid_value,msdyn_worklocation,_ovs_rational_value,ts_businessowner,_msdyn_primaryincidenttype_value,msdyn_primaryincidentdescription,msdyn_primaryincidentestimatedduration,ts_overtimerequired,ts_reportdetails,_ts_canceledinspectionjustification_value,_ovs_revisedquarterid_value,_ts_scheduledquarterjustification_value,ts_justificationcomment,ts_details,msdyn_instructions,ts_preparationtime,ts_woreportinganddocumentation,ts_comments,ts_overtime,ts_conductingoversight,ts_traveltime,_msdyn_servicerequest_value,_ts_securityincident_value,_ts_trip_value,_msdyn_parentworkorder_value,msdyn_systemstatus"
@@ -1044,32 +1044,35 @@ function createWorkOrderWorkspaceFromWorkOrder(formContext, currentWorkOrderId, 
         function success(result) {
           console.log("Unplanned work order created successfully with ID: " + result.id);
 
-          // Open the saved record in edit mode
-          const pageInput = {
-            pageType: "entityrecord",
-            entityName: "ts_unplannedworkorder",
-            entityId: result.id,
-            formType: 2 // Edit form
-          };
+          // Only open the form if openForm is true
+          if (openForm) {
+            // Open the saved record in edit mode
+            const pageInput = {
+              pageType: "entityrecord",
+              entityName: "ts_unplannedworkorder",
+              entityId: result.id,
+              formType: 2 // Edit form
+            };
 
-          const navigationOptions = {
-            target: 2,
-            width: { value: 80, unit: "%" },
-            height: { value: 80, unit: "%" },
-            position: 1
-          };
+            const navigationOptions = {
+              target: 2,
+              width: { value: 80, unit: "%" },
+              height: { value: 80, unit: "%" },
+              position: 1
+            };
 
-          Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
-            function success(result) {
-              console.log("Saved unplanned work order opened successfully in edit mode");
-              // Refresh the original form after modal closes
-              formContext.data.refresh();
-            },
-            function error(err) {
-              console.error("Error opening saved unplanned work order:", err);
-              showErrorMessageAlert(err);
-            }
-          );
+            Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+              function success(result) {
+                console.log("Saved unplanned work order opened successfully in edit mode");
+                // Refresh the original form after modal closes
+                formContext.data.refresh();
+              },
+              function error(err) {
+                console.error("Error opening saved unplanned work order:", err);
+                showErrorMessageAlert(err);
+              }
+            );
+          }
         },
         function error(err) {
           console.error("Error creating unplanned work order:", err);
@@ -1157,4 +1160,142 @@ function canEditWorkOrderWorkspace() {
         } 
     });
     return enable;
+}
+
+// Bulk-edit opener for Workspace with auto-create capability
+// If workspaces don't exist for selected Work Orders, they are created automatically
+function openBulkWorkspace(selectedControl) {
+    // Security check - only allow specific roles
+    var roles = Xrm.Utility.getGlobalContext().userSettings.roles;
+    var hasAccess = false;
+    roles.forEach(function (item) {
+        if (item.name == "System Administrator" || item.name == "ROM - Manager" || item.name == "ROM - Planner") {
+            hasAccess = true;
+        }
+    });
+
+    if (!hasAccess) {
+        const lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
+        Xrm.Navigation.openAlertDialog({ 
+            text: (lang == 1036) ? 
+                "Vous n'avez pas la permission d'accéder à cette fonction." : 
+                "You do not have permission to access this function." 
+        });
+        return;
+    }
+
+    const lookup = "_ts_workorder_value";
+    const grid = selectedControl.getGrid ? selectedControl.getGrid() : selectedControl;
+    const rows = grid.getSelectedRows().get();
+    const woIds = rows.map(r => r.getData().getEntity().getId().replace(/[{}]/g, "").toLowerCase());
+    const lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
+
+    (async function () {
+        try {
+            // Show progress indicator
+            Xrm.Utility.showProgressIndicator();
+
+            const wsIds = [];
+            const missingWoIds = [];
+            const failedWoIds = [];
+
+            // Step 1: Query existing workspaces for each Work Order
+            for (let index = 0; index < woIds.length; index++) {
+                const woId = woIds[index];
+                const res = await Xrm.WebApi.retrieveMultipleRecords(
+                    "ts_unplannedworkorder",
+                    `?$select=ts_unplannedworkorderid&$filter=${lookup} eq '${woId}'`
+                );
+                
+                if (res.entities && res.entities.length > 0) {
+                    // Existing workspace found - add to list
+                    res.entities.forEach(e =>
+                        wsIds.push(e["ts_unplannedworkorderid"].replace(/[{}]/g, "").toLowerCase())
+                    );
+                } else {
+                    // No workspace found - mark for creation
+                    missingWoIds.push(woId);
+                }
+            }
+
+            // Step 2: Create workspaces for missing Work Orders
+            if (missingWoIds.length > 0) {
+                for (let index = 0; index < missingWoIds.length; index++) {
+                    const woId = missingWoIds[index];
+                    const newWorkspaceId = await createWorkspaceUsingExistingFunction(woId, lang);
+                    
+                    if (newWorkspaceId) {
+                        wsIds.push(newWorkspaceId);
+                    } else {
+                        failedWoIds.push(woId);
+                    }
+                }
+            }
+
+            // Step 2.5: Show warning if any failed
+            if (failedWoIds.length > 0) {
+                const successCount = missingWoIds.length - failedWoIds.length;
+                const failureMessage = (lang == 1036) ?
+                    `${successCount} espace(s) de travail créé(s). Échec pour ${failedWoIds.length} ordre(s) de travail.\nIDs: ${failedWoIds.join(", ")}` :
+                    `${successCount} workspace(s) created. Failed for ${failedWoIds.length} work order(s).\nIDs: ${failedWoIds.join(", ")}`;
+                
+                Xrm.Utility.closeProgressIndicator();
+                Xrm.Navigation.openAlertDialog({ text: failureMessage });
+                return;
+            }
+
+            // Step 3: Open bulk-edit with all workspace IDs (existing + newly created)
+            if (wsIds.length > 0) {
+                Xrm.Utility.closeProgressIndicator();
+                
+                await Xrm.Navigation.navigateTo({
+                    pageType: "bulkedit",
+                    entityName: "ts_unplannedworkorder",
+                    entityIds: wsIds
+                }, {
+                    target: 2,
+                    width: { value: 80, unit: "%" },
+                    height: { value: 80, unit: "%" },
+                    position: 1
+                });
+            }
+        } catch (error) {
+            Xrm.Utility.closeProgressIndicator();
+            const lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
+            Xrm.Navigation.openAlertDialog({ 
+                text: (lang == 1036) ? 
+                    "Une erreur s'est produite: " + error.message : 
+                    "An error occurred: " + error.message 
+            });
+        }
+    })();
+}
+
+// Helper function: Create workspace silently using the existing createWorkOrderWorkspaceFromWorkOrder
+// Does not open a form - used for bulk auto-creation
+async function createWorkspaceUsingExistingFunction(currentWorkOrderId, lang) {
+    return new Promise((resolve) => {
+        // Use the existing function but pass openForm=false to skip opening the form
+        createWorkOrderWorkspaceFromWorkOrder(null, currentWorkOrderId, lang, false);
+        
+        // Wait for the creation and resolve with the ID
+        // We'll poll for the created record
+        setTimeout(() => {
+            Xrm.WebApi.retrieveMultipleRecords(
+                "ts_unplannedworkorder",
+                `?$select=ts_unplannedworkorderid&$filter=_ts_workorder_value eq '${currentWorkOrderId}'&$orderby=createdon desc&$top=1`
+            ).then(
+                function success(result) {
+                    if (result.entities && result.entities.length > 0) {
+                        resolve(result.entities[0].ts_unplannedworkorderid);
+                    } else {
+                        resolve(null);
+                    }
+                },
+                function error(err) {
+                    resolve(null);
+                }
+            );
+        }, 500);
+    });
 }
