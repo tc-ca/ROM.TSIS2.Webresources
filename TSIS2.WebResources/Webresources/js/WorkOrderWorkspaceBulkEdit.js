@@ -35,12 +35,16 @@ function openBulkWorkspace(selectedControl) {
 
     (async function () {
         try {
+            // Show progress indicator
+            Xrm.Utility.showProgressIndicator();
+
             const wsIds = [];
             const missingWoIds = [];
             const failedWoIds = [];
 
             // Step 1: Query existing workspaces for each Work Order
-            for (const woId of woIds) {
+            for (let index = 0; index < woIds.length; index++) {
+                const woId = woIds[index];
                 const res = await Xrm.WebApi.retrieveMultipleRecords(
                     "ts_unplannedworkorder",
                     `?$select=ts_unplannedworkorderid&$filter=${lookup} eq '${woId}'`
@@ -59,8 +63,10 @@ function openBulkWorkspace(selectedControl) {
 
             // Step 2: Create workspaces for missing Work Orders
             if (missingWoIds.length > 0) {
-                for (const woId of missingWoIds) {
+                for (let index = 0; index < missingWoIds.length; index++) {
+                    const woId = missingWoIds[index];
                     const newWorkspaceId = await createWorkspaceAndGetId(woId, lang);
+                    
                     if (newWorkspaceId) {
                         wsIds.push(newWorkspaceId);
                     } else {
@@ -76,12 +82,15 @@ function openBulkWorkspace(selectedControl) {
                     `${successCount} espace(s) de travail créé(s). Échec pour ${failedWoIds.length} ordre(s) de travail.\nIDs: ${failedWoIds.join(", ")}` :
                     `${successCount} workspace(s) created. Failed for ${failedWoIds.length} work order(s).\nIDs: ${failedWoIds.join(", ")}`;
                 
-                console.warn("Failed Work Order IDs:", failedWoIds);
+                Xrm.Utility.closeProgressIndicator();
                 Xrm.Navigation.openAlertDialog({ text: failureMessage });
+                return;
             }
 
             // Step 3: Open bulk-edit with all workspace IDs (existing + newly created)
             if (wsIds.length > 0) {
+                Xrm.Utility.closeProgressIndicator();
+                
                 await Xrm.Navigation.navigateTo({
                     pageType: "bulkedit",
                     entityName: "ts_unplannedworkorder",
@@ -94,7 +103,7 @@ function openBulkWorkspace(selectedControl) {
                 });
             }
         } catch (error) {
-            console.error("Error in openBulkWorkspace:", error);
+            Xrm.Utility.closeProgressIndicator();
             const lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
             Xrm.Navigation.openAlertDialog({ 
                 text: (lang == 1036) ? 
@@ -248,17 +257,14 @@ async function createWorkspaceAndGetId(currentWorkOrderId, lang) {
                 // Create the workspace (no form opened)
                 Xrm.WebApi.createRecord("ts_unplannedworkorder", unplannedWorkOrderData).then(
                     function success(result) {
-                        console.log("Workspace created automatically with ID: " + result.id);
                         resolve(result.id);
                     },
                     function error(err) {
-                        console.error("Error creating workspace:", err);
                         resolve(null); // Continue processing even if one fails
                     }
                 );
             },
             function error(err) {
-                console.error("Error retrieving work order:", err);
                 resolve(null); // Continue processing even if one fails
             }
         );
