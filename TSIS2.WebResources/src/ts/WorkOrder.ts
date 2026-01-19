@@ -2827,39 +2827,3 @@ namespace ROM.WorkOrder {
             .addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
     }
 }
-
-
-async function getEffectiveUserBuIdForFiltering(
-    userBuId: string
-): Promise<string> {
-
-    if (!userBuId) return userBuId;
-
-    const effectiveUserBuId = userBuId.replace(/[{}]/g, "").toLowerCase();
-
-    const isAvSecByBU = await isAvSecBU(effectiveUserBuId);
-    const isISSOByBU = await isISSOBU(effectiveUserBuId);
-
-
-    if (isAvSecByBU) {
-        const avSecDomesticBuId =
-            await getEnvironmentVariableValue(BU_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC);
-
-        if (avSecDomesticBuId) {
-            console.log("User is Aviation Security → Using Aviation Security Domestic Business Unit");
-            return avSecDomesticBuId;
-        }
-    }
-
-    if (isISSOByBU) {
-        const issoBuId =
-            await getEnvironmentVariableValue(BU_SCHEMA_NAMES.ISSO);
-
-        if (issoBuId) {
-            console.log("User is Information System Security Officer → Using ISSO Business Unit");
-            return issoBuId;
-        }
-    }
-
-    return effectiveUserBuId;
-}
