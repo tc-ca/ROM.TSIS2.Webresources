@@ -1734,29 +1734,6 @@ interface ts_trip_Create extends ts_trip {
 }
 interface ts_trip_Update extends ts_trip {
 }
-interface ts_tripinspector_Base extends WebEntity {
-}
-interface ts_tripinspector_Fixed extends WebEntity_Fixed {
-  ts_tripinspectorid: string;
-}
-interface ts_tripinspector extends ts_tripinspector_Base, ts_tripinspector_Relationships {
-}
-interface ts_tripinspector_Relationships {
-}
-interface ts_tripinspector_Result extends ts_tripinspector_Base, ts_tripinspector_Relationships {
-}
-interface ts_tripinspector_FormattedResult {
-}
-interface ts_tripinspector_Select {
-}
-interface ts_tripinspector_Expand {
-}
-interface ts_tripinspector_Filter {
-}
-interface ts_tripinspector_Create extends ts_tripinspector {
-}
-interface ts_tripinspector_Update extends ts_tripinspector {
-}
 interface ts_ts_file_ts_trip_Base extends WebEntity {
 }
 interface ts_ts_file_ts_trip_Fixed extends WebEntity_Fixed {
