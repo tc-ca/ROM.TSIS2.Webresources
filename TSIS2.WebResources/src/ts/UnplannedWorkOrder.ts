@@ -969,6 +969,42 @@ namespace ROM.UnplannedWorkOrder {
             throw new Error((e as any).Message);
         }
     }
+
+    export async function filterCanceledJustificationField(eContext: Xrm.ExecutionContext<any, any>) {
+        const form = <Form.ts_unplannedworkorder.Main.Information>eContext.getFormContext();
+
+        const effectiveBuId = await getEffectiveUserBuForCurrentUser();
+
+        // If null → no BU filter applied (TC users)
+        if (!effectiveBuId) {
+            console.log("No BU filter applied for this user (TC or unknown)");
+            return;
+        }
+
+        const fetchXml = `
+        <fetch mapping='logical'>
+          <entity name='ts_canceledinspectionjustification'>
+            <filter>
+              <condition attribute='owningbusinessunit' operator='eq' value='${effectiveBuId}' />
+            </filter>
+          </entity>
+        </fetch>
+    `;
+
+        const control = form.getControl("ts_cancelledinspectionjustification");
+
+        if (control) {
+            control.addPreSearch(() => {
+                    control.addCustomFilter(fetchXml, "ts_canceledinspectionjustification");
+            });
+        } else {
+            console.warn("Control 'ts_cancelledinspectionjustification' not found on the form.");
+        }
+    }
+
+
+
+
     //export function filterCanceledJustificationField(eContext: Xrm.ExecutionContext<any, any>): void {
     //    try {
     //        let form = <Form.msdyn_workorder.Main.WOJustifyCancellation>eContext.getFormContext();
