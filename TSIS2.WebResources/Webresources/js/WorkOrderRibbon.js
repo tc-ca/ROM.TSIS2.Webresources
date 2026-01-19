@@ -899,7 +899,7 @@ function createWorkspaceFromWorkOrder(currentWorkOrderId, lang) {
   return new Promise((resolve, reject) => {
     // Retrieve work order data to transfer fields
     Xrm.WebApi.retrieveRecord("msdyn_workorder", currentWorkOrderId,
-      "?$select=msdyn_name,_ownerid_value,_msdyn_workordertype_value,_ts_region_value,_ts_country_value,_ovs_operationtypeid_value,ts_aircraftclassification,_ts_tradenameid_value,_msdyn_serviceaccount_value,_ts_contact_value,_ts_site_value,_msdyn_functionallocation_value,_ts_subsubsite_value,_ts_reason_value,_ts_workorderjustification_value,_ovs_operationid_value,msdyn_worklocation,_ovs_rational_value,ts_businessowner,_msdyn_primaryincidenttype_value,msdyn_primaryincidentdescription,msdyn_primaryincidentestimatedduration,ts_overtimerequired,ts_reportdetails,_ts_canceledinspectionjustification_value,_ovs_revisedquarterid_value,_ts_scheduledquarterjustification_value,ts_justificationcomment,ts_details,msdyn_instructions,ts_preparationtime,ts_woreportinganddocumentation,ts_comments,ts_overtime,ts_conductingoversight,ts_traveltime,_msdyn_servicerequest_value,_ts_securityincident_value,_ts_trip_value,_msdyn_parentworkorder_value,msdyn_systemstatus"
+      "?$select=msdyn_name,_ownerid_value,_msdyn_workordertype_value,_ts_region_value,_ts_country_value,_ovs_operationtypeid_value,ts_aircraftclassification,_ts_tradenameid_value,_msdyn_serviceaccount_value,_ts_contact_value,_ts_site_value,_msdyn_functionallocation_value,_ts_subsubsite_value,_ts_reason_value,_ts_workorderjustification_value,_ovs_operationid_value,msdyn_worklocation,_ovs_rational_value,ts_businessowner,_msdyn_primaryincidenttype_value,msdyn_primaryincidentdescription,msdyn_primaryincidentestimatedduration,ts_overtimerequired,ts_reportdetails,_ts_canceledinspectionjustification_value,_ovs_revisedquarterid_value,_ts_scheduledquarterjustification_value,ts_justificationcomment,ts_details,msdyn_instructions,ts_preparationtime,ts_woreportinganddocumentation,ts_comments,ts_overtime,ts_conductingoversight,ts_traveltime,_msdyn_servicerequest_value,_ts_securityincident_value,_ts_trip_value,_msdyn_parentworkorder_value,msdyn_systemstatus,ts_state,_ovs_fiscalyear_value,_ovs_fiscalquarter_value,ts_othercanceledjustification"
     ).then(
       function success(workOrder) {
         // Prepare data for creating the unplanned work order record
@@ -972,6 +972,12 @@ function createWorkspaceFromWorkOrder(currentWorkOrderId, lang) {
         if (workOrder._ts_scheduledquarterjustification_value) {
           unplannedWorkOrderData["ts_ScheduledQuarterJustification@odata.bind"] = "/ts_justifications(" + workOrder._ts_scheduledquarterjustification_value + ")";
         }
+        if (workOrder._ovs_fiscalyear_value) {
+          unplannedWorkOrderData["ts_PlannedFiscalYear@odata.bind"] = "/tc_tcfiscalyears(" + workOrder._ovs_fiscalyear_value + ")";
+        }
+        if (workOrder._ovs_fiscalquarter_value) {
+          unplannedWorkOrderData["ts_PlannedFiscalQuarter@odata.bind"] = "/tc_tcfiscalquarters(" + workOrder._ovs_fiscalquarter_value + ")";
+        }
         // Time Tracking
         if (workOrder._msdyn_servicerequest_value) {
           unplannedWorkOrderData["ts_servicerequest@odata.bind"] = "/incidents(" + workOrder._msdyn_servicerequest_value + ")";
@@ -1018,6 +1024,9 @@ function createWorkspaceFromWorkOrder(currentWorkOrderId, lang) {
         if (workOrder.msdyn_instructions) {
           unplannedWorkOrderData.ts_instructions = workOrder.msdyn_instructions;
         }
+        if (workOrder.ts_othercanceledjustification) {
+          unplannedWorkOrderData.ts_othercancelledjustification = workOrder.ts_othercanceledjustification;
+        }
         // Time Tracking
         if (workOrder.ts_preparationtime) {
           unplannedWorkOrderData.ts_wopreparationtime = workOrder.ts_preparationtime;
@@ -1038,6 +1047,10 @@ function createWorkspaceFromWorkOrder(currentWorkOrderId, lang) {
           unplannedWorkOrderData.ts_wotraveltime = workOrder.ts_traveltime;
         }
         // System Status
+        if (workOrder.ts_state)
+        {
+          unplannedWorkOrderData.ts_state = workOrder.ts_state;
+        }
         if (workOrder.msdyn_systemstatus) {
           unplannedWorkOrderData.ts_recordstatus = workOrder.msdyn_systemstatus;
         }
