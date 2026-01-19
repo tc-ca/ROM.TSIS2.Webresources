@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -114,7 +114,7 @@ var ROM;
                                     if (isROM20Form) {
                                         form.getControl("ts_overtimerequired").setVisible(false);
                                     }
-                                    if (currentSystemStatus == 741130000 /* Closed */ || currentSystemStatus == 690970005 /* Cancelled */) {
+                                    if (currentSystemStatus == msdyn_wosystemstatus.Closed || currentSystemStatus == msdyn_wosystemstatus.Cancelled) {
                                         if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager")) {
                                             form.getControl("msdyn_systemstatus").setDisabled(true);
                                         }
@@ -171,13 +171,13 @@ var ROM;
             //Set Trip Lookup Navigation to open Time Tracking form when on Time Tracking Tab
             setTripLookupClickNavigation(eContext);
             showHideFiedsByOperationType(eContext);
-            if (currentSystemStatus == 690970004 || currentSystemStatus == 741130000 /* Closed */) {
+            if (currentSystemStatus == 690970004 || currentSystemStatus == msdyn_wosystemstatus.Closed) {
                 form.getControl("ts_completedquarter").setVisible(true);
             }
             else {
                 form.getControl("ts_completedquarter").setVisible(false);
             }
-            if (currentSystemStatus == 690970004 || currentSystemStatus == 690970003 || currentSystemStatus == 741130000 /* Closed */) { //Closed ; Completed
+            if (currentSystemStatus == 690970004 || currentSystemStatus == 690970003 || currentSystemStatus == msdyn_wosystemstatus.Closed) { //Closed ; Completed
                 form.getControl("ovs_revisedquarterid").setDisabled(true);
             }
             //Limit ownership of a Work Order to users associated with the same program
@@ -234,7 +234,7 @@ var ROM;
                     else {
                         var lookup = new Array();
                         lookup[0] = new Object();
-                        lookup[0].id = "{" + UNPLANNED_CATEGORY_ID + "}";
+                        lookup[0].id = "{".concat(UNPLANNED_CATEGORY_ID, "}");
                         lookup[0].name = "Unplanned";
                         lookup[0].entityType = "ovs_tyrational";
                         form.getAttribute("ovs_rational").setValue(lookup); //Unplanned
@@ -291,12 +291,12 @@ var ROM;
                         }
                     }
                     setActivityTypeDisabled(eContext);
-                    if (currentSystemStatus == 690970004 || currentSystemStatus == 741130000 /* Closed */) {
+                    if (currentSystemStatus == 690970004 || currentSystemStatus == msdyn_wosystemstatus.Closed) {
                         if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
                             form.getControl("header_msdyn_systemstatus").setDisabled(true);
                         }
                     }
-                    if (currentSystemStatus == 741130000 /* Closed */) {
+                    if (currentSystemStatus == msdyn_wosystemstatus.Closed) {
                         form.getControl("msdyn_workordertype").setDisabled(true);
                         form.getControl("ts_region").setDisabled(true);
                         form.getControl("ovs_operationtypeid").setDisabled(true);
@@ -333,7 +333,7 @@ var ROM;
                     break;
             }
             // Lock some fields if there exist a Case that has this WO associated to it
-            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"" + form.data.entity.getId() + "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>";
+            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"".concat(form.data.entity.getId(), "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>");
             fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
             Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", fetchXML).then(function success(result) {
                 if (result.entities.length > 0) {
@@ -394,12 +394,12 @@ var ROM;
                     }
                 }
             }
-            if (currentSystemStatus == 741130000 /* Closed */) {
-                form.getControl("msdyn_systemstatus").removeOption(690970000 /* New */);
-                form.getControl("msdyn_systemstatus").removeOption(690970001 /* Scheduled */);
-                form.getControl("msdyn_systemstatus").removeOption(690970005 /* Cancelled */);
+            if (currentSystemStatus == msdyn_wosystemstatus.Closed) {
+                form.getControl("msdyn_systemstatus").removeOption(msdyn_wosystemstatus.New);
+                form.getControl("msdyn_systemstatus").removeOption(msdyn_wosystemstatus.Scheduled);
+                form.getControl("msdyn_systemstatus").removeOption(msdyn_wosystemstatus.Cancelled);
                 if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
-                    form.getControl("msdyn_systemstatus").removeOption(741130001 /* InProgress */);
+                    form.getControl("msdyn_systemstatus").removeOption(msdyn_wosystemstatus.InProgress);
                 }
             }
             //Restrict edit rights for Report Details to WO Owner and Additional Inspectors
@@ -410,7 +410,7 @@ var ROM;
                 });
             }
             //Lock Cancelled Inspection Justification field if WO is cancelled        
-            if (currentSystemStatus == 690970005 /* Cancelled */) {
+            if (currentSystemStatus == msdyn_wosystemstatus.Cancelled) {
                 form.getControl("ts_canceledinspectionjustification").setDisabled(true);
             }
             unlockRecordLogFieldsIfUserIsSystemAdmin(form);
@@ -467,7 +467,7 @@ var ROM;
             var form = eContext.getFormContext();
             var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             var workOrderServiceTaskData;
-            if (systemStatus == 690970004 /* ClosedInactive */) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
+            if (systemStatus == msdyn_wosystemstatus.ClosedInactive) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
                 workOrderServiceTaskData =
                     {
                         "statecode": 1,
@@ -628,7 +628,7 @@ var ROM;
                                             if (railwayCarrierId) {
                                                 railwayCarrierOperationType = new Array();
                                                 railwayCarrierOperationType[0] = new Object();
-                                                railwayCarrierOperationType[0].id = "{" + railwayCarrierId + "}";
+                                                railwayCarrierOperationType[0].id = "{".concat(railwayCarrierId, "}");
                                                 railwayCarrierOperationType[0].name = "Railway Carrier";
                                                 railwayCarrierOperationType[0].entityType = "ovs_operationtype";
                                                 form_1.getAttribute("ovs_operationtypeid").setValue(railwayCarrierOperationType);
@@ -901,111 +901,55 @@ var ROM;
             }
         }
         WorkOrder.subSubSiteOnChange = subSubSiteOnChange;
-        function filterCanceledJustificationField(eContext) {
-            try {
-                var form_3 = eContext.getFormContext();
-                console.log("filterCanceledJustificationField");
-                if (form_3.getAttribute("ovs_operationtypeid") != null) {
-                    var type = form_3.getAttribute("ovs_operationtypeid").getValue();
-                    if (type != null) {
-                        var operationTypeOwningBusinessUnitFetchXML = [
-                            "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
-                            "  <entity name='businessunit'>",
-                            "    <attribute name='name'/>",
-                            "    <attribute name='businessunitid'/>",
-                            "    <link-entity name='ovs_operationtype' from='owningbusinessunit' to='businessunitid' link-type='inner'>",
-                            "      <filter>",
-                            "        <condition attribute='ovs_operationtypeid' operator='eq' value='", type[0].id, "'/>",
-                            "      </filter>",
-                            "    </link-entity>",
-                            "  </entity>",
-                            "</fetch>"
-                        ].join("");
-                        operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
-                        Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(function success(resultBusinessUnit) {
-                            return __awaiter(this, void 0, void 0, function () {
-                                var owningBuId, filterConditions, _a, avSecDomesticTeamId, avSecInternationalTeamId, _b, issoTeamId, targetFilter;
-                                return __generator(this, function (_c) {
-                                    switch (_c.label) {
-                                        case 0:
-                                            if (!resultBusinessUnit.entities.length) {
-                                                return [2 /*return*/];
-                                            }
-                                            owningBuId = resultBusinessUnit.entities[0].businessunitid;
-                                            filterConditions = [];
-                                            _a = owningBuId;
-                                            if (!_a) return [3 /*break*/, 2];
-                                            return [4 /*yield*/, isAvSecBU(owningBuId)];
-                                        case 1:
-                                            _a = (_c.sent());
-                                            _c.label = 2;
-                                        case 2:
-                                            if (!_a) return [3 /*break*/, 5];
-                                            return [4 /*yield*/, getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC)];
-                                        case 3:
-                                            avSecDomesticTeamId = _c.sent();
-                                            return [4 /*yield*/, getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL)];
-                                        case 4:
-                                            avSecInternationalTeamId = _c.sent();
-                                            if (avSecDomesticTeamId) {
-                                                filterConditions.push("<condition attribute='ownerid' operator='eq' value='" + avSecDomesticTeamId + "'/>");
-                                            }
-                                            if (avSecInternationalTeamId) {
-                                                filterConditions.push("<condition attribute='ownerid' operator='eq' value='" + avSecInternationalTeamId + "'/>");
-                                            }
-                                            return [3 /*break*/, 9];
-                                        case 5:
-                                            _b = owningBuId;
-                                            if (!_b) return [3 /*break*/, 7];
-                                            return [4 /*yield*/, isISSOBU(owningBuId)];
-                                        case 6:
-                                            _b = (_c.sent());
-                                            _c.label = 7;
-                                        case 7:
-                                            if (!_b) return [3 /*break*/, 9];
-                                            return [4 /*yield*/, getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.ISSO_TEAM)];
-                                        case 8:
-                                            issoTeamId = _c.sent();
-                                            if (issoTeamId) {
-                                                filterConditions.push("<condition attribute='ownerid' operator='eq' value='" + issoTeamId + "'/>");
-                                            }
-                                            _c.label = 9;
-                                        case 9:
-                                            if (!filterConditions.length) {
-                                                return [2 /*return*/];
-                                            }
-                                            targetFilter = "<filter type='or'>" + filterConditions.join("") + "</filter>";
-                                            form_3.getControl("ts_canceledinspectionjustification").addPreSearch(function () {
-                                                console.log("inside Filter: " + targetFilter);
-                                                form_3.getControl("ts_canceledinspectionjustification").addCustomFilter(targetFilter, "ts_canceledinspectionjustification");
-                                            });
-                                            return [2 /*return*/];
-                                    }
+        function filterCanceledJustificationField(eContext, formType) {
+            return __awaiter(this, void 0, void 0, function () {
+                var form, effectiveBuId, fetchXml, control;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            switch (formType) {
+                                case "ROM Oversight Activity":
+                                    form = eContext.getFormContext();
+                                    break;
+                                case "WO Justify Cancellation":
+                                    form = eContext.getFormContext();
+                                    break;
+                                default:
+                                    console.error("Unknown form type:", formType);
+                                    return [2 /*return*/];
+                            }
+                            return [4 /*yield*/, getEffectiveUserBuForCurrentUser()];
+                        case 1:
+                            effectiveBuId = _a.sent();
+                            if (!effectiveBuId) {
+                                console.log("No BU filter applied for this user (TC or unknown)");
+                                return [2 /*return*/];
+                            }
+                            fetchXml = "\n        <fetch mapping='logical'>\n          <entity name='ts_canceledinspectionjustification'>\n            <filter>\n              <condition attribute='owningbusinessunit' operator='eq' value='".concat(effectiveBuId, "' />\n            </filter>\n          </entity>\n        </fetch>\n    ");
+                            control = form.getControl("ts_canceledinspectionjustification");
+                            if (control) {
+                                control.addPreSearch(function () {
+                                    control.addCustomFilter(fetchXml, "ts_canceledinspectionjustification");
                                 });
-                            });
-                        }, function (error) {
-                            showErrorMessageAlert(error);
-                        });
+                            }
+                            return [2 /*return*/];
                     }
-                }
-            }
-            catch (e) {
-                throw new Error(e.Message);
-            }
+                });
+            });
         }
         WorkOrder.filterCanceledJustificationField = filterCanceledJustificationField;
         function subSiteOnChange(eContext) {
             try {
-                var form_4 = eContext.getFormContext();
-                var operationTypeAttribute = form_4.getAttribute("ovs_operationtypeid");
-                var stakeholderAttribute = form_4.getAttribute("msdyn_serviceaccount");
-                var siteAttribute = form_4.getAttribute("ts_site");
-                var subSiteAttribute = form_4.getAttribute("msdyn_functionallocation"); //ts_subsite on Operation entity
-                var workOrderTypeAttribute = form_4.getAttribute("msdyn_workordertype");
+                var form_3 = eContext.getFormContext();
+                var operationTypeAttribute = form_3.getAttribute("ovs_operationtypeid");
+                var stakeholderAttribute = form_3.getAttribute("msdyn_serviceaccount");
+                var siteAttribute = form_3.getAttribute("ts_site");
+                var subSiteAttribute = form_3.getAttribute("msdyn_functionallocation"); //ts_subsite on Operation entity
+                var workOrderTypeAttribute = form_3.getAttribute("msdyn_workordertype");
                 if (siteAttribute != null && siteAttribute != undefined && subSiteAttribute != null && subSiteAttribute != undefined) {
                     // Clear out operation and subsite value if not already empty
-                    if (form_4.getAttribute("ovs_operationid").getValue() != null)
-                        form_4.getAttribute("ovs_operationid").setValue(null);
+                    if (form_3.getAttribute("ovs_operationid").getValue() != null)
+                        form_3.getAttribute("ovs_operationid").setValue(null);
                     // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
                     var operationTypeAttributeValue_2 = operationTypeAttribute.getValue();
                     var stakeholderAttributeValue = stakeholderAttribute.getValue();
@@ -1029,14 +973,14 @@ var ROM;
                                 lookup[0].name = targetOperation.ovs_name;
                                 lookup[0].entityType = 'ovs_operation';
                                 if (targetOperation.ts_operationalstatus == 717750001) {
-                                    form_4.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "The operation \"" + targetOperation.ovs_name + "\" is non-operational." : "L'opération \"" + targetOperation.ovs_name + "\" est  non opérationnelle."), "ERROR", "non-operational-operation");
-                                    form_4.getAttribute('ts_site').setValue(null);
+                                    form_3.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "The operation \"" + targetOperation.ovs_name + "\" is non-operational." : "L'opération \"" + targetOperation.ovs_name + "\" est  non opérationnelle."), "ERROR", "non-operational-operation");
+                                    form_3.getAttribute('ts_site').setValue(null);
                                 }
                                 else {
-                                    form_4.ui.clearFormNotification("non-operational-operation");
-                                    form_4.getAttribute('ovs_operationid').setValue(lookup);
+                                    form_3.ui.clearFormNotification("non-operational-operation");
+                                    form_3.getAttribute('ovs_operationid').setValue(lookup);
                                 }
-                                setActivityTypeFilteredView(form_4, lookup[0].id, workOrderTypeAttributeValue_3[0].id, operationTypeAttributeValue_2[0].id);
+                                setActivityTypeFilteredView(form_3, lookup[0].id, workOrderTypeAttributeValue_3[0].id, operationTypeAttributeValue_2[0].id);
                             }
                             else {
                                 // do not set a default if multiple records are found, error.
@@ -1064,36 +1008,36 @@ var ROM;
                                 });
                                 if (targetSubSiteIds != "") {
                                     checkOtherSubSites = false;
-                                    form_4.getControl('ts_subsubsite').setDisabled(false);
-                                    form_4.getControl('ts_subsubsite').setVisible(true);
-                                    form_4.getAttribute("ts_subsubsite").setRequiredLevel("required"); //none
+                                    form_3.getControl('ts_subsubsite').setDisabled(false);
+                                    form_3.getControl('ts_subsubsite').setVisible(true);
+                                    form_3.getAttribute("ts_subsubsite").setRequiredLevel("required"); //none
                                     var viewId = '{1B59589F-F122-5428-4771-79BC925240C3}';
                                     var entityName = "msdyn_functionallocation";
                                     var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");
                                     var activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="in">' + targetSubSiteIds + '</condition></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
                                     debugger;
                                     var msgTxt = subCounter + " operations found for the selected site and stakeholder!.";
-                                    form_4.ui.clearFormNotification("hasOperation");
-                                    form_4.ui.setFormNotification(msgTxt, "INFO", "hasOperation"); //INFO
+                                    form_3.ui.clearFormNotification("hasOperation");
+                                    form_3.ui.setFormNotification(msgTxt, "INFO", "hasOperation"); //INFO
                                     var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
-                                    form_4.getControl("ts_subsubsite").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+                                    form_3.getControl("ts_subsubsite").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
                                 }
                             }
                             if (checkOtherSubSites) {
                                 //No operation found for Sub-subsite
-                                form_4.ui.clearFormNotification("closedSubProject");
-                                form_4.ui.setFormNotification("No operations found matching the selected Subsite, Operation Type and Stakeholder!.", "WARNING", "closedSubProject"); //ERROR
-                                form_4.getAttribute("ts_subsubsite").setValue(null);
-                                form_4.getControl('ts_subsubsite').setVisible(false);
-                                form_4.getAttribute("ts_subsubsite").setRequiredLevel("none"); //none,required
+                                form_3.ui.clearFormNotification("closedSubProject");
+                                form_3.ui.setFormNotification("No operations found matching the selected Subsite, Operation Type and Stakeholder!.", "WARNING", "closedSubProject"); //ERROR
+                                form_3.getAttribute("ts_subsubsite").setValue(null);
+                                form_3.getControl('ts_subsubsite').setVisible(false);
+                                form_3.getAttribute("ts_subsubsite").setRequiredLevel("none"); //none,required
                             }
                         }, function (error) {
                             showErrorMessageAlert(error);
                         });
                     }
                     else {
-                        form_4.getAttribute("ts_subsubsite").setValue(null);
-                        form_4.getControl('ts_subsubsite').setVisible(false);
+                        form_3.getAttribute("ts_subsubsite").setValue(null);
+                        form_3.getControl('ts_subsubsite').setVisible(false);
                     }
                 }
             }
@@ -1104,15 +1048,15 @@ var ROM;
         WorkOrder.subSiteOnChange = subSiteOnChange;
         function siteOnChange(eContext) {
             try {
-                var form_5 = eContext.getFormContext();
-                var operationTypeAttribute = form_5.getAttribute("ovs_operationtypeid");
-                var stakeholderAttribute = form_5.getAttribute("msdyn_serviceaccount");
-                var siteAttribute = form_5.getAttribute("ts_site");
-                var workOrderTypeAttribute = form_5.getAttribute("msdyn_workordertype");
+                var form_4 = eContext.getFormContext();
+                var operationTypeAttribute = form_4.getAttribute("ovs_operationtypeid");
+                var stakeholderAttribute = form_4.getAttribute("msdyn_serviceaccount");
+                var siteAttribute = form_4.getAttribute("ts_site");
+                var workOrderTypeAttribute = form_4.getAttribute("msdyn_workordertype");
                 if (siteAttribute != null && siteAttribute != undefined) {
                     // Clear out operation and subsite value if not already empty
-                    if (form_5.getAttribute("ovs_operationid").getValue() != null)
-                        form_5.getAttribute("ovs_operationid").setValue(null);
+                    if (form_4.getAttribute("ovs_operationid").getValue() != null)
+                        form_4.getAttribute("ovs_operationid").setValue(null);
                     // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
                     var operationTypeAttributeValue_3 = operationTypeAttribute.getValue();
                     var stakeholderAttributeValue = stakeholderAttribute.getValue();
@@ -1134,14 +1078,14 @@ var ROM;
                                 lookup[0].name = targetOperation.ovs_name;
                                 lookup[0].entityType = 'ovs_operation';
                                 if (targetOperation.ts_operationalstatus == 717750001) {
-                                    form_5.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "The operation \"" + targetOperation.ovs_name + "\" is non-operational." : "L'opération \"" + targetOperation.ovs_name + "\" est  non opérationnelle."), "ERROR", "non-operational-operation");
-                                    form_5.getAttribute('ts_site').setValue(null);
+                                    form_4.ui.setFormNotification((Xrm.Utility.getGlobalContext().userSettings.languageId == 1033 ? "The operation \"" + targetOperation.ovs_name + "\" is non-operational." : "L'opération \"" + targetOperation.ovs_name + "\" est  non opérationnelle."), "ERROR", "non-operational-operation");
+                                    form_4.getAttribute('ts_site').setValue(null);
                                 }
                                 else {
-                                    form_5.ui.clearFormNotification("non-operational-operation");
-                                    form_5.getAttribute('ovs_operationid').setValue(lookup);
+                                    form_4.ui.clearFormNotification("non-operational-operation");
+                                    form_4.getAttribute('ovs_operationid').setValue(lookup);
                                 }
-                                setActivityTypeFilteredView(form_5, lookup[0].id, workOrderTypeAttributeValue_4[0].id, operationTypeAttributeValue_3[0].id);
+                                setActivityTypeFilteredView(form_4, lookup[0].id, workOrderTypeAttributeValue_4[0].id, operationTypeAttributeValue_3[0].id);
                             }
                             else {
                                 // do not set a default if multiple records are found, error.
@@ -1169,37 +1113,37 @@ var ROM;
                                 });
                                 if (targetSubSiteIds != "") {
                                     checkOtherSubSites = false;
-                                    form_5.getControl('msdyn_functionallocation').setDisabled(false);
-                                    form_5.getControl('msdyn_functionallocation').setVisible(true);
-                                    form_5.getAttribute("msdyn_functionallocation").setRequiredLevel("required"); //none,required
+                                    form_4.getControl('msdyn_functionallocation').setDisabled(false);
+                                    form_4.getControl('msdyn_functionallocation').setVisible(true);
+                                    form_4.getAttribute("msdyn_functionallocation").setRequiredLevel("required"); //none,required
                                     var viewId = '{1B59589F-F122-5428-4771-79BC925240C3}';
                                     var entityName = "msdyn_functionallocation";
                                     var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredSites");
                                     var activityTypeFetchXml = '<fetch no-lock="false"><entity name="msdyn_functionallocation"><attribute name="statecode"/><attribute name="msdyn_functionallocationid"/><attribute name="msdyn_name"/><filter><condition attribute="msdyn_functionallocationid" operator="in">' + targetSubSiteIds + '</condition></filter><order attribute="msdyn_name" descending="false"/></entity></fetch>';
                                     debugger;
                                     var msgTxt = counter + " operations found for the selected site, operation type and stakeholder!.";
-                                    form_5.ui.clearFormNotification("hasOperation");
-                                    form_5.ui.setFormNotification(msgTxt, "INFO", "hasOperation"); //INFO
+                                    form_4.ui.clearFormNotification("hasOperation");
+                                    form_4.ui.setFormNotification(msgTxt, "INFO", "hasOperation"); //INFO
                                     var layoutXml = '<grid name="resultset" object="10010" jump="msdyn_name" select="1" icon="1" preview="1"><row name="result" id="msdyn_functionallocationid"><cell name="msdyn_name" width="200" /></row></grid>';
-                                    form_5.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
+                                    form_4.getControl("msdyn_functionallocation").addCustomView(viewId, entityName, viewDisplayName, activityTypeFetchXml, layoutXml, true);
                                 }
                             }
                             if (checkOtherSubSites) {
                                 //No operation found
-                                form_5.ui.clearFormNotification("closedProject");
+                                form_4.ui.clearFormNotification("closedProject");
                                 //form.ui.setFormNotification("No operations found matching the selected site, operation type and stakeholder!.", "WARNING", "closedProject");//ERROR
-                                form_5.getAttribute("msdyn_functionallocation").setValue(null);
-                                form_5.getControl('msdyn_functionallocation').setVisible(false);
-                                form_5.getAttribute("msdyn_functionallocation").setRequiredLevel("none"); //none,required                                
+                                form_4.getAttribute("msdyn_functionallocation").setValue(null);
+                                form_4.getControl('msdyn_functionallocation').setVisible(false);
+                                form_4.getAttribute("msdyn_functionallocation").setRequiredLevel("none"); //none,required                                
                             }
                         }, function (error) {
                             showErrorMessageAlert(error);
                         });
                     }
                     else {
-                        form_5.getAttribute("msdyn_functionallocation").setValue(null);
-                        form_5.getControl('msdyn_functionallocation').setVisible(false);
-                        form_5.getAttribute("msdyn_functionallocation").setRequiredLevel("none"); //none,required                                
+                        form_4.getAttribute("msdyn_functionallocation").setValue(null);
+                        form_4.getControl('msdyn_functionallocation').setVisible(false);
+                        form_4.getAttribute("msdyn_functionallocation").setRequiredLevel("none"); //none,required                                
                     }
                 }
             }
@@ -1210,8 +1154,8 @@ var ROM;
         WorkOrder.siteOnChange = siteOnChange;
         function tradenameOnChange(eContext) {
             try {
-                var form_6 = eContext.getFormContext();
-                var TradenameAttribute = form_6.getAttribute("ts_tradenameid");
+                var form_5 = eContext.getFormContext();
+                var TradenameAttribute = form_5.getAttribute("ts_tradenameid");
                 if (TradenameAttribute != null && TradenameAttribute != undefined) {
                     var TradenameAttributeValue = TradenameAttribute.getValue();
                     if (TradenameAttributeValue != null && TradenameAttributeValue != undefined) {
@@ -1224,7 +1168,7 @@ var ROM;
                             lookup[0].id = _ts_stakeholderid_value;
                             lookup[0].name = _ts_stakeholderid_value_formatted;
                             lookup[0].entityType = _ts_stakeholderid_value_lookuplogicalname;
-                            form_6.getAttribute('msdyn_serviceaccount').setValue(lookup);
+                            form_5.getAttribute('msdyn_serviceaccount').setValue(lookup);
                             stakeholderOnChange(eContext);
                         }, function (error) {
                             showErrorMessageAlert(error);
@@ -1240,14 +1184,14 @@ var ROM;
         // Just removed this from subsite onchange. I see there's also SiteOnChange in here which we're using for the actual site field. I'm not sure if we need this function anymore.
         function functionalLocationOnChange(eContext) {
             try {
-                var form_7 = eContext.getFormContext();
-                var operationTypeAttribute = form_7.getAttribute("ovs_operationtypeid");
-                var stakeholderAttribute = form_7.getAttribute("msdyn_serviceaccount");
-                var functionalLocationAttribute = form_7.getAttribute("msdyn_functionallocation");
+                var form_6 = eContext.getFormContext();
+                var operationTypeAttribute = form_6.getAttribute("ovs_operationtypeid");
+                var stakeholderAttribute = form_6.getAttribute("msdyn_serviceaccount");
+                var functionalLocationAttribute = form_6.getAttribute("msdyn_functionallocation");
                 if (functionalLocationAttribute != null && functionalLocationAttribute != undefined) {
                     // Clear out operation value if not already empty
-                    if (form_7.getAttribute("ovs_operationid").getValue() != null)
-                        form_7.getAttribute("ovs_operationid").setValue(null);
+                    if (form_6.getAttribute("ovs_operationid").getValue() != null)
+                        form_6.getAttribute("ovs_operationid").setValue(null);
                     // If an operation type is selected, we use the filtered fetchxml, otherwise, disable and clear out the dependent fields
                     var operationTypeAttributeValue = operationTypeAttribute.getValue();
                     var stakeholderAttributeValue = stakeholderAttribute.getValue();
@@ -1266,7 +1210,7 @@ var ROM;
                                 lookup[0].id = targetOperation.ovs_operationid;
                                 lookup[0].name = targetOperation.ovs_name;
                                 lookup[0].entityType = 'ovs_operation';
-                                form_7.getAttribute('ovs_operationid').setValue(lookup);
+                                form_6.getAttribute('ovs_operationid').setValue(lookup);
                             }
                             else {
                                 // do not set a default if multiple records are found, error.
@@ -1303,7 +1247,7 @@ var ROM;
             }
             else 
             //If system status is set to closed
-            if (newSystemStatus == 690970004 /* ClosedInactive */ || newSystemStatus == 741130000 /* Closed */) {
+            if (newSystemStatus == msdyn_wosystemstatus.ClosedInactive || newSystemStatus == msdyn_wosystemstatus.Closed) {
                 Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=statecode eq 0 and msdyn_workorder/msdyn_workorderid eq " + form.data.entity.getId() + " and statuscode ne 918640002 and ts_mandatory eq true").then(function success(result) {
                     if (result.entities.length > 0) {
                         var alertStrings = {
@@ -1315,7 +1259,7 @@ var ROM;
                         form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
                     }
                     else {
-                        if (newSystemStatus == 690970004 /* ClosedInactive */) {
+                        if (newSystemStatus == msdyn_wosystemstatus.ClosedInactive) {
                             var confirmStrings = {
                                 text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationText"),
                                 title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationTitle")
@@ -1458,19 +1402,19 @@ var ROM;
         WorkOrder.stateCodeOnChange = stateCodeOnChange;
         function updateCaseView(eContext) {
             try {
-                var form_8 = eContext.getFormContext();
-                var caseAttribute = form_8.getAttribute("msdyn_servicerequest");
-                var regionAttribute = form_8.getAttribute("ts_region");
-                var countryAttribute = form_8.getAttribute("ts_country");
-                var stakeholderAttribute = form_8.getAttribute("msdyn_serviceaccount");
-                var siteAttribute = form_8.getAttribute("ts_site");
+                var form_7 = eContext.getFormContext();
+                var caseAttribute = form_7.getAttribute("msdyn_servicerequest");
+                var regionAttribute = form_7.getAttribute("ts_region");
+                var countryAttribute = form_7.getAttribute("ts_country");
+                var stakeholderAttribute = form_7.getAttribute("msdyn_serviceaccount");
+                var siteAttribute = form_7.getAttribute("ts_site");
                 var caseAttributeValue = caseAttribute.getValue();
                 var regionAttributeValue_2 = regionAttribute.getValue();
                 var countryAttributeValue_1 = countryAttribute.getValue();
                 var stakeholderAttributeValue_1 = stakeholderAttribute.getValue();
                 var siteAttributeValue_1 = siteAttribute.getValue();
                 var regionCondition = regionAttributeValue_2 == null ? "" : '<condition attribute="ovs_region" operator="eq" value="' + regionAttributeValue_2[0].id + '" />';
-                var countryCondition = getCountryFetchXmlCondition(form_8);
+                var countryCondition = getCountryFetchXmlCondition(form_7);
                 var stakeholderCondition = stakeholderAttributeValue_1 == null ? "" : '<condition attribute="customerid" operator="eq" value="' + stakeholderAttributeValue_1[0].id + '" />';
                 var siteCondition = siteAttributeValue_1 == null ? "" : '<condition attribute="msdyn_functionallocation" operator="eq" value="' + siteAttributeValue_1[0].id + '" />';
                 if (caseAttribute != null && caseAttribute != undefined) {
@@ -1481,7 +1425,7 @@ var ROM;
                                 (countryCondition != "" && (result != null && countryAttributeValue_1 != null && countryAttributeValue_1[0].id.replace(/({|})/g, '') != ((_b = result._ts_country_value) === null || _b === void 0 ? void 0 : _b.toUpperCase()))) ||
                                 (stakeholderCondition != "" && (result != null && stakeholderAttributeValue_1 != null && stakeholderAttributeValue_1[0].id.replace(/({|})/g, '') != ((_c = result._customerid_value) === null || _c === void 0 ? void 0 : _c.toUpperCase()))) ||
                                 (siteCondition != "" && (result != null && siteAttributeValue_1 != null && siteAttributeValue_1[0].id.replace(/({|})/g, '') != ((_d = result._msdyn_functionallocation_value) === null || _d === void 0 ? void 0 : _d.toUpperCase())))) {
-                                form_8.getAttribute("msdyn_servicerequest").setValue(null);
+                                form_7.getAttribute("msdyn_servicerequest").setValue(null);
                             }
                         }, function (error) {
                             showErrorMessageAlert(error);
@@ -1494,7 +1438,7 @@ var ROM;
                     var viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredCases");
                     var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="incident"> <attribute name="ticketnumber" /> <attribute name="incidentid" /> <order attribute="ticketnumber" descending="false" /> <filter type="and">' + regionCondition + countryCondition + stakeholderCondition + siteCondition + ' </filter> </entity> </fetch>';
                     var layoutXml = '<grid name="resultset" object="10010" jump="title" select="1" icon="1" preview="1"><row name="result" id="incidentid"><cell name="title" width="200" /></row></grid>';
-                    form_8.getControl("msdyn_servicerequest").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                    form_7.getControl("msdyn_servicerequest").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                 }
             }
             catch (e) {
@@ -1814,7 +1758,7 @@ var ROM;
             return "";
         }
         function closeWorkOrderServiceTasks(formContext, workOrderServiceTaskData) {
-            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq " + formContext.data.entity.getId()).then(function success(result) {
+            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=msdyn_workorder/msdyn_workorderid eq ".concat(formContext.data.entity.getId())).then(function success(result) {
                 for (var i = 0; i < result.entities.length; i++) {
                     Xrm.WebApi.updateRecord("msdyn_workorderservicetask", result.entities[i].msdyn_workorderservicetaskid, workOrderServiceTaskData).then(function success(result) {
                         //work order service task closed successfully
@@ -1852,7 +1796,7 @@ var ROM;
             var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             var plannedFiscalQuarter = form.getAttribute("ovs_fiscalquarter").getValue();
             var validWorkOrderStatus = false;
-            if (systemStatus != null && (systemStatus == 690970000 /* New */ || systemStatus == 690970001 /* Scheduled */ || systemStatus == 741130001 /* InProgress */)) {
+            if (systemStatus != null && (systemStatus == msdyn_wosystemstatus.New || systemStatus == msdyn_wosystemstatus.Scheduled || systemStatus == msdyn_wosystemstatus.InProgress)) {
                 validWorkOrderStatus = true;
             }
             if (plannedFiscalQuarter != null) {
@@ -1957,7 +1901,7 @@ var ROM;
                             var wost = _a[_i];
                             if (wost.statecode == 0) {
                                 workOrderHasActiveWost = true;
-                                if (wost.statuscode == 918640005 /* New */)
+                                if (wost.statuscode == msdyn_workorderservicetask_statuscode.New)
                                     workOrderHasNewWost = true;
                             }
                         }
@@ -2016,7 +1960,7 @@ var ROM;
                         var wost = _a[_i];
                         if (wost.statecode == 0) {
                             workOrderHasActiveWost = true;
-                            if (wost.statuscode == 918640005 /* New */)
+                            if (wost.statuscode == msdyn_workorderservicetask_statuscode.New)
                                 workOrderHasNewWost = true;
                         }
                     }
@@ -2254,7 +2198,7 @@ var ROM;
         function setFiscalQuarter(form) {
             var currentDate = new Date();
             var currentDateString = currentDate.toISOString();
-            var fetchXml = "<fetch top=\"1\"><entity name=\"tc_tcfiscalquarter\"><attribute name=\"tc_name\"/><attribute name=\"tc_tcfiscalquarterid\"/><filter type=\"and\"><condition attribute=\"tc_quarterstart\" operator=\"le\" value=\"" + currentDateString + "\"/><condition attribute=\"tc_quarterend\" operator=\"ge\" value=\"" + currentDateString + "\"/></filter></entity></fetch>";
+            var fetchXml = "<fetch top=\"1\"><entity name=\"tc_tcfiscalquarter\"><attribute name=\"tc_name\"/><attribute name=\"tc_tcfiscalquarterid\"/><filter type=\"and\"><condition attribute=\"tc_quarterstart\" operator=\"le\" value=\"".concat(currentDateString, "\"/><condition attribute=\"tc_quarterend\" operator=\"ge\" value=\"").concat(currentDateString, "\"/></filter></entity></fetch>");
             var lookup = new Array();
             Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalquarter", "?fetchXml=" + fetchXml).then(function success(result) {
                 lookup[0] = new Object();
@@ -2374,7 +2318,7 @@ var ROM;
                     if (operationTypeAttributeValue[0].id.toLowerCase() == "{8b614ef0-c651-eb11-a812-000d3af3ac0d}") { //Air Carrier (Passenger)
                         form.getControl("ts_aircraftclassification").setVisible(true);
                         if (form.getAttribute("ts_aircraftclassification").getValue() == null) {
-                            form.getAttribute("ts_aircraftclassification").setValue(741130000 /* PassengerPAX */);
+                            form.getAttribute("ts_aircraftclassification").setValue(ts_aircraftclassification.PassengerPAX);
                         }
                         if (isROM20Form) {
                             formROM2.ui.tabs.get("tab_workspace").sections.get("tab_workspace_flightdetails").setVisible(true);
@@ -2426,16 +2370,16 @@ var ROM;
                         distinationCountry = result2._ts_country_value;
                         if (distinationCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7" && originCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7") { // Canada
                             // Domestic
-                            form.getAttribute("ts_airserviceclassification").setValue(741130000 /* Domestic */);
+                            form.getAttribute("ts_airserviceclassification").setValue(ts_airserviceclassification.Domestic);
                         }
                         else if ((distinationCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && distinationCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")
                             || (originCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && originCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")) { //Not in USA or Canada
                             //International
-                            form.getAttribute("ts_airserviceclassification").setValue(741130001 /* International */);
+                            form.getAttribute("ts_airserviceclassification").setValue(ts_airserviceclassification.International);
                         }
                         else {
                             //Transborder
-                            form.getAttribute("ts_airserviceclassification").setValue(741130002 /* Transborder */);
+                            form.getAttribute("ts_airserviceclassification").setValue(ts_airserviceclassification.Transborder);
                         }
                     }, function error(error) {
                         Xrm.Navigation.openAlertDialog({ text: error.message });
@@ -2578,7 +2522,7 @@ var ROM;
             // Hardcoded Team Template ID
             var teamTemplateId = "bddf1d45-706d-ec11-8f8e-0022483da5aa";
             // FetchXML to get existing users in the Additional Inspectors subgrid 
-            var fetchXML = "\n                        <fetch>\n                          <entity name=\"systemuser\">\n                            <attribute name=\"systemuserid\"/>\n                            <attribute name=\"fullname\"/>\n                            <link-entity name=\"teammembership\" from=\"systemuserid\" to=\"systemuserid\" link-type=\"inner\">\n                              <link-entity name=\"team\" from=\"teamid\" to=\"teamid\" link-type=\"inner\">\n                                <link-entity name=\"teamtemplate\" from=\"teamtemplateid\" to=\"teamtemplateid\" link-type=\"inner\">\n                                  <filter>\n                                    <condition attribute=\"teamtemplateid\" operator=\"eq\" value=\"" + teamTemplateId + "\" />\n                                  </filter>\n                                </link-entity>\n                                <link-entity name=\"principalobjectaccess\" from=\"principalid\" to=\"teamid\" link-type=\"inner\">\n                                  <link-entity name=\"msdyn_workorder\" from=\"msdyn_workorderid\" to=\"objectid\" link-type=\"inner\">\n                                    <filter>\n                                      <condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"" + currentWorkOrderRecordId + "\" />\n                                    </filter>\n                                  </link-entity>\n                                </link-entity>\n                              </link-entity>\n                            </link-entity>sys\n                          </entity>\n                        </fetch>";
+            var fetchXML = "\n                        <fetch>\n                          <entity name=\"systemuser\">\n                            <attribute name=\"systemuserid\"/>\n                            <attribute name=\"fullname\"/>\n                            <link-entity name=\"teammembership\" from=\"systemuserid\" to=\"systemuserid\" link-type=\"inner\">\n                              <link-entity name=\"team\" from=\"teamid\" to=\"teamid\" link-type=\"inner\">\n                                <link-entity name=\"teamtemplate\" from=\"teamtemplateid\" to=\"teamtemplateid\" link-type=\"inner\">\n                                  <filter>\n                                    <condition attribute=\"teamtemplateid\" operator=\"eq\" value=\"".concat(teamTemplateId, "\" />\n                                  </filter>\n                                </link-entity>\n                                <link-entity name=\"principalobjectaccess\" from=\"principalid\" to=\"teamid\" link-type=\"inner\">\n                                  <link-entity name=\"msdyn_workorder\" from=\"msdyn_workorderid\" to=\"objectid\" link-type=\"inner\">\n                                    <filter>\n                                      <condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"").concat(currentWorkOrderRecordId, "\" />\n                                    </filter>\n                                  </link-entity>\n                                </link-entity>\n                              </link-entity>\n                            </link-entity>sys\n                          </entity>\n                        </fetch>");
             Xrm.WebApi.retrieveMultipleRecords("systemuser", "?fetchXml=" + encodeURIComponent(fetchXML))
                 .then(function (result) {
                 for (var i = 0; i < result.entities.length; i++) {
@@ -2613,7 +2557,7 @@ var ROM;
                                 '    <attribute name="msdyn_workordertypeid" />' +
                                 '    <attribute name="msdyn_name" />' +
                                 '    <filter>' +
-                                ("      <condition attribute=\"ownerid\" operator=\"" + op + "\" value=\"" + railSecurityTeamId + "\" />") +
+                                "      <condition attribute=\"ownerid\" operator=\"".concat(op, "\" value=\"").concat(railSecurityTeamId, "\" />") +
                                 '    </filter>' +
                                 '  </entity>' +
                                 '</fetch>';

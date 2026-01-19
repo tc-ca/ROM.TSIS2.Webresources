@@ -929,77 +929,52 @@ namespace ROM.WorkOrder {
             throw new Error((e as any).Message);
         }
     }
-    export function filterCanceledJustificationField(eContext: Xrm.ExecutionContext<any, any>): void {
-        try {
-            let form = <Form.msdyn_workorder.Main.WOJustifyCancellation>eContext.getFormContext();
-            console.log("filterCanceledJustificationField");
-            if (form.getAttribute("ovs_operationtypeid") != null) {
-                var type = form.getAttribute("ovs_operationtypeid").getValue();
-                if (type != null) {
-                    var operationTypeOwningBusinessUnitFetchXML = [
-                        "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' no-lock='false'>",
-                        "  <entity name='businessunit'>",
-                        "    <attribute name='name'/>",
-                        "    <attribute name='businessunitid'/>",
-                        "    <link-entity name='ovs_operationtype' from='owningbusinessunit' to='businessunitid' link-type='inner'>",
-                        "      <filter>",
-                        "        <condition attribute='ovs_operationtypeid' operator='eq' value='", type[0].id, "'/>",
-                        "      </filter>",
-                        "    </link-entity>",
-                        "  </entity>",
-                        "</fetch>"
-                    ].join("");
-                    operationTypeOwningBusinessUnitFetchXML = "?fetchXml=" + operationTypeOwningBusinessUnitFetchXML;
-                    Xrm.WebApi.retrieveMultipleRecords("businessunit", operationTypeOwningBusinessUnitFetchXML).then(
-                        async function success(resultBusinessUnit) {
-                            if (!resultBusinessUnit.entities.length) {
-                                return;
-                            }
 
-                            const owningBuId = resultBusinessUnit.entities[0].businessunitid;
-                            let filterConditions: string[] = [];
 
-                            // AvSec-owned operation type → AvSec teams
-                            if (owningBuId && await isAvSecBU(owningBuId)) {
-                                const avSecDomesticTeamId = await getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC);
-                                const avSecInternationalTeamId = await getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL);
+    type FormType =
+        | "ROM Oversight Activity"
+        | "WO Justify Cancellation"
 
-                                if (avSecDomesticTeamId) {
-                                    filterConditions.push("<condition attribute='ownerid' operator='eq' value='" + avSecDomesticTeamId + "'/>");
-                                }
-                                if (avSecInternationalTeamId) {
-                                    filterConditions.push("<condition attribute='ownerid' operator='eq' value='" + avSecInternationalTeamId + "'/>");
-                                }
-                            }
-                            // ISSO-owned operation type → ISSO team
-                            else if (owningBuId && await isISSOBU(owningBuId)) {
-                                const issoTeamId = await getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.ISSO_TEAM);
-                                if (issoTeamId) {
-                                    filterConditions.push("<condition attribute='ownerid' operator='eq' value='" + issoTeamId + "'/>");
-                                }
-                            }
+    export async function filterCanceledJustificationField(
+        eContext: Xrm.ExecutionContext<any, any>,
+        formType: FormType
+    ) {
+        var form: any;
 
-                            if (!filterConditions.length) {
-                                return;
-                            }
-
-                            const targetFilter = "<filter type='or'>" + filterConditions.join("") + "</filter>";
-
-                            form.getControl("ts_canceledinspectionjustification").addPreSearch(function () {
-                                console.log("inside Filter: " + targetFilter);
-                                form.getControl("ts_canceledinspectionjustification").addCustomFilter(targetFilter, "ts_canceledinspectionjustification");
-                            });
-
-                        },
-                        function (error) {
-                            showErrorMessageAlert(error);
-                        }
-                    );
-                }
-            }
+        switch (formType) {
+            case "ROM Oversight Activity":
+                form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+                break;
+            case "WO Justify Cancellation":
+                form = <Form.msdyn_workorder.Main.WOJustifyCancellation>eContext.getFormContext();
+                break;
+            default:
+                console.error("Unknown form type:", formType);
+                return;
         }
-        catch (e) {
-            throw new Error((e as any).Message);
+
+        const effectiveBuId = await getEffectiveUserBuForCurrentUser();
+
+        if (!effectiveBuId) {
+            console.log("No BU filter applied for this user (TC or unknown)");
+            return;
+        }
+
+        const fetchXml = `
+        <fetch mapping='logical'>
+          <entity name='ts_canceledinspectionjustification'>
+            <filter>
+              <condition attribute='owningbusinessunit' operator='eq' value='${effectiveBuId}' />
+            </filter>
+          </entity>
+        </fetch>
+    `;
+
+        const control = form.getControl("ts_canceledinspectionjustification");
+        if (control) {
+            control.addPreSearch(() => {
+                control.addCustomFilter(fetchXml, "ts_canceledinspectionjustification");
+            });
         }
     }
 

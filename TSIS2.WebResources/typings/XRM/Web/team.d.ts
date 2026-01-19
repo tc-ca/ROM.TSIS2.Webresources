@@ -92,7 +92,6 @@ interface Team_Relationships {
   team_ts_teamplanningdata?: ts_TeamPlanningData_Result[] | null;
   team_ts_teamplanninginspectorhours?: ts_TeamPlanningInspectorHours_Result[] | null;
   team_ts_trip?: ts_trip_Result[] | null;
-  team_ts_tripinspector?: ts_tripinspector_Result[] | null;
   team_ts_unplannedworkorder?: ts_unplannedworkorder_Result[] | null;
   team_ts_userregistration?: ts_UserRegistration_Result[] | null;
   team_ts_workordercreationwizard?: ts_workordercreationwizard_Result[] | null;
@@ -287,7 +286,6 @@ interface Team_Expand {
   team_ts_teamplanningdata: WebExpand<Team_Expand, ts_TeamPlanningData_Select, ts_TeamPlanningData_Filter, { team_ts_teamplanningdata: ts_TeamPlanningData_Result[] }>;
   team_ts_teamplanninginspectorhours: WebExpand<Team_Expand, ts_TeamPlanningInspectorHours_Select, ts_TeamPlanningInspectorHours_Filter, { team_ts_teamplanninginspectorhours: ts_TeamPlanningInspectorHours_Result[] }>;
   team_ts_trip: WebExpand<Team_Expand, ts_trip_Select, ts_trip_Filter, { team_ts_trip: ts_trip_Result[] }>;
-  team_ts_tripinspector: WebExpand<Team_Expand, ts_tripinspector_Select, ts_tripinspector_Filter, { team_ts_tripinspector: ts_tripinspector_Result[] }>;
   team_ts_unplannedworkorder: WebExpand<Team_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { team_ts_unplannedworkorder: ts_unplannedworkorder_Result[] }>;
   team_ts_userregistration: WebExpand<Team_Expand, ts_UserRegistration_Select, ts_UserRegistration_Filter, { team_ts_userregistration: ts_UserRegistration_Result[] }>;
   team_ts_workordercreationwizard: WebExpand<Team_Expand, ts_workordercreationwizard_Select, ts_workordercreationwizard_Filter, { team_ts_workordercreationwizard: ts_workordercreationwizard_Result[] }>;
@@ -421,7 +419,6 @@ interface Team_RelatedMany {
   team_ts_teamplanningdata: WebMappingRetrieve<ts_TeamPlanningData_Select,ts_TeamPlanningData_Expand,ts_TeamPlanningData_Filter,ts_TeamPlanningData_Fixed,ts_TeamPlanningData_Result,ts_TeamPlanningData_FormattedResult>;
   team_ts_teamplanninginspectorhours: WebMappingRetrieve<ts_TeamPlanningInspectorHours_Select,ts_TeamPlanningInspectorHours_Expand,ts_TeamPlanningInspectorHours_Filter,ts_TeamPlanningInspectorHours_Fixed,ts_TeamPlanningInspectorHours_Result,ts_TeamPlanningInspectorHours_FormattedResult>;
   team_ts_trip: WebMappingRetrieve<ts_trip_Select,ts_trip_Expand,ts_trip_Filter,ts_trip_Fixed,ts_trip_Result,ts_trip_FormattedResult>;
-  team_ts_tripinspector: WebMappingRetrieve<ts_tripinspector_Select,ts_tripinspector_Expand,ts_tripinspector_Filter,ts_tripinspector_Fixed,ts_tripinspector_Result,ts_tripinspector_FormattedResult>;
   team_ts_unplannedworkorder: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
   team_ts_userregistration: WebMappingRetrieve<ts_UserRegistration_Select,ts_UserRegistration_Expand,ts_UserRegistration_Filter,ts_UserRegistration_Fixed,ts_UserRegistration_Result,ts_UserRegistration_FormattedResult>;
   team_ts_workordercreationwizard: WebMappingRetrieve<ts_workordercreationwizard_Select,ts_workordercreationwizard_Expand,ts_workordercreationwizard_Filter,ts_workordercreationwizard_Fixed,ts_workordercreationwizard_Result,ts_workordercreationwizard_FormattedResult>;

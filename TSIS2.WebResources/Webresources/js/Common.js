@@ -971,3 +971,67 @@ async function isUserUsingRailSafetyApp() {
         return false;
     }
 }
+
+
+
+/**
+ * Determines the effective Business Unit (BU) for filtering the
+ * Cancelled Inspection Justification lookup.
+ * AvSec → Aviation Security Domestic BU
+ * ISSO → ISSO BU
+ * TC → null (no BU filter)
+ * @returns {Promise<string|null>} Effective BU ID or null
+ */
+async function getEffectiveUserBuForCurrentUser() {
+    try {
+        const globalContext = Xrm.Utility.getGlobalContext();
+        const userId = globalContext.userSettings.userId.replace(/[{}]/g, "");
+
+        const user = await Xrm.WebApi.retrieveRecord(
+            "systemuser",
+            userId,
+            "?$select=_businessunitid_value"
+        );
+
+        const userBuId = user._businessunitid_value;
+
+        if (!userBuId) {
+            console.warn("User BU not found");
+            return null;
+        }
+
+        const effectiveUserBuId = userBuId.replace(/[{}]/g, "").toLowerCase();
+
+        const isAvSec = await isAvSecBU(effectiveUserBuId);
+        const isISSO = await isISSOBU(effectiveUserBuId);
+        const isTC = await isTCBU(effectiveUserBuId);
+
+        console.log("isAvSec:", isAvSec, "isISSO:", isISSO, "isTC:", isTC);
+
+        if (isTC) {
+            console.log("User is TC → No BU filter applied");
+            return null;
+        }
+
+        if (isAvSec) {
+            const avSecDomesticBuId = await getEnvironmentVariableValue(BU_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC);
+            if (avSecDomesticBuId) {
+                console.log("User is AvSec → Using Aviation Security Domestic BU:", avSecDomesticBuId);
+                return avSecDomesticBuId;
+            }
+        }
+
+        if (isISSO) {
+            const issoBuId = await getEnvironmentVariableValue(BU_SCHEMA_NAMES.ISSO);
+            if (issoBuId) {
+                console.log("User is ISSO → Using ISSO BU:", issoBuId);
+                return issoBuId;
+            }
+        }
+        return effectiveUserBuId;
+
+    } catch (error) {
+        console.error("Error retrieving effective BU for current user:", error);
+        return null;
+    }
+}
