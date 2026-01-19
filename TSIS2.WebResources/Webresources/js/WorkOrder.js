@@ -114,7 +114,7 @@ var ROM;
                                     if (isROM20Form) {
                                         form.getControl("ts_overtimerequired").setVisible(false);
                                     }
-                                    if (currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */ || currentSystemStatus == 690970005 /* msdyn_wosystemstatus.Cancelled */) {
+                                    if (currentSystemStatus == msdyn_wosystemstatus.Closed || currentSystemStatus == msdyn_wosystemstatus.Cancelled) {
                                         if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager")) {
                                             form.getControl("msdyn_systemstatus").setDisabled(true);
                                         }
@@ -171,13 +171,13 @@ var ROM;
             //Set Trip Lookup Navigation to open Time Tracking form when on Time Tracking Tab
             setTripLookupClickNavigation(eContext);
             showHideFiedsByOperationType(eContext);
-            if (currentSystemStatus == 690970004 || currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) {
+            if (currentSystemStatus == 690970004 || currentSystemStatus == msdyn_wosystemstatus.Closed) {
                 form.getControl("ts_completedquarter").setVisible(true);
             }
             else {
                 form.getControl("ts_completedquarter").setVisible(false);
             }
-            if (currentSystemStatus == 690970004 || currentSystemStatus == 690970003 || currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) { //Closed ; Completed
+            if (currentSystemStatus == 690970004 || currentSystemStatus == 690970003 || currentSystemStatus == msdyn_wosystemstatus.Closed) { //Closed ; Completed
                 form.getControl("ovs_revisedquarterid").setDisabled(true);
             }
             //Limit ownership of a Work Order to users associated with the same program
@@ -291,12 +291,12 @@ var ROM;
                         }
                     }
                     setActivityTypeDisabled(eContext);
-                    if (currentSystemStatus == 690970004 || currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) {
+                    if (currentSystemStatus == 690970004 || currentSystemStatus == msdyn_wosystemstatus.Closed) {
                         if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
                             form.getControl("header_msdyn_systemstatus").setDisabled(true);
                         }
                     }
-                    if (currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) {
+                    if (currentSystemStatus == msdyn_wosystemstatus.Closed) {
                         form.getControl("msdyn_workordertype").setDisabled(true);
                         form.getControl("ts_region").setDisabled(true);
                         form.getControl("ovs_operationtypeid").setDisabled(true);
@@ -394,12 +394,12 @@ var ROM;
                     }
                 }
             }
-            if (currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) {
-                form.getControl("msdyn_systemstatus").removeOption(690970000 /* msdyn_wosystemstatus.New */);
-                form.getControl("msdyn_systemstatus").removeOption(690970001 /* msdyn_wosystemstatus.Scheduled */);
-                form.getControl("msdyn_systemstatus").removeOption(690970005 /* msdyn_wosystemstatus.Cancelled */);
+            if (currentSystemStatus == msdyn_wosystemstatus.Closed) {
+                form.getControl("msdyn_systemstatus").removeOption(msdyn_wosystemstatus.New);
+                form.getControl("msdyn_systemstatus").removeOption(msdyn_wosystemstatus.Scheduled);
+                form.getControl("msdyn_systemstatus").removeOption(msdyn_wosystemstatus.Cancelled);
                 if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Manager")) {
-                    form.getControl("msdyn_systemstatus").removeOption(741130001 /* msdyn_wosystemstatus.InProgress */);
+                    form.getControl("msdyn_systemstatus").removeOption(msdyn_wosystemstatus.InProgress);
                 }
             }
             //Restrict edit rights for Report Details to WO Owner and Additional Inspectors
@@ -410,7 +410,7 @@ var ROM;
                 });
             }
             //Lock Cancelled Inspection Justification field if WO is cancelled        
-            if (currentSystemStatus == 690970005 /* msdyn_wosystemstatus.Cancelled */) {
+            if (currentSystemStatus == msdyn_wosystemstatus.Cancelled) {
                 form.getControl("ts_canceledinspectionjustification").setDisabled(true);
             }
             unlockRecordLogFieldsIfUserIsSystemAdmin(form);
@@ -467,7 +467,7 @@ var ROM;
             var form = eContext.getFormContext();
             var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             var workOrderServiceTaskData;
-            if (systemStatus == 690970004 /* msdyn_wosystemstatus.ClosedInactive */) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
+            if (systemStatus == msdyn_wosystemstatus.ClosedInactive) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
                 workOrderServiceTaskData =
                     {
                         "statecode": 1,
@@ -1247,7 +1247,7 @@ var ROM;
             }
             else 
             //If system status is set to closed
-            if (newSystemStatus == 690970004 /* msdyn_wosystemstatus.ClosedInactive */ || newSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) {
+            if (newSystemStatus == msdyn_wosystemstatus.ClosedInactive || newSystemStatus == msdyn_wosystemstatus.Closed) {
                 Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=statecode eq 0 and msdyn_workorder/msdyn_workorderid eq " + form.data.entity.getId() + " and statuscode ne 918640002 and ts_mandatory eq true").then(function success(result) {
                     if (result.entities.length > 0) {
                         var alertStrings = {
@@ -1259,7 +1259,7 @@ var ROM;
                         form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
                     }
                     else {
-                        if (newSystemStatus == 690970004 /* msdyn_wosystemstatus.ClosedInactive */) {
+                        if (newSystemStatus == msdyn_wosystemstatus.ClosedInactive) {
                             var confirmStrings = {
                                 text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationText"),
                                 title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationTitle")
@@ -1796,7 +1796,7 @@ var ROM;
             var systemStatus = form.getAttribute("msdyn_systemstatus").getValue();
             var plannedFiscalQuarter = form.getAttribute("ovs_fiscalquarter").getValue();
             var validWorkOrderStatus = false;
-            if (systemStatus != null && (systemStatus == 690970000 /* msdyn_wosystemstatus.New */ || systemStatus == 690970001 /* msdyn_wosystemstatus.Scheduled */ || systemStatus == 741130001 /* msdyn_wosystemstatus.InProgress */)) {
+            if (systemStatus != null && (systemStatus == msdyn_wosystemstatus.New || systemStatus == msdyn_wosystemstatus.Scheduled || systemStatus == msdyn_wosystemstatus.InProgress)) {
                 validWorkOrderStatus = true;
             }
             if (plannedFiscalQuarter != null) {
@@ -1901,7 +1901,7 @@ var ROM;
                             var wost = _a[_i];
                             if (wost.statecode == 0) {
                                 workOrderHasActiveWost = true;
-                                if (wost.statuscode == 918640005 /* msdyn_workorderservicetask_statuscode.New */)
+                                if (wost.statuscode == msdyn_workorderservicetask_statuscode.New)
                                     workOrderHasNewWost = true;
                             }
                         }
@@ -1960,7 +1960,7 @@ var ROM;
                         var wost = _a[_i];
                         if (wost.statecode == 0) {
                             workOrderHasActiveWost = true;
-                            if (wost.statuscode == 918640005 /* msdyn_workorderservicetask_statuscode.New */)
+                            if (wost.statuscode == msdyn_workorderservicetask_statuscode.New)
                                 workOrderHasNewWost = true;
                         }
                     }
@@ -2318,7 +2318,7 @@ var ROM;
                     if (operationTypeAttributeValue[0].id.toLowerCase() == "{8b614ef0-c651-eb11-a812-000d3af3ac0d}") { //Air Carrier (Passenger)
                         form.getControl("ts_aircraftclassification").setVisible(true);
                         if (form.getAttribute("ts_aircraftclassification").getValue() == null) {
-                            form.getAttribute("ts_aircraftclassification").setValue(741130000 /* ts_aircraftclassification.PassengerPAX */);
+                            form.getAttribute("ts_aircraftclassification").setValue(ts_aircraftclassification.PassengerPAX);
                         }
                         if (isROM20Form) {
                             formROM2.ui.tabs.get("tab_workspace").sections.get("tab_workspace_flightdetails").setVisible(true);
@@ -2370,16 +2370,16 @@ var ROM;
                         distinationCountry = result2._ts_country_value;
                         if (distinationCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7" && originCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7") { // Canada
                             // Domestic
-                            form.getAttribute("ts_airserviceclassification").setValue(741130000 /* ts_airserviceclassification.Domestic */);
+                            form.getAttribute("ts_airserviceclassification").setValue(ts_airserviceclassification.Domestic);
                         }
                         else if ((distinationCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && distinationCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")
                             || (originCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && originCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")) { //Not in USA or Canada
                             //International
-                            form.getAttribute("ts_airserviceclassification").setValue(741130001 /* ts_airserviceclassification.International */);
+                            form.getAttribute("ts_airserviceclassification").setValue(ts_airserviceclassification.International);
                         }
                         else {
                             //Transborder
-                            form.getAttribute("ts_airserviceclassification").setValue(741130002 /* ts_airserviceclassification.Transborder */);
+                            form.getAttribute("ts_airserviceclassification").setValue(ts_airserviceclassification.Transborder);
                         }
                     }, function error(error) {
                         Xrm.Navigation.openAlertDialog({ text: error.message });
@@ -2575,42 +2575,3 @@ var ROM;
         }
     })(WorkOrder = ROM.WorkOrder || (ROM.WorkOrder = {}));
 })(ROM || (ROM = {}));
-function getEffectiveUserBuIdForFiltering(userBuId) {
-    return __awaiter(this, void 0, void 0, function () {
-        var effectiveUserBuId, isAvSecByBU, isISSOByBU, avSecDomesticBuId, issoBuId;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    if (!userBuId)
-                        return [2 /*return*/, userBuId];
-                    effectiveUserBuId = userBuId.replace(/[{}]/g, "").toLowerCase();
-                    return [4 /*yield*/, isAvSecBU(effectiveUserBuId)];
-                case 1:
-                    isAvSecByBU = _a.sent();
-                    return [4 /*yield*/, isISSOBU(effectiveUserBuId)];
-                case 2:
-                    isISSOByBU = _a.sent();
-                    if (!isAvSecByBU) return [3 /*break*/, 4];
-                    return [4 /*yield*/, getEnvironmentVariableValue(BU_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC)];
-                case 3:
-                    avSecDomesticBuId = _a.sent();
-                    if (avSecDomesticBuId) {
-                        console.log("User is Aviation Security → Using Aviation Security Domestic Business Unit");
-                        return [2 /*return*/, avSecDomesticBuId];
-                    }
-                    _a.label = 4;
-                case 4:
-                    if (!isISSOByBU) return [3 /*break*/, 6];
-                    return [4 /*yield*/, getEnvironmentVariableValue(BU_SCHEMA_NAMES.ISSO)];
-                case 5:
-                    issoBuId = _a.sent();
-                    if (issoBuId) {
-                        console.log("User is Information System Security Officer → Using ISSO Business Unit");
-                        return [2 /*return*/, issoBuId];
-                    }
-                    _a.label = 6;
-                case 6: return [2 /*return*/, effectiveUserBuId];
-            }
-        });
-    });
-}
