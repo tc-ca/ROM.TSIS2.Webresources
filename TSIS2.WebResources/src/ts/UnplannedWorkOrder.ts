@@ -1603,7 +1603,7 @@ namespace ROM.UnplannedWorkOrder {
                 // This value is never saved and only needs to be unique among the other available views for the lookup.
                 const viewId = '{5B58559F-F162-5428-4771-79BC825240B3}';
                 const entityName = "incident";
-                const viewDisplayName = Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "FilteredCases");
+                const viewDisplayName = Xrm.Utility.getResourceString("ts_/resx/UnplannedWorkOrder", "FilteredCases");
                 const fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"> <entity name="incident"> <attribute name="ticketnumber" /> <attribute name="incidentid" /> <order attribute="ticketnumber" descending="false" /> <filter type="and">' + regionCondition + countryCondition + stakeholderCondition + siteCondition + ' </filter> </entity> </fetch>';
                 const layoutXml = '<grid name="resultset" object="10010" jump="title" select="1" icon="1" preview="1"><row name="result" id="incidentid"><cell name="title" width="200" /></row></grid>';
                 form.getControl("ts_servicerequest").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
