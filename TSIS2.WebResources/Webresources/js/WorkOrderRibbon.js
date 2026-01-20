@@ -912,7 +912,16 @@ function createWorkspaceFromWorkOrder(currentWorkOrderId, lang) {
         // Add lookup fields only if they exist
         // Summary
         if (workOrder._ownerid_value) {
-            unplannedWorkOrderData["ownerid@odata.bind"] = "/systemusers(" + workOrder._ownerid_value + ")";
+
+            const ownerType = workOrder["_ownerid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+
+            if (ownerType === "systemuser") {
+                unplannedWorkOrderData["ownerid@odata.bind"] = "/systemusers(" + workOrder._ownerid_value + ")";
+            } else if (ownerType === "team") {
+                unplannedWorkOrderData["ownerid@odata.bind"] = "/teams(" + workOrder._ownerid_value + ")";
+            } else {
+                console.warn("Unknown owner type:", ownerType);
+            }
         }
         if (currentWorkOrderId) {
           unplannedWorkOrderData["ts_WorkOrder@odata.bind"] = "/msdyn_workorders(" + currentWorkOrderId + ")";
