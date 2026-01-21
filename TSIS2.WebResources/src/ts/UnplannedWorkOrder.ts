@@ -110,8 +110,8 @@ namespace ROM.UnplannedWorkOrder {
             else {
                 form.getControl("ts_details").setVisible(true);
                 form.getControl("ts_servicerequest").setVisible(false);
-                //form.getControl("ts_instructions").setVisible(true);
-                //form.getControl("ts_accountableteam").setVisible(true);
+                form.getControl("ts_instructions").setVisible(true);
+                form.getControl("ts_accountableteam").setVisible(true);
                 //form.getControl("ts_plannedcost").setVisible(false);
                 //form.getControl("ts_actualcost").setVisible(false);
                 //form.getControl("ts_costexplanation").setVisible(false);
