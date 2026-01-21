@@ -26,6 +26,7 @@
         .btn:hover {
             background-color: #323B42 !important;
         }
+
         .modal {
             display: none; /* hidden by default */
             position: absolute;
@@ -432,13 +433,26 @@
                         sortedCategoriesList = categoriesList.sort((a, b) => a.Title.localeCompare(b.Title));
                     }
 
-
                     const dropdown = document.getElementById('fileCategories');
 
                     // Clear existing options
                     dropdown.innerHTML = '';
 
-                    var firstLoop = true;
+                    // Add empty option (default selected)
+                    const emptyOption = document.createElement('option');
+                    emptyOption.value = "";
+
+                    if (userLanguage == 1036) {
+                        emptyOption.textContent = "Sélectionner...";
+                    } else {
+                        emptyOption.textContent = "Select...";
+                    }
+
+                    dropdown.appendChild(emptyOption);
+
+                    // Do NOT set selectedFileCategory yet
+                    selectedFileCategory = "";
+
 
                     // populate the drop down
                     sortedCategoriesList.forEach(category => {
@@ -458,14 +472,11 @@
 
                         dropdown.appendChild(option);
 
-                        // select the first item
-                        if (firstLoop) {
-                            selectedFileCategory = category.ID;
-                        }
-
-                        firstLoop = false;
                     });
 
+
+                    // ensures empty option is selected by default
+                    dropdown.value = "";
 
                     return true;
                 } else {
