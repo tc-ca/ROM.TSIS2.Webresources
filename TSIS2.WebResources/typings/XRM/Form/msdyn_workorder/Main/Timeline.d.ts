@@ -1,5 +1,5 @@
 declare namespace Form.msdyn_workorder.Main {
-  namespace WOJustifyCancellation {
+  namespace Timeline {
     namespace Tabs {
       interface DeviceInsightsTab extends Xrm.SectionCollectionBase {
         get(name: "DeviceInsightsSection"): Xrm.PageSection;
@@ -38,8 +38,9 @@ declare namespace Form.msdyn_workorder.Main {
       }
       interface f1tab_mainsettings extends Xrm.SectionCollectionBase {
         get(name: "WorkOrderAccessTeams"): Xrm.PageSection;
-        get(name: "_section_7"): Xrm.PageSection;
+        get(name: "_section_496"): Xrm.PageSection;
         get(name: "f1tab_mainsettings_section_2"): Xrm.PageSection;
+        get(name: "f1tab_mainsettings_section_7"): Xrm.PageSection;
         get(name: "f1tab_mainsettings_section_7"): Xrm.PageSection;
         get(name: "tab_7_section_1"): Xrm.PageSection;
         get(name: "{b8e326ee-5c21-4a18-ba55-e3b56966c249}_section_8"): Xrm.PageSection;
@@ -273,6 +274,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_workordersummary"): Xrm.StringControl;
       get(name: "msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
       get(name: "notescontrol"): Xrm.BaseControl;
+      get(name: "notescontrol1"): Xrm.BaseControl;
       get(name: "ovs_currentfiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
       get(name: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;
@@ -326,7 +328,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(chooser: (item: Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>, index: number) => boolean): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
     }
   }
-  interface WOJustifyCancellation extends Xrm.PageBase<WOJustifyCancellation.Attributes,WOJustifyCancellation.Tabs,WOJustifyCancellation.Controls> {
+  interface Timeline extends Xrm.PageBase<Timeline.Attributes,Timeline.Tabs,Timeline.Controls> {
     getAttribute(attributeName: "createdby"): Xrm.LookupAttribute<"systemuser">;
     getAttribute(attributeName: "createdon"): Xrm.DateAttribute;
     getAttribute(attributeName: "modifiedby"): Xrm.LookupAttribute<"systemuser">;
@@ -487,6 +489,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_workordersummary"): Xrm.StringControl;
     getControl(controlName: "msdyn_workordertype"): Xrm.LookupControl<"msdyn_workordertype">;
     getControl(controlName: "notescontrol"): Xrm.BaseControl;
+    getControl(controlName: "notescontrol1"): Xrm.BaseControl;
     getControl(controlName: "ovs_currentfiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "ovs_fiscalquarter"): Xrm.LookupControl<"tc_tcfiscalquarter">;
     getControl(controlName: "ovs_fiscalyear"): Xrm.LookupControl<"tc_tcfiscalyear">;

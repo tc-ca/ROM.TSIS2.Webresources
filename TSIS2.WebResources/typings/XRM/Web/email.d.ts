@@ -122,6 +122,7 @@ interface Email_Relationships {
 }
 interface Email extends Email_Base, Email_Relationships {
   SensitivityLabelId_Email_bind$sensitivitylabels?: string | null;
+  msdyn_emailclassificationcategory_Email_bind$msdyn_emailclassificationcategories?: string | null;
   ownerid_email_bind$systemusers?: string | null;
   ownerid_email_bind$teams?: string | null;
   regardingobjectid_account_email_bind$accounts?: string | null;
@@ -305,6 +306,7 @@ interface Email_Select {
   modifiedonbehalfby_guid: WebAttribute<Email_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
   msdyn_autofill_type: WebAttribute<Email_Select, { msdyn_autofill_type: msdyn_email_msdyn_autofill_type | null }, { msdyn_autofill_type_formatted?: string }>;
   msdyn_copilotengaged: WebAttribute<Email_Select, { msdyn_copilotengaged: boolean | null }, {  }>;
+  msdyn_emailclassificationcategory_guid: WebAttribute<Email_Select, { msdyn_emailclassificationcategory_guid: string | null }, { msdyn_emailclassificationcategory_formatted?: string }>;
   msdyn_emailengagementinteractions: WebAttribute<Email_Select, { msdyn_emailengagementinteractions: string | null }, {  }>;
   msdyn_recipientlist: WebAttribute<Email_Select, { msdyn_recipientlist: string | null }, {  }>;
   msdyn_sentiment: WebAttribute<Email_Select, { msdyn_sentiment: msdyn_email_msdyn_sentiment | null }, { msdyn_sentiment_formatted?: string }>;
@@ -420,6 +422,7 @@ interface Email_Filter {
   modifiedonbehalfby_guid: XQW.Guid;
   msdyn_autofill_type: msdyn_email_msdyn_autofill_type;
   msdyn_copilotengaged: boolean;
+  msdyn_emailclassificationcategory_guid: XQW.Guid;
   msdyn_emailengagementinteractions: string;
   msdyn_recipientlist: string;
   msdyn_sentiment: msdyn_email_msdyn_sentiment;
@@ -535,6 +538,7 @@ interface Email_FormattedResult {
   modifiedon_formatted?: string;
   modifiedonbehalfby_formatted?: string;
   msdyn_autofill_type_formatted?: string;
+  msdyn_emailclassificationcategory_formatted?: string;
   msdyn_sentiment_formatted?: string;
   msdyn_sentimentreason_formatted?: string;
   msft_datastate_formatted?: string;
@@ -578,6 +582,7 @@ interface Email_Result extends Email_Base, Email_Relationships {
   from_guid: string | null;
   modifiedby_guid: string | null;
   modifiedonbehalfby_guid: string | null;
+  msdyn_emailclassificationcategory_guid: string | null;
   ownerid_guid: string | null;
   owningbusinessunit_guid: string | null;
   owningteam_guid: string | null;
