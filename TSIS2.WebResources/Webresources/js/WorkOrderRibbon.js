@@ -867,6 +867,10 @@ function editUnplannedWorkOrder(primaryControl) {
             console.log("Modal opened successfully");
             // Refresh the form after modal closes
             formContext.data.refresh();
+            const timelineControl = formContext.getControl("Timeline"); // or your control's name
+            if (timelineControl) {
+                timelineControl.refresh();
+            }
           },
           function error(err) {
             console.error("Error opening modal:", err);

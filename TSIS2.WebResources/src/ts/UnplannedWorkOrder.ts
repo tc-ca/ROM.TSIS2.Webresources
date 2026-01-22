@@ -557,7 +557,7 @@ namespace ROM.UnplannedWorkOrder {
         //  setCantCompleteinspectionVisibility(form);
 
         //Post a note on ScheduledQuarter Change
-        //  postNoteOnScheduledQuarterChange(form);
+        postNoteOnScheduledQuarterChange(form);
 
         if (cancelledInspectionJustification != null) {
             form.getAttribute("ts_recordstatus").setValue(msdyn_wosystemstatus.Cancelled);
@@ -1715,41 +1715,68 @@ namespace ROM.UnplannedWorkOrder {
     }
 
     // FUNCTIONS
-    function postNoteOnScheduledQuarterChange(form: Form.msdyn_workorder.Main.ROMOversightActivity): void {
+    function postNoteOnScheduledQuarterChange(form: Form.ts_unplannedworkorder.Main.Information): void {
         if (scheduledQuarterAttributeValueChanged) {
-            const revisedQuarterAttributeValue = form.getAttribute("ovs_revisedquarterid").getValue();
+            const revisedQuarterAttributeValue = form.getAttribute("ts_revisedquarterid").getValue();
             const justification = form.getAttribute("ts_scheduledquarterjustification").getValue();
             var justificationValue;
-            const justificationComment = form.getAttribute("ts_justificationcomment").getValue();
+            const justificationComment = form.getAttribute("ts_scheduledquarterjustificationcomment").getValue();
 
             if (form.ui.getFormType() == 2) {
-                let recordId = form.data.entity.getId().replace(/[{}]/g, "");
-                var data = {};
-                data['objectid_msdyn_workorder@odata.bind'] = '/msdyn_workorders(' + recordId + ')';
-                if (revisedQuarterAttributeValue != null) {
-                    data['subject'] = "Scheduled Quarter changed to: " + revisedQuarterAttributeValue[0].name;
-                }
-                else {
-                    data['subject'] = "Scheduled Quarter changed to null ";
-                }
+                const unplannedWoId =
+                    form.data.entity.getId().replace(/[{}]/g, "");
 
-                if (justification != null) {
-                    justificationValue = justification[0].name;
-                }
-                else {
-                    justificationValue = "null";
-                }
-                data['notetext'] = "Justification changed to: " + justificationValue + " <br />Justification Comment: " + justificationComment;
+                Xrm.WebApi.retrieveRecord(
+                    "ts_unplannedworkorder",
+                    unplannedWoId,
+                    "?$select=_ts_workorder_value"
+                ).then(result => {
 
-                //form.getAttribute("ts_scheduledquarterjustification").setValue(null);
-                //form.getAttribute("ts_justificationcomment").setValue(null);
+                    const workOrderId = result["_ts_workorder_value"];
 
-                Xrm.WebApi.createRecord('annotation', data).then(function success(result) {
-                    scheduledQuarterAttributeValueChanged = false;
-                },
-                    function (error) {
-                        console.log(error.message);
-                    });
+                    if (!workOrderId) {
+                        console.error("❌ No Work Order linked to Unplanned WO");
+                        return;
+                    }
+
+                    const data: any = {};
+
+                    data["objectid_msdyn_workorder@odata.bind"] =
+                        `/msdyn_workorders(${workOrderId})`;
+
+                    if (revisedQuarterAttributeValue != null) {
+                        data["subject"] =
+                            "Scheduled Quarter changed to: " +
+                            revisedQuarterAttributeValue[0].name;
+                    } else {
+                        data["subject"] =
+                            "Scheduled Quarter changed to null";
+                    }
+
+                    if (justification != null) {
+                        justificationValue = justification[0].name;
+                    }
+
+                    data["notetext"] =
+                        "Justification changed to: " + justificationValue +
+                        "<br />Justification Comment: " + justificationComment;
+
+                    Xrm.WebApi.createRecord("annotation", data).then(
+                        result => {
+                            scheduledQuarterAttributeValueChanged = false;
+                        },
+                        error => {
+                            console.error("❌ Create note failed:", error.message);
+                        }
+                    );
+
+                    //form.getAttribute("ts_scheduledquarterjustification").setValue(null);
+                    //form.getAttribute("ts_justificationcomment").setValue(null);
+
+                }).catch(error => {
+                    console.error("❌ Failed to retrieve Work Order:", error.message);
+                });
+
             }
         }
     }
