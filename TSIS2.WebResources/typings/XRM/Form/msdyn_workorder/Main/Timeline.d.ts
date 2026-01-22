@@ -38,7 +38,6 @@ declare namespace Form.msdyn_workorder.Main {
       }
       interface f1tab_mainsettings extends Xrm.SectionCollectionBase {
         get(name: "WorkOrderAccessTeams"): Xrm.PageSection;
-        get(name: "_section_496"): Xrm.PageSection;
         get(name: "f1tab_mainsettings_section_2"): Xrm.PageSection;
         get(name: "f1tab_mainsettings_section_7"): Xrm.PageSection;
         get(name: "f1tab_mainsettings_section_7"): Xrm.PageSection;

@@ -24,13 +24,6 @@ declare namespace Form.ts_unplannedworkorder.Main {
         get(index: number): Xrm.PageSection;
         get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
       }
-      interface tab_6 extends Xrm.SectionCollectionBase {
-        get(name: "tab_6_section_1"): Xrm.PageSection;
-        get(name: string): undefined;
-        get(): Xrm.PageSection[];
-        get(index: number): Xrm.PageSection;
-        get(chooser: (item: Xrm.PageSection, index: number) => boolean): Xrm.PageSection[];
-      }
       interface tab_TimeTracking extends Xrm.SectionCollectionBase {
         get(name: "tab_5_section_1"): Xrm.PageSection;
         get(name: "tab_5_section_3"): Xrm.PageSection;
@@ -110,7 +103,6 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "header_statecode"): Xrm.OptionSetControl<ts_unplannedworkorder_statecode>;
       get(name: "header_statuscode"): Xrm.OptionSetControl<ts_unplannedworkorder_statuscode>;
       get(name: "header_ts_recordstatus"): Xrm.OptionSetControl<msdyn_wosystemstatus>;
-      get(name: "notescontrol"): Xrm.BaseControl;
       get(name: "ts_accountableteam"): Xrm.LookupControl<"team">;
       get(name: "ts_aircraftclassification"): Xrm.OptionSetControl<ts_aircraftclassification>;
       get(name: "ts_businessowner"): Xrm.StringControl;
@@ -177,7 +169,6 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "tab_2"): Xrm.PageTab<Tabs.tab_2>;
       get(name: "tab_3"): Xrm.PageTab<Tabs.tab_3>;
       get(name: "tab_4"): Xrm.PageTab<Tabs.tab_4>;
-      get(name: "tab_6"): Xrm.PageTab<Tabs.tab_6>;
       get(name: "tab_TimeTracking"): Xrm.PageTab<Tabs.tab_TimeTracking>;
       get(name: string): undefined;
       get(): Xrm.PageTab<Xrm.Collection<Xrm.PageSection>>[];
@@ -250,7 +241,6 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getControl(controlName: "header_statecode"): Xrm.OptionSetControl<ts_unplannedworkorder_statecode>;
     getControl(controlName: "header_statuscode"): Xrm.OptionSetControl<ts_unplannedworkorder_statuscode>;
     getControl(controlName: "header_ts_recordstatus"): Xrm.OptionSetControl<msdyn_wosystemstatus>;
-    getControl(controlName: "notescontrol"): Xrm.BaseControl;
     getControl(controlName: "ts_accountableteam"): Xrm.LookupControl<"team">;
     getControl(controlName: "ts_aircraftclassification"): Xrm.OptionSetControl<ts_aircraftclassification>;
     getControl(controlName: "ts_businessowner"): Xrm.StringControl;
