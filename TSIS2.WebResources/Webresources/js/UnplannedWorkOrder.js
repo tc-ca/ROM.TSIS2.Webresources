@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -147,7 +147,7 @@ var ROM;
                                     if (isROM20Form) {
                                         form.getControl("ts_overtimerequired").setVisible(false);
                                     }
-                                    if (currentSystemStatus == 741130000 /* Closed */ || currentSystemStatus == 690970005 /* Cancelled */) {
+                                    if (currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */ || currentSystemStatus == 690970005 /* msdyn_wosystemstatus.Cancelled */) {
                                         if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager")) {
                                             form.getControl("header_ts_recordstatus").setDisabled(true);
                                         }
@@ -256,7 +256,7 @@ var ROM;
                     else {
                         var lookup = new Array();
                         lookup[0] = new Object();
-                        lookup[0].id = "{" + UNPLANNED_CATEGORY_ID + "}";
+                        lookup[0].id = "{".concat(UNPLANNED_CATEGORY_ID, "}");
                         lookup[0].name = "Unplanned";
                         lookup[0].entityType = "ovs_tyrational";
                         form.getAttribute("ts_rational").setValue(lookup); //Unplanned
@@ -355,7 +355,7 @@ var ROM;
                     break;
             }
             // Lock some fields if there exist a Case that has this WO associated to it
-            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"" + form.data.entity.getId() + "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>";
+            var fetchXML = "<fetch><entity name=\"msdyn_workorder\"><attribute name=\"msdyn_workorderid\"/><filter><condition attribute=\"msdyn_workorderid\" operator=\"eq\" value=\"".concat(form.data.entity.getId(), "\"/></filter><link-entity name=\"incident\" from=\"incidentid\" to=\"msdyn_servicerequest\"/></entity></fetch>");
             fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);
             Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", fetchXML).then(function success(result) {
                 if (result.entities.length > 0) {
@@ -432,7 +432,7 @@ var ROM;
                 });
             }
             //Lock Cancelled Inspection Justification field if WO is cancelled
-            if (currentSystemStatus == 690970005 /* Cancelled */) {
+            if (currentSystemStatus == 690970005 /* msdyn_wosystemstatus.Cancelled */) {
                 form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
                 var selectedCanceledWorkOrderReason = form.getAttribute("ts_cancelledinspectionjustification").getValue();
                 var selectedOther = "{A8D7125C-7F24-ED11-9DB2-002248AE429C}";
@@ -496,7 +496,7 @@ var ROM;
             var systemStatus = form.getAttribute("ts_recordstatus").getValue();
             var cancelledInspectionJustification = form.getAttribute("ts_cancelledinspectionjustification").getValue();
             var workOrderServiceTaskData;
-            if (systemStatus == 690970004 /* ClosedInactive */) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
+            if (systemStatus == 690970004 /* msdyn_wosystemstatus.ClosedInactive */) { //Only close associated entities when Record Status is set to Closed - Posted  690970004
                 workOrderServiceTaskData =
                     {
                         "statecode": 1,
@@ -510,9 +510,9 @@ var ROM;
             //Check if the Work Order is past the Planned Fiscal Quarter
             //  setCantCompleteinspectionVisibility(form);
             //Post a note on ScheduledQuarter Change
-            //  postNoteOnScheduledQuarterChange(form);
+            postNoteOnScheduledQuarterChange(form);
             if (cancelledInspectionJustification != null) {
-                form.getAttribute("ts_recordstatus").setValue(690970005 /* Cancelled */);
+                form.getAttribute("ts_recordstatus").setValue(690970005 /* msdyn_wosystemstatus.Cancelled */);
                 form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
             }
         }
@@ -920,7 +920,7 @@ var ROM;
                                 console.log("No BU filter applied for this user (TC or unknown)");
                                 return [2 /*return*/];
                             }
-                            fetchXml = "\n        <fetch mapping='logical'>\n          <entity name='ts_canceledinspectionjustification'>\n            <filter>\n              <condition attribute='owningbusinessunit' operator='eq' value='" + effectiveBuId + "' />\n            </filter>\n          </entity>\n        </fetch>\n    ";
+                            fetchXml = "\n        <fetch mapping='logical'>\n          <entity name='ts_canceledinspectionjustification'>\n            <filter>\n              <condition attribute='owningbusinessunit' operator='eq' value='".concat(effectiveBuId, "' />\n            </filter>\n          </entity>\n        </fetch>\n    ");
                             control = form.getControl("ts_cancelledinspectionjustification");
                             if (control) {
                                 control.addPreSearch(function () {
@@ -1577,33 +1577,45 @@ var ROM;
         // FUNCTIONS
         function postNoteOnScheduledQuarterChange(form) {
             if (scheduledQuarterAttributeValueChanged) {
-                var revisedQuarterAttributeValue = form.getAttribute("ovs_revisedquarterid").getValue();
-                var justification = form.getAttribute("ts_scheduledquarterjustification").getValue();
+                var revisedQuarterAttributeValue_1 = form.getAttribute("ts_revisedquarterid").getValue();
+                var justification_1 = form.getAttribute("ts_scheduledquarterjustification").getValue();
                 var justificationValue;
-                var justificationComment = form.getAttribute("ts_justificationcomment").getValue();
+                var justificationComment_1 = form.getAttribute("ts_scheduledquarterjustificationcomment").getValue();
                 if (form.ui.getFormType() == 2) {
-                    var recordId = form.data.entity.getId().replace(/[{}]/g, "");
-                    var data = {};
-                    data['objectid_msdyn_workorder@odata.bind'] = '/msdyn_workorders(' + recordId + ')';
-                    if (revisedQuarterAttributeValue != null) {
-                        data['subject'] = "Scheduled Quarter changed to: " + revisedQuarterAttributeValue[0].name;
-                    }
-                    else {
-                        data['subject'] = "Scheduled Quarter changed to null ";
-                    }
-                    if (justification != null) {
-                        justificationValue = justification[0].name;
-                    }
-                    else {
-                        justificationValue = "null";
-                    }
-                    data['notetext'] = "Justification changed to: " + justificationValue + " <br />Justification Comment: " + justificationComment;
-                    //form.getAttribute("ts_scheduledquarterjustification").setValue(null);
-                    //form.getAttribute("ts_justificationcomment").setValue(null);
-                    Xrm.WebApi.createRecord('annotation', data).then(function success(result) {
-                        scheduledQuarterAttributeValueChanged = false;
-                    }, function (error) {
-                        console.log(error.message);
+                    var unplannedWoId = form.data.entity.getId().replace(/[{}]/g, "");
+                    Xrm.WebApi.retrieveRecord("ts_unplannedworkorder", unplannedWoId, "?$select=_ts_workorder_value").then(function (result) {
+                        var workOrderId = result["_ts_workorder_value"];
+                        if (!workOrderId) {
+                            console.error("❌ No Work Order linked to Unplanned WO");
+                            return;
+                        }
+                        var data = {};
+                        data["objectid_msdyn_workorder@odata.bind"] =
+                            "/msdyn_workorders(".concat(workOrderId, ")");
+                        if (revisedQuarterAttributeValue_1 != null) {
+                            data["subject"] =
+                                "Scheduled Quarter changed to: " +
+                                    revisedQuarterAttributeValue_1[0].name;
+                        }
+                        else {
+                            data["subject"] =
+                                "Scheduled Quarter changed to null";
+                        }
+                        if (justification_1 != null) {
+                            justificationValue = justification_1[0].name;
+                        }
+                        data["notetext"] =
+                            "Justification changed to: " + justificationValue +
+                                "<br />Justification Comment: " + justificationComment_1;
+                        Xrm.WebApi.createRecord("annotation", data).then(function (result) {
+                            scheduledQuarterAttributeValueChanged = false;
+                        }, function (error) {
+                            console.error("❌ Create note failed:", error.message);
+                        });
+                        //form.getAttribute("ts_scheduledquarterjustification").setValue(null);
+                        //form.getAttribute("ts_justificationcomment").setValue(null);
+                    }).catch(function (error) {
+                        console.error("❌ Failed to retrieve Work Order:", error.message);
                     });
                 }
             }
@@ -1953,7 +1965,7 @@ var ROM;
                             var wost = _a[_i];
                             if (wost.statecode == 0) {
                                 workOrderHasActiveWost = true;
-                                if (wost.statuscode == 918640005 /* New */)
+                                if (wost.statuscode == 918640005 /* msdyn_workorderservicetask_statuscode.New */)
                                     workOrderHasNewWost = true;
                             }
                         }
@@ -2012,7 +2024,7 @@ var ROM;
                         var wost = _a[_i];
                         if (wost.statecode == 0) {
                             workOrderHasActiveWost = true;
-                            if (wost.statuscode == 918640005 /* New */)
+                            if (wost.statuscode == 918640005 /* msdyn_workorderservicetask_statuscode.New */)
                                 workOrderHasNewWost = true;
                         }
                     }
@@ -2233,7 +2245,7 @@ var ROM;
         function setFiscalQuarter(form) {
             var currentDate = new Date();
             var currentDateString = currentDate.toISOString();
-            var fetchXml = "<fetch top=\"1\"><entity name=\"tc_tcfiscalquarter\"><attribute name=\"tc_name\"/><attribute name=\"tc_tcfiscalquarterid\"/><filter type=\"and\"><condition attribute=\"tc_quarterstart\" operator=\"le\" value=\"" + currentDateString + "\"/><condition attribute=\"tc_quarterend\" operator=\"ge\" value=\"" + currentDateString + "\"/></filter></entity></fetch>";
+            var fetchXml = "<fetch top=\"1\"><entity name=\"tc_tcfiscalquarter\"><attribute name=\"tc_name\"/><attribute name=\"tc_tcfiscalquarterid\"/><filter type=\"and\"><condition attribute=\"tc_quarterstart\" operator=\"le\" value=\"".concat(currentDateString, "\"/><condition attribute=\"tc_quarterend\" operator=\"ge\" value=\"").concat(currentDateString, "\"/></filter></entity></fetch>");
             var lookup = new Array();
             Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalquarter", "?fetchXml=" + fetchXml).then(function success(result) {
                 lookup[0] = new Object();
@@ -2353,7 +2365,7 @@ var ROM;
                     if (operationTypeAttributeValue[0].id.toLowerCase() == "{8b614ef0-c651-eb11-a812-000d3af3ac0d}") { //Air Carrier (Passenger)
                         form.getControl("ts_aircraftclassification").setVisible(true);
                         if (form.getAttribute("ts_aircraftclassification").getValue() == null) {
-                            form.getAttribute("ts_aircraftclassification").setValue(741130000 /* PassengerPAX */);
+                            form.getAttribute("ts_aircraftclassification").setValue(741130000 /* ts_aircraftclassification.PassengerPAX */);
                         }
                         //if (isROM20Form) {
                         //    formROM2.ui.tabs.get("tab_workspace").sections.get("tab_workspace_flightdetails").setVisible(true);
@@ -2405,16 +2417,16 @@ var ROM;
                         distinationCountry = result2._ts_country_value;
                         if (distinationCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7" && originCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7") { // Canada
                             // Domestic
-                            form.getAttribute("ts_airserviceclassification").setValue(741130000 /* Domestic */);
+                            form.getAttribute("ts_airserviceclassification").setValue(741130000 /* ts_airserviceclassification.Domestic */);
                         }
                         else if ((distinationCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && distinationCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")
                             || (originCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && originCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")) { //Not in USA or Canada
                             //International
-                            form.getAttribute("ts_airserviceclassification").setValue(741130001 /* International */);
+                            form.getAttribute("ts_airserviceclassification").setValue(741130001 /* ts_airserviceclassification.International */);
                         }
                         else {
                             //Transborder
-                            form.getAttribute("ts_airserviceclassification").setValue(741130002 /* Transborder */);
+                            form.getAttribute("ts_airserviceclassification").setValue(741130002 /* ts_airserviceclassification.Transborder */);
                         }
                     }, function error(error) {
                         Xrm.Navigation.openAlertDialog({ text: error.message });
@@ -2531,7 +2543,7 @@ var ROM;
                                 '    <attribute name="msdyn_workordertypeid" />' +
                                 '    <attribute name="msdyn_name" />' +
                                 '    <filter>' +
-                                ("      <condition attribute=\"ownerid\" operator=\"" + op + "\" value=\"" + railSecurityTeamId + "\" />") +
+                                "      <condition attribute=\"ownerid\" operator=\"".concat(op, "\" value=\"").concat(railSecurityTeamId, "\" />") +
                                 '    </filter>' +
                                 '  </entity>' +
                                 '</fetch>';

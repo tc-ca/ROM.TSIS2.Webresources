@@ -38,7 +38,6 @@ interface ts_trip_Relationships {
   ts_trip_ts_enforcementactions?: ts_enforcementaction_Result[] | null;
   ts_ts_file_ts_trip?: ts_File_Result[] | null;
   ts_ts_trip_ts_suggestedinspection_Trip?: ts_SuggestedInspection_Result[] | null;
-  ts_ts_trip_ts_tripinspector_trip?: ts_tripinspector_Result[] | null;
   ts_unplannedworkorder_Trip_ts_trip?: ts_unplannedworkorder_Result[] | null;
 }
 interface ts_trip extends ts_trip_Base, ts_trip_Relationships {
@@ -152,7 +151,6 @@ interface ts_trip_Expand {
   ts_trip_ts_enforcementactions: WebExpand<ts_trip_Expand, ts_enforcementaction_Select, ts_enforcementaction_Filter, { ts_trip_ts_enforcementactions: ts_enforcementaction_Result[] }>;
   ts_ts_file_ts_trip: WebExpand<ts_trip_Expand, ts_File_Select, ts_File_Filter, { ts_ts_file_ts_trip: ts_File_Result[] }>;
   ts_ts_trip_ts_suggestedinspection_Trip: WebExpand<ts_trip_Expand, ts_SuggestedInspection_Select, ts_SuggestedInspection_Filter, { ts_ts_trip_ts_suggestedinspection_Trip: ts_SuggestedInspection_Result[] }>;
-  ts_ts_trip_ts_tripinspector_trip: WebExpand<ts_trip_Expand, ts_tripinspector_Select, ts_tripinspector_Filter, { ts_ts_trip_ts_tripinspector_trip: ts_tripinspector_Result[] }>;
   ts_unplannedworkorder_Trip_ts_trip: WebExpand<ts_trip_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { ts_unplannedworkorder_Trip_ts_trip: ts_unplannedworkorder_Result[] }>;
 }
 interface ts_trip_FormattedResult {
@@ -218,7 +216,6 @@ interface ts_trip_RelatedMany {
   ts_trip_ts_enforcementactions: WebMappingRetrieve<ts_enforcementaction_Select,ts_enforcementaction_Expand,ts_enforcementaction_Filter,ts_enforcementaction_Fixed,ts_enforcementaction_Result,ts_enforcementaction_FormattedResult>;
   ts_ts_file_ts_trip: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
   ts_ts_trip_ts_suggestedinspection_Trip: WebMappingRetrieve<ts_SuggestedInspection_Select,ts_SuggestedInspection_Expand,ts_SuggestedInspection_Filter,ts_SuggestedInspection_Fixed,ts_SuggestedInspection_Result,ts_SuggestedInspection_FormattedResult>;
-  ts_ts_trip_ts_tripinspector_trip: WebMappingRetrieve<ts_tripinspector_Select,ts_tripinspector_Expand,ts_tripinspector_Filter,ts_tripinspector_Fixed,ts_tripinspector_Result,ts_tripinspector_FormattedResult>;
   ts_unplannedworkorder_Trip_ts_trip: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
