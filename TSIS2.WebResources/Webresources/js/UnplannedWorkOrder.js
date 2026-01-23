@@ -60,7 +60,6 @@ var ROM;
                     setWorkOrderTypeFilteredView(form, false);
                 }
             });
-            var state = (_a = form.getAttribute("statecode").getValue()) !== null && _a !== void 0 ? _a : null;
             // Check flag and navigate to WO if needed
             var flagAttr = form.getAttribute("ts_openworkorderoncreation");
             if (flagAttr && flagAttr.getValue() === true && form.ui.getFormType() === 2) {
@@ -91,6 +90,7 @@ var ROM;
                     console.error("Error saving flag change:", err);
                 });
             }
+            var state = (_a = form.getAttribute("statecode").getValue()) !== null && _a !== void 0 ? _a : null;
             var regionAttribute = form.getAttribute("ts_region");
             var regionAttributeValue = regionAttribute.getValue();
             var ownerControl = form.getControl("header_ownerid");
@@ -130,11 +130,11 @@ var ROM;
                                 isAvSec = _a.sent();
                                 if (!isAvSec) {
                                     form.getControl("ts_details").setVisible(false);
-                                    /*                form.getControl("ts_overtime").setVisible(false);*/
+                                    /*form.getControl("ts_overtime").setVisible(false);*/
                                     form.getControl("ts_overtimerequired").setVisible(true);
                                     form.getControl("ts_servicerequest").setDisabled(true);
                                 }
-                                else {
+                                else if (isAvSec) {
                                     form.getControl("ts_details").setVisible(true);
                                     form.getControl("ts_servicerequest").setVisible(false);
                                     form.getControl("ts_instructions").setVisible(true);
@@ -151,6 +151,17 @@ var ROM;
                                         if (!userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager")) {
                                             form.getControl("header_ts_recordstatus").setDisabled(true);
                                         }
+                                    }
+                                }
+                                // Set disabled false for quarter fields if ISSO
+                                else {
+                                    if (userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager|ROM - Inspector")) {
+                                        /*form.getControl("ts_completedquarter").setDisabled(false);*/
+                                        form.getControl("ts_revisedquarterid").setDisabled(false);
+                                    }
+                                    else {
+                                        /*form.getControl("ts_completedquarter").setDisabled(true);*/
+                                        form.getControl("ts_revisedquarterid").setDisabled(true);
                                     }
                                 }
                                 return [2 /*return*/];
@@ -199,9 +210,9 @@ var ROM;
             //else {
             //    form.getControl("ts_completedquarter").setVisible(false);
             //}
-            //if (currentSystemStatus == 690970004 || currentSystemStatus == 690970003 || currentSystemStatus == msdyn_wosystemstatus.Closed) { //Closed ; Completed
-            //    form.getControl("ovs_revisedquarterid").setDisabled(true);
-            //}
+            if (currentSystemStatus == 690970004 || currentSystemStatus == 690970003 || currentSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) { //Closed ; Completed
+                form.getControl("ts_revisedquarterid").setDisabled(true);
+            }
             //Limit ownership of a Work Order to users associated with the same program
             if (form.ui.getFormType() == 1 || form.ui.getFormType() == 2) {
                 if (ownerControl != null) {
