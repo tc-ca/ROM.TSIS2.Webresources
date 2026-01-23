@@ -21,9 +21,6 @@ namespace ROM.UnplannedWorkOrder {
             }
         });
 
-
-        const state = form.getAttribute("statecode").getValue() ?? null;
-
         // Check flag and navigate to WO if needed
         const flagAttr = form.getAttribute("ts_openworkorderoncreation");
         if (flagAttr && flagAttr.getValue() === true && form.ui.getFormType() === 2) {
@@ -62,6 +59,8 @@ namespace ROM.UnplannedWorkOrder {
                 }
             );
         }
+
+        const state = form.getAttribute("statecode").getValue() ?? null;
 
         const regionAttribute = form.getAttribute("ts_region");
         const regionAttributeValue = regionAttribute.getValue();
@@ -102,12 +101,12 @@ namespace ROM.UnplannedWorkOrder {
 
             if (!isAvSec) {
                 form.getControl("ts_details").setVisible(false);
-                /*                form.getControl("ts_overtime").setVisible(false);*/
+                /*form.getControl("ts_overtime").setVisible(false);*/
                 form.getControl("ts_overtimerequired").setVisible(true);
                 form.getControl("ts_servicerequest").setDisabled(true);
 
             }
-            else {
+            else if (isAvSec) {
                 form.getControl("ts_details").setVisible(true);
                 form.getControl("ts_servicerequest").setVisible(false);
                 form.getControl("ts_instructions").setVisible(true);
@@ -128,16 +127,16 @@ namespace ROM.UnplannedWorkOrder {
                     }
                 }
             }
-            //Set disabled false for quarter fields if ISSO
-            //else {
-            //    if (userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager|ROM - Inspector")) {
-            //        form.getControl("ts_completedquarter").setDisabled(false);
-            //        form.getControl("ovs_revisedquarterid").setDisabled(false);
-            //    } else {
-            //        form.getControl("ts_completedquarter").setDisabled(true);
-            //        form.getControl("ts_revisedquarterid").setDisabled(true);
-            //    }
-            //}
+            // Set disabled false for quarter fields if ISSO
+            else {
+                if (userHasRole("System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager|ROM - Inspector")) {
+                    /*form.getControl("ts_completedquarter").setDisabled(false);*/
+                    form.getControl("ts_revisedquarterid").setDisabled(false);
+                } else {
+                    /*form.getControl("ts_completedquarter").setDisabled(true);*/
+                    form.getControl("ts_revisedquarterid").setDisabled(true);
+                }
+            }
         });
 
         // Enable rationale editing for users in the AvSec International team (based on environment variable, not team name)
@@ -190,9 +189,9 @@ namespace ROM.UnplannedWorkOrder {
         //    form.getControl("ts_completedquarter").setVisible(false);
         //}
 
-        //if (currentSystemStatus == 690970004 || currentSystemStatus == 690970003 || currentSystemStatus == msdyn_wosystemstatus.Closed) { //Closed ; Completed
-        //    form.getControl("ovs_revisedquarterid").setDisabled(true);
-        //}
+        if (currentSystemStatus == 690970004 || currentSystemStatus == 690970003 || currentSystemStatus == msdyn_wosystemstatus.Closed) { //Closed ; Completed
+            form.getControl("ts_revisedquarterid").setDisabled(true);
+        }
 
         //Limit ownership of a Work Order to users associated with the same program
         if (form.ui.getFormType() == 1 || form.ui.getFormType() == 2) {
