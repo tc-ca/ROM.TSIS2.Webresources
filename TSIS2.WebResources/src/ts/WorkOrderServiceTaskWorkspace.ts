@@ -1194,16 +1194,16 @@
             if (accesscontrol == 1) {
                 let accessUserFetchXml = [
                     "<fetch>",
-                    "  <entity name='ts_msdyn_workorderservicetask_systemuser'>",
+                    "  <entity name='ts_workorderservicetaskworkspace_system'>",
                     "    <filter type='and'>",
-                    "      <condition attribute='msdyn_workorderservicetaskid' operator='eq' value='", eContext.getFormContext().data.entity.getId(), "'/>",
+                    "      <condition attribute='ts_workorderservicetaskworkspaceid' operator='eq' value='", eContext.getFormContext().data.entity.getId(), "'/>",
                     "      <condition attribute='systemuserid' operator='eq' value='", Xrm.Utility.getGlobalContext().userSettings.userId, "'/>",
                     "    </filter>",
                     "  </entity>",
                     "</fetch>"
                 ].join("");
                 accessUserFetchXml = "?fetchXml=" + encodeURIComponent(accessUserFetchXml);
-                Xrm.WebApi.retrieveMultipleRecords("ts_msdyn_workorderservicetask_systemuser", accessUserFetchXml).then(
+                Xrm.WebApi.retrieveMultipleRecords("ts_workorderservicetaskworkspace_system", accessUserFetchXml).then(
                     function (result) {
                         if (result.entities != null && result.entities.length == 0) {
                             if (workOrderId != "") {
