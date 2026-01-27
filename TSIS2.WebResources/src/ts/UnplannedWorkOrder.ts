@@ -7,6 +7,8 @@ namespace ROM.UnplannedWorkOrder {
     var scheduledQuarterAttributeValueChanged = false;
     var isROM20Form = false;
     var UNPLANNED_CATEGORY_ID = "47f438c7-c104-eb11-a813-000d3af3a7a7";
+    const ISSO_CANCELED_JUSTICATION_OTHER = "{A8D7125C-7F24-ED11-9DB2-002248AE429C}";
+    const AVSEC_CANCELED_JUSTICATION_OTHER = "{F25411D0-29F2-F011-8406-70A8A50B10AD}";
     // EVENTS
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_unplannedworkorder.Main.Information>eContext.getFormContext();
@@ -468,10 +470,9 @@ namespace ROM.UnplannedWorkOrder {
             form.getControl("ts_cancelledinspectionjustification").setDisabled(true);
 
             let selectedCanceledWorkOrderReason = form.getAttribute("ts_cancelledinspectionjustification").getValue();
-            const selectedOther = "{A8D7125C-7F24-ED11-9DB2-002248AE429C}";
 
             //If 'Other' is selected as a reason, make ts_othercanceledjustification visible
-            if (selectedCanceledWorkOrderReason != null && selectedCanceledWorkOrderReason[0].id.toUpperCase() == selectedOther) {
+            if (selectedCanceledWorkOrderReason != null && (selectedCanceledWorkOrderReason[0].id.toUpperCase() == ISSO_CANCELED_JUSTICATION_OTHER || selectedCanceledWorkOrderReason[0].id.toUpperCase() == AVSEC_CANCELED_JUSTICATION_OTHER)) {
                 form.getControl("ts_othercancelledjustification").setVisible(true);
                 form.getAttribute("ts_othercancelledjustification").setRequiredLevel("required");
             }
@@ -2284,10 +2285,8 @@ namespace ROM.UnplannedWorkOrder {
 
         let selectedCanceledWorkOrderReason = form.getAttribute("ts_cancelledinspectionjustification").getValue();
 
-        const selectedOther = "{A8D7125C-7F24-ED11-9DB2-002248AE429C}";
-
         //If 'Other' is selected as a reason, make ts_othercanceledjustification visible
-        if (selectedCanceledWorkOrderReason != null && selectedCanceledWorkOrderReason[0].id.toUpperCase() == selectedOther) {
+        if (selectedCanceledWorkOrderReason != null && (selectedCanceledWorkOrderReason[0].id.toUpperCase() == ISSO_CANCELED_JUSTICATION_OTHER || selectedCanceledWorkOrderReason[0].id.toUpperCase() == AVSEC_CANCELED_JUSTICATION_OTHER)) {
             form.getControl("ts_othercancelledjustification").setVisible(true);
             form.getAttribute("ts_othercancelledjustification").setRequiredLevel("required");
         } else {
