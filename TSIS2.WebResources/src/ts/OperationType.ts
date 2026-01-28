@@ -15,6 +15,12 @@
 
         // Log Rail Safety ownership status to console
         logRailSafetyOwnershipStatus(form);
+
+        // Hide owner field if already owned by Rail Safety
+        const isRailSafety = await isOwnedByRailSafety(ownerAttributeValue);
+        if (isRailSafety) {
+            form.getControl("ownerid").setVisible(false);
+        }
     }
 
     export async function onSave(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {

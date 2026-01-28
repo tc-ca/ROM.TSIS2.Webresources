@@ -41,7 +41,7 @@ var ROM;
     (function (OperationType) {
         function onLoad(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var form, ownerAttribute, ownerAttributeValue, isAvSec;
+                var form, ownerAttribute, ownerAttributeValue, isAvSec, isRailSafety;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -60,6 +60,12 @@ var ROM;
                         case 3:
                             // Log Rail Safety ownership status to console
                             logRailSafetyOwnershipStatus(form);
+                            return [4 /*yield*/, isOwnedByRailSafety(ownerAttributeValue)];
+                        case 4:
+                            isRailSafety = _a.sent();
+                            if (isRailSafety) {
+                                form.getControl("ownerid").setVisible(false);
+                            }
                             return [2 /*return*/];
                     }
                 });
