@@ -582,6 +582,7 @@
                         fileData = {
                             "ts_formintegrationid": "WO " + tableRecordName
                         };
+                        fileData["ts_msdyn_workorder@odata.bind"] = `/msdyn_workorders(${recordId})`;
                         var fetchXmlWOST = '<fetch> <entity name="msdyn_workorderservicetask"><attribute name="msdyn_name" /><filter type="and"> <condition attribute="msdyn_workorder" operator="eq" value="' + recordId + '" /> </filter> </entity> </fetch>';
                         fetchXML = "?fetchXml=" + encodeURIComponent(fetchXmlWOST);
                         await parent.Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", fetchXML).then(function success(result) {
@@ -592,7 +593,7 @@
                                         entityType: "msdyn_workorderservicetask",
                                         id: task.msdyn_workorderservicetaskid
                                     });
-
+                                     fileData["ts_workorderservicetask@odata.bind"] = `/msdyn_workorderservicetasks(${result.entities[0].msdyn_workorderservicetaskid})`;
                                 });
                                 associateRelatedRecords("ts_Files_msdyn_workorderservicetasks", relatedServiceTasks, fileId);
                             }
@@ -620,6 +621,8 @@
                         fileData = {
                             "ts_formintegrationid": "WOST " + tableRecordName
                         };
+                        fileData["ts_workorderservicetask@odata.bind"] = `/msdyn_workorderservicetasks(${recordId})`;
+
                         var fetchWO = '<fetch><entity name="msdyn_workorder"><link-entity name="msdyn_workorderservicetask" from="msdyn_workorder" to="msdyn_workorderid" link-type="inner"><filter type="and"><condition attribute="msdyn_workorderservicetaskid" operator="eq" value="' + recordId + '"/></filter></link-entity></entity></fetch >';
                         fetchXML = "?fetchXml=" + encodeURIComponent(fetchWO);
                         await parent.Xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", fetchXML).then(function success(result) {
