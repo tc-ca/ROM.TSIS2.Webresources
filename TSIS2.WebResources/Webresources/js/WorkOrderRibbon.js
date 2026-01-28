@@ -47,6 +47,7 @@ function showAddExistingButton(primaryControl, targetFormId) {
 }
 function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, selectedControl) {
   const formContext = primaryControl;
+  const workOrderNumber = formContext.getAttribute("msdyn_name").getValue();
 
   const caseId = Xrm.Page.data.entity.getId().replace(/({|})/g, "");
 
@@ -106,7 +107,7 @@ function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, sel
             if (this.status === 204) {
               selectedControl.refresh();
             } else {
-              showErrorMessageAlert(this.statusText);
+              showErrorMessageAlert(this.statusText, workOrderNumber);
             }
           }
         };
@@ -115,13 +116,14 @@ function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, sel
       }
     },
     function (error) {
-      showErrorMessageAlert(error);
+      showErrorMessageAlert(error, workOrderNumber);
     }
   );
 }
 
 function ActivateWorkOrder(primaryControl) {
   const formContext = primaryControl;
+  const workOrderNumber = formContext.getAttribute("msdyn_name").getValue();
   $.ajaxSetup({ cache: true });
   $.getScript("../WebResources/ts_/js/Common.js", function () {
     $.ajaxSetup({ cache: false });
@@ -150,13 +152,14 @@ function ActivateWorkOrder(primaryControl) {
         }
       },
       function (error) {
-        showErrorMessageAlert(error);
+        showErrorMessageAlert(error, workOrderNumber);
       }
     );
   });
 }
 
 function openWorkOrderServiceTasks(formContext) {
+  const workOrderNumber = formContext.getAttribute("msdyn_name").getValue();
   workOrderServiceTaskData = {
     statecode: 0, //closed -> 1
     statuscode: 918640002, //closed -> 918640003
@@ -177,13 +180,13 @@ function openWorkOrderServiceTasks(formContext) {
           ).then(
             function success(result) {},
             function (error) {
-              showErrorMessageAlert(error);
+              showErrorMessageAlert(error, workOrderNumber);
             }
           );
         }
       },
       function (error) {
-        showErrorMessageAlert(error);
+        showErrorMessageAlert(error, workOrderNumber);
       }
     );
 }
@@ -198,8 +201,12 @@ function setWorkOrderServiceTasksView(formContext) {
   formContext.getControl("workorderservicetasksgrid").getViewSelector().setCurrentView(activeWorkOrderServiceTasksView);
 }
 
-function showErrorMessageAlert(error) {
-  var alertStrings = { text: error.message };
+function showErrorMessageAlert(error, workOrderNumber) {
+  var errorMessage = error.message || error.toString();
+  if (workOrderNumber) {
+    errorMessage = "Work Order: " + workOrderNumber + "\n\nError: " + errorMessage;
+  }
+  var alertStrings = { text: errorMessage };
   var alertOptions = { height: 120, width: 260 };
   Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () {});
 }
@@ -1206,11 +1213,10 @@ function openBulkWorkspace(selectedControl) {
 
     if (!hasAccess) {
         const lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
-        Xrm.Navigation.openAlertDialog({ 
-            text: (lang == 1036) ? 
-                "Vous n'avez pas la permission d'accéder à cette fonction." : 
-                "You do not have permission to access this function." 
-        });
+        const permissionError = new Error((lang == 1036) ? 
+            "Vous n'avez pas la permission d'accéder à cette fonction." : 
+            "You do not have permission to access this function.");
+        showErrorMessageAlert(permissionError);
         return;
     }
 
@@ -1269,12 +1275,19 @@ function openBulkWorkspace(selectedControl) {
             // Step 2.5: Show warning if any failed
             if (failedWoIds.length > 0) {
                 const successCount = missingWoIds.length - failedWoIds.length;
+                let diagnosticDetails = "\n\nDiagnostic Info:\n";
+                diagnosticDetails += "- Total WOs selected: " + woIds.length + "\n";
+                diagnosticDetails += "- Successfully created: " + successCount + "\n";
+                diagnosticDetails += "- Failed: " + failedWoIds.length + "\n";
+                diagnosticDetails += "- Step: Check workspace creation or API calls\n";
+                diagnosticDetails += "- Please check the browser console for detailed errors";
+                
                 const failureMessage = (lang == 1036) ?
-                    `${successCount} espace(s) de travail créé(s). Échec pour ${failedWoIds.length} ordre(s) de travail.\nIDs: ${failedWoIds.join(", ")}` :
-                    `${successCount} workspace(s) created. Failed for ${failedWoIds.length} work order(s).\nIDs: ${failedWoIds.join(", ")}`;
+                    `${successCount} espace(s) de travail créé(s). Échec pour ${failedWoIds.length} ordre(s) de travail.\nIDs: ${failedWoIds.join(", ")}` + diagnosticDetails :
+                    `${successCount} workspace(s) created. Failed for ${failedWoIds.length} work order(s).\nIDs: ${failedWoIds.join(", ")}` + diagnosticDetails;
                 
                 Xrm.Utility.closeProgressIndicator();
-                Xrm.Navigation.openAlertDialog({ text: failureMessage });
+                showErrorMessageAlert(new Error(failureMessage));
                 return;
             }
 
@@ -1295,12 +1308,7 @@ function openBulkWorkspace(selectedControl) {
             }
         } catch (error) {
             Xrm.Utility.closeProgressIndicator();
-            const lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
-            Xrm.Navigation.openAlertDialog({ 
-                text: (lang == 1036) ? 
-                    "Une erreur s'est produite: " + error.message : 
-                    "An error occurred: " + error.message 
-            });
+            showErrorMessageAlert(error);
         }
     })();
 }
