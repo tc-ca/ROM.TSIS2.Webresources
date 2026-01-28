@@ -13,9 +13,19 @@
             form.getControl("Subgrid_EntityRisk").setVisible(false);
         }
 
+        // Log Rail Safety ownership status to console
+        logRailSafetyOwnershipStatus(form);
     }
-    export function onSave(eContext: Xrm.ExecutionContext<any, any>): void {
-        console.log("onSave working");
+
+    export async function onSave(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
+        const form = <Form.ovs_operationtype.Main.Information>eContext.getFormContext();
+
+        try {
+            // Rail Safety ownership assignment
+            await assignRailSafetyOwnershipOnSave(form);
+        } catch (error) {
+            console.error("[OperationType.onSave] Error:", error);
+        }
     }
 
 }
