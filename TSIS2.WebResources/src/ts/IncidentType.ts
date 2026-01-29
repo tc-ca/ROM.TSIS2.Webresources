@@ -50,27 +50,37 @@ namespace ROM.IncidentType {
                     if (teamSchemaName) {
                         const teamId = await getEnvironmentVariableValue(teamSchemaName);
                         if (teamId) {
-                            const teamRec = await Xrm.WebApi.retrieveRecord("team", teamId, "?$select=name");
-                            if (!teamRec) return;
+                            try {
+                                const teamRec = await Xrm.WebApi.retrieveRecord("team", teamId, "?$select=name");
+                                if (!teamRec || !teamRec.name) {
+                                    console.warn("[IncidentType.onLoad] Team record not found or missing name:", teamId);
+                                    return;
+                                }
 
-                            const team: Xrm.EntityReference<"team"> = {
-                                id: teamId,
-                                name: teamRec.name || "",
-                                entityType: "team"
-                            };
+                                const team: Xrm.EntityReference<"team"> = {
+                                    id: teamId,
+                                    name: teamRec.name,
+                                    entityType: "team"
+                                };
 
-                            form.getAttribute('ownerid').setValue([team]);
-                            
-                            // Hide owner field if Rail Safety team was assigned
-                            if (isRailSafetyTeam) {
-                                form.getControl("ownerid").setVisible(false);
-                            }
+                                form.getAttribute('ownerid').setValue([team]);
+                                
+                                // Hide owner field if Rail Safety team was assigned
+                                if (isRailSafetyTeam) {
+                                    form.getControl("ownerid").setVisible(false);
+                                }
 
-                            // Check owner status after setting it (only for AvSec)
-                            if (isAvSec) {
-                                isOwnedByAvSec([team]).then(isAvSecOwner => {
-                                    form.ui.tabs.get("tab_risk").setVisible(isAvSecOwner);
-                                });
+                                // Check owner status after setting it (only for AvSec)
+                                if (isAvSec) {
+                                    isOwnedByAvSec([team]).then(isAvSecOwner => {
+                                        form.ui.tabs.get("tab_risk").setVisible(isAvSecOwner);
+                                    });
+                                }
+
+                                // Log Rail Safety ownership status after setting owner
+                                logRailSafetyOwnershipStatus(form);
+                            } catch (error) {
+                                console.error("[IncidentType.onLoad] Error retrieving team record:", error);
                             }
                         }
                     }
@@ -113,10 +123,9 @@ namespace ROM.IncidentType {
                     form.ui.tabs.get("tab_risk").setVisible(isAvSecOwner);
                 });
             }
-        }
 
-        // Log Rail Safety ownership status to console
-        logRailSafetyOwnershipStatus(form);
+            // Log Rail Safety ownership status for existing records
+            logRailSafetyOwnershipStatus(form);
     }
 
     export async function onSave(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {

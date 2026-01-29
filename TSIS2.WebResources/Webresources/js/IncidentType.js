@@ -41,6 +41,46 @@ var ROM;
     (function (IncidentType) {
         function onLoad(eContext) {
             return __awaiter(this, void 0, void 0, function () {
+                function onSave(eContext) {
+                    return __awaiter(this, void 0, void 0, function () {
+                        var form, error_1;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    form = eContext.getFormContext();
+                                    _a.label = 1;
+                                case 1:
+                                    _a.trys.push([1, 3, , 4]);
+                                    // Rail Safety ownership assignment
+                                    return [4 /*yield*/, assignRailSafetyOwnershipOnSave(form)];
+                                case 2:
+                                    // Rail Safety ownership assignment
+                                    _a.sent();
+                                    return [3 /*break*/, 4];
+                                case 3:
+                                    error_1 = _a.sent();
+                                    console.error("[IncidentType.onSave] Error:", error_1);
+                                    return [3 /*break*/, 4];
+                                case 4: return [2 /*return*/];
+                            }
+                        });
+                    });
+                }
+                function setFieldsDisabled(eContext) {
+                    var formContext = eContext.getFormContext();
+                    var gridContext = formContext.getControl("operation_activity_grid");
+                    if (formContext) {
+                        var arrFields_1 = ["ts_operation", "ts_activity"];
+                        var objEntity = formContext.data.entity;
+                        objEntity.attributes.forEach(function (attribute, i) {
+                            if (arrFields_1.indexOf(attribute.getName()) > -1) {
+                                var attributeToDisable = attribute.controls.get(0);
+                                attributeToDisable.setDisabled(true);
+                            }
+                        });
+                    }
+                    ;
+                }
                 var form, formType, userId, currentUserBusinessUnitFetchXML, ownerAttribute, ownerAttributeValue;
                 return __generator(this, function (_a) {
                     form = eContext.getFormContext();
@@ -65,7 +105,7 @@ var ROM;
                         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
                         Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
                             return __awaiter(this, void 0, void 0, function () {
-                                var userBuId, isTC, isAvSec, isISSO, _a, isRailSafety, _b, teamSchemaName, isRailSafetyTeam, teamId, teamRec, team;
+                                var userBuId, isTC, isAvSec, isISSO, _a, isRailSafety, _b, teamSchemaName, isRailSafetyTeam, teamId, teamRec, team, error_2;
                                 return __generator(this, function (_c) {
                                     switch (_c.label) {
                                         case 0:
@@ -111,19 +151,24 @@ var ROM;
                                                 teamSchemaName = TEAM_SCHEMA_NAMES.RAIL_SAFETY;
                                                 isRailSafetyTeam = true;
                                             }
-                                            if (!teamSchemaName) return [3 /*break*/, 11];
+                                            if (!teamSchemaName) return [3 /*break*/, 13];
                                             return [4 /*yield*/, getEnvironmentVariableValue(teamSchemaName)];
                                         case 9:
                                             teamId = _c.sent();
-                                            if (!teamId) return [3 /*break*/, 11];
-                                            return [4 /*yield*/, Xrm.WebApi.retrieveRecord("team", teamId, "?$select=name")];
+                                            if (!teamId) return [3 /*break*/, 13];
+                                            _c.label = 10;
                                         case 10:
+                                            _c.trys.push([10, 12, , 13]);
+                                            return [4 /*yield*/, Xrm.WebApi.retrieveRecord("team", teamId, "?$select=name")];
+                                        case 11:
                                             teamRec = _c.sent();
-                                            if (!teamRec)
+                                            if (!teamRec || !teamRec.name) {
+                                                console.warn("[IncidentType.onLoad] Team record not found or missing name:", teamId);
                                                 return [2 /*return*/];
+                                            }
                                             team = {
                                                 id: teamId,
-                                                name: teamRec.name || "",
+                                                name: teamRec.name,
                                                 entityType: "team"
                                             };
                                             form.getAttribute('ownerid').setValue([team]);
@@ -137,8 +182,14 @@ var ROM;
                                                     form.ui.tabs.get("tab_risk").setVisible(isAvSecOwner);
                                                 });
                                             }
-                                            _c.label = 11;
-                                        case 11: return [2 /*return*/];
+                                            // Log Rail Safety ownership status after setting owner
+                                            logRailSafetyOwnershipStatus(form);
+                                            return [3 /*break*/, 13];
+                                        case 12:
+                                            error_2 = _c.sent();
+                                            console.error("[IncidentType.onLoad] Error retrieving team record:", error_2);
+                                            return [3 /*break*/, 13];
+                                        case 13: return [2 /*return*/];
                                     }
                                 });
                             });
@@ -185,55 +236,15 @@ var ROM;
                                 form.ui.tabs.get("tab_risk").setVisible(isAvSecOwner);
                             });
                         }
+                        // Log Rail Safety ownership status for existing records
+                        logRailSafetyOwnershipStatus(form);
                     }
-                    // Log Rail Safety ownership status to console
-                    logRailSafetyOwnershipStatus(form);
+                    IncidentType.onSave = onSave;
+                    IncidentType.setFieldsDisabled = setFieldsDisabled;
                     return [2 /*return*/];
                 });
             });
         }
         IncidentType.onLoad = onLoad;
-        function onSave(eContext) {
-            return __awaiter(this, void 0, void 0, function () {
-                var form, error_1;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            form = eContext.getFormContext();
-                            _a.label = 1;
-                        case 1:
-                            _a.trys.push([1, 3, , 4]);
-                            // Rail Safety ownership assignment
-                            return [4 /*yield*/, assignRailSafetyOwnershipOnSave(form)];
-                        case 2:
-                            // Rail Safety ownership assignment
-                            _a.sent();
-                            return [3 /*break*/, 4];
-                        case 3:
-                            error_1 = _a.sent();
-                            console.error("[IncidentType.onSave] Error:", error_1);
-                            return [3 /*break*/, 4];
-                        case 4: return [2 /*return*/];
-                    }
-                });
-            });
-        }
-        IncidentType.onSave = onSave;
-        function setFieldsDisabled(eContext) {
-            var formContext = eContext.getFormContext();
-            var gridContext = formContext.getControl("operation_activity_grid");
-            if (formContext) {
-                var arrFields_1 = ["ts_operation", "ts_activity"];
-                var objEntity = formContext.data.entity;
-                objEntity.attributes.forEach(function (attribute, i) {
-                    if (arrFields_1.indexOf(attribute.getName()) > -1) {
-                        var attributeToDisable = attribute.controls.get(0);
-                        attributeToDisable.setDisabled(true);
-                    }
-                });
-            }
-            ;
-        }
-        IncidentType.setFieldsDisabled = setFieldsDisabled;
     })(IncidentType = ROM.IncidentType || (ROM.IncidentType = {}));
 })(ROM || (ROM = {}));
