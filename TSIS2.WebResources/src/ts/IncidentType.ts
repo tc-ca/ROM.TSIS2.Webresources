@@ -32,9 +32,12 @@ namespace ROM.IncidentType {
                     const isTC = await isTCBU(userBuId);
                     if (isTC) return;
 
-                    const isAvSec = await isAvSecBU(userBuId);
-                    const isISSO = !isAvSec ? await isISSOBU(userBuId) : false;
-                    const isRailSafety = !isAvSec && !isISSO ? await isRailSafetyBU(userBuId) : false;
+                    // Parallelize BU checks - all three run concurrently
+                    const [isAvSec, isISSO, isRailSafety] = await Promise.all([
+                        isAvSecBU(userBuId),
+                        isISSOBU(userBuId),
+                        isRailSafetyBU(userBuId)
+                    ]);
 
                     let teamSchemaName: string | undefined;
                     let isRailSafetyTeam = false;

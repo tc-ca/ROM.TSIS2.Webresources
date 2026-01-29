@@ -67,41 +67,25 @@ var ROM;
                                 currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
                                 Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
                                     return __awaiter(this, void 0, void 0, function () {
-                                        var userBuId, isTC, isAvSec, isISSO, _a, isRailSafety, _b, teamSchemaName, isRailSafetyTeam, teamId, teamRec, team, error_2;
-                                        return __generator(this, function (_c) {
-                                            switch (_c.label) {
+                                        var userBuId, isTC, _a, isAvSec, isISSO, isRailSafety, teamSchemaName, isRailSafetyTeam, teamId, teamRec, team, error_2;
+                                        return __generator(this, function (_b) {
+                                            switch (_b.label) {
                                                 case 0:
                                                     if (!businessunit.entities.length || !businessunit.entities[0].businessunitid)
                                                         return [2 /*return*/];
                                                     userBuId = businessunit.entities[0].businessunitid;
                                                     return [4 /*yield*/, isTCBU(userBuId)];
                                                 case 1:
-                                                    isTC = _c.sent();
+                                                    isTC = _b.sent();
                                                     if (isTC)
                                                         return [2 /*return*/];
-                                                    return [4 /*yield*/, isAvSecBU(userBuId)];
+                                                    return [4 /*yield*/, Promise.all([
+                                                            isAvSecBU(userBuId),
+                                                            isISSOBU(userBuId),
+                                                            isRailSafetyBU(userBuId)
+                                                        ])];
                                                 case 2:
-                                                    isAvSec = _c.sent();
-                                                    if (!!isAvSec) return [3 /*break*/, 4];
-                                                    return [4 /*yield*/, isISSOBU(userBuId)];
-                                                case 3:
-                                                    _a = _c.sent();
-                                                    return [3 /*break*/, 5];
-                                                case 4:
-                                                    _a = false;
-                                                    _c.label = 5;
-                                                case 5:
-                                                    isISSO = _a;
-                                                    if (!(!isAvSec && !isISSO)) return [3 /*break*/, 7];
-                                                    return [4 /*yield*/, isRailSafetyBU(userBuId)];
-                                                case 6:
-                                                    _b = _c.sent();
-                                                    return [3 /*break*/, 8];
-                                                case 7:
-                                                    _b = false;
-                                                    _c.label = 8;
-                                                case 8:
-                                                    isRailSafety = _b;
+                                                    _a = _b.sent(), isAvSec = _a[0], isISSO = _a[1], isRailSafety = _a[2];
                                                     isRailSafetyTeam = false;
                                                     if (isAvSec) {
                                                         teamSchemaName = TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC;
@@ -113,17 +97,17 @@ var ROM;
                                                         teamSchemaName = TEAM_SCHEMA_NAMES.RAIL_SAFETY;
                                                         isRailSafetyTeam = true;
                                                     }
-                                                    if (!teamSchemaName) return [3 /*break*/, 13];
+                                                    if (!teamSchemaName) return [3 /*break*/, 7];
                                                     return [4 /*yield*/, getEnvironmentVariableValue(teamSchemaName)];
-                                                case 9:
-                                                    teamId = _c.sent();
-                                                    if (!teamId) return [3 /*break*/, 13];
-                                                    _c.label = 10;
-                                                case 10:
-                                                    _c.trys.push([10, 12, , 13]);
+                                                case 3:
+                                                    teamId = _b.sent();
+                                                    if (!teamId) return [3 /*break*/, 7];
+                                                    _b.label = 4;
+                                                case 4:
+                                                    _b.trys.push([4, 6, , 7]);
                                                     return [4 /*yield*/, Xrm.WebApi.retrieveRecord("team", teamId, "?$select=name")];
-                                                case 11:
-                                                    teamRec = _c.sent();
+                                                case 5:
+                                                    teamRec = _b.sent();
                                                     if (!teamRec || !teamRec.name) {
                                                         console.warn("[IncidentType.onLoad] Team record not found or missing name:", teamId);
                                                         return [2 /*return*/];
@@ -146,12 +130,12 @@ var ROM;
                                                     }
                                                     // Log Rail Safety ownership status after setting owner
                                                     logRailSafetyOwnershipStatus(form);
-                                                    return [3 /*break*/, 13];
-                                                case 12:
-                                                    error_2 = _c.sent();
+                                                    return [3 /*break*/, 7];
+                                                case 6:
+                                                    error_2 = _b.sent();
                                                     console.error("[IncidentType.onLoad] Error retrieving team record:", error_2);
-                                                    return [3 /*break*/, 13];
-                                                case 13: return [2 /*return*/];
+                                                    return [3 /*break*/, 7];
+                                                case 7: return [2 /*return*/];
                                             }
                                         });
                                     });
