@@ -130,11 +130,19 @@ var ROM;
                                             if (isRailSafetyTeam) {
                                                 form.getControl("ownerid").setVisible(false);
                                             }
+                                            // Check owner status after setting it (only for AvSec)
+                                            if (isAvSec) {
+                                                isOwnedByAvSec([team]).then(function (isAvSecOwner) {
+                                                    form.ui.tabs.get("tab_risk").setVisible(isAvSecOwner);
+                                                });
+                                            }
                                             _c.label = 11;
                                         case 11: return [2 /*return*/];
                                     }
                                 });
                             });
+                        }).catch(function (error) {
+                            console.error("[IncidentType.onLoad] Error retrieving business unit:", error);
                         });
                     }
                     //If viewing a record
@@ -166,14 +174,16 @@ var ROM;
                                     }
                                 });
                             });
+                        }).catch(function (error) {
+                            console.error("[IncidentType.onLoad] Error retrieving incident type:", error);
                         });
-                    }
-                    ownerAttribute = form.getAttribute("ownerid");
-                    ownerAttributeValue = ownerAttribute.getValue();
-                    if (ownerAttributeValue != null) {
-                        isOwnedByAvSec(ownerAttributeValue).then(function (isAvSecOwner) {
-                            form.ui.tabs.get("tab_risk").setVisible(isAvSecOwner);
-                        });
+                        ownerAttribute = form.getAttribute("ownerid");
+                        ownerAttributeValue = ownerAttribute.getValue();
+                        if (ownerAttributeValue != null) {
+                            isOwnedByAvSec(ownerAttributeValue).then(function (isAvSecOwner) {
+                                form.ui.tabs.get("tab_risk").setVisible(isAvSecOwner);
+                            });
+                        }
                     }
                     // Log Rail Safety ownership status to console
                     logRailSafetyOwnershipStatus(form);

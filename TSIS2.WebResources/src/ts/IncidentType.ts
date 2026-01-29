@@ -64,10 +64,19 @@ namespace ROM.IncidentType {
                             if (isRailSafetyTeam) {
                                 form.getControl("ownerid").setVisible(false);
                             }
+
+                            // Check owner status after setting it (only for AvSec)
+                            if (isAvSec) {
+                                isOwnedByAvSec([team]).then(isAvSecOwner => {
+                                    form.ui.tabs.get("tab_risk").setVisible(isAvSecOwner);
+                                });
+                            }
                         }
                     }
                 }
-            );
+            ).catch(error => {
+                console.error("[IncidentType.onLoad] Error retrieving business unit:", error);
+            });
         }
 
         //If viewing a record
@@ -90,17 +99,19 @@ namespace ROM.IncidentType {
                         formUI.quickForms.get("ProgramAreaRiskRatingQV").setVisible(false);
                     }
                 }
-            );
-        }
-
-        //If owner is Aviation Security
-        const ownerAttribute = form.getAttribute("ownerid")
-        const ownerAttributeValue = ownerAttribute.getValue();
-
-        if (ownerAttributeValue != null) {
-            isOwnedByAvSec(ownerAttributeValue).then(isAvSecOwner => {
-                form.ui.tabs.get("tab_risk").setVisible(isAvSecOwner);
+            ).catch(error => {
+                console.error("[IncidentType.onLoad] Error retrieving incident type:", error);
             });
+
+            // Check owner status for existing records
+            const ownerAttribute = form.getAttribute("ownerid");
+            const ownerAttributeValue = ownerAttribute.getValue();
+
+            if (ownerAttributeValue != null) {
+                isOwnedByAvSec(ownerAttributeValue).then(isAvSecOwner => {
+                    form.ui.tabs.get("tab_risk").setVisible(isAvSecOwner);
+                });
+            }
         }
 
         // Log Rail Safety ownership status to console
