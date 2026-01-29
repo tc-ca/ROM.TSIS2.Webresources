@@ -33,7 +33,7 @@ namespace ROM.IncidentType {
 
                     const isAvSec = await isAvSecBU(userBuId);
                     const isISSO = !isAvSec ? await isISSOBU(userBuId) : false;
-                    const isRailSafetyBU = !isAvSec && !isISSO ? await isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.RAIL_SAFETY) : false;
+                    const isRailSafety = !isAvSec && !isISSO ? await isRailSafetyBU(userBuId) : false;
 
                     let teamSchemaName: string | undefined;
                     let isRailSafetyTeam = false;
@@ -41,7 +41,7 @@ namespace ROM.IncidentType {
                         teamSchemaName = TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC;
                     } else if (isISSO) {
                         teamSchemaName = TEAM_SCHEMA_NAMES.ISSO_TEAM;
-                    } else if (isRailSafetyBU) {
+                    } else if (isRailSafety) {
                         teamSchemaName = TEAM_SCHEMA_NAMES.RAIL_SAFETY;
                         isRailSafetyTeam = true;
                     }
