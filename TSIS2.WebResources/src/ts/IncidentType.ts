@@ -2,9 +2,10 @@ namespace ROM.IncidentType {
 
     export async function onLoad(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
         const form = <Form.msdyn_incidenttype.Main.Information>eContext.getFormContext();
+        const formType = form.ui.getFormType();
 
         //If creating a record
-        if (form.ui.getFormType() == 1) {
+        if (formType == 1) {
             form.getAttribute('ownerid').setValue();
             let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
 
@@ -80,7 +81,7 @@ namespace ROM.IncidentType {
         }
 
         //If viewing a record
-        if (form.ui.getFormType() == 2 || form.ui.getFormType() == 3 || form.ui.getFormType() == 4) {
+        if (formType == 2 || formType == 3 || formType == 4) {
             Xrm.WebApi.retrieveRecord('msdyn_incidenttype', form.data.entity.getId(), "?$select=_owningbusinessunit_value").then(
                 async function success(incidenttype) {
                     const owningBuId = incidenttype._owningbusinessunit_value;

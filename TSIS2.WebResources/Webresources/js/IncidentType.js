@@ -41,11 +41,12 @@ var ROM;
     (function (IncidentType) {
         function onLoad(eContext) {
             return __awaiter(this, void 0, void 0, function () {
-                var form, userId, currentUserBusinessUnitFetchXML, ownerAttribute, ownerAttributeValue;
+                var form, formType, userId, currentUserBusinessUnitFetchXML, ownerAttribute, ownerAttributeValue;
                 return __generator(this, function (_a) {
                     form = eContext.getFormContext();
+                    formType = form.ui.getFormType();
                     //If creating a record
-                    if (form.ui.getFormType() == 1) {
+                    if (formType == 1) {
                         form.getAttribute('ownerid').setValue();
                         userId = Xrm.Utility.getGlobalContext().userSettings.userId;
                         currentUserBusinessUnitFetchXML = [
@@ -64,7 +65,7 @@ var ROM;
                         currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
                         Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
                             return __awaiter(this, void 0, void 0, function () {
-                                var userBuId, isTC, isAvSec, isISSO, _a, isRailSafetyBU, _b, teamSchemaName, isRailSafetyTeam, teamId, teamRec, team;
+                                var userBuId, isTC, isAvSec, isISSO, _a, isRailSafety, _b, teamSchemaName, isRailSafetyTeam, teamId, teamRec, team;
                                 return __generator(this, function (_c) {
                                     switch (_c.label) {
                                         case 0:
@@ -90,7 +91,7 @@ var ROM;
                                         case 5:
                                             isISSO = _a;
                                             if (!(!isAvSec && !isISSO)) return [3 /*break*/, 7];
-                                            return [4 /*yield*/, isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.RAIL_SAFETY)];
+                                            return [4 /*yield*/, isRailSafetyBU(userBuId)];
                                         case 6:
                                             _b = _c.sent();
                                             return [3 /*break*/, 8];
@@ -98,7 +99,7 @@ var ROM;
                                             _b = false;
                                             _c.label = 8;
                                         case 8:
-                                            isRailSafetyBU = _b;
+                                            isRailSafety = _b;
                                             isRailSafetyTeam = false;
                                             if (isAvSec) {
                                                 teamSchemaName = TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC;
@@ -106,7 +107,7 @@ var ROM;
                                             else if (isISSO) {
                                                 teamSchemaName = TEAM_SCHEMA_NAMES.ISSO_TEAM;
                                             }
-                                            else if (isRailSafetyBU) {
+                                            else if (isRailSafety) {
                                                 teamSchemaName = TEAM_SCHEMA_NAMES.RAIL_SAFETY;
                                                 isRailSafetyTeam = true;
                                             }
@@ -146,7 +147,7 @@ var ROM;
                         });
                     }
                     //If viewing a record
-                    if (form.ui.getFormType() == 2 || form.ui.getFormType() == 3 || form.ui.getFormType() == 4) {
+                    if (formType == 2 || formType == 3 || formType == 4) {
                         Xrm.WebApi.retrieveRecord('msdyn_incidenttype', form.data.entity.getId(), "?$select=_owningbusinessunit_value").then(function success(incidenttype) {
                             return __awaiter(this, void 0, void 0, function () {
                                 var owningBuId, isOwningBuAvSec, formUI, formUI;
