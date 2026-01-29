@@ -1,6 +1,6 @@
 namespace ROM.IncidentType {
 
-    export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
+    export async function onLoad(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
         const form = <Form.msdyn_incidenttype.Main.Information>eContext.getFormContext();
 
         //If creating a record
@@ -33,12 +33,17 @@ namespace ROM.IncidentType {
 
                     const isAvSec = await isAvSecBU(userBuId);
                     const isISSO = !isAvSec ? await isISSOBU(userBuId) : false;
+                    const isRailSafetyBU = !isAvSec && !isISSO ? await isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.RAIL_SAFETY) : false;
 
                     let teamSchemaName: string | undefined;
+                    let isRailSafetyTeam = false;
                     if (isAvSec) {
                         teamSchemaName = TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC;
                     } else if (isISSO) {
                         teamSchemaName = TEAM_SCHEMA_NAMES.ISSO_TEAM;
+                    } else if (isRailSafetyBU) {
+                        teamSchemaName = TEAM_SCHEMA_NAMES.RAIL_SAFETY;
+                        isRailSafetyTeam = true;
                     }
 
                     if (teamSchemaName) {
@@ -54,6 +59,11 @@ namespace ROM.IncidentType {
                             };
 
                             form.getAttribute('ownerid').setValue([team]);
+                            
+                            // Hide owner field if Rail Safety team was assigned
+                            if (isRailSafetyTeam) {
+                                form.getControl("ownerid").setVisible(false);
+                            }
                         }
                     }
                 }
@@ -91,6 +101,20 @@ namespace ROM.IncidentType {
             isOwnedByAvSec(ownerAttributeValue).then(isAvSecOwner => {
                 form.ui.tabs.get("tab_risk").setVisible(isAvSecOwner);
             });
+        }
+
+        // Log Rail Safety ownership status to console
+        logRailSafetyOwnershipStatus(form);
+    }
+
+    export async function onSave(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
+        const form = <Form.msdyn_incidenttype.Main.Information>eContext.getFormContext();
+
+        try {
+            // Rail Safety ownership assignment
+            await assignRailSafetyOwnershipOnSave(form);
+        } catch (error) {
+            console.error("[IncidentType.onSave] Error:", error);
         }
     }
 
