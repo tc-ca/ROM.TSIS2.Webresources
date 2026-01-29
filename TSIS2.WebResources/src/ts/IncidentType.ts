@@ -119,13 +119,17 @@ namespace ROM.IncidentType {
             const ownerAttributeValue = ownerAttribute.getValue();
 
             if (ownerAttributeValue != null) {
-                isOwnedByAvSec(ownerAttributeValue).then(isAvSecOwner => {
+                try {
+                    const isAvSecOwner = await isOwnedByAvSec(ownerAttributeValue);
                     form.ui.tabs.get("tab_risk").setVisible(isAvSecOwner);
-                });
+                } catch (error) {
+                    console.error("[IncidentType.onLoad] Error checking AvSec ownership:", error);
+                }
             }
 
             // Log Rail Safety ownership status for existing records
             logRailSafetyOwnershipStatus(form);
+        }
     }
 
     export async function onSave(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
