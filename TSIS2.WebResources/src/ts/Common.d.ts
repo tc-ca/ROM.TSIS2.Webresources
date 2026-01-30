@@ -28,6 +28,7 @@ declare function isOwnedByRailSafety(ownerValue: any): Promise<boolean>;
 declare function isOwnedByRailSafetyAdministrator(ownerValue: any): Promise<boolean>;
 declare function isAvSecBU(buId: string): Promise<boolean>;
 declare function isISSOBU(buId: string): Promise<boolean>;
+declare function isRailSafetyBU(buId: string): Promise<boolean>;
 declare function isTCBU(buId: string): Promise<boolean>;
 declare function isUserInTCBU(userBuId: string): Promise<boolean>;
 declare function getAvSecBUGUIDs(): Promise<string[]>;

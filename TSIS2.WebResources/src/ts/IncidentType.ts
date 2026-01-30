@@ -1,10 +1,11 @@
 namespace ROM.IncidentType {
 
-    export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
+    export async function onLoad(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
         const form = <Form.msdyn_incidenttype.Main.Information>eContext.getFormContext();
+        const formType = form.ui.getFormType();
 
         //If creating a record
-        if (form.ui.getFormType() == 1) {
+        if (formType == 1) {
             form.getAttribute('ownerid').setValue();
             let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
 
@@ -31,37 +32,69 @@ namespace ROM.IncidentType {
                     const isTC = await isTCBU(userBuId);
                     if (isTC) return;
 
-                    const isAvSec = await isAvSecBU(userBuId);
-                    const isISSO = !isAvSec ? await isISSOBU(userBuId) : false;
+                    // Parallelize BU checks - all three run concurrently
+                    const [isAvSec, isISSO, isRailSafety] = await Promise.all([
+                        isAvSecBU(userBuId),
+                        isISSOBU(userBuId),
+                        isRailSafetyBU(userBuId)
+                    ]);
 
                     let teamSchemaName: string | undefined;
+                    let isRailSafetyTeam = false;
                     if (isAvSec) {
                         teamSchemaName = TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC;
                     } else if (isISSO) {
                         teamSchemaName = TEAM_SCHEMA_NAMES.ISSO_TEAM;
+                    } else if (isRailSafety) {
+                        teamSchemaName = TEAM_SCHEMA_NAMES.RAIL_SAFETY;
+                        isRailSafetyTeam = true;
                     }
 
                     if (teamSchemaName) {
                         const teamId = await getEnvironmentVariableValue(teamSchemaName);
                         if (teamId) {
-                            const teamRec = await Xrm.WebApi.retrieveRecord("team", teamId, "?$select=name");
-                            if (!teamRec) return;
+                            try {
+                                const teamRec = await Xrm.WebApi.retrieveRecord("team", teamId, "?$select=name");
+                                if (!teamRec || !teamRec.name) {
+                                    console.warn("[IncidentType.onLoad] Team record not found or missing name:", teamId);
+                                    return;
+                                }
 
-                            const team: Xrm.EntityReference<"team"> = {
-                                id: teamId,
-                                name: teamRec.name || "",
-                                entityType: "team"
-                            };
+                                const team: Xrm.EntityReference<"team"> = {
+                                    id: teamId,
+                                    name: teamRec.name,
+                                    entityType: "team"
+                                };
 
-                            form.getAttribute('ownerid').setValue([team]);
+                                form.getAttribute('ownerid').setValue([team]);
+                                
+                                // Hide owner field if Rail Safety team was assigned
+                                if (isRailSafetyTeam) {
+                                    form.getControl("ownerid").setVisible(false);
+                                }
+
+                                // Check owner status after setting it (only for AvSec)
+                                if (isAvSec) {
+                                    isOwnedByAvSec([team]).then(isAvSecOwner => {
+                                        form.ui.tabs.get("tab_risk").setVisible(isAvSecOwner);
+                                    });
+                                }
+
+                                // Log Rail Safety ownership status after setting owner
+                                logRailSafetyOwnershipStatus(form);
+                            } catch (error) {
+                                console.error("[IncidentType.onLoad] Error retrieving team record:", error);
+                            }
                         }
                     }
                 }
-            );
+            ).catch(error => {
+                console.error("[IncidentType.onLoad] Error retrieving business unit:", error);
+            });
         }
 
         //If viewing a record
-        if (form.ui.getFormType() == 2 || form.ui.getFormType() == 3 || form.ui.getFormType() == 4) {
+        if (formType == 2 || formType == 3 || formType == 4) {
             Xrm.WebApi.retrieveRecord('msdyn_incidenttype', form.data.entity.getId(), "?$select=_owningbusinessunit_value").then(
                 async function success(incidenttype) {
                     const owningBuId = incidenttype._owningbusinessunit_value;
@@ -80,17 +113,36 @@ namespace ROM.IncidentType {
                         formUI.quickForms.get("ProgramAreaRiskRatingQV").setVisible(false);
                     }
                 }
-            );
-        }
-
-        //If owner is Aviation Security
-        const ownerAttribute = form.getAttribute("ownerid")
-        const ownerAttributeValue = ownerAttribute.getValue();
-
-        if (ownerAttributeValue != null) {
-            isOwnedByAvSec(ownerAttributeValue).then(isAvSecOwner => {
-                form.ui.tabs.get("tab_risk").setVisible(isAvSecOwner);
+            ).catch(error => {
+                console.error("[IncidentType.onLoad] Error retrieving incident type:", error);
             });
+
+            // Check owner status for existing records
+            const ownerAttribute = form.getAttribute("ownerid");
+            const ownerAttributeValue = ownerAttribute.getValue();
+
+            if (ownerAttributeValue != null) {
+                try {
+                    const isAvSecOwner = await isOwnedByAvSec(ownerAttributeValue);
+                    form.ui.tabs.get("tab_risk").setVisible(isAvSecOwner);
+                } catch (error) {
+                    console.error("[IncidentType.onLoad] Error checking AvSec ownership:", error);
+                }
+            }
+
+            // Log Rail Safety ownership status for existing records
+            logRailSafetyOwnershipStatus(form);
+        }
+    }
+
+    export async function onSave(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
+        const form = <Form.msdyn_incidenttype.Main.Information>eContext.getFormContext();
+
+        try {
+            // Rail Safety ownership assignment
+            await assignRailSafetyOwnershipOnSave(form);
+        } catch (error) {
+            console.error("[IncidentType.onSave] Error:", error);
         }
     }
 

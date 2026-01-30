@@ -18,6 +18,7 @@ const BU_SCHEMA_NAMES = {
   ISSO: "ts_IntermodalSurfaceSecurityOversightISSOBusinessUnitGUID",
   TRANSPORT_CANADA: "ts_TransportCanadaBusinessUnitGUID",
   AVIATION_SECURITY_INTERNATIONAL_DEV: "ts_AviationSecurityInternationalBusinessUnitGUID_DEV",
+  RAIL_SAFETY: "ts_RailSafetyBusinessUnitGUID",
 };
 
 // Model Driven App Names
@@ -647,6 +648,15 @@ async function isAvSecBU(buId) {
  */
 async function isISSOBU(buId) {
   return isBusinessUnit(buId, [BU_SCHEMA_NAMES.ISSO]);
+}
+
+/**
+ * True if BU is the Rail Safety BU.
+ * @param {string} buId - Business Unit GUID
+ * @returns {Promise<boolean>} True if BU is Rail Safety
+ */
+async function isRailSafetyBU(buId) {
+  return isBusinessUnit(buId, [BU_SCHEMA_NAMES.RAIL_SAFETY]);
 }
 
 // Returns an array of AvSec Business Unit GUIDs (normalized)
