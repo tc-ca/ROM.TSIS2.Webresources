@@ -122,7 +122,7 @@
             ReCalculateRiskScore();   
 
             // Start countdown
-            let secondsLeft = 30;
+            let secondsLeft = 15;
             textSpan.innerText = processingText + " " + secondsLeft;
 
             if (countdownTimer) clearInterval(countdownTimer);  // clear any old timer
@@ -139,7 +139,7 @@
 
                     // Restore button
                     textSpan.innerText = originalText;
-                    console.info("Button re-enabled after 30s");
+                    console.info("Button re-enabled after 15s");
 
                     // Refresh the form
                     if (parent.Xrm && parent.Xrm.Page && parent.Xrm.Page.data) {
