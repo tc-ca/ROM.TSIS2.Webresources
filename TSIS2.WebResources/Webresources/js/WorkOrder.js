@@ -416,6 +416,8 @@ var ROM;
             unlockRecordLogFieldsIfUserIsSystemAdmin(form);
             RemoveOptionCancel(eContext);
             showRationaleField(form, UNPLANNED_CATEGORY_ID);
+            // Hide ts_reason field (Work Order Rationale) unless owner is Domestic AvSec
+            showWorkOrderRationaleByBusinessUnit(form);
             checkUserIsInWorkOrderAccessTeam(form);
         }
         WorkOrder.onLoad = onLoad;
@@ -2426,13 +2428,65 @@ var ROM;
         }
         WorkOrder.rationaleOnChange = rationaleOnChange;
         /**
-          * Shows and makes required the Rationale lookup control when a Category indicates "Unplanned".
-          *
-          * @param {Form.msdyn_workorder.Main.ROMOversightActivity} form The Work Order form context (ROM Oversight Activity).
-          * @param {string} unplannedCategoryGUID GUID for the "Unplanned" category.
-          *
-          * @returns {void}
-          */
+         * Shows the Work Order Rationale field (ts_reason) ONLY for Domestic AvSec.
+         * Hides the field for Rail Safety, Rail Security, and International AvSec.
+         *
+         * @param {Form.msdyn_workorder.Main.ROMOversightActivity} form The Work Order form context.
+         *
+         * @returns {void}
+         */
+        function showWorkOrderRationaleByBusinessUnit(form) {
+            return __awaiter(this, void 0, void 0, function () {
+                var ownerAttribute, ownerValue, rationaleControl_1, isDomesticAvSec, rationaleControl, rationaleAttribute, error_1;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            _a.trys.push([0, 2, , 3]);
+                            ownerAttribute = form.getAttribute("ownerid");
+                            if (!ownerAttribute) {
+                                return [2 /*return*/];
+                            }
+                            ownerValue = ownerAttribute.getValue();
+                            if (!ownerValue || !ownerValue[0]) {
+                                rationaleControl_1 = form.getControl("ts_reason");
+                                if (rationaleControl_1) {
+                                    rationaleControl_1.setVisible(false);
+                                }
+                                return [2 /*return*/];
+                            }
+                            return [4 /*yield*/, isOwnedByAvSecDomestic(ownerValue)];
+                        case 1:
+                            isDomesticAvSec = _a.sent();
+                            rationaleControl = form.getControl("ts_reason");
+                            rationaleAttribute = form.getAttribute("ts_reason");
+                            if (rationaleControl) {
+                                rationaleControl.setVisible(isDomesticAvSec);
+                            }
+                            if (rationaleAttribute) {
+                                rationaleAttribute.setRequiredLevel(isDomesticAvSec ? "required" : "none");
+                                // If hiding, clear value to avoid stale required-value mismatch
+                                if (!isDomesticAvSec) {
+                                    rationaleAttribute.setValue(null);
+                                }
+                            }
+                            return [3 /*break*/, 3];
+                        case 2:
+                            error_1 = _a.sent();
+                            console.error("[WorkOrder.showWorkOrderRationaleByBusinessUnit] Error:", error_1);
+                            return [3 /*break*/, 3];
+                        case 3: return [2 /*return*/];
+                    }
+                });
+            });
+        }
+        /**
+         * Shows and makes required the Rationale lookup control when a Category indicates "Unplanned".
+         *
+         * @param {Form.msdyn_workorder.Main.ROMOversightActivity} form The Work Order form context (ROM Oversight Activity).
+         * @param {string} unplannedCategoryGUID GUID for the "Unplanned" category.
+         *
+         * @returns {void}
+         */
         function showRationaleField(form, unplannedCategoryGUID) {
             var lang = Xrm.Utility.getGlobalContext().userSettings.languageId;
             var categoryAttribute = form.getAttribute("ovs_rational");
