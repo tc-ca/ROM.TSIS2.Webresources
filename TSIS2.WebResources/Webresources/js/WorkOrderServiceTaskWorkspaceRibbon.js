@@ -12,7 +12,7 @@ if (lang == 1036) {
         "Toutes les questions requises du questionnaire doivent être répondues avant que le questionnaire puissent être marqué comme Terminé.";
     markCompleteValidationTitleLocalized = "Questionnaire Incomplet";
     markCompleteConfirmationTextLocalized =
-        "En cliquant sur OK, le statut du questionnaire passera à Terminé et les réponses seront enregistrées.\n\nLe résultat peut prendre jusqu’à 2 minutes à s’afficher. Veuillez actualiser la page, en utilisant l’outil du ruban, pour voir le résultat.";
+        "En cliquant sur OK, le statut du questionnaire passera à Terminé et les réponses seront enregistrées.";
     markCompleteConfirmationTitleLocalized = "Confirmation - Questionnaire complété";
     workOrderServiceTaskDetailsLocalized = "Détails de la tâche du service d'ordre de travail";
     workOrderServiceTaskLocalized = "Tâche de service de l'ordre de travail";
@@ -29,7 +29,7 @@ if (lang == 1036) {
         "All required questions in the questionnaire must be answered before the questionnaire can be Marked Complete.";
     markCompleteValidationTitleLocalized = "Questionnaire Incomplete";
     markCompleteConfirmationTextLocalized =
-        "By clicking OK, the questionnaire status will change to Complete and the questionnaire answers will be saved.\n\nThe Result may take up to 2 minutes to display. Please refresh the page, using the ribbon tool, to see the Result.";
+        "By clicking OK, the questionnaire status will change to Complete and the questionnaire answers will be saved.";
     markCompleteConfirmationTitleLocalized = "Confirmation - Questionnaire Complete";
     workOrderServiceTaskDetailsLocalized = "Work Order Service Task Details";
     workOrderServiceTaskLocalized = "Work Order Service Task";
