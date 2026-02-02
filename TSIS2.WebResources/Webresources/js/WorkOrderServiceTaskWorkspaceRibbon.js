@@ -443,7 +443,7 @@ function completeConfirmation(formContext, survey) {
         text: markCompleteConfirmationTextLocalized,
         title: markCompleteConfirmationTitleLocalized,
     };
-    var confirmOptions = { height: 250, width: 450 };
+    var confirmOptions = { height: 200, width: 450 };
 
     Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(function (success) {
         if (success.confirmed) {
