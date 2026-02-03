@@ -476,14 +476,19 @@ function addExistingUsersToWorkOrder(primaryControl, selectedEntityTypeName, sel
     const incidentTypeOwnerId = getOwnerIdFromRecord(incidentType);
     const isAvSec = incidentTypeOwnerId ? await isOwnedByAvSec(incidentTypeOwnerId) : false;
     const isISSO = incidentTypeOwnerId ? await isOwnedByISSO(incidentTypeOwnerId) : false;
+    const isRailSafety = incidentTypeOwnerId ? await isOwnedByRailSafety(incidentTypeOwnerId) : false;
 
-    // TODO: Need to revisit once it is determined what will be done with the inspector teams.
-    let inspectorTeamConditions = "";
-    if (isAvSec) {
-      inspectorTeamConditions =
-        '<condition entityname="aa" attribute="name" operator="like" value="Aviation%Inspectors" />';
-    } else if (isISSO) {
-      inspectorTeamConditions = '<condition entityname="aa" attribute="name" operator="eq" value="ISSO%Inspectors" />';
+      // TODO: Need to revisit once it is determined what will be done with the inspector teams.
+      let inspectorTeamConditions = "";
+      if (isAvSec) {
+          inspectorTeamConditions =
+              '<condition entityname="aa" attribute="name" operator="like" value="Aviation%Inspectors" />';
+      }
+      else if (isISSO) {
+          inspectorTeamConditions = '<condition entityname="aa" attribute="name" operator="eq" value="ISSO%Inspectors" />';
+      }
+      else if (isRailSafety) {
+          inspectorTeamConditions = '<condition entityname="aa" attribute="name" operator="eq" value="Rail Safety Auditor" />';
       }
 
       let entityName = parentEntityName;
