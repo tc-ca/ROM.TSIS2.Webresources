@@ -300,6 +300,11 @@
                 "description": "ROM TSIS 2.0 Work Order Creation Wizard Scripts"
             },
             {
+                "uniquename": "ts_/js/WorkOrderExportJob.js",
+                "file": "js\\WorkOrderExportJob.js",
+                "description": "ROM TSIS 2.0 Work Order Export Job Scripts"
+            },
+            {
                 "uniquename": "ovs_/js/WorkOrderRibbon.js",
                 "file": "js\\WorkOrderRibbon.js",
                 "description": "ROM TSIS 2.0 Work Order Ribbon Scripts"
@@ -748,6 +753,11 @@
                 "uniquename": "ovs_/js/tsis2findingwidget.js",
                 "file": "js\\tsis2findingwidget.js",
                 "description": "ROM TSIS 2.0 Custom Finding Widget for SurveyJS"
+            },
+            {
+                "uniquename": "ts_/js/html2pdf.bundle.min.js",
+                "file": "js\\html2pdf.bundle.min.js",
+                "description": "html2pdf library"
             },
             {
                 "uniquename": "ts_/js/buildprovisiontext.js",

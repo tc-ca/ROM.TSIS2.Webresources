@@ -1193,6 +1193,124 @@ function enableEditWorkOrderButtonForOwnerOrInspector(primaryControl) {
     return ROM.WorkOrder.isEditWorkOrderEnabled;
 }
 
+/**
+ * Display rule: Shows button only when Work Order is in a subgrid on ts_workorderexportjob form
+ * Configure in Ribbon Workbench: Enable Rule -> Custom Rule -> Function: isInExportJobSubgrid
+ */
+function isInExportJobSubgrid(primaryControl) {
+  try {
+    // Check if we're in a subgrid context by checking parent window
+    if (typeof parent !== "undefined" && parent.Xrm && parent.Xrm.Page) {
+      var parentEntityName = parent.Xrm.Page.data.entity.getEntityName();
+      return parentEntityName === "ts_workorderexportjob";
+    }
+    return false;
+  } catch (e) {
+    return false;
+  }
+}
+
+/**
+ * Export questionnaires for this Work Order (called from ribbon button in subgrid)
+ * Creates a new export job for the selected Work Orders
+ * Configure in Ribbon Workbench:
+ *   - Button 1 (what user saw):    exportWorkOrderFromSubgrid(selectedControl)
+ *   - Button 2 (show all hidden):  exportWorkOrderFromSubgrid(selectedControl, true)
+ * @param {any} selectedControl - The subgrid control
+ * @param {boolean} includeHiddenQuestions - Optional flag, default false
+ */
+async function exportWorkOrderFromSubgrid(selectedControl, includeHiddenQuestions = false) {
+  try {
+    function pad2(n) {
+      return (n < 10 ? "0" : "") + n;
+    }
+
+    // Local, user-friendly timestamp for record names (avoid ISO noise)
+    function formatDateForJobName(d) {
+      var yyyy = d.getFullYear();
+      var mm = pad2(d.getMonth() + 1);
+      var dd = pad2(d.getDate());
+      var hh = pad2(d.getHours());
+      var mi = pad2(d.getMinutes());
+      return yyyy + "-" + mm + "-" + dd + " " + hh + ":" + mi;
+    }
+
+    async function checkForExistingActiveJobs() {
+      const activeStatuses = [741130001, 741130002, 741130003, 741130004, 741130005];
+      const filterConditions = activeStatuses.map(s => `statuscode eq ${s}`).join(" or ");
+      const query = `?$select=ts_name,statuscode&$filter=${filterConditions}&$top=1`;
+
+      try {
+        const result = await Xrm.WebApi.retrieveMultipleRecords("ts_workorderexportjob", query);
+        return (result.entities && result.entities.length > 0) ? result.entities[0] : null;
+      } catch (error) {
+        console.error("Error checking for active export jobs:", error);
+        return null; // fail-open (server plugin still enforces)
+      }
+    }
+
+    // 1. Get GUIDs from selected rows
+    var selectedRows = selectedControl.getGrid().getSelectedRows();
+    var selectedIds = [];
+    selectedRows.forEach(function (row) {
+      selectedIds.push(row.getData().getEntity().getId().replace(/[{}]/g, ""));
+    });
+
+    if (selectedIds.length === 0) {
+      Xrm.Navigation.openAlertDialog({ text: "Please select at least one Work Order." });
+      return;
+    }
+
+    // 2. Concurrency check (UX-only)
+    const existingJob = await checkForExistingActiveJobs();
+    if (existingJob) {
+      await Xrm.Navigation.openAlertDialog({
+        confirmButtonLabel: "OK",
+        text: `An export is already in progress: "${existingJob.ts_name || "(unnamed)"}". Please wait for it to complete before starting a new export.`
+      });
+      return;
+    }
+
+   // 2. Create ts_workorderexportjob
+   var includeHidden =
+     includeHiddenQuestions === true ||
+     includeHiddenQuestions === "true" ||
+     includeHiddenQuestions === 1;
+
+  var entity = {};
+  entity.ts_name = "Batch Export (" + selectedIds.length + " Work Orders) - " + formatDateForJobName(new Date());
+  entity.statuscode = 741130001; // Client Processing – questionnaire rendering
+  entity.ts_hiddenquestions = includeHidden;
+   entity.ts_surveypayloadjson = JSON.stringify({
+     ids: selectedIds,
+     includeHiddenQuestions: includeHidden,
+   });
+
+    const result = await Xrm.WebApi.createRecord("ts_workorderexportjob", entity);
+    var newId = result.id;
+
+    // 3. Navigation: Open record in a new window (not modal)
+    var pageInput = {
+      pageType: "entityrecord",
+      entityName: "ts_workorderexportjob",
+      entityId: newId
+    };
+    var navigationOptions = { target: 1 };
+
+    try {
+      await Xrm.Navigation.navigateTo(pageInput, navigationOptions);
+      // Refresh the subgrid
+      selectedControl.refresh();
+    } catch (e) {
+      // Silent fail - user can manually open the record if needed
+    }
+
+  } catch (e) {
+    console.log("[PDFTEST] Error in exportWorkOrderQuestionnaireFromSubgrid: " + e.message);
+    Xrm.Navigation.openAlertDialog({ text: "Error: " + e.message });
+  }
+}
+
 function canEditWorkOrderWorkspace() {
     var roles = Xrm.Utility.getGlobalContext().userSettings.roles;
     var enable = false;
