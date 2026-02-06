@@ -112,7 +112,7 @@ async function getParentProvision(provision) {
 async function getSiblingProvisions(provision) {
   var results = await parent.Xrm.WebApi.retrieveMultipleRecords(
     "qm_rclegislation",
-    `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value,ts_ordernbr&$filter=_qm_rcparentlegislationid_value eq '${provision._qm_rcparentlegislationid_value}'`
+    `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value,ts_ordernbr&$filter=_qm_rcparentlegislationid_value eq '${provision._qm_rcparentlegislationid_value}' and statecode eq 0`
   );
   return sortProvisions(results.entities);
 }
@@ -120,7 +120,7 @@ async function getSiblingProvisions(provision) {
 async function getChildrenProvisions(provision) {
   var results = await parent.Xrm.WebApi.retrieveMultipleRecords(
     "qm_rclegislation",
-    `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value,ts_ordernbr&$filter=_qm_rcparentlegislationid_value eq '${provision.qm_rclegislationid}'`
+    `?$select=qm_name,qm_legislationlbl,qm_legislationetxt,qm_legislationftxt,_qm_tylegislationtypeid_value,_qm_rcparentlegislationid_value,ts_ordernbr&$filter=_qm_rcparentlegislationid_value eq '${provision.qm_rclegislationid}' and statecode eq 0`
   );
   return sortProvisions(results.entities);
 }
