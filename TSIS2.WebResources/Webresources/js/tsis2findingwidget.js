@@ -16,7 +16,7 @@ var findingTypeNoncomplianceLocalized;
 var accountableTableHeaderLocalized;
 var operationNameTableHeaderLocalized;
 
-if (lang == 1036){
+if (lang == 1036) {
     inspectorCommentsLocalizedText = "Fournir des détails";
     charactersRemainingLocalizedText = "caractères restants";
     accountableOperationsLocalized = "Opération responsable";
@@ -27,7 +27,7 @@ if (lang == 1036){
     accountableTableHeaderLocalized = "Est responsable";
     operationNameTableHeaderLocalized = "Nom de l'opération";
 }
-else{
+else {
     inspectorCommentsLocalizedText = "Provide Details:";
     charactersRemainingLocalizedText = "characters remaining";
     accountableOperationsLocalized = "Accountable Operations";
@@ -37,7 +37,7 @@ else{
     findingTypeNoncomplianceLocalized = "Non-compliance";
     accountableTableHeaderLocalized = "Accountable";
     operationNameTableHeaderLocalized = "Operation Name";
-    
+
 }
 
 const findingTypeChoices = {
@@ -154,7 +154,7 @@ var widget = {
 
         //This stores references to the inputs of each table row so that the values can be retrieved together and entered into the question's value json
         var operationInputs = [];
-        
+
         //Iterate through each operation associated to the Work Order, populate the operation table with inputs
         operationList.forEach(function (operation) {
             //Create table elements for this operation
@@ -296,7 +296,7 @@ var widget = {
                 console.log(question.value)
             }
         });
-        
+
 
         operationsContainer.appendChild(operationsTable);
 
@@ -390,8 +390,8 @@ function updateQuestionProvisionData(question, provisionName) {
     if (question.nameID == null) {
         question.nameID = question.id;
     }
-    //Retrieve records with the same provision name that are not Non-Imperative
-    parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$filter=(ts_nameenglish eq '${provisionName}') and (_ts_provisioncategory_value ne 18adfa7f-33f5-eb11-94ef-000d3af36036)`).then(
+    //Retrieve records with the same provision name that are not Non-Imperative and are Active
+    parent.Xrm.WebApi.retrieveMultipleRecords("qm_rclegislation", `?$filter=(ts_nameenglish eq '${provisionName}') and (_ts_provisioncategory_value ne 18adfa7f-33f5-eb11-94ef-000d3af36036) and statecode eq 0`).then(
         async function success(result) {
             if (result.entities.length > 0) {
                 let provision = result.entities[0];
