@@ -10,15 +10,14 @@ namespace ROM.WorkOrderExportJob {
     const STATUS_COMPLETED = 741130006; // ZIP created
     const STATUS_ERROR = 741130007; // Error
 
-    const PROGRESS_POLL_INTERVAL_MS = 10_000;
-    const PROGRESS_WRITE_THROTTLE_MS = 1_500;
-
-    const PROGRESS_NOTIFICATION_ID = "wo_export_progress";
-    const DETAIL_NOTIFICATION_ID = "wo_export_detail";
-    const DONT_CLOSE_DIALOG_KEY_PREFIX = "ts_wo_export_dont_close_shown_";
-    const SAFE_TO_CLOSE_DIALOG_KEY_PREFIX = "ts_wo_export_safe_to_close_shown_";
-
     let progressPollHandle: number | null = null;
+    let finalizeCheckTimeoutHandle: number | null = null;
+
+    const PROGRESS_POLL_INTERVAL_MS = 5000;
+    const PROGRESS_WRITE_THROTTLE_MS = 1500;
+    
+    const PROGRESS_NOTIFICATION_ID = "wo_export_progress";
+
 
     function getJobId(formContext: any): string {
         return (formContext?.data?.entity?.getId?.() || "").replace(/[{}]/g, "");
@@ -90,14 +89,6 @@ namespace ROM.WorkOrderExportJob {
         }
     }
 
-    function setDetailNotification(formContext: any, text: string, level: "INFO" | "WARNING" | "ERROR" = "INFO"): void {
-        try {
-            formContext.ui.setFormNotification(text, level, DETAIL_NOTIFICATION_ID);
-        } catch (e) {
-            // ignore
-        }
-    }
-
     function clearProgressNotification(formContext: any): void {
         try {
             formContext.ui.clearFormNotification(PROGRESS_NOTIFICATION_ID);
@@ -106,20 +97,11 @@ namespace ROM.WorkOrderExportJob {
         }
     }
 
-    function clearDetailNotification(formContext: any): void {
-        try {
-            formContext.ui.clearFormNotification(DETAIL_NOTIFICATION_ID);
-        } catch (e) {
-            // ignore
-        }
-    }
-
     function setLeavePageGuard(enabled: boolean): void {
         try {
             if (enabled) {
-                // Some browsers ignore custom text; they still show a generic warning prompt.
                 window.onbeforeunload = function () {
-                    return "Export is running. If you leave, questionnaire PDF generation may stop.";
+                    return "Export is running. If you leave, the export may stop.";
                 };
             } else {
                 window.onbeforeunload = null;
@@ -129,36 +111,18 @@ namespace ROM.WorkOrderExportJob {
         }
     }
 
-    async function showDontCloseDialogOnce(jobId: string): Promise<void> {
+    async function showDontCloseDialog(): Promise<void> {
         try {
-            const key = `${DONT_CLOSE_DIALOG_KEY_PREFIX}${jobId}`;
-            const alreadyShown = window.sessionStorage?.getItem(key) === "1";
-            if (alreadyShown) return;
-
-            window.sessionStorage?.setItem(key, "1");
-            await Xrm.Navigation.openAlertDialog({
-                text: "Export started.\n\nPlease keep this tab open until questionnaire PDFs finish.\nYou'll get a message when it's safe to close."
-            });
-        } catch (e) {
-            // ignore
-        }
-    }
-
-    async function showSafeToCloseDialogOnce(jobId: string): Promise<void> {
-        try {
-            const key = `${SAFE_TO_CLOSE_DIALOG_KEY_PREFIX}${jobId}`;
-            const alreadyShown = window.sessionStorage?.getItem(key) === "1";
-            if (alreadyShown) return;
-
-            window.sessionStorage?.setItem(key, "1");
             await Xrm.Navigation.openAlertDialog({
                 text:
-                    "Questionnaire PDFs are complete.\n\nIt is now safe to close this tab. The export will continue in the background.\n\nIf you want, you can keep this tab open and monitor progress. Come back to this Export Job later to download the ZIP when it is completed."
+                    "⚠️ Export started.\n\n" +
+                    "Keep this tab open."
             });
         } catch (e) {
             // ignore
         }
     }
+
 
     function getClientUrl(): string {
         try {
@@ -234,14 +198,27 @@ namespace ROM.WorkOrderExportJob {
         const rawMessage = (job?.ts_progressmessage || "").trim();
         const displayMessage = formatBackendProgressMessage(status, stageLabel, rawMessage, doneUnits, totalUnits);
         setProgressNotification(formContext, displayMessage, "INFO");
-        // Keep detail notification quiet during backend stages; users don't need to know about polling.
-        clearDetailNotification(formContext);
 
         if (status === STATUS_COMPLETED) {
+            const fileName = (job?.ts_finalexportzip_name || "").toString().trim();
+        
+            if (!fileName) {
+                setProgressNotification(formContext, "Finalizing export…", "INFO");
+                if (finalizeCheckTimeoutHandle === null) {
+                    finalizeCheckTimeoutHandle = window.setTimeout(() => {
+                        finalizeCheckTimeoutHandle = null;
+                        pollAndRenderProgress(formContext, jobId).catch(() => {});
+                    }, 3_000); // check if file is in the export job
+                }
+                return;
+            }
+        
             stopProgressPoller(formContext);
-            setProgressNotification(formContext, "Export completed. Opening final ZIP...", "INFO");
-            await openFinalArtifact(jobId, job);
+            setProgressNotification(formContext, "Export completed. The ZIP is ready to download.", "INFO");
+            try { await formContext.data.refresh(false); } catch {}
+            return;
         }
+        
     }
 
     function startProgressPoller(formContext: any, jobId: string): void {
@@ -263,6 +240,10 @@ namespace ROM.WorkOrderExportJob {
         if (progressPollHandle !== null) {
             window.clearInterval(progressPollHandle);
             progressPollHandle = null;
+        }
+        if (finalizeCheckTimeoutHandle !== null) {
+            window.clearTimeout(finalizeCheckTimeoutHandle);
+            finalizeCheckTimeoutHandle = null;
         }
     }
 
@@ -301,7 +282,14 @@ namespace ROM.WorkOrderExportJob {
 
     export async function onLoad(eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
         const formContext = eContext.getFormContext() as any;
-        console.log("[WOExport] onLoad triggered.");
+        
+        // Show internal fields only for Admins
+        if (userHasRole("System Administrator")) {
+            if (formContext.getControl("ts_payloadjson")) formContext.getControl("ts_payloadjson").setVisible(true);
+            if (formContext.getControl("ts_hiddenquestions")) formContext.getControl("ts_hiddenquestions").setVisible(true);
+            if (formContext.getControl("ts_finalexportzip")) formContext.getControl("ts_finalexportzip").setVisible(true);
+            if (formContext.getControl("ts_surveypayloadjson")) formContext.getControl("ts_surveypayloadjson").setVisible(true);
+        }
         
         // Hide WebResource_RenderHost if formType is new (creation)
         const formType = formContext.ui.getFormType();
@@ -325,14 +313,8 @@ namespace ROM.WorkOrderExportJob {
                 status === STATUS_READY_FOR_FLOW ||
                 status === STATUS_FLOW_RUNNING ||
                 status === STATUS_READY_FOR_MERGE ||
-                status === STATUS_COMPLETED ||
                 status === STATUS_ERROR) {
                 setLeavePageGuard(false);
-
-                // If user reloads/opens the job during backend processing, show the "safe to close" message once.
-                if (status !== STATUS_COMPLETED && status !== STATUS_ERROR) {
-                    showSafeToCloseDialogOnce(jobId);
-                }
 
                 startProgressPoller(formContext, jobId);
                 return;
@@ -345,7 +327,7 @@ namespace ROM.WorkOrderExportJob {
             if (jobId) {
                 // Stage 2 is running in this tab: warn and prevent accidental close.
                 setLeavePageGuard(true);
-                showDontCloseDialogOnce(jobId);
+                showDontCloseDialog();
             }
 
             const renderHostControl = formContext.getControl("WebResource_RenderHost");
@@ -387,9 +369,11 @@ namespace ROM.WorkOrderExportJob {
             let totalSurveyPdfs = 0;
             const tasksByWorkOrderId: Record<string, any[]> = {};
 
-            setProgressNotification(formContext, "Preparing export (1/2): counting questionnaires...", "INFO");
-            setDetailNotification(formContext, "This is quick and lets us show an accurate progress bar.", "INFO");
-            let countIndex = 0;
+            setProgressNotification(
+                formContext,
+                "Preparing export (1/2): counting questionnaires...",
+                "INFO"
+            );            let countIndex = 0;
             for (const workOrderId of ids) {
                 countIndex++;
                 const workOrderIdNoBraces = workOrderId.replace(/[{}]/g, "");
@@ -398,7 +382,6 @@ namespace ROM.WorkOrderExportJob {
                     "&$filter=_msdyn_workorder_value eq " + workOrderIdNoBraces;
 
                 setProgressNotification(formContext, `Preparing export (1/2): counting questionnaires (${countIndex}/${totalExports})...`, "INFO");
-                setDetailNotification(formContext, `Counting work order ${countIndex} of ${totalExports}...`, "INFO");
                 const tasks = await Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", fetchOptions);
 
                 const tasksTotal = tasks.entities.length;
@@ -477,8 +460,11 @@ namespace ROM.WorkOrderExportJob {
             
             // Helper function to update progress notification (local UI)
             const updateProgress = (overallMessage: string, detailMessage?: string) => {
-                setProgressNotification(formContext, overallMessage, "WARNING");
-                if (detailMessage) setDetailNotification(formContext, detailMessage, "WARNING");
+                const combined = detailMessage
+                    ? `${overallMessage} — ${detailMessage}`
+                    : overallMessage;
+            
+                setProgressNotification(formContext, combined, "WARNING");
             };
 
             let lastProgressWriteMs = 0;
@@ -800,29 +786,28 @@ namespace ROM.WorkOrderExportJob {
                     errorMsgAttr.setValue(errors.join("\n\n"));
                 }
                 clearProgressNotification(formContext);
-                clearDetailNotification(formContext);
                 setLeavePageGuard(false);
                 await formContext.data.save();
                 Xrm.Navigation.openAlertDialog({ text: `Export completed with ${errors.length} error(s). Check error message field for details.` });
             } else {
                 await writeProgress(`Questionnaire PDFs: ${Math.min(doneUnits, totalSurveyPdfs)}/${totalSurveyPdfs} (complete)`, true);
-                setProgressNotification(formContext, "Questionnaire PDFs complete. Continuing in the background (main PDFs + final ZIP).", "INFO");
-                setDetailNotification(formContext, "It is now safe to close this page.", "INFO");
+                setProgressNotification(
+                    formContext,
+                    "Export in progress (background processing continues).",
+                    "INFO"
+                );
                 formContext.getAttribute("statuscode").setValue(STATUS_READY_FOR_SERVER);
                 setLeavePageGuard(false);
 
                 await formContext.data.save();
                 if (exportJobId) {
-                    await showSafeToCloseDialogOnce(exportJobId);
+                    startProgressPoller(formContext, exportJobId);
                 }
-                // Start polling backend stages right away (no full refresh)
-                if (exportJobId) startProgressPoller(formContext, exportJobId);
             }
 
         } catch (e: any) {
             console.error("[WOExport] ERROR: ", e);
             clearProgressNotification(formContext);
-            clearDetailNotification(formContext);
             setLeavePageGuard(false);
 
             formContext.getAttribute("statuscode").setValue(STATUS_ERROR);
@@ -830,7 +815,7 @@ namespace ROM.WorkOrderExportJob {
             if (errorMsgAttr) {
                 errorMsgAttr.setValue(e.message || e.toString());
             }
-            formContext.data.save();
+            await formContext.data.save();
             Xrm.Navigation.openAlertDialog({ text: "Error processing export job: " + (e.message || e.toString()) });
         }
     }
