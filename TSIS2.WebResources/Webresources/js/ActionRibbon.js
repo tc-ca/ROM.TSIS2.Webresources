@@ -1,7 +1,7 @@
 ﻿//Action for mscrm.OpenRecordItem overridden command. Opens Action forms as a modal.
 function openRecord(recordId) {
     let formId = "8b389e0e-5f8c-44fe-afa8-d814de41eede"; //Information Main form
-    //Retrieve selected finding record
+    //Retrieve selected Action record
     Xrm.WebApi.retrieveRecord("ts_action", recordId).then(
         function (result) {
             var pageInput = {
@@ -21,7 +21,7 @@ function openRecord(recordId) {
                 },
                 position: 1,
             };
-            //Open finding record
+            //Open Action record
             Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
                 function success() {
                     // Run code on success
