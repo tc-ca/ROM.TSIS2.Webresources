@@ -460,6 +460,11 @@
                 "file": "js\\UnplannedWorkOrder.js",
                 "description": "Work Order Workspace for Work Order table"
             },
+            {
+                "uniquename": "ts_/js/ActionRibbon.js",
+                "file": "js\\ActionRibbon.js",
+                "description": "Ribbon functions for Action"
+            },
             /* Styles */
             {
                 "uniquename": "ovs_/css/bootstrap.min.css",
