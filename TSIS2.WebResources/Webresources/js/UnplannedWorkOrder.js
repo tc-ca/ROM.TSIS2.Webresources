@@ -2233,23 +2233,33 @@ var ROM;
          */
         function isCurrentUserAvSecDomestic() {
             return __awaiter(this, void 0, void 0, function () {
-                var userId, error_1;
+                var userId, user, userBuId, result, error_1;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
-                            _a.trys.push([0, 2, , 3]);
+                            _a.trys.push([0, 3, , 4]);
                             userId = Xrm.Utility.getGlobalContext().userSettings.userId;
                             if (!userId) {
                                 console.warn('[isCurrentUserAvSecDomestic] User ID not available');
                                 return [2 /*return*/, false];
                             }
-                            return [4 /*yield*/, isOwnedByAvSecDomestic(userId)];
-                        case 1: return [2 /*return*/, _a.sent()];
+                            return [4 /*yield*/, Xrm.WebApi.retrieveRecord("systemuser", userId, "?$select=_businessunitid_value")];
+                        case 1:
+                            user = _a.sent();
+                            userBuId = user._businessunitid_value;
+                            if (!userBuId) {
+                                console.warn('[isCurrentUserAvSecDomestic] User business unit not found');
+                                return [2 /*return*/, false];
+                            }
+                            return [4 /*yield*/, isBusinessUnit(userBuId, [BU_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC])];
                         case 2:
+                            result = _a.sent();
+                            return [2 /*return*/, result];
+                        case 3:
                             error_1 = _a.sent();
-                            console.error('[isCurrentUserAvSecDomestic] Error checking user business unit:', error_1);
+                            console.error('[isCurrentUserAvSecDomestic] Error:', error_1);
                             return [2 /*return*/, false];
-                        case 3: return [2 /*return*/];
+                        case 4: return [2 /*return*/];
                     }
                 });
             });

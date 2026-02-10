@@ -2454,9 +2454,20 @@ namespace ROM.UnplannedWorkOrder {
                 return false;
             }
             
-            return await isOwnedByAvSecDomestic(userId);
+            // Get user's business unit ID
+            const user = await Xrm.WebApi.retrieveRecord("systemuser", userId, "?$select=_businessunitid_value");
+            const userBuId = user._businessunitid_value;
+            
+            if (!userBuId) {
+                console.warn('[isCurrentUserAvSecDomestic] User business unit not found');
+                return false;
+            }
+            
+            // Check if user's BU is AvSec Domestic 
+            const result = await isBusinessUnit(userBuId, [BU_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC]);
+            return result;
         } catch (error) {
-            console.error('[isCurrentUserAvSecDomestic] Error checking user business unit:', error);
+            console.error('[isCurrentUserAvSecDomestic] Error:', error);
             return false;
         }
     }
