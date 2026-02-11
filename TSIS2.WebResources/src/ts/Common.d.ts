@@ -40,3 +40,4 @@ declare function logRailSafetyOwnershipStatus(formContext: any): Promise<void>;
 declare function getModelDrivenAppId(): string | null;
 declare function isUserUsingRailSafetyApp(): Promise<boolean>;
 declare function getEffectiveUserBuForCurrentUser(): Promise<string | null>;
+declare function isBusinessUnit(buId: string, schemaNames: string[]): Promise<boolean>;
