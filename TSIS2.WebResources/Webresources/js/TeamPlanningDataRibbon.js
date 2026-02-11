@@ -88,6 +88,7 @@ function recalculateTeamPlanningDataValues(formContext) {
             "    <attribute name='ts_varianceq1'/>",
             "    <filter>",
             "      <condition attribute='ts_teamplanningdata' operator='eq' value='", teamPlanningDataId, "'/>",
+            "      <condition attribute='statecode' operator='eq' value='0'/>",
             "    </filter>",
             "  </entity>",
             "</fetch>"

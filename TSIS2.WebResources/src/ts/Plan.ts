@@ -449,29 +449,33 @@
 
         }
 
-        var suggestedInspectionsfetchXml = [
-            "<fetch>",
-            "   <entity name='ts_suggestedinspection'>",
-            "       <attribute name='ts_suggestedinspectionid'/>",
-            "       <attribute name='ts_estimatedduration'/>",
-            "       <attribute name='ts_q1'/>",
-            "       <attribute name='ts_q2'/>",
-            "       <attribute name='ts_q3'/>",
-            "       <attribute name='ts_q4'/>",
-            "       <attribute name='ts_estimatedtraveltime'/>",
-            "       <attribute name='ts_estimatedcost' />",
-            "       <link-entity name='ts_plan' from='ts_planid' to='ts_plan' link-type='inner' alias='ad'>",
-            "           <filter type='and'>",
-            "               <condition attribute='ts_planid' operator='eq' value='", formContext.data.entity.getId(), "'/>",
-            "</filter>",
-            "       </link-entity>",
-            "       <link-entity name='ts_trip' from='ts_tripid' to='ts_trip' visible='false' link-type='outer' alias='plantrip'>",
-            "       <attribute name='ts_estimatedtraveltime' />",
-            "       <attribute name='ts_estimatedcost' />",
-            "       </link-entity>",
-            "   </entity>",
-            "</fetch>"
-        ].join("");
+var suggestedInspectionsfetchXml = [
+    "<fetch>",
+    "  <entity name='ts_suggestedinspection'>",
+    "    <attribute name='ts_suggestedinspectionid'/>",
+    "    <attribute name='ts_estimatedduration'/>",
+    "    <attribute name='ts_q1'/>",
+    "    <attribute name='ts_q2'/>",
+    "    <attribute name='ts_q3'/>",
+    "    <attribute name='ts_q4'/>",
+    "    <attribute name='ts_estimatedtraveltime'/>",
+    "    <attribute name='ts_estimatedcost'/>",
+    "    <filter>",
+    "      <condition attribute='statecode' operator='eq' value='0'/>",
+    "    </filter>",
+    "    <link-entity name='ts_plan' from='ts_planid' to='ts_plan' link-type='inner' alias='ad'>",
+    "      <filter>",
+    "        <condition attribute='ts_planid' operator='eq' value='" + formContext.data.entity.getId() + "'/>",
+    "      </filter>",
+    "    </link-entity>",
+    "    <link-entity name='ts_trip' from='ts_tripid' to='ts_trip' link-type='outer' alias='plantrip'>",
+    "      <attribute name='ts_estimatedtraveltime' />",
+    "      <attribute name='ts_estimatedcost' />",
+    "    </link-entity>",
+    "  </entity>",
+    "</fetch>"
+].join("");
+
         suggestedInspectionsfetchXml = "?fetchXml=" + encodeURIComponent(suggestedInspectionsfetchXml);
         let suggestedInspections = await Xrm.WebApi.retrieveMultipleRecords("ts_suggestedinspection", suggestedInspectionsfetchXml).then(function success(result) {
             return result.entities;
