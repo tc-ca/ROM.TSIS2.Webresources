@@ -2,6 +2,7 @@
 // Using hardcoded values so SharePoint flows don't need to be modified
 var avsecOwnerName = "Aviation Security";
 var issoOwnerName = "Intermodal Surface Security Oversight";
+var railsafetyOwnerName = "Rail Safety";
 
 // Display names retrieved from database for user-facing messages
 var avsecDisplayName = null;
@@ -480,7 +481,7 @@ async function modifyRecordOwner(entityName, myRecordOwner, myRecordName, mySite
 
     // Set headers and table names based on entity type
     switch (entityName) {
-        case "msdyn_workorder":
+        case "msdyn_workorder":            
         case "msdyn_workorderservicetask":
         case "incident":
         case "account":
@@ -557,6 +558,21 @@ async function modifyRecordOwner(entityName, myRecordOwner, myRecordName, mySite
                 }
             }
             break;
+    }
+
+    if (await isUserUsingRailSafetyApp()) {
+        if (fileUploadData.recordOwnerTeamId) {
+            const ownerId = fileUploadData.recordOwnerTeamId;            
+            const isRailSafety = await isOwnedByRailSafety(ownerId);
+
+            if (isRailSafety) {
+                fileUploadData.recordOwner = railsafetyOwnerName;
+                fileUploadData.validOwner = true;
+            } else  {
+                fileUploadData.recordOwner = "";
+            }
+        }
+        
     }
 
     if (fileUploadData.recordOwner == avsecOwnerName || fileUploadData.recordOwner == issoOwnerName) {
