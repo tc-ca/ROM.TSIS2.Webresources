@@ -1263,7 +1263,7 @@ async function exportWorkOrderFromSubgrid(selectedControl, includeHiddenQuestion
     }
 
     async function checkForExistingActiveJobs() {
-      const activeStatuses = [741130001, 741130002, 741130003, 741130004, 741130005];
+      const activeStatuses = [741130001, 741130002, 741130003, 741130004, 741130005, 741130008, 741130009, 741130010, 741130011, 741130012];
       const filterConditions = activeStatuses.map(s => `statuscode eq ${s}`).join(" or ");
       const query = `?$select=ts_name,statuscode&$filter=${filterConditions}&$top=1`;
 
@@ -1298,7 +1298,22 @@ async function exportWorkOrderFromSubgrid(selectedControl, includeHiddenQuestion
       return;
     }
 
-   // 2. Create ts_workorderexportjob
+    // 3. User confirmation before starting export job
+    var confirmStrings = {
+      title: "Confirm Export",
+      text:
+        "This will start an export job for " + selectedIds.length + " Work Order(s).\n\n" +
+        "Stage 1 runs in your browser. Do not close or reload the export form, and avoid logging off, locking, or letting your PC sleep until Stage 1 finishes.\n\n" +
+        "If a transient issue is detected, the form may refresh automatically to resume processing.",
+      confirmButtonLabel: "OK",
+      cancelButtonLabel: "Cancel"
+    };
+    var confirmResult = await Xrm.Navigation.openConfirmDialog(confirmStrings);
+    if (!confirmResult || !confirmResult.confirmed) {
+      return;
+    }
+
+   // 4. Create ts_workorderexportjob
    var includeHidden =
      includeHiddenQuestions === true ||
      includeHiddenQuestions === "true" ||
@@ -1316,7 +1331,7 @@ async function exportWorkOrderFromSubgrid(selectedControl, includeHiddenQuestion
     const result = await Xrm.WebApi.createRecord("ts_workorderexportjob", entity);
     var newId = result.id;
 
-    // 3. Navigation: Open record in a new window (not modal)
+    // 5. Navigation: Open record in a new window (not modal)
     var pageInput = {
       pageType: "entityrecord",
       entityName: "ts_workorderexportjob",

@@ -9,6 +9,11 @@ namespace ROM.WorkOrderExportJob {
     const STATUS_READY_FOR_MERGE = 741130005; // MAIN PDFs exist -> C# merge
     const STATUS_COMPLETED = 741130006; // ZIP created
     const STATUS_ERROR = 741130007; // Error
+    const STATUS_MERGE_IN_PROGRESS = 741130008;
+    const STATUS_READY_FOR_ZIP = 741130009;
+    const STATUS_ZIP_IN_PROGRESS = 741130010;
+    const STATUS_READY_FOR_CLEANUP = 741130011;
+    const STATUS_CLEANUP_IN_PROGRESS = 741130012;
 
     let progressPollHandle: number | null = null;
     let finalizeCheckTimeoutHandle: number | null = null;
@@ -17,7 +22,16 @@ namespace ROM.WorkOrderExportJob {
     const PROGRESS_WRITE_THROTTLE_MS = 1500;
     const PROGRESS_INDICATOR_UPDATE_THROTTLE_MS = 250;
     const CLIENT_HEARTBEAT_RECENT_MS = 30_000;
+    const STALL_WATCHDOG_INTERVAL_MS = 10_000;
+    const STALL_TIMEOUT_MS = 4 * 60_000;
+    const MAX_AUTO_RESUME_ATTEMPTS = 5;
+    const MAX_SAME_CONTEXT_STALLS = 2;
     const INTERRUPTION_FLAG_PREFIX = "wo_export_interrupted_";
+    const AUTO_RESUME_FLAG_PREFIX = "wo_export_auto_resume_";
+    const RESUME_ATTEMPTS_PREFIX = "wo_export_resume_attempts_";
+    const LAST_PROGRESS_CONTEXT_PREFIX = "wo_export_last_context_";
+    const LAST_STALL_CONTEXT_PREFIX = "wo_export_last_stall_context_";
+    const SAME_STALL_COUNT_PREFIX = "wo_export_same_stall_count_";
     const DEBUG_LOGS = false;
     
     const PROGRESS_NOTIFICATION_ID = "wo_export_progress";
@@ -59,6 +73,11 @@ namespace ROM.WorkOrderExportJob {
             case STATUS_READY_FOR_FLOW: return "Queued for main PDF generation";
             case STATUS_FLOW_RUNNING: return "Generating main PDFs";
             case STATUS_READY_FOR_MERGE: return "Merging PDFs and packaging ZIP";
+            case STATUS_MERGE_IN_PROGRESS: return "Merging PDFs";
+            case STATUS_READY_FOR_ZIP: return "Preparing ZIP";
+            case STATUS_ZIP_IN_PROGRESS: return "Creating final ZIP";
+            case STATUS_READY_FOR_CLEANUP: return "Preparing cleanup";
+            case STATUS_CLEANUP_IN_PROGRESS: return "Cleaning up intermediate files";
             case STATUS_COMPLETED: return "Completed";
             case STATUS_ERROR: return "Error";
             default: return "Unknown";
@@ -68,7 +87,12 @@ namespace ROM.WorkOrderExportJob {
     function getStagePrefix(status: number | null | undefined): string {
         if (status === STATUS_CLIENT_PROCESSING) return "[Stage 1/3]";
         if (status === STATUS_READY_FOR_SERVER || status === STATUS_READY_FOR_FLOW || status === STATUS_FLOW_RUNNING) return "[Stage 2/3]";
-        if (status === STATUS_READY_FOR_MERGE) return "[Stage 3/3]";
+        if (status === STATUS_READY_FOR_MERGE ||
+            status === STATUS_MERGE_IN_PROGRESS ||
+            status === STATUS_READY_FOR_ZIP ||
+            status === STATUS_ZIP_IN_PROGRESS ||
+            status === STATUS_READY_FOR_CLEANUP ||
+            status === STATUS_CLEANUP_IN_PROGRESS) return "[Stage 3/3]";
         if (status === STATUS_COMPLETED) return "[Completed]";
         if (status === STATUS_ERROR) return "[Error]";
         return "[Stage]";
@@ -82,12 +106,17 @@ namespace ROM.WorkOrderExportJob {
     }
 
     function formatQuestionnaireExportProgress(done: number, total: number, complete: boolean = false): string {
-        const safeTotal = Math.max(0, total);
-        const safeDone = Math.max(0, Math.min(done, safeTotal));
-        const percent = safeTotal > 0 ? Math.round((safeDone * 100) / safeTotal) : 0;
+        const overall = formatSurveyOverall(done, total);
+        const isActuallyComplete = complete && Math.max(0, done) >= Math.max(0, total);
         return complete
-            ? `Questionnaire export: ${safeDone}/${safeTotal} (${percent}%) (complete)`
-            : `Questionnaire export: ${safeDone}/${safeTotal} (${percent}%)`;
+            ? (isActuallyComplete
+                ? `${overall} | Questionnaire export | Complete`
+                : `${overall} | Questionnaire export | Incomplete`)
+            : `${overall} | Questionnaire export`;
+    }
+
+    function formatStage1Preparation(detail: string): string {
+        return `[Stage 1/3] Initializing | ${detail}`;
     }
 
     function isRecentHeartbeat(heartbeatIso: string | null | undefined, maxAgeMs: number): boolean {
@@ -104,11 +133,49 @@ namespace ROM.WorkOrderExportJob {
         doneUnits: number,
         totalUnits: number
     ): string {
+        const normalizeBackendDetail = (input: string): string => {
+            const text = (input || "").trim();
+            if (!text) return text;
+            const lower = text.toLowerCase();
+
+            // Remove redundant "ready for X" phrasing when stage label already conveys it.
+            if (/(^|\b)merge worker completed all work orders\.\s*ready for zip\.?$/i.test(text)) {
+                return "Merge complete for all work orders.";
+            }
+            if (/(^|\b)ready for zip\.?$/i.test(text)) {
+                return "Merge complete. Starting ZIP packaging.";
+            }
+            if (/(^|\b)ready for cleanup\.?$/i.test(text)) {
+                return "ZIP complete. Starting cleanup.";
+            }
+            if (/(^|\b)ready for merge\.?$/i.test(text)) {
+                return "Main PDFs complete. Starting merge.";
+            }
+
+            // Generic redundant prefixes from some worker messages.
+            if (lower.startsWith("merge worker:")) {
+                return text.replace(/^merge worker:\s*/i, "").trim();
+            }
+            if (lower.startsWith("zip worker:")) {
+                return text.replace(/^zip worker:\s*/i, "").trim();
+            }
+            if (lower.startsWith("cleanup worker:")) {
+                return text.replace(/^cleanup worker:\s*/i, "").trim();
+            }
+
+            return text;
+        };
+
         const percent = totalUnits > 0 ? Math.max(0, Math.min(100, Math.round((doneUnits * 100) / totalUnits))) : 0;
         const msg = (rawMessage || "").trim();
         const stagePrefix = getStagePrefix(status);
         const stageDisplay = `${stagePrefix} ${stageLabel}`;
-        let detailMsg = msg;
+        let detailMsg = normalizeBackendDetail(msg);
+
+        // If upstream already wrote a standardized stage message, avoid duplicating prefixes.
+        if (/^\[(Stage\s+\d+\/\d+|Completed|Error)\]/i.test(detailMsg)) {
+            return detailMsg;
+        }
 
         // Flow messages sometimes repeat the same stage phrase; strip that prefix from detail.
         const stageLabelLower = (stageLabel || "").trim().toLowerCase();
@@ -117,7 +184,7 @@ namespace ROM.WorkOrderExportJob {
             detailMsg = detailMsg.substring(stageLabel.length).replace(/^[:\-\s]+/, "").trim();
         }
 
-        if (!detailMsg) return `${stageDisplay} | ${percent}%`;
+        if (!detailMsg) return `${stageDisplay} | Overall ${percent}%`;
 
         // Common pattern from Flow: "Main PDFs: x/y"
         const mainMatch = detailMsg.match(/^Main PDFs:\s*(\d+)\s*\/\s*(\d+)\s*$/i);
@@ -128,23 +195,36 @@ namespace ROM.WorkOrderExportJob {
             const done = total > 0 ? Math.max(0, Math.min(rawDone, total)) : Math.max(0, rawDone);
 
             // If we've already moved to Stage 3, don't keep showing stale Stage 2 "Main PDFs" counters.
-            if (status === STATUS_READY_FOR_MERGE) {
-                return `${stageDisplay} | ${percent}% | Starting merge + ZIP`;
+            if (status === STATUS_READY_FOR_MERGE ||
+                status === STATUS_MERGE_IN_PROGRESS ||
+                status === STATUS_READY_FOR_ZIP ||
+                status === STATUS_ZIP_IN_PROGRESS ||
+                status === STATUS_READY_FOR_CLEANUP ||
+                status === STATUS_CLEANUP_IN_PROGRESS) {
+                return `${stageDisplay} | Overall ${percent}% | Starting merge + ZIP`;
             }
 
             const next = (status === STATUS_FLOW_RUNNING && total > 0 && done >= total) ? "Next: merge + ZIP." : "";
-            return `${stageDisplay} | ${percent}% | ${done} of ${total} done. ${next}`.trim();
+            return `${stageDisplay} | Overall ${percent}% | ${done} of ${total} done. ${next}`.trim();
         }
 
         // If survey stage completed but we're now in backend, replace technical survey-only messages with a clearer handoff.
-        if ((status === STATUS_READY_FOR_SERVER || status === STATUS_READY_FOR_FLOW || status === STATUS_FLOW_RUNNING || status === STATUS_READY_FOR_MERGE) &&
+        if ((status === STATUS_READY_FOR_SERVER ||
+            status === STATUS_READY_FOR_FLOW ||
+            status === STATUS_FLOW_RUNNING ||
+            status === STATUS_READY_FOR_MERGE ||
+            status === STATUS_MERGE_IN_PROGRESS ||
+            status === STATUS_READY_FOR_ZIP ||
+            status === STATUS_ZIP_IN_PROGRESS ||
+            status === STATUS_READY_FOR_CLEANUP ||
+            status === STATUS_CLEANUP_IN_PROGRESS) &&
             (detailMsg.toLowerCase().includes("survey pdfs") || detailMsg.toLowerCase().includes("questionnaire pdfs") || detailMsg.toLowerCase().includes("questionnaires") || detailMsg.toLowerCase().includes("questionnaire export")) &&
             detailMsg.toLowerCase().includes("complete")) {
-            return `${stageDisplay} | ${percent}% | Questionnaire(s) complete. Continuing with main PDFs and final ZIP...`;
+            return `${stageDisplay} | Overall ${percent}% | Questionnaire(s) complete. Continuing with main PDFs and final ZIP...`;
         }
 
         // Default: prefix with stage so message always has context.
-        return `${stageDisplay} | ${percent}% | ${detailMsg}`;
+        return `${stageDisplay} | Overall ${percent}% | ${detailMsg}`;
     }
 
     async function safeUpdateJob(jobId: string, patch: any): Promise<void> {
@@ -159,14 +239,40 @@ namespace ROM.WorkOrderExportJob {
     async function refreshFormAfterCompletion(formContext: any): Promise<void> {
         // Some orgs lag before file column metadata appears in-form.
         // Retry refresh a few times so users don't need manual refresh.
+        let refreshed = false;
         for (let attempt = 0; attempt < 3; attempt++) {
             try {
                 await formContext.data.refresh(false);
-                return;
+                refreshed = true;
+                break;
             } catch (e) {
-                if (attempt >= 2) return;
+                if (attempt >= 2) break;
                 await new Promise<void>((resolve) => window.setTimeout(() => resolve(), 1200));
             }
+        }
+
+        // Fallback: force one full page reload so file-column UI state is guaranteed fresh.
+        // Guard with a per-job one-time flag to avoid reload loops.
+        const jobId = getJobId(formContext);
+        if (!jobId) return;
+        const reloadKey = `wo_export_completed_reload_once_${jobId}`;
+        const didReload = sessionStorage.getItem(reloadKey) === "1";
+        if (didReload) {
+            sessionStorage.removeItem(reloadKey);
+            return;
+        }
+        if (!refreshed) {
+            sessionStorage.setItem(reloadKey, "1");
+            window.setTimeout(() => window.location.reload(), 250);
+            return;
+        }
+
+        // Even when data.refresh succeeds, file columns may still lag in rendering in some clients.
+        const fileAttr = formContext.getAttribute?.("ts_finalexportzip");
+        const hasFileValue = !!fileAttr?.getValue?.();
+        if (!hasFileValue) {
+            sessionStorage.setItem(reloadKey, "1");
+            window.setTimeout(() => window.location.reload(), 250);
         }
     }
 
@@ -189,7 +295,7 @@ namespace ROM.WorkOrderExportJob {
     function showCriticalProgressIndicator(text?: string, isUnsafeToClose: boolean = true): void {
         try {
             const header = isUnsafeToClose
-                ? "⚠️ Do not close or refresh this form."
+                ? "⚠️ Do not close or reload this form."
                 : "⏳";
             const detail = text || "Questionnaire export is in progress.";
             const message = isUnsafeToClose ? `${header} | ${detail}` : `${header} ${detail}`;
@@ -255,6 +361,26 @@ namespace ROM.WorkOrderExportJob {
         return `${INTERRUPTION_FLAG_PREFIX}${jobId}`;
     }
 
+    function getAutoResumeFlagKey(jobId: string): string {
+        return `${AUTO_RESUME_FLAG_PREFIX}${jobId}`;
+    }
+
+    function getResumeAttemptsKey(jobId: string): string {
+        return `${RESUME_ATTEMPTS_PREFIX}${jobId}`;
+    }
+
+    function getLastProgressContextKey(jobId: string): string {
+        return `${LAST_PROGRESS_CONTEXT_PREFIX}${jobId}`;
+    }
+
+    function getLastStallContextKey(jobId: string): string {
+        return `${LAST_STALL_CONTEXT_PREFIX}${jobId}`;
+    }
+
+    function getSameStallCountKey(jobId: string): string {
+        return `${SAME_STALL_COUNT_PREFIX}${jobId}`;
+    }
+
     function consumeInterruptionFlag(jobId: string): boolean {
         try {
             const key = getInterruptionFlagKey(jobId);
@@ -269,6 +395,101 @@ namespace ROM.WorkOrderExportJob {
     function clearInterruptionFlag(jobId: string): void {
         try {
             localStorage.removeItem(getInterruptionFlagKey(jobId));
+        } catch (e) {
+            // ignore
+        }
+    }
+
+    function setAutoResumeFlag(jobId: string): void {
+        try {
+            localStorage.setItem(getAutoResumeFlagKey(jobId), new Date().toISOString());
+        } catch (e) {
+            // ignore
+        }
+    }
+
+    function consumeAutoResumeFlag(jobId: string): boolean {
+        try {
+            const key = getAutoResumeFlagKey(jobId);
+            const found = !!localStorage.getItem(key);
+            if (found) localStorage.removeItem(key);
+            return found;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function getResumeAttempts(jobId: string): number {
+        try {
+            const raw = localStorage.getItem(getResumeAttemptsKey(jobId));
+            const parsed = Number(raw);
+            if (!Number.isFinite(parsed) || parsed < 0) return 0;
+            return Math.floor(parsed);
+        } catch (e) {
+            return 0;
+        }
+    }
+
+    function setResumeAttempts(jobId: string, attempts: number): void {
+        try {
+            localStorage.setItem(getResumeAttemptsKey(jobId), `${Math.max(0, Math.floor(attempts))}`);
+        } catch (e) {
+            // ignore
+        }
+    }
+
+    function clearResumeAttempts(jobId: string): void {
+        try {
+            localStorage.removeItem(getResumeAttemptsKey(jobId));
+        } catch (e) {
+            // ignore
+        }
+    }
+
+    function setLastProgressContext(jobId: string, text: string): void {
+        try {
+            localStorage.setItem(getLastProgressContextKey(jobId), (text || "").toString().trim());
+        } catch (e) {
+            // ignore
+        }
+    }
+
+    function getLastProgressContext(jobId: string): string {
+        try {
+            return (localStorage.getItem(getLastProgressContextKey(jobId)) || "").toString();
+        } catch (e) {
+            return "";
+        }
+    }
+
+    function clearLastProgressContext(jobId: string): void {
+        try {
+            localStorage.removeItem(getLastProgressContextKey(jobId));
+        } catch (e) {
+            // ignore
+        }
+    }
+
+    function recordStallAtContext(jobId: string, context: string): number {
+        try {
+            const normalized = (context || "").trim();
+            const prevContext = (localStorage.getItem(getLastStallContextKey(jobId)) || "").trim();
+            const prevCountRaw = Number(localStorage.getItem(getSameStallCountKey(jobId)) || "0");
+            const prevCount = Number.isFinite(prevCountRaw) && prevCountRaw > 0 ? Math.floor(prevCountRaw) : 0;
+            const nextCount = prevContext === normalized ? (prevCount + 1) : 1;
+
+            localStorage.setItem(getLastStallContextKey(jobId), normalized);
+            localStorage.setItem(getSameStallCountKey(jobId), `${nextCount}`);
+            return nextCount;
+        } catch (e) {
+            return 1;
+        }
+    }
+
+    function clearStallTracking(jobId: string): void {
+        try {
+            localStorage.removeItem(getLastStallContextKey(jobId));
+            localStorage.removeItem(getSameStallCountKey(jobId));
         } catch (e) {
             // ignore
         }
@@ -354,6 +575,17 @@ namespace ROM.WorkOrderExportJob {
         Xrm.Navigation.openAlertDialog({ text: "Export completed, but the ZIP could not be located automatically. Please check Notes on the export job (or the Final Export ZIP lookup)." });
     }
 
+    function focusZipControl(formContext: any): void {
+        try {
+            const zipControl = formContext?.getControl?.("ts_finalexportzip");
+            if (zipControl?.setFocus) {
+                zipControl.setFocus();
+            }
+        } catch (e) {
+            // ignore
+        }
+    }
+
     async function pollAndRenderProgress(formContext: any, jobId: string): Promise<void> {
         // Single retrieve for status + progress
         const select =
@@ -396,6 +628,17 @@ namespace ROM.WorkOrderExportJob {
             closeCriticalProgressIndicator();
             setProgressNotification(formContext, "Export completed. The ZIP is ready to download.", "INFO");
             await refreshFormAfterCompletion(formContext);
+            focusZipControl(formContext);
+
+            const userChoice = await Xrm.Navigation.openConfirmDialog({
+                title: "Export Completed",
+                text: "The export is complete. Your ZIP is ready.\n\nDo you want to download it now?",
+                confirmButtonLabel: "Download ZIP",
+                cancelButtonLabel: "Later"
+            });
+            if (userChoice?.confirmed) {
+                await openFinalArtifact(jobId, job);
+            }
             return;
         }
         
@@ -493,6 +736,11 @@ namespace ROM.WorkOrderExportJob {
                 status === STATUS_READY_FOR_FLOW ||
                 status === STATUS_FLOW_RUNNING ||
                 status === STATUS_READY_FOR_MERGE ||
+                status === STATUS_MERGE_IN_PROGRESS ||
+                status === STATUS_READY_FOR_ZIP ||
+                status === STATUS_ZIP_IN_PROGRESS ||
+                status === STATUS_READY_FOR_CLEANUP ||
+                status === STATUS_CLEANUP_IN_PROGRESS ||
                 status === STATUS_ERROR) {
                 setLeavePageGuard(false);
 
@@ -503,9 +751,82 @@ namespace ROM.WorkOrderExportJob {
 
         if (status !== STATUS_CLIENT_PROCESSING) return;
 
+        let stopStallWatchdog: () => void = () => {};
         try {
             let recoveryMode: "none" | "resume" | "cancelled" = "none";
             let resumedTaskIds = new Set<string>();
+            let stallWatchdogHandle: number | null = null;
+            let lastProgressActivityMs = Date.now();
+            let lastProgressContext = "[Stage 1/3] Initializing";
+            let autoReloadTriggered = false;
+
+            const touchProgressActivity = (context?: string): void => {
+                lastProgressActivityMs = Date.now();
+                if ((context || "").trim()) {
+                    lastProgressContext = (context || "").trim();
+                    if (jobId) setLastProgressContext(jobId, lastProgressContext);
+                }
+            };
+
+            stopStallWatchdog = (): void => {
+                if (stallWatchdogHandle !== null) {
+                    window.clearInterval(stallWatchdogHandle);
+                    stallWatchdogHandle = null;
+                }
+            };
+
+            const handleStallDetected = async (): Promise<void> => {
+                if (!jobId || autoReloadTriggered) return;
+                autoReloadTriggered = true;
+                stopStallWatchdog();
+
+                const priorAttempts = getResumeAttempts(jobId);
+                const lastKnownContext = getLastProgressContext(jobId) || lastProgressContext || "[Stage 1/3] Unknown";
+                const sameContextStallCount = recordStallAtContext(jobId, lastKnownContext);
+                const repeatedSameContext = sameContextStallCount >= MAX_SAME_CONTEXT_STALLS;
+
+                if (repeatedSameContext || priorAttempts >= MAX_AUTO_RESUME_ATTEMPTS) {
+                    const fatalMsg =
+                        repeatedSameContext
+                            ? `Stage 1 stalled ${MAX_SAME_CONTEXT_STALLS} times at the same step. Export stopped.\nLast known progress: ${lastKnownContext}`
+                            : `Stage 1 auto-resume failed after ${MAX_AUTO_RESUME_ATTEMPTS} attempt(s). Export stopped due to repeated stalls.\nLast known progress: ${lastKnownContext}`;
+                    await safeUpdateJob(jobId, {
+                        statuscode: STATUS_ERROR,
+                        ts_errormessage: fatalMsg,
+                        ts_progressmessage: `[Error] Stage 1 stalled repeatedly. Export stopped.`,
+                        ts_lastheartbeat: new Date().toISOString()
+                    });
+                    clearInterruptionFlag(jobId);
+                    clearResumeAttempts(jobId);
+                    clearLastProgressContext(jobId);
+                    clearStallTracking(jobId);
+                    setLeavePageGuard(false);
+                    closeCriticalProgressIndicator();
+                    clearProgressNotification(formContext);
+                    try { await formContext.data.refresh(false); } catch {}
+                    Xrm.Navigation.openAlertDialog({ text: fatalMsg });
+                    return;
+                }
+
+                const nextAttempt = priorAttempts + 1;
+                setResumeAttempts(jobId, nextAttempt);
+                setAutoResumeFlag(jobId);
+                try {
+                    localStorage.setItem(getInterruptionFlagKey(jobId), new Date().toISOString());
+                } catch (e) {
+                    // ignore
+                }
+                await safeUpdateJob(jobId, {
+                    ts_progressmessage: `[Stage 1/3] Stall detected. Auto-resume attempt ${nextAttempt}/${MAX_AUTO_RESUME_ATTEMPTS}...`,
+                    ts_lastheartbeat: new Date().toISOString()
+                });
+                showCriticalProgressIndicator(
+                    `[Stage 1/3] Stall detected | Auto-resume attempt ${nextAttempt}/${MAX_AUTO_RESUME_ATTEMPTS}`,
+                    true
+                );
+                setLeavePageGuard(false);
+                window.setTimeout(() => window.location.reload(), 250);
+            };
 
             if (jobId) {
                 const currentJob = await Xrm.WebApi.retrieveRecord(
@@ -515,6 +836,7 @@ namespace ROM.WorkOrderExportJob {
                 );
                 const currentStatus: number | null | undefined = currentJob?.statuscode;
                 const hasInterruptionFlag = consumeInterruptionFlag(jobId);
+                const autoResumeRequested = consumeAutoResumeFlag(jobId);
                 const hasPartialProgress = Number(currentJob?.ts_doneunits || 0) > 0 ||
                     ((currentJob?.ts_progressmessage || "").toString().trim().length > 0);
                 const heartbeatRecent = isRecentHeartbeat(currentJob?.ts_lastheartbeat, CLIENT_HEARTBEAT_RECENT_MS);
@@ -522,7 +844,7 @@ namespace ROM.WorkOrderExportJob {
                     (hasInterruptionFlag || (!heartbeatRecent && hasPartialProgress));
 
                 if (isInterruptedRun) {
-                    recoveryMode = await promptResumeOrCancel();
+                    recoveryMode = autoResumeRequested ? "resume" : await promptResumeOrCancel();
 
                     if (recoveryMode === "resume") {
                         const existingSurveyNotes = await getSurveyPdfAnnotations(jobId);
@@ -533,7 +855,9 @@ namespace ROM.WorkOrderExportJob {
                         }
                         setProgressNotification(
                             formContext,
-                            `Resuming questionnaire export from ${resumedTaskIds.size} existing PDF(s)...`,
+                            autoResumeRequested
+                                ? `Resuming questionnaire export automatically (${getResumeAttempts(jobId)}/${MAX_AUTO_RESUME_ATTEMPTS}) from ${resumedTaskIds.size} existing PDF(s)...`
+                                : `Resuming questionnaire export from ${resumedTaskIds.size} existing PDF(s)...`,
                             "INFO"
                         );
                     } else {
@@ -549,6 +873,9 @@ namespace ROM.WorkOrderExportJob {
                         setLeavePageGuard(false);
                         closeCriticalProgressIndicator();
                         clearInterruptionFlag(jobId);
+                        clearResumeAttempts(jobId);
+                        clearLastProgressContext(jobId);
+                        clearStallTracking(jobId);
                         try { await formContext.data.refresh(false); } catch {}
                         Xrm.Navigation.openAlertDialog({ text: userCancelledMessage });
                         return;
@@ -556,7 +883,7 @@ namespace ROM.WorkOrderExportJob {
                 } else if (currentStatus === STATUS_CLIENT_PROCESSING && heartbeatRecent) {
                     setLeavePageGuard(true, jobId);
                     showCriticalProgressIndicator(
-                        "Questionnaire export is already running. Do not close or refresh this form if you started it.",
+                        "[Stage 1/3] In progress | Questionnaire export is already running. Do not close or reload this form if you started it.",
                         true
                     );
                     startProgressPoller(formContext, jobId);
@@ -568,6 +895,15 @@ namespace ROM.WorkOrderExportJob {
                 // Stage 2 is running in this form: warn and prevent accidental close.
                 setLeavePageGuard(true, jobId);
                 clearProgressNotification(formContext);
+                touchProgressActivity("[Stage 1/3] In progress");
+
+                stallWatchdogHandle = window.setInterval(() => {
+                    const stalledForMs = Date.now() - lastProgressActivityMs;
+                    if (stalledForMs < STALL_TIMEOUT_MS) return;
+                    handleStallDetected().catch((e: any) => {
+                        console.warn(`[WOExport] Stall watchdog handler failed: ${e?.message || e}`);
+                    });
+                }, STALL_WATCHDOG_INTERVAL_MS);
             }
 
             const renderHostControl = formContext.getControl("WebResource_RenderHost");
@@ -616,7 +952,7 @@ namespace ROM.WorkOrderExportJob {
                 "Preparing export (1/2): scanning selected work orders...",
                 "INFO"
             );
-            showCriticalProgressIndicator("Preparing export (1/2): scanning selected work orders...");
+            showCriticalProgressIndicator(formatStage1Preparation("Preparing export (1/2): scanning selected work orders..."));
             let countIndex = 0;
             for (const workOrderId of ids) {
                 countIndex++;
@@ -625,7 +961,7 @@ namespace ROM.WorkOrderExportJob {
                     "?$select=msdyn_workorderservicetaskid,msdyn_name,ovs_questionnairedefinition,ovs_questionnaireresponse" +
                     "&$filter=_msdyn_workorder_value eq " + workOrderIdNoBraces;
 
-                showCriticalProgressIndicator(`Preparing export (1/2): scanning selected work orders (${countIndex}/${totalExports})...`);
+                showCriticalProgressIndicator(formatStage1Preparation(`Preparing export (1/2): scanning selected work orders (${countIndex}/${totalExports})...`));
                 const tasks = await Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", fetchOptions);
 
                 const tasksTotal = tasks.entities.length;
@@ -708,6 +1044,7 @@ namespace ROM.WorkOrderExportJob {
 
             let currentExportIndex = 0;
             const errors: string[] = [];
+            const nonBlockingSkips: string[] = [];
             
             // Helper function to update progress notification (local UI)
             const updateProgress = (overallMessage: string, detailMessage?: string) => {
@@ -726,11 +1063,12 @@ namespace ROM.WorkOrderExportJob {
                             actionLower.includes("format") ? "🧩 " :
                             actionLower.includes("generating") ? "📄 " :
                             actionLower.includes("prepar") ? "⏳ " : "";
-                        combined = `${left} | ${overallMessage} | ${icon}${action}`;
+                        combined = `${overallMessage} | ${left} | ${icon}${action}`;
                     } else {
-                        combined = `${detailMessage} | ${overallMessage}`;
+                        combined = `${overallMessage} | ${detailMessage}`;
                     }
                 }
+                touchProgressActivity(combined);
                 showCriticalProgressIndicator(combined);
             };
 
@@ -740,6 +1078,7 @@ namespace ROM.WorkOrderExportJob {
                 if (!force && (now - lastProgressWriteMs) < PROGRESS_WRITE_THROTTLE_MS) return;
                 lastProgressWriteMs = now;
                 if (!exportJobId) return;
+                touchProgressActivity(message);
                 await safeUpdateJob(exportJobId, {
                     ts_doneunits: doneUnits,
                     ts_progressmessage: message,
@@ -786,6 +1125,7 @@ namespace ROM.WorkOrderExportJob {
                     const taskId = task.msdyn_workorderservicetaskid?.replace(/[{}]/g, "") || "unknown";
                     const normalizedTaskId = taskId.toLowerCase();
                     const taskName = (task.msdyn_name || "").toString().trim() || "Unknown";
+                    const taskLabel = `${taskId} (${taskName})`;
                     
                     if (task.ovs_questionnairedefinition && task.ovs_questionnaireresponse) {
                         currentTaskIndex++;
@@ -828,6 +1168,18 @@ namespace ROM.WorkOrderExportJob {
 
                         // 1. Parse & Flatten Definition (Single Page)
                         if (!def || typeof def !== 'string' || def.trim() === '') {
+                            const warningMessage =
+                                `Work Order: ${workOrderLabel}\n` +
+                                `Work Order Service Task: ${taskLabel}\n` +
+                                `Skip Reason: Questionnaire definition is missing or empty.`;
+                            nonBlockingSkips.push(warningMessage);
+                            skippedCount++;
+                            doneUnits++;
+                            updateProgress(
+                                formatSurveyOverall(doneUnits, totalSurveyPdfs),
+                                `Work order ${currentExportIndex}/${totalExports}${woDisplayName} | Questionnaire ${currentTaskIndex}/${totalQuestionnaires} | Skipped (missing definition)`
+                            );
+                            await writeProgress(formatQuestionnaireExportProgress(doneUnits, totalSurveyPdfs));
                             continue;
                         }
 
@@ -835,8 +1187,19 @@ namespace ROM.WorkOrderExportJob {
                         try {
                             surveyDef = JSON.parse(def.trim());
                         } catch (parseError: any) {
-                            console.error(`[WOExport] Error parsing survey definition for Work Order Service Task ${taskId}: ${parseError.message}`);
-                            continue; // Skip this task and move to the next one
+                            const warningMessage =
+                                `Work Order: ${workOrderLabel}\n` +
+                                `Work Order Service Task: ${taskLabel}\n` +
+                                `Skip Reason: Invalid questionnaire definition JSON (${parseError?.message || parseError}).`;
+                            nonBlockingSkips.push(warningMessage);
+                            skippedCount++;
+                            doneUnits++;
+                            updateProgress(
+                                formatSurveyOverall(doneUnits, totalSurveyPdfs),
+                                `Work order ${currentExportIndex}/${totalExports}${woDisplayName} | Questionnaire ${currentTaskIndex}/${totalQuestionnaires} | Skipped (invalid definition)`
+                            );
+                            await writeProgress(formatQuestionnaireExportProgress(doneUnits, totalSurveyPdfs));
+                            continue;
                         }
 
                         // If includeHiddenQuestions is true: clear visibleIf on ALL elements on ALL pages
@@ -1057,7 +1420,6 @@ namespace ROM.WorkOrderExportJob {
                         await writeProgress(formatQuestionnaireExportProgress(doneUnits, totalSurveyPdfs));
                         // DO NOT BREAK - Process all tasks for this Work Order
                         } catch (taskError: any) {
-                            const taskLabel = `${taskId} (${taskName})`;
                             const userGuidance = "Please try again. If this keeps failing, retry the export without this Work Order/Service Task.";
                             const errorMessage =
                                 `Work Order: ${workOrderLabel}\n` +
@@ -1093,22 +1455,49 @@ namespace ROM.WorkOrderExportJob {
                 formContext.getAttribute("statuscode").setValue(STATUS_ERROR);
                 const errorMsgAttr = formContext.getAttribute("ts_errormessage");
                 if (errorMsgAttr) {
-                    errorMsgAttr.setValue(errors.join("\n\n"));
+                    const parts: string[] = [];
+                    parts.push(errors.join("\n\n"));
+                    if (nonBlockingSkips.length > 0) {
+                        parts.push(
+                            `Non-blocking skips (${nonBlockingSkips.length}):\n` +
+                            nonBlockingSkips.join("\n\n")
+                        );
+                    }
+                    errorMsgAttr.setValue(parts.join("\n\n"));
                 }
                 clearProgressNotification(formContext);
                 setLeavePageGuard(false);
+                stopStallWatchdog();
                 closeCriticalProgressIndicator();
                 if (exportJobId) clearInterruptionFlag(exportJobId);
+                if (exportJobId) clearResumeAttempts(exportJobId);
+                if (exportJobId) clearLastProgressContext(exportJobId);
+                if (exportJobId) clearStallTracking(exportJobId);
                 await formContext.data.save();
                 Xrm.Navigation.openAlertDialog({ text: `Export completed with ${errors.length} error(s). Check error message field for details.` });
             } else {
-                await writeProgress(formatQuestionnaireExportProgress(doneUnits, totalSurveyPdfs, true), true);
+                const completionMsg = formatQuestionnaireExportProgress(doneUnits, totalSurveyPdfs, true);
+                const completionWithSkips = nonBlockingSkips.length > 0
+                    ? `${completionMsg} | Skipped: ${nonBlockingSkips.length}`
+                    : completionMsg;
+                await writeProgress(completionWithSkips, true);
+                stopStallWatchdog();
                 closeCriticalProgressIndicator();
                 clearProgressNotification(formContext);
                 formContext.getAttribute("statuscode").setValue(STATUS_READY_FOR_SERVER);
+                if (nonBlockingSkips.length > 0) {
+                    const warningSummary =
+                        `Non-blocking skips (${nonBlockingSkips.length}):\n` +
+                        nonBlockingSkips.join("\n\n");
+                    const errorMsgAttr = formContext.getAttribute("ts_errormessage");
+                    if (errorMsgAttr) errorMsgAttr.setValue(warningSummary);
+                }
                 setLeavePageGuard(false);
                 closeCriticalProgressIndicator();
                 if (exportJobId) clearInterruptionFlag(exportJobId);
+                if (exportJobId) clearResumeAttempts(exportJobId);
+                if (exportJobId) clearLastProgressContext(exportJobId);
+                if (exportJobId) clearStallTracking(exportJobId);
 
                 await formContext.data.save();
                 if (exportJobId) {
@@ -1118,10 +1507,14 @@ namespace ROM.WorkOrderExportJob {
 
         } catch (e: any) {
             console.error("[WOExport] ERROR: ", e);
+            stopStallWatchdog();
             clearProgressNotification(formContext);
             setLeavePageGuard(false);
             closeCriticalProgressIndicator();
             if (jobId) clearInterruptionFlag(jobId);
+            if (jobId) clearResumeAttempts(jobId);
+            if (jobId) clearLastProgressContext(jobId);
+            if (jobId) clearStallTracking(jobId);
 
             formContext.getAttribute("statuscode").setValue(STATUS_ERROR);
             const errorMsgAttr = formContext.getAttribute("ts_errormessage");
