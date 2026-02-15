@@ -35,6 +35,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
+};
 var ROM;
 (function (ROM) {
     var WorkOrderExportJob;
@@ -42,23 +47,57 @@ var ROM;
         // StatusCode Values for ts_workorderexportjob
         var STATUS_ACTIVE = 1;
         var STATUS_CLIENT_PROCESSING = 741130001; // Webresource generating survey PDFs
-        var STATUS_READY_FOR_SERVER = 741130002; // Surveys done → C# builds payload
-        var STATUS_READY_FOR_FLOW = 741130003; // Payload ready → Flow may start
+        var STATUS_READY_FOR_SERVER = 741130002; // Surveys done -> C# builds payload
+        var STATUS_READY_FOR_FLOW = 741130003; // Payload ready -> Flow may start
         var STATUS_FLOW_RUNNING = 741130004; // Flow claimed the job (lock)
-        var STATUS_READY_FOR_MERGE = 741130005; // MAIN PDFs exist → C# merge
+        var STATUS_READY_FOR_MERGE = 741130005; // MAIN PDFs exist -> C# merge
         var STATUS_COMPLETED = 741130006; // ZIP created
         var STATUS_ERROR = 741130007; // Error
-        var PROGRESS_POLL_INTERVAL_MS = 10000;
-        var PROGRESS_WRITE_THROTTLE_MS = 1500;
-        var PROGRESS_NOTIFICATION_ID = "wo_export_progress";
         var progressPollHandle = null;
+        var finalizeCheckTimeoutHandle = null;
+        var PROGRESS_POLL_INTERVAL_MS = 5000;
+        var PROGRESS_WRITE_THROTTLE_MS = 1500;
+        var PROGRESS_INDICATOR_UPDATE_THROTTLE_MS = 250;
+        var CLIENT_HEARTBEAT_RECENT_MS = 30000;
+        var INTERRUPTION_FLAG_PREFIX = "wo_export_interrupted_";
+        var DEBUG_LOGS = false;
+        var PROGRESS_NOTIFICATION_ID = "wo_export_progress";
+        var criticalProgressIndicatorOpen = false;
+        var lastCriticalProgressMessage = "";
+        var lastCriticalProgressUpdateMs = 0;
+        var leaveGuardEnabled = false;
+        var leaveGuardJobId = null;
+        function debugLog(message) {
+            var optionalParams = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                optionalParams[_i - 1] = arguments[_i];
+            }
+            if (!DEBUG_LOGS)
+                return;
+            console.log.apply(console, __spreadArray([message], optionalParams));
+        }
+        var beforeUnloadHandler = function (event) {
+            // Modern browsers ignore custom text and show a generic confirmation prompt.
+            // Setting returnValue is what triggers: "This page is asking you to confirm..."
+            if (leaveGuardJobId) {
+                try {
+                    localStorage.setItem("" + INTERRUPTION_FLAG_PREFIX + leaveGuardJobId, new Date().toISOString());
+                }
+                catch (e) {
+                    // ignore
+                }
+            }
+            event.preventDefault();
+            event.returnValue = "";
+            return "";
+        };
         function getJobId(formContext) {
             var _a, _b, _c;
             return (((_c = (_b = (_a = formContext === null || formContext === void 0 ? void 0 : formContext.data) === null || _a === void 0 ? void 0 : _a.entity) === null || _b === void 0 ? void 0 : _b.getId) === null || _c === void 0 ? void 0 : _c.call(_b)) || "").replace(/[{}]/g, "");
         }
         function getStatusLabel(status) {
             switch (status) {
-                case STATUS_CLIENT_PROCESSING: return "Generating questionnaire PDFs";
+                case STATUS_CLIENT_PROCESSING: return "Processing questionnaires";
                 case STATUS_READY_FOR_SERVER: return "Preparing export payload";
                 case STATUS_READY_FOR_FLOW: return "Queued for main PDF generation";
                 case STATUS_FLOW_RUNNING: return "Generating main PDFs";
@@ -68,30 +107,78 @@ var ROM;
                 default: return "Unknown";
             }
         }
+        function getStagePrefix(status) {
+            if (status === STATUS_CLIENT_PROCESSING)
+                return "[Stage 1/3]";
+            if (status === STATUS_READY_FOR_SERVER || status === STATUS_READY_FOR_FLOW || status === STATUS_FLOW_RUNNING)
+                return "[Stage 2/3]";
+            if (status === STATUS_READY_FOR_MERGE)
+                return "[Stage 3/3]";
+            if (status === STATUS_COMPLETED)
+                return "[Completed]";
+            if (status === STATUS_ERROR)
+                return "[Error]";
+            return "[Stage]";
+        }
         function formatSurveyOverall(done, total) {
-            return "Export \u2014 Questionnaires " + Math.min(done, total) + "/" + total;
+            var safeTotal = Math.max(0, total);
+            var safeDone = Math.max(0, Math.min(done, safeTotal));
+            var percent = safeTotal > 0 ? Math.round((safeDone * 100) / safeTotal) : 0;
+            return "[Stage 1/3] " + safeDone + "/" + safeTotal + " (" + percent + "%)";
+        }
+        function formatQuestionnaireExportProgress(done, total, complete) {
+            if (complete === void 0) { complete = false; }
+            var safeTotal = Math.max(0, total);
+            var safeDone = Math.max(0, Math.min(done, safeTotal));
+            var percent = safeTotal > 0 ? Math.round((safeDone * 100) / safeTotal) : 0;
+            return complete
+                ? "Questionnaire export: " + safeDone + "/" + safeTotal + " (" + percent + "%) (complete)"
+                : "Questionnaire export: " + safeDone + "/" + safeTotal + " (" + percent + "%)";
+        }
+        function isRecentHeartbeat(heartbeatIso, maxAgeMs) {
+            if (!heartbeatIso)
+                return false;
+            var ts = Date.parse(heartbeatIso);
+            if (!Number.isFinite(ts))
+                return false;
+            return (Date.now() - ts) <= maxAgeMs;
         }
         function formatBackendProgressMessage(status, stageLabel, rawMessage, doneUnits, totalUnits) {
             var percent = totalUnits > 0 ? Math.max(0, Math.min(100, Math.round((doneUnits * 100) / totalUnits))) : 0;
             var msg = (rawMessage || "").trim();
-            if (!msg)
-                return "Export " + percent + "% \u2014 " + stageLabel;
+            var stagePrefix = getStagePrefix(status);
+            var stageDisplay = stagePrefix + " " + stageLabel;
+            var detailMsg = msg;
+            // Flow messages sometimes repeat the same stage phrase; strip that prefix from detail.
+            var stageLabelLower = (stageLabel || "").trim().toLowerCase();
+            var detailLower = detailMsg.toLowerCase();
+            if (stageLabelLower && detailLower.startsWith(stageLabelLower)) {
+                detailMsg = detailMsg.substring(stageLabel.length).replace(/^[:\-\s]+/, "").trim();
+            }
+            if (!detailMsg)
+                return stageDisplay + " | " + percent + "%";
             // Common pattern from Flow: "Main PDFs: x/y"
-            var mainMatch = msg.match(/^Main PDFs:\s*(\d+)\s*\/\s*(\d+)\s*$/i);
+            var mainMatch = detailMsg.match(/^Main PDFs:\s*(\d+)\s*\/\s*(\d+)\s*$/i);
             if (mainMatch) {
-                var done = Number(mainMatch[1] || 0);
-                var total = Number(mainMatch[2] || 0);
-                var next = (done >= total) ? "Next: merge + ZIP." : "";
-                return ("Export " + percent + "% \u2014 " + stageLabel + " \u2014 " + done + " of " + total + " done. " + next).trim();
+                var rawDone = Number(mainMatch[1] || 0);
+                var rawTotal = Number(mainMatch[2] || 0);
+                var total = Math.max(0, rawTotal);
+                var done = total > 0 ? Math.max(0, Math.min(rawDone, total)) : Math.max(0, rawDone);
+                // If we've already moved to Stage 3, don't keep showing stale Stage 2 "Main PDFs" counters.
+                if (status === STATUS_READY_FOR_MERGE) {
+                    return stageDisplay + " | " + percent + "% | Starting merge + ZIP";
+                }
+                var next = (status === STATUS_FLOW_RUNNING && total > 0 && done >= total) ? "Next: merge + ZIP." : "";
+                return (stageDisplay + " | " + percent + "% | " + done + " of " + total + " done. " + next).trim();
             }
             // If survey stage completed but we're now in backend, replace technical survey-only messages with a clearer handoff.
             if ((status === STATUS_READY_FOR_SERVER || status === STATUS_READY_FOR_FLOW || status === STATUS_FLOW_RUNNING || status === STATUS_READY_FOR_MERGE) &&
-                (msg.toLowerCase().includes("survey pdfs") || msg.toLowerCase().includes("questionnaire pdfs") || msg.toLowerCase().includes("questionnaires")) &&
-                msg.toLowerCase().includes("complete")) {
-                return "Export " + percent + "% \u2014 Questionnaires complete. Continuing with main PDFs and final ZIP...";
+                (detailMsg.toLowerCase().includes("survey pdfs") || detailMsg.toLowerCase().includes("questionnaire pdfs") || detailMsg.toLowerCase().includes("questionnaires") || detailMsg.toLowerCase().includes("questionnaire export")) &&
+                detailMsg.toLowerCase().includes("complete")) {
+                return stageDisplay + " | " + percent + "% | Questionnaire(s) complete. Continuing with main PDFs and final ZIP...";
             }
             // Default: prefix with stage so message always has context.
-            return "Export " + percent + "% \u2014 " + stageLabel + " \u2014 " + msg;
+            return stageDisplay + " | " + percent + "% | " + detailMsg;
         }
         function safeUpdateJob(jobId, patch) {
             return __awaiter(this, void 0, void 0, function () {
@@ -107,9 +194,42 @@ var ROM;
                         case 2:
                             e_1 = _a.sent();
                             // Don't fail the export if progress writes fail (e.g., column not on form, permissions, etc.)
-                            console.log("[WOExport] Progress update failed: " + ((e_1 === null || e_1 === void 0 ? void 0 : e_1.message) || e_1));
+                            debugLog("[WOExport] Progress update failed: " + ((e_1 === null || e_1 === void 0 ? void 0 : e_1.message) || e_1));
                             return [3 /*break*/, 3];
                         case 3: return [2 /*return*/];
+                    }
+                });
+            });
+        }
+        function refreshFormAfterCompletion(formContext) {
+            return __awaiter(this, void 0, void 0, function () {
+                var attempt, e_2;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            attempt = 0;
+                            _a.label = 1;
+                        case 1:
+                            if (!(attempt < 3)) return [3 /*break*/, 7];
+                            _a.label = 2;
+                        case 2:
+                            _a.trys.push([2, 4, , 6]);
+                            return [4 /*yield*/, formContext.data.refresh(false)];
+                        case 3:
+                            _a.sent();
+                            return [2 /*return*/];
+                        case 4:
+                            e_2 = _a.sent();
+                            if (attempt >= 2)
+                                return [2 /*return*/];
+                            return [4 /*yield*/, new Promise(function (resolve) { return window.setTimeout(function () { return resolve(); }, 1200); })];
+                        case 5:
+                            _a.sent();
+                            return [3 /*break*/, 6];
+                        case 6:
+                            attempt++;
+                            return [3 /*break*/, 1];
+                        case 7: return [2 /*return*/];
                     }
                 });
             });
@@ -131,39 +251,134 @@ var ROM;
                 // ignore
             }
         }
-        function setLeavePageGuard(enabled) {
+        function showCriticalProgressIndicator(text, isUnsafeToClose) {
+            if (isUnsafeToClose === void 0) { isUnsafeToClose = true; }
+            try {
+                var header = isUnsafeToClose
+                    ? "⚠️ Do not close or refresh this form."
+                    : "⏳";
+                var detail = text || "Questionnaire export is in progress.";
+                var message = isUnsafeToClose ? header + " | " + detail : header + " " + detail;
+                if (message === lastCriticalProgressMessage)
+                    return;
+                var now = Date.now();
+                if ((now - lastCriticalProgressUpdateMs) < PROGRESS_INDICATOR_UPDATE_THROTTLE_MS)
+                    return;
+                if (criticalProgressIndicatorOpen) {
+                    Xrm.Utility.closeProgressIndicator();
+                    criticalProgressIndicatorOpen = false;
+                }
+                // Keep one indicator open and update its message in place.
+                Xrm.Utility.showProgressIndicator(message);
+                criticalProgressIndicatorOpen = true;
+                lastCriticalProgressMessage = message;
+                lastCriticalProgressUpdateMs = now;
+            }
+            catch (e) {
+                // ignore
+            }
+        }
+        function closeCriticalProgressIndicator() {
+            try {
+                if (!criticalProgressIndicatorOpen)
+                    return;
+                Xrm.Utility.closeProgressIndicator();
+                criticalProgressIndicatorOpen = false;
+                lastCriticalProgressMessage = "";
+                lastCriticalProgressUpdateMs = 0;
+            }
+            catch (e) {
+                // ignore
+            }
+        }
+        function setLeavePageGuard(enabled, jobId) {
             try {
                 if (enabled) {
-                    window.onbeforeunload = function () {
-                        return "Export is running. If you leave, the export may stop.";
-                    };
+                    if (jobId)
+                        leaveGuardJobId = jobId;
+                    if (leaveGuardEnabled)
+                        return;
+                    window.addEventListener("beforeunload", beforeUnloadHandler);
+                    leaveGuardEnabled = true;
                 }
                 else {
-                    window.onbeforeunload = null;
+                    if (!leaveGuardEnabled)
+                        return;
+                    window.removeEventListener("beforeunload", beforeUnloadHandler);
+                    leaveGuardEnabled = false;
+                    leaveGuardJobId = null;
                 }
             }
             catch (e) {
                 // ignore
             }
         }
-        function showDontCloseDialog() {
+        function isSurveyPdfFilename(filename) {
+            return /^WO_[0-9A-Fa-f-]+_SURVEY_[0-9A-Fa-f-]+\.pdf$/i.test((filename || "").trim());
+        }
+        function extractSurveyTaskId(filename) {
+            var match = (filename || "").trim().match(/^WO_[0-9A-Fa-f-]+_SURVEY_([0-9A-Fa-f-]+)\.pdf$/i);
+            return (match === null || match === void 0 ? void 0 : match[1]) ? match[1].toLowerCase() : null;
+        }
+        function getInterruptionFlagKey(jobId) {
+            return "" + INTERRUPTION_FLAG_PREFIX + jobId;
+        }
+        function consumeInterruptionFlag(jobId) {
+            try {
+                var key = getInterruptionFlagKey(jobId);
+                var found = !!localStorage.getItem(key);
+                if (found)
+                    localStorage.removeItem(key);
+                return found;
+            }
+            catch (e) {
+                return false;
+            }
+        }
+        function clearInterruptionFlag(jobId) {
+            try {
+                localStorage.removeItem(getInterruptionFlagKey(jobId));
+            }
+            catch (e) {
+                // ignore
+            }
+        }
+        function promptResumeOrCancel() {
             return __awaiter(this, void 0, void 0, function () {
-                var e_2;
+                var result;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, Xrm.Navigation.openConfirmDialog({
+                                title: "Questionnaire Export Interrupted",
+                                text: "The previous questionnaire export appears to have been interrupted by closing or refreshing the form. Select OK to resume, or Cancel to cancel this export job.",
+                                confirmButtonLabel: "OK (Resume)",
+                                cancelButtonLabel: "Cancel Job"
+                            })];
+                        case 1:
+                            result = _a.sent();
+                            return [2 /*return*/, (result === null || result === void 0 ? void 0 : result.confirmed) ? "resume" : "cancelled"];
+                    }
+                });
+            });
+        }
+        function getSurveyPdfAnnotations(jobId) {
+            return __awaiter(this, void 0, void 0, function () {
+                var query, result;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
-                            _a.trys.push([0, 2, , 3]);
-                            return [4 /*yield*/, Xrm.Navigation.openAlertDialog({
-                                    text: "⚠️ Export started.\n\n" +
-                                        "Keep this tab open."
-                                })];
+                            query = "?$select=annotationid,filename" +
+                                ("&$filter=_objectid_value eq " + jobId + " and isdocument eq true") +
+                                "&$top=5000";
+                            return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("annotation", query)];
                         case 1:
-                            _a.sent();
-                            return [3 /*break*/, 3];
-                        case 2:
-                            e_2 = _a.sent();
-                            return [3 /*break*/, 3];
-                        case 3: return [2 /*return*/];
+                            result = _a.sent();
+                            return [2 /*return*/, ((result === null || result === void 0 ? void 0 : result.entities) || [])
+                                    .map(function (a) { return ({
+                                    annotationid: ((a === null || a === void 0 ? void 0 : a.annotationid) || "").toString(),
+                                    filename: ((a === null || a === void 0 ? void 0 : a.filename) || "").toString()
+                                }); })
+                                    .filter(function (a) { return !!a.annotationid && isSurveyPdfFilename(a.filename); })];
                     }
                 });
             });
@@ -193,28 +408,30 @@ var ROM;
             });
         }
         function openFinalArtifact(jobId, jobRecord) {
-            var _a, _b;
             return __awaiter(this, void 0, void 0, function () {
-                var zipFileName, q, notes, noteId, e_3;
-                return __generator(this, function (_c) {
-                    switch (_c.label) {
+                var q, notes, zipNote, noteId, e_3;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
                         case 0: return [4 /*yield*/, tryOpenFinalZipFileColumn(jobId, jobRecord)];
                         case 1:
                             // Mode B: Dataverse File column on the job
-                            if (_c.sent()) {
+                            if (_a.sent()) {
                                 return [2 /*return*/];
                             }
-                            zipFileName = "WorkOrderExport_" + jobId + ".zip";
-                            _c.label = 2;
+                            _a.label = 2;
                         case 2:
-                            _c.trys.push([2, 6, , 7]);
-                            q = "?$select=annotationid,filename,subject" +
-                                ("&$filter=_objectid_value eq " + jobId + " and filename eq '" + zipFileName + "'") +
-                                "&$top=1";
+                            _a.trys.push([2, 6, , 7]);
+                            q = "?$select=annotationid,filename,subject,createdon" +
+                                ("&$filter=_objectid_value eq " + jobId + " and isdocument eq true") +
+                                "&$orderby=createdon desc" +
+                                "&$top=10";
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("annotation", q)];
                         case 3:
-                            notes = _c.sent();
-                            noteId = (_b = (_a = notes === null || notes === void 0 ? void 0 : notes.entities) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.annotationid;
+                            notes = _a.sent();
+                            zipNote = ((notes === null || notes === void 0 ? void 0 : notes.entities) || []).find(function (n) {
+                                return (((n === null || n === void 0 ? void 0 : n.filename) || "").toString().toLowerCase().endsWith(".zip"));
+                            });
+                            noteId = zipNote === null || zipNote === void 0 ? void 0 : zipNote.annotationid;
                             if (!noteId) return [3 /*break*/, 5];
                             return [4 /*yield*/, Xrm.Navigation.navigateTo({
                                     pageType: "entityrecord",
@@ -222,12 +439,12 @@ var ROM;
                                     entityId: noteId
                                 }, { target: 1 })];
                         case 4:
-                            _c.sent();
+                            _a.sent();
                             return [2 /*return*/];
                         case 5: return [3 /*break*/, 7];
                         case 6:
-                            e_3 = _c.sent();
-                            console.log("[WOExport] Failed to locate ZIP note: " + ((e_3 === null || e_3 === void 0 ? void 0 : e_3.message) || e_3));
+                            e_3 = _a.sent();
+                            debugLog("[WOExport] Failed to locate ZIP note: " + ((e_3 === null || e_3 === void 0 ? void 0 : e_3.message) || e_3));
                             return [3 /*break*/, 7];
                         case 7:
                             Xrm.Navigation.openAlertDialog({ text: "Export completed, but the ZIP could not be located automatically. Please check Notes on the export job (or the Final Export ZIP lookup)." });
@@ -238,7 +455,7 @@ var ROM;
         }
         function pollAndRenderProgress(formContext, jobId) {
             return __awaiter(this, void 0, void 0, function () {
-                var select, job, status, msg, totalUnits, doneUnits, stageLabel, rawMessage, displayMessage, e_4;
+                var select, job, status, msg, totalUnits, doneUnits, stageLabel, rawMessage, displayMessage, fileName;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -250,6 +467,7 @@ var ROM;
                             if (status === STATUS_ERROR) {
                                 stopProgressPoller(formContext);
                                 msg = (job === null || job === void 0 ? void 0 : job.ts_errormessage) || "Export failed. See error message.";
+                                closeCriticalProgressIndicator();
                                 setProgressNotification(formContext, "Error: " + msg, "ERROR");
                                 return [2 /*return*/];
                             }
@@ -258,22 +476,28 @@ var ROM;
                             stageLabel = getStatusLabel(status);
                             rawMessage = ((job === null || job === void 0 ? void 0 : job.ts_progressmessage) || "").trim();
                             displayMessage = formatBackendProgressMessage(status, stageLabel, rawMessage, doneUnits, totalUnits);
-                            setProgressNotification(formContext, displayMessage, "INFO");
-                            if (!(status === STATUS_COMPLETED)) return [3 /*break*/, 5];
+                            showCriticalProgressIndicator(displayMessage, status === STATUS_CLIENT_PROCESSING);
+                            clearProgressNotification(formContext);
+                            if (!(status === STATUS_COMPLETED)) return [3 /*break*/, 3];
+                            fileName = ((job === null || job === void 0 ? void 0 : job.ts_finalexportzip_name) || "").toString().trim();
+                            if (!fileName) {
+                                showCriticalProgressIndicator("Finalizing export...", false);
+                                if (finalizeCheckTimeoutHandle === null) {
+                                    finalizeCheckTimeoutHandle = window.setTimeout(function () {
+                                        finalizeCheckTimeoutHandle = null;
+                                        pollAndRenderProgress(formContext, jobId).catch(function () { });
+                                    }, 3000); // check if file is in the export job
+                                }
+                                return [2 /*return*/];
+                            }
                             stopProgressPoller(formContext);
-                            setProgressNotification(formContext, "Export completed.  The ZIP is ready to download.", "INFO");
-                            _a.label = 2;
+                            closeCriticalProgressIndicator();
+                            setProgressNotification(formContext, "Export completed. The ZIP is ready to download.", "INFO");
+                            return [4 /*yield*/, refreshFormAfterCompletion(formContext)];
                         case 2:
-                            _a.trys.push([2, 4, , 5]);
-                            return [4 /*yield*/, formContext.data.refresh(false)];
-                        case 3:
                             _a.sent();
-                            return [3 /*break*/, 5];
-                        case 4:
-                            e_4 = _a.sent();
-                            console.log("[WOExport] Form refresh failed after completion:", e_4);
-                            return [3 /*break*/, 5];
-                        case 5: return [2 /*return*/];
+                            return [2 /*return*/];
+                        case 3: return [2 /*return*/];
                     }
                 });
             });
@@ -283,18 +507,22 @@ var ROM;
                 return;
             progressPollHandle = window.setInterval(function () {
                 pollAndRenderProgress(formContext, jobId).catch(function (e) {
-                    console.log("[WOExport] Progress polling error: " + ((e === null || e === void 0 ? void 0 : e.message) || e));
+                    console.warn("[WOExport] Progress polling error: " + ((e === null || e === void 0 ? void 0 : e.message) || e));
                 });
             }, PROGRESS_POLL_INTERVAL_MS);
             // kick once immediately
             pollAndRenderProgress(formContext, jobId).catch(function (e) {
-                console.log("[WOExport] Progress polling error: " + ((e === null || e === void 0 ? void 0 : e.message) || e));
+                console.warn("[WOExport] Progress polling error: " + ((e === null || e === void 0 ? void 0 : e.message) || e));
             });
         }
         function stopProgressPoller(formContext) {
             if (progressPollHandle !== null) {
                 window.clearInterval(progressPollHandle);
                 progressPollHandle = null;
+            }
+            if (finalizeCheckTimeoutHandle !== null) {
+                window.clearTimeout(finalizeCheckTimeoutHandle);
+                finalizeCheckTimeoutHandle = null;
             }
         }
         /**
@@ -330,15 +558,25 @@ var ROM;
             });
         }
         function onLoad(eContext) {
-            var _a, _b, _c, _d;
+            var _a, _b, _c, _d, _e;
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, formType, renderHostControl, status, jobId, renderHostControl, renderWindow_1, payloadAttr, payloadStr, rawPayload, ids, includeHiddenQuestions, totalExports, exportJobId_1, totalSurveyPdfs, tasksByWorkOrderId, countIndex, _i, ids_1, workOrderId, workOrderIdNoBraces, fetchOptions, tasks, tasksTotal, errorMessage, errorMsgAttr, tasksWithQuestionnaires, errorMessage, errorMsgAttr, totalUnits, doneUnits_1, userSettings, locale_1, cssId, style, currentExportIndex, errors, updateProgress, lastProgressWriteMs_1, writeProgress, _e, ids_2, workOrderId, workOrderIdNoBraces, workOrderName, workOrder, e_5, woDisplayName, tasksEntities, tasksTotal, renderedCount, uploadedCount, skippedCount, tasksWithQuestionnaires, totalQuestionnaires, currentTaskIndex, _loop_1, _f, tasksEntities_1, task, errorMsgAttr, e_6, errorMsgAttr;
+                var formContext, formType, renderHostControl, status, jobId, recoveryMode, resumedTaskIds, currentJob, currentStatus, hasInterruptionFlag, hasPartialProgress, heartbeatRecent, isInterruptedRun, existingSurveyNotes, _i, existingSurveyNotes_1, note, existingTaskId, userCancelledMessage, _f, renderHostControl, renderWindow_1, payloadAttr, payloadStr, rawPayload, ids, includeHiddenQuestions, totalExports, exportJobId_1, totalSurveyPdfs, tasksByWorkOrderId, countIndex, _g, ids_1, workOrderId, workOrderIdNoBraces, fetchOptions, tasks, tasksTotal, errorMessage, errorMsgAttr, tasksWithQuestionnaires, errorMessage, errorMsgAttr, totalUnits, doneUnits_1, userSettings, locale_1, cssId, style, currentExportIndex, errors, updateProgress, lastProgressWriteMs_1, writeProgress, _h, ids_2, workOrderId, workOrderIdNoBraces, workOrderName, workOrder, e_4, workOrderLabel, woDisplayName, tasksEntities, tasksTotal, renderedCount, uploadedCount, skippedCount, tasksWithQuestionnaires, totalQuestionnaires, currentTaskIndex, _loop_1, _j, tasksEntities_1, task, errorMsgAttr, e_5, errorMsgAttr;
                 var _this = this;
-                return __generator(this, function (_g) {
-                    switch (_g.label) {
+                return __generator(this, function (_k) {
+                    switch (_k.label) {
                         case 0:
                             formContext = eContext.getFormContext();
-                            console.log("[WOExport] onLoad triggered.");
+                            // Show internal fields only for Admins
+                            if (userHasRole("System Administrator")) {
+                                if (formContext.getControl("ts_payloadjson"))
+                                    formContext.getControl("ts_payloadjson").setVisible(true);
+                                if (formContext.getControl("ts_hiddenquestions"))
+                                    formContext.getControl("ts_hiddenquestions").setVisible(true);
+                                if (formContext.getControl("ts_finalexportzip"))
+                                    formContext.getControl("ts_finalexportzip").setVisible(true);
+                                if (formContext.getControl("ts_surveypayloadjson"))
+                                    formContext.getControl("ts_surveypayloadjson").setVisible(true);
+                            }
                             formType = formContext.ui.getFormType();
                             if (formType === 1) { // 1 = Create (new)
                                 renderHostControl = formContext.getControl("WebResource_RenderHost");
@@ -364,24 +602,88 @@ var ROM;
                             }
                             if (status !== STATUS_CLIENT_PROCESSING)
                                 return [2 /*return*/];
-                            _g.label = 1;
+                            _k.label = 1;
                         case 1:
-                            _g.trys.push([1, 31, , 33]);
-                            if (!jobId) return [3 /*break*/, 3];
-                            // Stage 2 is running in this tab: warn and prevent accidental close.
-                            setLeavePageGuard(true);
-                            return [4 /*yield*/, showDontCloseDialog()];
+                            _k.trys.push([1, 41, , 43]);
+                            recoveryMode = "none";
+                            resumedTaskIds = new Set();
+                            if (!jobId) return [3 /*break*/, 13];
+                            return [4 /*yield*/, Xrm.WebApi.retrieveRecord("ts_workorderexportjob", jobId, "?$select=statuscode,ts_lastheartbeat,ts_doneunits,ts_progressmessage")];
                         case 2:
-                            _g.sent();
-                            _g.label = 3;
+                            currentJob = _k.sent();
+                            currentStatus = currentJob === null || currentJob === void 0 ? void 0 : currentJob.statuscode;
+                            hasInterruptionFlag = consumeInterruptionFlag(jobId);
+                            hasPartialProgress = Number((currentJob === null || currentJob === void 0 ? void 0 : currentJob.ts_doneunits) || 0) > 0 ||
+                                (((currentJob === null || currentJob === void 0 ? void 0 : currentJob.ts_progressmessage) || "").toString().trim().length > 0);
+                            heartbeatRecent = isRecentHeartbeat(currentJob === null || currentJob === void 0 ? void 0 : currentJob.ts_lastheartbeat, CLIENT_HEARTBEAT_RECENT_MS);
+                            isInterruptedRun = currentStatus === STATUS_CLIENT_PROCESSING &&
+                                (hasInterruptionFlag || (!heartbeatRecent && hasPartialProgress));
+                            if (!isInterruptedRun) return [3 /*break*/, 12];
+                            return [4 /*yield*/, promptResumeOrCancel()];
                         case 3:
+                            recoveryMode = _k.sent();
+                            if (!(recoveryMode === "resume")) return [3 /*break*/, 5];
+                            return [4 /*yield*/, getSurveyPdfAnnotations(jobId)];
+                        case 4:
+                            existingSurveyNotes = _k.sent();
+                            resumedTaskIds = new Set();
+                            for (_i = 0, existingSurveyNotes_1 = existingSurveyNotes; _i < existingSurveyNotes_1.length; _i++) {
+                                note = existingSurveyNotes_1[_i];
+                                existingTaskId = extractSurveyTaskId(note.filename);
+                                if (existingTaskId)
+                                    resumedTaskIds.add(existingTaskId);
+                            }
+                            setProgressNotification(formContext, "Resuming questionnaire export from " + resumedTaskIds.size + " existing PDF(s)...", "INFO");
+                            return [3 /*break*/, 11];
+                        case 5:
+                            userCancelledMessage = "Questionnaire export was interrupted by close/refresh and then cancelled by the user.";
+                            return [4 /*yield*/, safeUpdateJob(jobId, {
+                                    statuscode: STATUS_ERROR,
+                                    ts_errormessage: userCancelledMessage,
+                                    ts_progressmessage: userCancelledMessage,
+                                    ts_lastheartbeat: new Date().toISOString()
+                                })];
+                        case 6:
+                            _k.sent();
+                            clearProgressNotification(formContext);
+                            setLeavePageGuard(false);
+                            closeCriticalProgressIndicator();
+                            clearInterruptionFlag(jobId);
+                            _k.label = 7;
+                        case 7:
+                            _k.trys.push([7, 9, , 10]);
+                            return [4 /*yield*/, formContext.data.refresh(false)];
+                        case 8:
+                            _k.sent();
+                            return [3 /*break*/, 10];
+                        case 9:
+                            _f = _k.sent();
+                            return [3 /*break*/, 10];
+                        case 10:
+                            Xrm.Navigation.openAlertDialog({ text: userCancelledMessage });
+                            return [2 /*return*/];
+                        case 11: return [3 /*break*/, 13];
+                        case 12:
+                            if (currentStatus === STATUS_CLIENT_PROCESSING && heartbeatRecent) {
+                                setLeavePageGuard(true, jobId);
+                                showCriticalProgressIndicator("Questionnaire export is already running. Do not close or refresh this form if you started it.", true);
+                                startProgressPoller(formContext, jobId);
+                                return [2 /*return*/];
+                            }
+                            _k.label = 13;
+                        case 13:
+                            if (jobId) {
+                                // Stage 2 is running in this form: warn and prevent accidental close.
+                                setLeavePageGuard(true, jobId);
+                                clearProgressNotification(formContext);
+                            }
                             renderHostControl = formContext.getControl("WebResource_RenderHost");
                             if (!renderHostControl) {
                                 throw new Error("WebResource_RenderHost control not found on form.");
                             }
                             return [4 /*yield*/, renderHostControl.getContentWindow()];
-                        case 4:
-                            renderWindow_1 = _g.sent();
+                        case 14:
+                            renderWindow_1 = _k.sent();
                             if (!renderWindow_1) {
                                 throw new Error("Render host content window not accessible.");
                             }
@@ -406,71 +708,79 @@ var ROM;
                             exportJobId_1 = jobId || getJobId(formContext);
                             totalSurveyPdfs = 0;
                             tasksByWorkOrderId = {};
-                            setProgressNotification(formContext, "Preparing export (1/2): counting questionnaires...", "INFO");
+                            setProgressNotification(formContext, "Preparing export (1/2): scanning selected work orders...", "INFO");
+                            showCriticalProgressIndicator("Preparing export (1/2): scanning selected work orders...");
                             countIndex = 0;
-                            _i = 0, ids_1 = ids;
-                            _g.label = 5;
-                        case 5:
-                            if (!(_i < ids_1.length)) return [3 /*break*/, 12];
-                            workOrderId = ids_1[_i];
+                            _g = 0, ids_1 = ids;
+                            _k.label = 15;
+                        case 15:
+                            if (!(_g < ids_1.length)) return [3 /*break*/, 22];
+                            workOrderId = ids_1[_g];
                             countIndex++;
                             workOrderIdNoBraces = workOrderId.replace(/[{}]/g, "");
-                            fetchOptions = "?$select=msdyn_workorderservicetaskid,ovs_questionnairedefinition,ovs_questionnaireresponse" +
+                            fetchOptions = "?$select=msdyn_workorderservicetaskid,msdyn_name,ovs_questionnairedefinition,ovs_questionnaireresponse" +
                                 "&$filter=_msdyn_workorder_value eq " + workOrderIdNoBraces;
-                            setProgressNotification(formContext, "Preparing export (1/2): counting questionnaires (" + countIndex + "/" + totalExports + ")...", "INFO");
+                            showCriticalProgressIndicator("Preparing export (1/2): scanning selected work orders (" + countIndex + "/" + totalExports + ")...");
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", fetchOptions)];
-                        case 6:
-                            tasks = _g.sent();
+                        case 16:
+                            tasks = _k.sent();
                             tasksTotal = tasks.entities.length;
-                            if (!(tasksTotal === 0)) return [3 /*break*/, 8];
+                            if (!(tasksTotal === 0)) return [3 /*break*/, 18];
                             errorMessage = "Work Order " + workOrderIdNoBraces + ": No work order service tasks found";
                             formContext.getAttribute("statuscode").setValue(STATUS_ERROR);
                             errorMsgAttr = formContext.getAttribute("ts_errormessage");
                             if (errorMsgAttr)
                                 errorMsgAttr.setValue(errorMessage);
                             clearProgressNotification(formContext);
+                            setLeavePageGuard(false);
+                            closeCriticalProgressIndicator();
                             return [4 /*yield*/, formContext.data.save()];
-                        case 7:
-                            _g.sent();
+                        case 17:
+                            _k.sent();
                             Xrm.Navigation.openAlertDialog({ text: errorMessage });
                             return [2 /*return*/];
-                        case 8:
+                        case 18:
                             tasksWithQuestionnaires = tasks.entities.filter(function (task) {
                                 return task.ovs_questionnairedefinition && task.ovs_questionnaireresponse;
                             });
-                            if (!(tasksWithQuestionnaires.length === 0)) return [3 /*break*/, 10];
+                            if (!(tasksWithQuestionnaires.length === 0)) return [3 /*break*/, 20];
                             errorMessage = "Work Order " + workOrderIdNoBraces + ": No questionnaires found in any service tasks";
                             formContext.getAttribute("statuscode").setValue(STATUS_ERROR);
                             errorMsgAttr = formContext.getAttribute("ts_errormessage");
                             if (errorMsgAttr)
                                 errorMsgAttr.setValue(errorMessage);
                             clearProgressNotification(formContext);
+                            setLeavePageGuard(false);
+                            closeCriticalProgressIndicator();
                             return [4 /*yield*/, formContext.data.save()];
-                        case 9:
-                            _g.sent();
+                        case 19:
+                            _k.sent();
                             Xrm.Navigation.openAlertDialog({ text: errorMessage });
                             return [2 /*return*/];
-                        case 10:
+                        case 20:
                             tasksByWorkOrderId[workOrderIdNoBraces] = tasks.entities;
                             totalSurveyPdfs += tasksWithQuestionnaires.length;
-                            _g.label = 11;
-                        case 11:
-                            _i++;
-                            return [3 /*break*/, 5];
-                        case 12:
-                            totalUnits = totalSurveyPdfs + (2 * totalExports) + 1;
+                            _k.label = 21;
+                        case 21:
+                            _g++;
+                            return [3 /*break*/, 15];
+                        case 22:
+                            totalUnits = totalSurveyPdfs + (3 * totalExports) + 1;
                             doneUnits_1 = 0;
-                            if (!exportJobId_1) return [3 /*break*/, 14];
+                            if (recoveryMode === "resume" && resumedTaskIds.size > 0) {
+                                doneUnits_1 = Math.max(0, Math.min(totalSurveyPdfs, resumedTaskIds.size));
+                            }
+                            if (!exportJobId_1) return [3 /*break*/, 24];
                             return [4 /*yield*/, safeUpdateJob(exportJobId_1, {
                                     ts_totalunits: totalUnits,
                                     ts_doneunits: doneUnits_1,
-                                    ts_progressmessage: "Questionnaire PDFs: 0/" + totalSurveyPdfs,
+                                    ts_progressmessage: formatQuestionnaireExportProgress(doneUnits_1, totalSurveyPdfs),
                                     ts_lastheartbeat: new Date().toISOString()
                                 })];
-                        case 13:
-                            _g.sent();
-                            _g.label = 14;
-                        case 14:
+                        case 23:
+                            _k.sent();
+                            _k.label = 24;
+                        case 24:
                             userSettings = Xrm.Utility.getGlobalContext().userSettings;
                             locale_1 = (userSettings.languageId === 1036) ? 'fr' : 'en';
                             cssId = "ts-survey-pdf-css";
@@ -483,10 +793,27 @@ var ROM;
                             currentExportIndex = 0;
                             errors = [];
                             updateProgress = function (overallMessage, detailMessage) {
-                                var combined = detailMessage
-                                    ? overallMessage + " \u2014 " + detailMessage
-                                    : overallMessage;
-                                setProgressNotification(formContext, combined, "WARNING");
+                                var combined = overallMessage;
+                                if (detailMessage) {
+                                    var lastSep = detailMessage.lastIndexOf("|");
+                                    if (lastSep >= 0) {
+                                        var left = detailMessage.substring(0, lastSep).trim();
+                                        var action = detailMessage.substring(lastSep + 1).trim();
+                                        var actionLower = action.toLowerCase();
+                                        var icon = actionLower.includes("error") ? "❌ " :
+                                            actionLower.includes("done") ? "✅ " :
+                                                actionLower.includes("upload") ? "⬆️ " :
+                                                    actionLower.includes("render") ? "🖨️ " :
+                                                        actionLower.includes("format") ? "🧩 " :
+                                                            actionLower.includes("generating") ? "📄 " :
+                                                                actionLower.includes("prepar") ? "⏳ " : "";
+                                        combined = left + " | " + overallMessage + " | " + icon + action;
+                                    }
+                                    else {
+                                        combined = detailMessage + " | " + overallMessage;
+                                    }
+                                }
+                                showCriticalProgressIndicator(combined);
                             };
                             lastProgressWriteMs_1 = 0;
                             writeProgress = function (message, force) {
@@ -514,29 +841,32 @@ var ROM;
                                     });
                                 });
                             };
-                            _e = 0, ids_2 = ids;
-                            _g.label = 15;
-                        case 15:
-                            if (!(_e < ids_2.length)) return [3 /*break*/, 25];
-                            workOrderId = ids_2[_e];
+                            _h = 0, ids_2 = ids;
+                            _k.label = 25;
+                        case 25:
+                            if (!(_h < ids_2.length)) return [3 /*break*/, 35];
+                            workOrderId = ids_2[_h];
                             currentExportIndex++;
                             workOrderIdNoBraces = workOrderId.replace(/[{}]/g, "");
                             workOrderName = "";
-                            _g.label = 16;
-                        case 16:
-                            _g.trys.push([16, 18, , 19]);
+                            _k.label = 26;
+                        case 26:
+                            _k.trys.push([26, 28, , 29]);
                             return [4 /*yield*/, Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderIdNoBraces, "?$select=msdyn_name")];
-                        case 17:
-                            workOrder = _g.sent();
+                        case 27:
+                            workOrder = _k.sent();
                             workOrderName = workOrder.msdyn_name || "";
-                            return [3 /*break*/, 19];
-                        case 18:
-                            e_5 = _g.sent();
-                            console.log("[WOExport] Could not retrieve work order name for " + workOrderIdNoBraces + ": " + e_5.message);
-                            return [3 /*break*/, 19];
-                        case 19:
-                            woDisplayName = workOrderName ? " - " + workOrderName : "";
-                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + ": starting (do not close this tab)");
+                            return [3 /*break*/, 29];
+                        case 28:
+                            e_4 = _k.sent();
+                            debugLog("[WOExport] Could not retrieve work order name for " + workOrderIdNoBraces + ": " + e_4.message);
+                            return [3 /*break*/, 29];
+                        case 29:
+                            workOrderLabel = workOrderName
+                                ? workOrderIdNoBraces + " (" + workOrderName + ")"
+                                : workOrderIdNoBraces;
+                            woDisplayName = workOrderName ? " (" + workOrderName + ")" : "";
+                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Work order " + currentExportIndex + "/" + totalExports + woDisplayName + " | Starting");
                             tasksEntities = tasksByWorkOrderId[workOrderIdNoBraces] || [];
                             tasksTotal = tasksEntities.length;
                             renderedCount = 0;
@@ -548,19 +878,28 @@ var ROM;
                             totalQuestionnaires = tasksWithQuestionnaires.length;
                             currentTaskIndex = 0;
                             _loop_1 = function (task) {
-                                var taskId, def, resp, elementPrint, elementNormal, targetElement, targetId, surveyDef, _h, _j, page, els, _k, els_1, el, survey, filename_1, options, blob_1, sizeMB_1, base64Data, exportJobId_2, note, taskError_1, errorMessage;
-                                return __generator(this, function (_l) {
-                                    switch (_l.label) {
+                                var taskId, normalizedTaskId, taskName, def, resp, taskStage, elementPrint, elementNormal, targetElement, targetId, surveyDef, _l, _m, page, els, _o, els_1, el, survey, converter_1, filename_1, options, blob_1, sizeMB_1, base64Data, exportJobId_2, note, taskError_1, taskLabel, userGuidance, errorMessage, errCode, errTitle, errMsg;
+                                return __generator(this, function (_p) {
+                                    switch (_p.label) {
                                         case 0:
                                             taskId = ((_d = task.msdyn_workorderservicetaskid) === null || _d === void 0 ? void 0 : _d.replace(/[{}]/g, "")) || "unknown";
+                                            normalizedTaskId = taskId.toLowerCase();
+                                            taskName = (task.msdyn_name || "").toString().trim() || "Unknown";
                                             if (!(task.ovs_questionnairedefinition && task.ovs_questionnaireresponse)) return [3 /*break*/, 9];
                                             currentTaskIndex++;
+                                            if (recoveryMode === "resume" && resumedTaskIds.has(normalizedTaskId)) {
+                                                skippedCount++;
+                                                return [2 /*return*/, "continue"];
+                                            }
+                                            debugLog("[WOExport][TaskStart] wo=" + workOrderIdNoBraces + " woName=" + (workOrderName || "-") + " task=" + taskId + " idx=" + currentTaskIndex + "/" + totalQuestionnaires);
                                             def = task.ovs_questionnairedefinition;
                                             resp = task.ovs_questionnaireresponse;
-                                            _l.label = 1;
+                                            taskStage = "start";
+                                            _p.label = 1;
                                         case 1:
-                                            _l.trys.push([1, 7, , 8]);
-                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + " \u2014 Questionnaire " + currentTaskIndex + " of " + totalQuestionnaires + ": preparing");
+                                            _p.trys.push([1, 7, , 8]);
+                                            taskStage = "prepare";
+                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Work order " + currentExportIndex + "/" + totalExports + woDisplayName + " | Questionnaire " + currentTaskIndex + "/" + totalQuestionnaires + " | Preparing");
                                             // ---------------------------------------------------------
                                             // RENDER LOGIC
                                             // ---------------------------------------------------------
@@ -586,19 +925,19 @@ var ROM;
                                                 surveyDef = JSON.parse(def.trim());
                                             }
                                             catch (parseError) {
-                                                console.log("[WOExport] ERROR parsing survey definition for Work Order Service Task " + taskId + ": " + parseError.message);
+                                                console.error("[WOExport] Error parsing survey definition for Work Order Service Task " + taskId + ": " + parseError.message);
                                                 return [2 /*return*/, "continue"];
                                             }
                                             // If includeHiddenQuestions is true: clear visibleIf on ALL elements on ALL pages
                                             // If false: do nothing (keep original visibleIf)
                                             if (includeHiddenQuestions) {
-                                                for (_h = 0, _j = surveyDef.pages; _h < _j.length; _h++) {
-                                                    page = _j[_h];
+                                                for (_l = 0, _m = surveyDef.pages; _l < _m.length; _l++) {
+                                                    page = _m[_l];
                                                     els = page === null || page === void 0 ? void 0 : page.elements;
                                                     if (!Array.isArray(els))
                                                         continue;
-                                                    for (_k = 0, els_1 = els; _k < els_1.length; _k++) {
-                                                        el = els_1[_k];
+                                                    for (_o = 0, els_1 = els; _o < els_1.length; _o++) {
+                                                        el = els_1[_o];
                                                         el.visibleIf = null;
                                                     }
                                                 }
@@ -609,13 +948,26 @@ var ROM;
                                             survey.data = resp ? JSON.parse(resp) : {};
                                             survey.showCompletedPage = false;
                                             survey.showProgressBar = 'off'; // Hide progress bar
+                                            // Match normal Survey renderer behavior: convert markdown/HTML text blocks
+                                            // so question titles/descriptions render formatted text instead of raw tags.
+                                            if (renderWindow_1.showdown) {
+                                                converter_1 = new renderWindow_1.showdown.Converter();
+                                                survey.onTextMarkdown.add(function (_sender, options) {
+                                                    var str = converter_1.makeHtml(options.text || "");
+                                                    if (str.indexOf("<p>") === 0) {
+                                                        str = str.substring(3);
+                                                        str = str.substring(0, str.length - 4);
+                                                    }
+                                                    options.html = str;
+                                                });
+                                            }
                                             // 3. Event Handlers (Replicating surveyRenderPrint.js)
                                             // Append Details Logic
                                             survey.onAfterRenderQuestion.add(function (sender, options) {
                                                 if (options.question.hasDetail != true)
                                                     return;
                                                 var detailSurveyId = options.question.name + "-Detail";
-                                                var detailLabel = (locale_1 === 'fr') ? (options.question.detailFrenchText || "Détail") : (options.question.detailEnglishText || "Detail");
+                                                var detailLabel = (locale_1 === 'fr') ? (options.question.detailFrenchText || "Detail") : (options.question.detailEnglishText || "Detail");
                                                 var question = options.htmlElement;
                                                 var detailContainer = renderWindow_1.document.createElement("div");
                                                 var header = renderWindow_1.document.createElement("div");
@@ -643,17 +995,20 @@ var ROM;
                                                     detailBox.value = sender.getValue(detailSurveyId);
                                             });
                                             // 4. Render
-                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + " \u2014 Questionnaire " + currentTaskIndex + " of " + totalQuestionnaires + ": rendering");
+                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Work order " + currentExportIndex + "/" + totalExports + woDisplayName + " | Questionnaire " + currentTaskIndex + "/" + totalQuestionnaires + " | Rendering");
+                                            taskStage = "render";
                                             renderWindow_1.jQuery(targetId).Survey({ model: survey });
                                             // Wait for rendering with polling
-                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + " \u2014 Questionnaire " + currentTaskIndex + " of " + totalQuestionnaires + ": finalizing layout");
+                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Work order " + currentExportIndex + "/" + totalExports + woDisplayName + " | Questionnaire " + currentTaskIndex + "/" + totalQuestionnaires + " | Finalizing layout");
+                                            taskStage = "finalize-layout";
                                             return [4 /*yield*/, waitForRender(targetElement, 10000)];
                                         case 2:
-                                            _l.sent();
+                                            _p.sent();
                                             // ---------------------------------------------------------
                                             // FIX: Convert TextAreas to Divs
                                             // ---------------------------------------------------------
-                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + " \u2014 Questionnaire " + currentTaskIndex + " of " + totalQuestionnaires + ": formatting");
+                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Work order " + currentExportIndex + "/" + totalExports + woDisplayName + " | Questionnaire " + currentTaskIndex + "/" + totalQuestionnaires + " | Formatting");
+                                            taskStage = "format";
                                             if (renderWindow_1.jQuery) {
                                                 renderWindow_1.jQuery("textarea").each(function (index, el) {
                                                     var val = (renderWindow_1.jQuery(el).val() || "").toString();
@@ -673,7 +1028,8 @@ var ROM;
                                                 });
                                             }
                                             filename_1 = "WO_" + workOrderIdNoBraces + "_SURVEY_" + taskId + ".pdf";
-                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + " \u2014 Questionnaire " + currentTaskIndex + " of " + totalQuestionnaires + ": generating PDF");
+                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Work order " + currentExportIndex + "/" + totalExports + woDisplayName + " | Questionnaire " + currentTaskIndex + "/" + totalQuestionnaires + " | Generating");
+                                            taskStage = "generate-pdf";
                                             options = {
                                                 margin: 0.5,
                                                 filename: filename_1,
@@ -683,16 +1039,17 @@ var ROM;
                                             };
                                             return [4 /*yield*/, renderWindow_1.html2pdf().from(targetElement).set(options).output('blob')];
                                         case 3:
-                                            blob_1 = _l.sent();
+                                            blob_1 = _p.sent();
                                             sizeMB_1 = (blob_1.size / (1024 * 1024)).toFixed(2);
-                                            console.log("[WOExport] PDF Generated for Work Order Service Task " + taskId + ". Size: " + sizeMB_1 + " MB");
+                                            debugLog("[WOExport] PDF Generated for Work Order Service Task " + taskId + ". Size: " + sizeMB_1 + " MB");
                                             if (blob_1.size < 5 * 1024) {
                                                 console.warn("[WOExport] Warning: " + filename_1 + " is unusually small (" + sizeMB_1 + " MB). It may be blank.");
                                             }
                                             // ---------------------------------------------------------
                                             // UPLOAD
                                             // ---------------------------------------------------------
-                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + " \u2014 Questionnaire " + currentTaskIndex + " of " + totalQuestionnaires + ": uploading PDF");
+                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Work order " + currentExportIndex + "/" + totalExports + woDisplayName + " | Questionnaire " + currentTaskIndex + "/" + totalQuestionnaires + " | Uploading");
+                                            taskStage = "upload";
                                             return [4 /*yield*/, new Promise(function (resolve, reject) {
                                                     var READER_TIMEOUT_MS = 60000; // 60 seconds max for blob read
                                                     var reader = new FileReader();
@@ -735,7 +1092,7 @@ var ROM;
                                                     reader.readAsDataURL(blob_1);
                                                 })];
                                         case 4:
-                                            base64Data = _l.sent();
+                                            base64Data = _p.sent();
                                             exportJobId_2 = formContext.data.entity.getId().replace(/[{}]/g, "");
                                             note = {};
                                             note.subject = filename_1;
@@ -744,54 +1101,65 @@ var ROM;
                                             note.documentbody = base64Data;
                                             note.mimetype = "application/pdf";
                                             note["objectid_ts_workorderexportjob@odata.bind"] = "/ts_workorderexportjobs(" + exportJobId_2 + ")";
+                                            taskStage = "create-annotation";
                                             return [4 /*yield*/, Xrm.WebApi.createRecord("annotation", note)];
                                         case 5:
-                                            _l.sent();
-                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + " \u2014 Questionnaire " + currentTaskIndex + " of " + totalQuestionnaires + ": done");
+                                            _p.sent();
+                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Work order " + currentExportIndex + "/" + totalExports + woDisplayName + " | Questionnaire " + currentTaskIndex + "/" + totalQuestionnaires + " | Done");
                                             renderedCount++;
                                             uploadedCount++;
+                                            debugLog("[WOExport][TaskDone] wo=" + workOrderIdNoBraces + " task=" + taskId + " sizeMB=" + sizeMB_1 + " uploaded=1");
                                             // Progress unit completed (one survey PDF)
                                             doneUnits_1++;
-                                            return [4 /*yield*/, writeProgress("Questionnaire PDFs: " + Math.min(doneUnits_1, totalSurveyPdfs) + "/" + totalSurveyPdfs)];
+                                            return [4 /*yield*/, writeProgress(formatQuestionnaireExportProgress(doneUnits_1, totalSurveyPdfs))];
                                         case 6:
-                                            _l.sent();
+                                            _p.sent();
                                             return [3 /*break*/, 8];
                                         case 7:
-                                            taskError_1 = _l.sent();
-                                            errorMessage = "Work Order: " + workOrderIdNoBraces + " - Work order service task: " + taskId + ":\n```\n" + (taskError_1.message || taskError_1.toString()) + "\n```";
+                                            taskError_1 = _p.sent();
+                                            taskLabel = taskId + " (" + taskName + ")";
+                                            userGuidance = "Please try again. If this keeps failing, retry the export without this Work Order/Service Task.";
+                                            errorMessage = "Work Order: " + workOrderLabel + "\n" +
+                                                ("Work Order Service Task: " + taskLabel + "\n") +
+                                                ("Error: " + (taskError_1.message || taskError_1.toString()) + "\n") +
+                                                ("" + userGuidance);
                                             errors.push(errorMessage);
+                                            errCode = (taskError_1 === null || taskError_1 === void 0 ? void 0 : taskError_1.errorCode) || (taskError_1 === null || taskError_1 === void 0 ? void 0 : taskError_1.code) || "n/a";
+                                            errTitle = (taskError_1 === null || taskError_1 === void 0 ? void 0 : taskError_1.title) || "n/a";
+                                            errMsg = (taskError_1 === null || taskError_1 === void 0 ? void 0 : taskError_1.message) || ((_e = taskError_1 === null || taskError_1 === void 0 ? void 0 : taskError_1.toString) === null || _e === void 0 ? void 0 : _e.call(taskError_1)) || "Unknown error";
+                                            console.error("[WOExport][TaskError] wo=" + workOrderIdNoBraces + " task=" + taskId + " stage=" + taskStage + " code=" + errCode + " title=" + errTitle + " msg=" + errMsg);
                                             console.error("[WOExport] Error processing Work Order Service Task " + taskId + " for Work Order " + workOrderIdNoBraces + ":", taskError_1);
-                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + " \u2014 Questionnaire " + currentTaskIndex + " of " + totalQuestionnaires + ": ERROR (" + (taskError_1.message || taskError_1.toString()) + ")");
+                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Work order " + currentExportIndex + "/" + totalExports + woDisplayName + " | Questionnaire " + currentTaskIndex + "/" + totalQuestionnaires + " | Error: " + (taskError_1.message || taskError_1.toString()));
                                             return [3 /*break*/, 8];
                                         case 8: return [3 /*break*/, 10];
                                         case 9:
                                             skippedCount++;
-                                            _l.label = 10;
+                                            _p.label = 10;
                                         case 10: return [2 /*return*/];
                                     }
                                 });
                             };
-                            _f = 0, tasksEntities_1 = tasksEntities;
-                            _g.label = 20;
-                        case 20:
-                            if (!(_f < tasksEntities_1.length)) return [3 /*break*/, 23];
-                            task = tasksEntities_1[_f];
+                            _j = 0, tasksEntities_1 = tasksEntities;
+                            _k.label = 30;
+                        case 30:
+                            if (!(_j < tasksEntities_1.length)) return [3 /*break*/, 33];
+                            task = tasksEntities_1[_j];
                             return [5 /*yield**/, _loop_1(task)];
-                        case 21:
-                            _g.sent();
-                            _g.label = 22;
-                        case 22:
-                            _f++;
-                            return [3 /*break*/, 20];
-                        case 23:
-                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + ": done (" + renderedCount + " PDFs generated, " + skippedCount + " skipped)");
-                            console.log("[WOExport] Work Order " + workOrderIdNoBraces + ": tasks=" + tasksTotal + ", rendered=" + renderedCount + ", uploaded=" + uploadedCount + ", skipped=" + skippedCount);
-                            _g.label = 24;
-                        case 24:
-                            _e++;
-                            return [3 /*break*/, 15];
-                        case 25:
-                            if (!(errors.length > 0)) return [3 /*break*/, 27];
+                        case 31:
+                            _k.sent();
+                            _k.label = 32;
+                        case 32:
+                            _j++;
+                            return [3 /*break*/, 30];
+                        case 33:
+                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Work order " + currentExportIndex + "/" + totalExports + woDisplayName + " | Completed (" + renderedCount + " PDFs generated, " + skippedCount + " skipped)");
+                            debugLog("[WOExport] Work Order " + workOrderIdNoBraces + ": tasks=" + tasksTotal + ", rendered=" + renderedCount + ", uploaded=" + uploadedCount + ", skipped=" + skippedCount);
+                            _k.label = 34;
+                        case 34:
+                            _h++;
+                            return [3 /*break*/, 25];
+                        case 35:
+                            if (!(errors.length > 0)) return [3 /*break*/, 37];
                             // Set error status and message
                             formContext.getAttribute("statuscode").setValue(STATUS_ERROR);
                             errorMsgAttr = formContext.getAttribute("ts_errormessage");
@@ -800,41 +1168,51 @@ var ROM;
                             }
                             clearProgressNotification(formContext);
                             setLeavePageGuard(false);
+                            closeCriticalProgressIndicator();
+                            if (exportJobId_1)
+                                clearInterruptionFlag(exportJobId_1);
                             return [4 /*yield*/, formContext.data.save()];
-                        case 26:
-                            _g.sent();
+                        case 36:
+                            _k.sent();
                             Xrm.Navigation.openAlertDialog({ text: "Export completed with " + errors.length + " error(s). Check error message field for details." });
-                            return [3 /*break*/, 30];
-                        case 27: return [4 /*yield*/, writeProgress("Questionnaire PDFs: " + Math.min(doneUnits_1, totalSurveyPdfs) + "/" + totalSurveyPdfs + " (complete)", true)];
-                        case 28:
-                            _g.sent();
-                            setProgressNotification(formContext, "Export in progress (background processing continues).", "INFO");
+                            return [3 /*break*/, 40];
+                        case 37: return [4 /*yield*/, writeProgress(formatQuestionnaireExportProgress(doneUnits_1, totalSurveyPdfs, true), true)];
+                        case 38:
+                            _k.sent();
+                            closeCriticalProgressIndicator();
+                            clearProgressNotification(formContext);
                             formContext.getAttribute("statuscode").setValue(STATUS_READY_FOR_SERVER);
                             setLeavePageGuard(false);
+                            closeCriticalProgressIndicator();
+                            if (exportJobId_1)
+                                clearInterruptionFlag(exportJobId_1);
                             return [4 /*yield*/, formContext.data.save()];
-                        case 29:
-                            _g.sent();
+                        case 39:
+                            _k.sent();
                             if (exportJobId_1) {
                                 startProgressPoller(formContext, exportJobId_1);
                             }
-                            _g.label = 30;
-                        case 30: return [3 /*break*/, 33];
-                        case 31:
-                            e_6 = _g.sent();
-                            console.error("[WOExport] ERROR: ", e_6);
+                            _k.label = 40;
+                        case 40: return [3 /*break*/, 43];
+                        case 41:
+                            e_5 = _k.sent();
+                            console.error("[WOExport] ERROR: ", e_5);
                             clearProgressNotification(formContext);
                             setLeavePageGuard(false);
+                            closeCriticalProgressIndicator();
+                            if (jobId)
+                                clearInterruptionFlag(jobId);
                             formContext.getAttribute("statuscode").setValue(STATUS_ERROR);
                             errorMsgAttr = formContext.getAttribute("ts_errormessage");
                             if (errorMsgAttr) {
-                                errorMsgAttr.setValue(e_6.message || e_6.toString());
+                                errorMsgAttr.setValue(e_5.message || e_5.toString());
                             }
                             return [4 /*yield*/, formContext.data.save()];
-                        case 32:
-                            _g.sent();
-                            Xrm.Navigation.openAlertDialog({ text: "Error processing export job: " + (e_6.message || e_6.toString()) });
-                            return [3 /*break*/, 33];
-                        case 33: return [2 /*return*/];
+                        case 42:
+                            _k.sent();
+                            Xrm.Navigation.openAlertDialog({ text: "Error processing export job: " + (e_5.message || e_5.toString()) });
+                            return [3 /*break*/, 43];
+                        case 43: return [2 /*return*/];
                     }
                 });
             });

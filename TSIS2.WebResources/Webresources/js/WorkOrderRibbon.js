@@ -1221,6 +1221,33 @@ function isInExportJobSubgrid(primaryControl) {
  */
 async function exportWorkOrderFromSubgrid(selectedControl, includeHiddenQuestions = false) {
   try {
+    var allowedRoles = "System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager";
+    var hasAccess = false;
+
+    if (typeof userHasRole === "function") {
+      hasAccess = userHasRole(allowedRoles);
+    } else {
+      var roles = Xrm.Utility.getGlobalContext().userSettings.roles;
+      roles.forEach(function (item) {
+        if (
+          item.name == "System Administrator" ||
+          item.name == "ROM - Business Admin" ||
+          item.name == "ROM - Planner" ||
+          item.name == "ROM - Manager"
+        ) {
+          hasAccess = true;
+        }
+      });
+    }
+
+    if (!hasAccess) {
+      await Xrm.Navigation.openAlertDialog({
+        confirmButtonLabel: "OK",
+        text: "Only users in the System Administrator, ROM - Business Admin, ROM - Planner, or ROM - Manager roles can export PDFs."
+      });
+      return;
+    }
+
     function pad2(n) {
       return (n < 10 ? "0" : "") + n;
     }

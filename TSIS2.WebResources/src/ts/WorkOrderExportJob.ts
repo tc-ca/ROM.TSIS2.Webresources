@@ -1,12 +1,12 @@
-
+﻿
 namespace ROM.WorkOrderExportJob {
     // StatusCode Values for ts_workorderexportjob
     const STATUS_ACTIVE = 1;
     const STATUS_CLIENT_PROCESSING = 741130001; // Webresource generating survey PDFs
-    const STATUS_READY_FOR_SERVER = 741130002; // Surveys done → C# builds payload
-    const STATUS_READY_FOR_FLOW = 741130003; // Payload ready → Flow may start
+    const STATUS_READY_FOR_SERVER = 741130002; // Surveys done -> C# builds payload
+    const STATUS_READY_FOR_FLOW = 741130003; // Payload ready -> Flow may start
     const STATUS_FLOW_RUNNING = 741130004; // Flow claimed the job (lock)
-    const STATUS_READY_FOR_MERGE = 741130005; // MAIN PDFs exist → C# merge
+    const STATUS_READY_FOR_MERGE = 741130005; // MAIN PDFs exist -> C# merge
     const STATUS_COMPLETED = 741130006; // ZIP created
     const STATUS_ERROR = 741130007; // Error
 
@@ -15,8 +15,37 @@ namespace ROM.WorkOrderExportJob {
 
     const PROGRESS_POLL_INTERVAL_MS = 5000;
     const PROGRESS_WRITE_THROTTLE_MS = 1500;
+    const PROGRESS_INDICATOR_UPDATE_THROTTLE_MS = 250;
+    const CLIENT_HEARTBEAT_RECENT_MS = 30_000;
+    const INTERRUPTION_FLAG_PREFIX = "wo_export_interrupted_";
+    const DEBUG_LOGS = false;
     
     const PROGRESS_NOTIFICATION_ID = "wo_export_progress";
+    let criticalProgressIndicatorOpen = false;
+    let lastCriticalProgressMessage = "";
+    let lastCriticalProgressUpdateMs = 0;
+    let leaveGuardEnabled = false;
+    let leaveGuardJobId: string | null = null;
+
+    function debugLog(message?: any, ...optionalParams: any[]): void {
+        if (!DEBUG_LOGS) return;
+        console.log(message, ...optionalParams);
+    }
+
+    const beforeUnloadHandler = (event: BeforeUnloadEvent): string => {
+        // Modern browsers ignore custom text and show a generic confirmation prompt.
+        // Setting returnValue is what triggers: "This page is asking you to confirm..."
+        if (leaveGuardJobId) {
+            try {
+                localStorage.setItem(`${INTERRUPTION_FLAG_PREFIX}${leaveGuardJobId}`, new Date().toISOString());
+            } catch (e) {
+                // ignore
+            }
+        }
+        event.preventDefault();
+        event.returnValue = "";
+        return "";
+    };
 
 
     function getJobId(formContext: any): string {
@@ -25,7 +54,7 @@ namespace ROM.WorkOrderExportJob {
 
     function getStatusLabel(status: number | null | undefined): string {
         switch (status) {
-            case STATUS_CLIENT_PROCESSING: return "Generating questionnaire PDFs";
+            case STATUS_CLIENT_PROCESSING: return "Processing questionnaires";
             case STATUS_READY_FOR_SERVER: return "Preparing export payload";
             case STATUS_READY_FOR_FLOW: return "Queued for main PDF generation";
             case STATUS_FLOW_RUNNING: return "Generating main PDFs";
@@ -36,8 +65,36 @@ namespace ROM.WorkOrderExportJob {
         }
     }
 
+    function getStagePrefix(status: number | null | undefined): string {
+        if (status === STATUS_CLIENT_PROCESSING) return "[Stage 1/3]";
+        if (status === STATUS_READY_FOR_SERVER || status === STATUS_READY_FOR_FLOW || status === STATUS_FLOW_RUNNING) return "[Stage 2/3]";
+        if (status === STATUS_READY_FOR_MERGE) return "[Stage 3/3]";
+        if (status === STATUS_COMPLETED) return "[Completed]";
+        if (status === STATUS_ERROR) return "[Error]";
+        return "[Stage]";
+    }
+
     function formatSurveyOverall(done: number, total: number): string {
-        return `Export — Questionnaires ${Math.min(done, total)}/${total}`;
+        const safeTotal = Math.max(0, total);
+        const safeDone = Math.max(0, Math.min(done, safeTotal));
+        const percent = safeTotal > 0 ? Math.round((safeDone * 100) / safeTotal) : 0;
+        return `[Stage 1/3] ${safeDone}/${safeTotal} (${percent}%)`;
+    }
+
+    function formatQuestionnaireExportProgress(done: number, total: number, complete: boolean = false): string {
+        const safeTotal = Math.max(0, total);
+        const safeDone = Math.max(0, Math.min(done, safeTotal));
+        const percent = safeTotal > 0 ? Math.round((safeDone * 100) / safeTotal) : 0;
+        return complete
+            ? `Questionnaire export: ${safeDone}/${safeTotal} (${percent}%) (complete)`
+            : `Questionnaire export: ${safeDone}/${safeTotal} (${percent}%)`;
+    }
+
+    function isRecentHeartbeat(heartbeatIso: string | null | undefined, maxAgeMs: number): boolean {
+        if (!heartbeatIso) return false;
+        const ts = Date.parse(heartbeatIso);
+        if (!Number.isFinite(ts)) return false;
+        return (Date.now() - ts) <= maxAgeMs;
     }
 
     function formatBackendProgressMessage(
@@ -49,27 +106,45 @@ namespace ROM.WorkOrderExportJob {
     ): string {
         const percent = totalUnits > 0 ? Math.max(0, Math.min(100, Math.round((doneUnits * 100) / totalUnits))) : 0;
         const msg = (rawMessage || "").trim();
+        const stagePrefix = getStagePrefix(status);
+        const stageDisplay = `${stagePrefix} ${stageLabel}`;
+        let detailMsg = msg;
 
-        if (!msg) return `Export ${percent}% — ${stageLabel}`;
+        // Flow messages sometimes repeat the same stage phrase; strip that prefix from detail.
+        const stageLabelLower = (stageLabel || "").trim().toLowerCase();
+        const detailLower = detailMsg.toLowerCase();
+        if (stageLabelLower && detailLower.startsWith(stageLabelLower)) {
+            detailMsg = detailMsg.substring(stageLabel.length).replace(/^[:\-\s]+/, "").trim();
+        }
+
+        if (!detailMsg) return `${stageDisplay} | ${percent}%`;
 
         // Common pattern from Flow: "Main PDFs: x/y"
-        const mainMatch = msg.match(/^Main PDFs:\s*(\d+)\s*\/\s*(\d+)\s*$/i);
+        const mainMatch = detailMsg.match(/^Main PDFs:\s*(\d+)\s*\/\s*(\d+)\s*$/i);
         if (mainMatch) {
-            const done = Number(mainMatch[1] || 0);
-            const total = Number(mainMatch[2] || 0);
-            const next = (done >= total) ? "Next: merge + ZIP." : "";
-            return `Export ${percent}% — ${stageLabel} — ${done} of ${total} done. ${next}`.trim();
+            const rawDone = Number(mainMatch[1] || 0);
+            const rawTotal = Number(mainMatch[2] || 0);
+            const total = Math.max(0, rawTotal);
+            const done = total > 0 ? Math.max(0, Math.min(rawDone, total)) : Math.max(0, rawDone);
+
+            // If we've already moved to Stage 3, don't keep showing stale Stage 2 "Main PDFs" counters.
+            if (status === STATUS_READY_FOR_MERGE) {
+                return `${stageDisplay} | ${percent}% | Starting merge + ZIP`;
+            }
+
+            const next = (status === STATUS_FLOW_RUNNING && total > 0 && done >= total) ? "Next: merge + ZIP." : "";
+            return `${stageDisplay} | ${percent}% | ${done} of ${total} done. ${next}`.trim();
         }
 
         // If survey stage completed but we're now in backend, replace technical survey-only messages with a clearer handoff.
         if ((status === STATUS_READY_FOR_SERVER || status === STATUS_READY_FOR_FLOW || status === STATUS_FLOW_RUNNING || status === STATUS_READY_FOR_MERGE) &&
-            (msg.toLowerCase().includes("survey pdfs") || msg.toLowerCase().includes("questionnaire pdfs") || msg.toLowerCase().includes("questionnaires")) &&
-            msg.toLowerCase().includes("complete")) {
-            return `Export ${percent}% — Questionnaires complete. Continuing with main PDFs and final ZIP...`;
+            (detailMsg.toLowerCase().includes("survey pdfs") || detailMsg.toLowerCase().includes("questionnaire pdfs") || detailMsg.toLowerCase().includes("questionnaires") || detailMsg.toLowerCase().includes("questionnaire export")) &&
+            detailMsg.toLowerCase().includes("complete")) {
+            return `${stageDisplay} | ${percent}% | Questionnaire(s) complete. Continuing with main PDFs and final ZIP...`;
         }
 
         // Default: prefix with stage so message always has context.
-        return `Export ${percent}% — ${stageLabel} — ${msg}`;
+        return `${stageDisplay} | ${percent}% | ${detailMsg}`;
     }
 
     async function safeUpdateJob(jobId: string, patch: any): Promise<void> {
@@ -77,7 +152,21 @@ namespace ROM.WorkOrderExportJob {
             await Xrm.WebApi.updateRecord("ts_workorderexportjob", jobId, patch);
         } catch (e: any) {
             // Don't fail the export if progress writes fail (e.g., column not on form, permissions, etc.)
-            console.log(`[WOExport] Progress update failed: ${e?.message || e}`);
+            debugLog(`[WOExport] Progress update failed: ${e?.message || e}`);
+        }
+    }
+
+    async function refreshFormAfterCompletion(formContext: any): Promise<void> {
+        // Some orgs lag before file column metadata appears in-form.
+        // Retry refresh a few times so users don't need manual refresh.
+        for (let attempt = 0; attempt < 3; attempt++) {
+            try {
+                await formContext.data.refresh(false);
+                return;
+            } catch (e) {
+                if (attempt >= 2) return;
+                await new Promise<void>((resolve) => window.setTimeout(() => resolve(), 1200));
+            }
         }
     }
 
@@ -97,32 +186,117 @@ namespace ROM.WorkOrderExportJob {
         }
     }
 
-    function setLeavePageGuard(enabled: boolean): void {
+    function showCriticalProgressIndicator(text?: string, isUnsafeToClose: boolean = true): void {
+        try {
+            const header = isUnsafeToClose
+                ? "⚠️ Do not close or refresh this form."
+                : "⏳";
+            const detail = text || "Questionnaire export is in progress.";
+            const message = isUnsafeToClose ? `${header} | ${detail}` : `${header} ${detail}`;
+            if (message === lastCriticalProgressMessage) return;
+            const now = Date.now();
+            if ((now - lastCriticalProgressUpdateMs) < PROGRESS_INDICATOR_UPDATE_THROTTLE_MS) return;
+
+        if (criticalProgressIndicatorOpen) {
+            Xrm.Utility.closeProgressIndicator();
+            criticalProgressIndicatorOpen = false;
+        }
+
+        // Keep one indicator open and update its message in place.
+        Xrm.Utility.showProgressIndicator(message);
+            criticalProgressIndicatorOpen = true;
+            lastCriticalProgressMessage = message;
+            lastCriticalProgressUpdateMs = now;
+        } catch (e) {
+            // ignore
+        }
+    }
+
+    function closeCriticalProgressIndicator(): void {
+        try {
+            if (!criticalProgressIndicatorOpen) return;
+            Xrm.Utility.closeProgressIndicator();
+            criticalProgressIndicatorOpen = false;
+            lastCriticalProgressMessage = "";
+            lastCriticalProgressUpdateMs = 0;
+        } catch (e) {
+            // ignore
+        }
+    }
+
+    function setLeavePageGuard(enabled: boolean, jobId?: string): void {
         try {
             if (enabled) {
-                window.onbeforeunload = function () {
-                    return "Export is running. If you leave, the export may stop.";
-                };
+                if (jobId) leaveGuardJobId = jobId;
+                if (leaveGuardEnabled) return;
+                window.addEventListener("beforeunload", beforeUnloadHandler);
+                leaveGuardEnabled = true;
             } else {
-                window.onbeforeunload = null;
+                if (!leaveGuardEnabled) return;
+                window.removeEventListener("beforeunload", beforeUnloadHandler);
+                leaveGuardEnabled = false;
+                leaveGuardJobId = null;
             }
         } catch (e) {
             // ignore
         }
     }
 
-    async function showDontCloseDialog(): Promise<void> {
+    function isSurveyPdfFilename(filename: string): boolean {
+        return /^WO_[0-9A-Fa-f-]+_SURVEY_[0-9A-Fa-f-]+\.pdf$/i.test((filename || "").trim());
+    }
+
+    function extractSurveyTaskId(filename: string): string | null {
+        const match = (filename || "").trim().match(/^WO_[0-9A-Fa-f-]+_SURVEY_([0-9A-Fa-f-]+)\.pdf$/i);
+        return match?.[1] ? match[1].toLowerCase() : null;
+    }
+
+    function getInterruptionFlagKey(jobId: string): string {
+        return `${INTERRUPTION_FLAG_PREFIX}${jobId}`;
+    }
+
+    function consumeInterruptionFlag(jobId: string): boolean {
         try {
-            await Xrm.Navigation.openAlertDialog({
-                text:
-                    "⚠️ Export started.\n\n" +
-                    "Keep this tab open."
-            });
+            const key = getInterruptionFlagKey(jobId);
+            const found = !!localStorage.getItem(key);
+            if (found) localStorage.removeItem(key);
+            return found;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function clearInterruptionFlag(jobId: string): void {
+        try {
+            localStorage.removeItem(getInterruptionFlagKey(jobId));
         } catch (e) {
             // ignore
         }
     }
 
+    async function promptResumeOrCancel(): Promise<"resume" | "cancelled"> {
+        const result = await Xrm.Navigation.openConfirmDialog({
+            title: "Questionnaire Export Interrupted",
+            text: "The previous questionnaire export appears to have been interrupted by closing or refreshing the form. Select OK to resume, or Cancel to cancel this export job.",
+            confirmButtonLabel: "OK (Resume)",
+            cancelButtonLabel: "Cancel Job"
+        });
+        return result?.confirmed ? "resume" : "cancelled";
+    }
+
+    async function getSurveyPdfAnnotations(jobId: string): Promise<Array<{ annotationid: string; filename: string }>> {
+        const query =
+            `?$select=annotationid,filename` +
+            `&$filter=_objectid_value eq ${jobId} and isdocument eq true` +
+            `&$top=5000`;
+        const result = await Xrm.WebApi.retrieveMultipleRecords("annotation", query);
+        return (result?.entities || [])
+            .map((a: any) => ({
+                annotationid: (a?.annotationid || "").toString(),
+                filename: (a?.filename || "").toString()
+            }))
+            .filter((a: any) => !!a.annotationid && isSurveyPdfFilename(a.filename));
+    }
 
     function getClientUrl(): string {
         try {
@@ -154,14 +328,17 @@ namespace ROM.WorkOrderExportJob {
         }
 
         // Mode A: ZIP note on the job
-        const zipFileName = `WorkOrderExport_${jobId}.zip`;
         try {
             const q =
-                `?$select=annotationid,filename,subject` +
-                `&$filter=_objectid_value eq ${jobId} and filename eq '${zipFileName}'` +
-                `&$top=1`;
+                `?$select=annotationid,filename,subject,createdon` +
+                `&$filter=_objectid_value eq ${jobId} and isdocument eq true` +
+                `&$orderby=createdon desc` +
+                `&$top=10`;
             const notes = await Xrm.WebApi.retrieveMultipleRecords("annotation", q);
-            const noteId = notes?.entities?.[0]?.annotationid;
+            const zipNote = (notes?.entities || []).find((n: any) =>
+                ((n?.filename || "").toString().toLowerCase().endsWith(".zip"))
+            );
+            const noteId = zipNote?.annotationid;
             if (noteId) {
                 await Xrm.Navigation.navigateTo({
                     pageType: "entityrecord",
@@ -171,7 +348,7 @@ namespace ROM.WorkOrderExportJob {
                 return;
             }
         } catch (e: any) {
-            console.log(`[WOExport] Failed to locate ZIP note: ${e?.message || e}`);
+            debugLog(`[WOExport] Failed to locate ZIP note: ${e?.message || e}`);
         }
 
         Xrm.Navigation.openAlertDialog({ text: "Export completed, but the ZIP could not be located automatically. Please check Notes on the export job (or the Final Export ZIP lookup)." });
@@ -188,6 +365,7 @@ namespace ROM.WorkOrderExportJob {
         if (status === STATUS_ERROR) {
             stopProgressPoller(formContext);
             const msg = job?.ts_errormessage || "Export failed. See error message.";
+            closeCriticalProgressIndicator();
             setProgressNotification(formContext, `Error: ${msg}`, "ERROR");
             return;
         }
@@ -197,13 +375,14 @@ namespace ROM.WorkOrderExportJob {
         const stageLabel = getStatusLabel(status);
         const rawMessage = (job?.ts_progressmessage || "").trim();
         const displayMessage = formatBackendProgressMessage(status, stageLabel, rawMessage, doneUnits, totalUnits);
-        setProgressNotification(formContext, displayMessage, "INFO");
+        showCriticalProgressIndicator(displayMessage, status === STATUS_CLIENT_PROCESSING);
+        clearProgressNotification(formContext);
 
         if (status === STATUS_COMPLETED) {
             const fileName = (job?.ts_finalexportzip_name || "").toString().trim();
         
             if (!fileName) {
-                setProgressNotification(formContext, "Finalizing export…", "INFO");
+                showCriticalProgressIndicator("Finalizing export...", false);
                 if (finalizeCheckTimeoutHandle === null) {
                     finalizeCheckTimeoutHandle = window.setTimeout(() => {
                         finalizeCheckTimeoutHandle = null;
@@ -214,8 +393,9 @@ namespace ROM.WorkOrderExportJob {
             }
         
             stopProgressPoller(formContext);
+            closeCriticalProgressIndicator();
             setProgressNotification(formContext, "Export completed. The ZIP is ready to download.", "INFO");
-            try { await formContext.data.refresh(false); } catch {}
+            await refreshFormAfterCompletion(formContext);
             return;
         }
         
@@ -226,13 +406,13 @@ namespace ROM.WorkOrderExportJob {
 
         progressPollHandle = window.setInterval(() => {
             pollAndRenderProgress(formContext, jobId).catch((e: any) => {
-                console.log(`[WOExport] Progress polling error: ${e?.message || e}`);
+                console.warn(`[WOExport] Progress polling error: ${e?.message || e}`);
             });
         }, PROGRESS_POLL_INTERVAL_MS);
 
         // kick once immediately
         pollAndRenderProgress(formContext, jobId).catch((e: any) => {
-            console.log(`[WOExport] Progress polling error: ${e?.message || e}`);
+            console.warn(`[WOExport] Progress polling error: ${e?.message || e}`);
         });
     }
 
@@ -324,10 +504,70 @@ namespace ROM.WorkOrderExportJob {
         if (status !== STATUS_CLIENT_PROCESSING) return;
 
         try {
+            let recoveryMode: "none" | "resume" | "cancelled" = "none";
+            let resumedTaskIds = new Set<string>();
+
             if (jobId) {
-                // Stage 2 is running in this tab: warn and prevent accidental close.
-                setLeavePageGuard(true);
-                showDontCloseDialog();
+                const currentJob = await Xrm.WebApi.retrieveRecord(
+                    "ts_workorderexportjob",
+                    jobId,
+                    "?$select=statuscode,ts_lastheartbeat,ts_doneunits,ts_progressmessage"
+                );
+                const currentStatus: number | null | undefined = currentJob?.statuscode;
+                const hasInterruptionFlag = consumeInterruptionFlag(jobId);
+                const hasPartialProgress = Number(currentJob?.ts_doneunits || 0) > 0 ||
+                    ((currentJob?.ts_progressmessage || "").toString().trim().length > 0);
+                const heartbeatRecent = isRecentHeartbeat(currentJob?.ts_lastheartbeat, CLIENT_HEARTBEAT_RECENT_MS);
+                const isInterruptedRun = currentStatus === STATUS_CLIENT_PROCESSING &&
+                    (hasInterruptionFlag || (!heartbeatRecent && hasPartialProgress));
+
+                if (isInterruptedRun) {
+                    recoveryMode = await promptResumeOrCancel();
+
+                    if (recoveryMode === "resume") {
+                        const existingSurveyNotes = await getSurveyPdfAnnotations(jobId);
+                        resumedTaskIds = new Set<string>();
+                        for (const note of existingSurveyNotes) {
+                            const existingTaskId = extractSurveyTaskId(note.filename);
+                            if (existingTaskId) resumedTaskIds.add(existingTaskId);
+                        }
+                        setProgressNotification(
+                            formContext,
+                            `Resuming questionnaire export from ${resumedTaskIds.size} existing PDF(s)...`,
+                            "INFO"
+                        );
+                    } else {
+                        const userCancelledMessage =
+                            "Questionnaire export was interrupted by close/refresh and then cancelled by the user.";
+                        await safeUpdateJob(jobId, {
+                            statuscode: STATUS_ERROR,
+                            ts_errormessage: userCancelledMessage,
+                            ts_progressmessage: userCancelledMessage,
+                            ts_lastheartbeat: new Date().toISOString()
+                        });
+                        clearProgressNotification(formContext);
+                        setLeavePageGuard(false);
+                        closeCriticalProgressIndicator();
+                        clearInterruptionFlag(jobId);
+                        try { await formContext.data.refresh(false); } catch {}
+                        Xrm.Navigation.openAlertDialog({ text: userCancelledMessage });
+                        return;
+                    }
+                } else if (currentStatus === STATUS_CLIENT_PROCESSING && heartbeatRecent) {
+                    setLeavePageGuard(true, jobId);
+                    showCriticalProgressIndicator(
+                        "Questionnaire export is already running. Do not close or refresh this form if you started it.",
+                        true
+                    );
+                    startProgressPoller(formContext, jobId);
+                    return;
+                }
+            }
+
+            if (jobId) {
+                // Stage 2 is running in this form: warn and prevent accidental close.
+                setLeavePageGuard(true, jobId);
+                clearProgressNotification(formContext);
             }
 
             const renderHostControl = formContext.getControl("WebResource_RenderHost");
@@ -363,25 +603,29 @@ namespace ROM.WorkOrderExportJob {
             const totalExports = ids.length;
             const exportJobId = jobId || getJobId(formContext);
 
-            // Pre-count total questionnaires (survey PDFs) to compute accurate totalUnits
-            // totalUnits = totalSurveyPdfs + totalWorkOrders + totalMergedPdfs + 1(zip)
-            //           = totalSurveyPdfs + (2 * totalWorkOrders) + 1
+            // Pre-count total questionnaires (survey PDFs) to compute accurate totalUnits.
+            // With Flow reporting TWO done-units per Work Order in Stage 4:
+            // totalUnits = totalSurveyPdfs + stage4Units + stage5MergeUnits + 1(zip)
+            //           = totalSurveyPdfs + (2 * totalWorkOrders) + (1 * totalWorkOrders) + 1
+            //           = totalSurveyPdfs + (3 * totalWorkOrders) + 1
             let totalSurveyPdfs = 0;
             const tasksByWorkOrderId: Record<string, any[]> = {};
 
             setProgressNotification(
                 formContext,
-                "Preparing export (1/2): counting questionnaires...",
+                "Preparing export (1/2): scanning selected work orders...",
                 "INFO"
-            );            let countIndex = 0;
+            );
+            showCriticalProgressIndicator("Preparing export (1/2): scanning selected work orders...");
+            let countIndex = 0;
             for (const workOrderId of ids) {
                 countIndex++;
                 const workOrderIdNoBraces = workOrderId.replace(/[{}]/g, "");
                 const fetchOptions =
-                    "?$select=msdyn_workorderservicetaskid,ovs_questionnairedefinition,ovs_questionnaireresponse" +
+                    "?$select=msdyn_workorderservicetaskid,msdyn_name,ovs_questionnairedefinition,ovs_questionnaireresponse" +
                     "&$filter=_msdyn_workorder_value eq " + workOrderIdNoBraces;
 
-                setProgressNotification(formContext, `Preparing export (1/2): counting questionnaires (${countIndex}/${totalExports})...`, "INFO");
+                showCriticalProgressIndicator(`Preparing export (1/2): scanning selected work orders (${countIndex}/${totalExports})...`);
                 const tasks = await Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", fetchOptions);
 
                 const tasksTotal = tasks.entities.length;
@@ -391,6 +635,8 @@ namespace ROM.WorkOrderExportJob {
                     const errorMsgAttr = formContext.getAttribute("ts_errormessage");
                     if (errorMsgAttr) errorMsgAttr.setValue(errorMessage);
                     clearProgressNotification(formContext);
+                    setLeavePageGuard(false);
+                    closeCriticalProgressIndicator();
                     await formContext.data.save();
                     Xrm.Navigation.openAlertDialog({ text: errorMessage });
                     return;
@@ -406,6 +652,8 @@ namespace ROM.WorkOrderExportJob {
                     const errorMsgAttr = formContext.getAttribute("ts_errormessage");
                     if (errorMsgAttr) errorMsgAttr.setValue(errorMessage);
                     clearProgressNotification(formContext);
+                    setLeavePageGuard(false);
+                    closeCriticalProgressIndicator();
                     await formContext.data.save();
                     Xrm.Navigation.openAlertDialog({ text: errorMessage });
                     return;
@@ -415,15 +663,18 @@ namespace ROM.WorkOrderExportJob {
                 totalSurveyPdfs += tasksWithQuestionnaires.length;
             }
 
-            const totalUnits = totalSurveyPdfs + (2 * totalExports) + 1;
+            const totalUnits = totalSurveyPdfs + (3 * totalExports) + 1;
             let doneUnits = 0;
+            if (recoveryMode === "resume" && resumedTaskIds.size > 0) {
+                doneUnits = Math.max(0, Math.min(totalSurveyPdfs, resumedTaskIds.size));
+            }
 
             // Initialize progress fields on the job (fields exist in Dataverse but may not be on the form)
             if (exportJobId) {
                 await safeUpdateJob(exportJobId, {
                     ts_totalunits: totalUnits,
                     ts_doneunits: doneUnits,
-                    ts_progressmessage: `Questionnaire PDFs: 0/${totalSurveyPdfs}`,
+                    ts_progressmessage: formatQuestionnaireExportProgress(doneUnits, totalSurveyPdfs),
                     ts_lastheartbeat: new Date().toISOString()
                 });
             }
@@ -460,11 +711,27 @@ namespace ROM.WorkOrderExportJob {
             
             // Helper function to update progress notification (local UI)
             const updateProgress = (overallMessage: string, detailMessage?: string) => {
-                const combined = detailMessage
-                    ? `${overallMessage} — ${detailMessage}`
-                    : overallMessage;
-            
-                setProgressNotification(formContext, combined, "WARNING");
+                let combined = overallMessage;
+                if (detailMessage) {
+                    const lastSep = detailMessage.lastIndexOf("|");
+                    if (lastSep >= 0) {
+                        const left = detailMessage.substring(0, lastSep).trim();
+                        const action = detailMessage.substring(lastSep + 1).trim();
+                        const actionLower = action.toLowerCase();
+                        const icon =
+                            actionLower.includes("error") ? "❌ " :
+                            actionLower.includes("done") ? "✅ " :
+                            actionLower.includes("upload") ? "⬆️ " :
+                            actionLower.includes("render") ? "🖨️ " :
+                            actionLower.includes("format") ? "🧩 " :
+                            actionLower.includes("generating") ? "📄 " :
+                            actionLower.includes("prepar") ? "⏳ " : "";
+                        combined = `${left} | ${overallMessage} | ${icon}${action}`;
+                    } else {
+                        combined = `${detailMessage} | ${overallMessage}`;
+                    }
+                }
+                showCriticalProgressIndicator(combined);
             };
 
             let lastProgressWriteMs = 0;
@@ -491,13 +758,16 @@ namespace ROM.WorkOrderExportJob {
                     const workOrder = await Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderIdNoBraces, "?$select=msdyn_name");
                     workOrderName = workOrder.msdyn_name || "";
                 } catch (e: any) {
-                    console.log(`[WOExport] Could not retrieve work order name for ${workOrderIdNoBraces}: ${e.message}`);
+                    debugLog(`[WOExport] Could not retrieve work order name for ${workOrderIdNoBraces}: ${e.message}`);
                 }
+                const workOrderLabel = workOrderName
+                    ? `${workOrderIdNoBraces} (${workOrderName})`
+                    : workOrderIdNoBraces;
                 
-                const woDisplayName = workOrderName ? ` - ${workOrderName}` : "";
+                const woDisplayName = workOrderName ? ` (${workOrderName})` : "";
                 updateProgress(
                     formatSurveyOverall(doneUnits, totalSurveyPdfs),
-                    `Export — Work order ${currentExportIndex} of ${totalExports}${woDisplayName}: starting (do not close this tab)`
+                    `Work order ${currentExportIndex}/${totalExports}${woDisplayName} | Starting`
                 );
                 
                 const tasksEntities = tasksByWorkOrderId[workOrderIdNoBraces] || [];
@@ -514,16 +784,25 @@ namespace ROM.WorkOrderExportJob {
                 let currentTaskIndex = 0;
                 for (const task of tasksEntities) {
                     const taskId = task.msdyn_workorderservicetaskid?.replace(/[{}]/g, "") || "unknown";
+                    const normalizedTaskId = taskId.toLowerCase();
+                    const taskName = (task.msdyn_name || "").toString().trim() || "Unknown";
                     
                     if (task.ovs_questionnairedefinition && task.ovs_questionnaireresponse) {
                         currentTaskIndex++;
+                        if (recoveryMode === "resume" && resumedTaskIds.has(normalizedTaskId)) {
+                            skippedCount++;
+                            continue;
+                        }
+                        debugLog(`[WOExport][TaskStart] wo=${workOrderIdNoBraces} woName=${workOrderName || "-"} task=${taskId} idx=${currentTaskIndex}/${totalQuestionnaires}`);
                         const def = task.ovs_questionnairedefinition;
                         const resp = task.ovs_questionnaireresponse;
+                        let taskStage = "start";
                         
                         try {
+                        taskStage = "prepare";
                         updateProgress(
                             formatSurveyOverall(doneUnits, totalSurveyPdfs),
-                            `Export — Work order ${currentExportIndex} of ${totalExports}${woDisplayName} — Questionnaire ${currentTaskIndex} of ${totalQuestionnaires}: preparing`
+                            `Work order ${currentExportIndex}/${totalExports}${woDisplayName} | Questionnaire ${currentTaskIndex}/${totalQuestionnaires} | Preparing`
                         );
 
                         // ---------------------------------------------------------
@@ -556,7 +835,7 @@ namespace ROM.WorkOrderExportJob {
                         try {
                             surveyDef = JSON.parse(def.trim());
                         } catch (parseError: any) {
-                            console.log(`[WOExport] ERROR parsing survey definition for Work Order Service Task ${taskId}: ${parseError.message}`);
+                            console.error(`[WOExport] Error parsing survey definition for Work Order Service Task ${taskId}: ${parseError.message}`);
                             continue; // Skip this task and move to the next one
                         }
 
@@ -582,13 +861,27 @@ namespace ROM.WorkOrderExportJob {
                         survey.showCompletedPage = false;
                         survey.showProgressBar = 'off'; // Hide progress bar
 
+                        // Match normal Survey renderer behavior: convert markdown/HTML text blocks
+                        // so question titles/descriptions render formatted text instead of raw tags.
+                        if (renderWindow.showdown) {
+                            const converter = new renderWindow.showdown.Converter();
+                            survey.onTextMarkdown.add(function (_sender: any, options: any) {
+                                let str = converter.makeHtml(options.text || "");
+                                if (str.indexOf("<p>") === 0) {
+                                    str = str.substring(3);
+                                    str = str.substring(0, str.length - 4);
+                                }
+                                options.html = str;
+                            });
+                        }
+
                         // 3. Event Handlers (Replicating surveyRenderPrint.js)
                         // Append Details Logic
                         survey.onAfterRenderQuestion.add(function (sender: any, options: any) {
                             if (options.question.hasDetail != true) return;
                             
                             const detailSurveyId = options.question.name + "-Detail";
-                            const detailLabel = (locale === 'fr') ? (options.question.detailFrenchText || "Détail") : (options.question.detailEnglishText || "Detail");
+                            const detailLabel = (locale === 'fr') ? (options.question.detailFrenchText || "Detail") : (options.question.detailEnglishText || "Detail");
                             
                             const question = options.htmlElement;
                             const detailContainer = renderWindow.document.createElement("div");
@@ -622,15 +915,17 @@ namespace ROM.WorkOrderExportJob {
                         // 4. Render
                         updateProgress(
                             formatSurveyOverall(doneUnits, totalSurveyPdfs),
-                            `Export — Work order ${currentExportIndex} of ${totalExports}${woDisplayName} — Questionnaire ${currentTaskIndex} of ${totalQuestionnaires}: rendering`
+                            `Work order ${currentExportIndex}/${totalExports}${woDisplayName} | Questionnaire ${currentTaskIndex}/${totalQuestionnaires} | Rendering`
                         );
+                        taskStage = "render";
                         renderWindow.jQuery(targetId).Survey({ model: survey });
 
                         // Wait for rendering with polling
                         updateProgress(
                             formatSurveyOverall(doneUnits, totalSurveyPdfs),
-                            `Export — Work order ${currentExportIndex} of ${totalExports}${woDisplayName} — Questionnaire ${currentTaskIndex} of ${totalQuestionnaires}: finalizing layout`
+                            `Work order ${currentExportIndex}/${totalExports}${woDisplayName} | Questionnaire ${currentTaskIndex}/${totalQuestionnaires} | Finalizing layout`
                         );
+                        taskStage = "finalize-layout";
                         await waitForRender(targetElement, 10000);
 
                         // ---------------------------------------------------------
@@ -638,8 +933,9 @@ namespace ROM.WorkOrderExportJob {
                         // ---------------------------------------------------------
                         updateProgress(
                             formatSurveyOverall(doneUnits, totalSurveyPdfs),
-                            `Export — Work order ${currentExportIndex} of ${totalExports}${woDisplayName} — Questionnaire ${currentTaskIndex} of ${totalQuestionnaires}: formatting`
+                            `Work order ${currentExportIndex}/${totalExports}${woDisplayName} | Questionnaire ${currentTaskIndex}/${totalQuestionnaires} | Formatting`
                         );
+                        taskStage = "format";
                         if (renderWindow.jQuery) {
                             renderWindow.jQuery("textarea").each(function (index: number, el: any) {
                                 const val = (renderWindow.jQuery(el).val() || "").toString();
@@ -667,8 +963,9 @@ namespace ROM.WorkOrderExportJob {
                         
                         updateProgress(
                             formatSurveyOverall(doneUnits, totalSurveyPdfs),
-                            `Export — Work order ${currentExportIndex} of ${totalExports}${woDisplayName} — Questionnaire ${currentTaskIndex} of ${totalQuestionnaires}: generating PDF`
+                            `Work order ${currentExportIndex}/${totalExports}${woDisplayName} | Questionnaire ${currentTaskIndex}/${totalQuestionnaires} | Generating`
                         );
+                        taskStage = "generate-pdf";
                         const options = {
                             margin: 0.5,
                             filename: filename,
@@ -679,7 +976,7 @@ namespace ROM.WorkOrderExportJob {
 
                         const blob = await renderWindow.html2pdf().from(targetElement).set(options).output('blob');
                         const sizeMB = (blob.size / (1024 * 1024)).toFixed(2);
-                        console.log(`[WOExport] PDF Generated for Work Order Service Task ${taskId}. Size: ${sizeMB} MB`);
+                        debugLog(`[WOExport] PDF Generated for Work Order Service Task ${taskId}. Size: ${sizeMB} MB`);
 
                         if (blob.size < 5 * 1024) {
                             console.warn(`[WOExport] Warning: ${filename} is unusually small (${sizeMB} MB). It may be blank.`);
@@ -690,8 +987,9 @@ namespace ROM.WorkOrderExportJob {
                         // ---------------------------------------------------------
                         updateProgress(
                             formatSurveyOverall(doneUnits, totalSurveyPdfs),
-                            `Export — Work order ${currentExportIndex} of ${totalExports}${woDisplayName} — Questionnaire ${currentTaskIndex} of ${totalQuestionnaires}: uploading PDF`
+                            `Work order ${currentExportIndex}/${totalExports}${woDisplayName} | Questionnaire ${currentTaskIndex}/${totalQuestionnaires} | Uploading`
                         );
+                        taskStage = "upload";
                         const base64Data = await new Promise<string>((resolve, reject) => {
                             const READER_TIMEOUT_MS = 60_000; // 60 seconds max for blob read
                             const reader = new FileReader();
@@ -743,26 +1041,38 @@ namespace ROM.WorkOrderExportJob {
                         note.mimetype = "application/pdf";
                         note["objectid_ts_workorderexportjob@odata.bind"] = `/ts_workorderexportjobs(${exportJobId})`;
 
+                        taskStage = "create-annotation";
                         await Xrm.WebApi.createRecord("annotation", note);
                         updateProgress(
                             formatSurveyOverall(doneUnits, totalSurveyPdfs),
-                            `Export — Work order ${currentExportIndex} of ${totalExports}${woDisplayName} — Questionnaire ${currentTaskIndex} of ${totalQuestionnaires}: done`
+                            `Work order ${currentExportIndex}/${totalExports}${woDisplayName} | Questionnaire ${currentTaskIndex}/${totalQuestionnaires} | Done`
                         );
 
                         renderedCount++;
                         uploadedCount++;
+                        debugLog(`[WOExport][TaskDone] wo=${workOrderIdNoBraces} task=${taskId} sizeMB=${sizeMB} uploaded=1`);
 
                         // Progress unit completed (one survey PDF)
                         doneUnits++;
-                        await writeProgress(`Questionnaire PDFs: ${Math.min(doneUnits, totalSurveyPdfs)}/${totalSurveyPdfs}`);
+                        await writeProgress(formatQuestionnaireExportProgress(doneUnits, totalSurveyPdfs));
                         // DO NOT BREAK - Process all tasks for this Work Order
                         } catch (taskError: any) {
-                            const errorMessage = `Work Order: ${workOrderIdNoBraces} - Work order service task: ${taskId}:\n\`\`\`\n${taskError.message || taskError.toString()}\n\`\`\``;
+                            const taskLabel = `${taskId} (${taskName})`;
+                            const userGuidance = "Please try again. If this keeps failing, retry the export without this Work Order/Service Task.";
+                            const errorMessage =
+                                `Work Order: ${workOrderLabel}\n` +
+                                `Work Order Service Task: ${taskLabel}\n` +
+                                `Error: ${taskError.message || taskError.toString()}\n` +
+                                `${userGuidance}`;
                             errors.push(errorMessage);
+                            const errCode = taskError?.errorCode || taskError?.code || "n/a";
+                            const errTitle = taskError?.title || "n/a";
+                            const errMsg = taskError?.message || taskError?.toString?.() || "Unknown error";
+                            console.error(`[WOExport][TaskError] wo=${workOrderIdNoBraces} task=${taskId} stage=${taskStage} code=${errCode} title=${errTitle} msg=${errMsg}`);
                             console.error(`[WOExport] Error processing Work Order Service Task ${taskId} for Work Order ${workOrderIdNoBraces}:`, taskError);
                             updateProgress(
                                 formatSurveyOverall(doneUnits, totalSurveyPdfs),
-                                `Export — Work order ${currentExportIndex} of ${totalExports}${woDisplayName} — Questionnaire ${currentTaskIndex} of ${totalQuestionnaires}: ERROR (${taskError.message || taskError.toString()})`
+                                `Work order ${currentExportIndex}/${totalExports}${woDisplayName} | Questionnaire ${currentTaskIndex}/${totalQuestionnaires} | Error: ${taskError.message || taskError.toString()}`
                             );
                         }
                     } else {
@@ -772,9 +1082,9 @@ namespace ROM.WorkOrderExportJob {
                 
                 updateProgress(
                     formatSurveyOverall(doneUnits, totalSurveyPdfs),
-                    `Export — Work order ${currentExportIndex} of ${totalExports}${woDisplayName}: done (${renderedCount} PDFs generated, ${skippedCount} skipped)`
+                    `Work order ${currentExportIndex}/${totalExports}${woDisplayName} | Completed (${renderedCount} PDFs generated, ${skippedCount} skipped)`
                 );
-                console.log(`[WOExport] Work Order ${workOrderIdNoBraces}: tasks=${tasksTotal}, rendered=${renderedCount}, uploaded=${uploadedCount}, skipped=${skippedCount}`);
+                debugLog(`[WOExport] Work Order ${workOrderIdNoBraces}: tasks=${tasksTotal}, rendered=${renderedCount}, uploaded=${uploadedCount}, skipped=${skippedCount}`);
             }
 
             // 6. Completion
@@ -787,17 +1097,18 @@ namespace ROM.WorkOrderExportJob {
                 }
                 clearProgressNotification(formContext);
                 setLeavePageGuard(false);
+                closeCriticalProgressIndicator();
+                if (exportJobId) clearInterruptionFlag(exportJobId);
                 await formContext.data.save();
                 Xrm.Navigation.openAlertDialog({ text: `Export completed with ${errors.length} error(s). Check error message field for details.` });
             } else {
-                await writeProgress(`Questionnaire PDFs: ${Math.min(doneUnits, totalSurveyPdfs)}/${totalSurveyPdfs} (complete)`, true);
-                setProgressNotification(
-                    formContext,
-                    "Export in progress (background processing continues).",
-                    "INFO"
-                );
+                await writeProgress(formatQuestionnaireExportProgress(doneUnits, totalSurveyPdfs, true), true);
+                closeCriticalProgressIndicator();
+                clearProgressNotification(formContext);
                 formContext.getAttribute("statuscode").setValue(STATUS_READY_FOR_SERVER);
                 setLeavePageGuard(false);
+                closeCriticalProgressIndicator();
+                if (exportJobId) clearInterruptionFlag(exportJobId);
 
                 await formContext.data.save();
                 if (exportJobId) {
@@ -809,6 +1120,8 @@ namespace ROM.WorkOrderExportJob {
             console.error("[WOExport] ERROR: ", e);
             clearProgressNotification(formContext);
             setLeavePageGuard(false);
+            closeCriticalProgressIndicator();
+            if (jobId) clearInterruptionFlag(jobId);
 
             formContext.getAttribute("statuscode").setValue(STATUS_ERROR);
             const errorMsgAttr = formContext.getAttribute("ts_errormessage");
@@ -820,3 +1133,4 @@ namespace ROM.WorkOrderExportJob {
         }
     }
 }
+
