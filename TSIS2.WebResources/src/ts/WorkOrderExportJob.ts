@@ -964,6 +964,7 @@ namespace ROM.WorkOrderExportJob {
             //           = totalSurveyPdfs + (3 * totalWorkOrders) + 1
             let totalSurveyPdfs = 0;
             const tasksByWorkOrderId: Record<string, any[]> = {};
+            const nonBlockingSkips: string[] = [];
 
             setProgressNotification(
                 formContext,
@@ -984,16 +985,9 @@ namespace ROM.WorkOrderExportJob {
 
                 const tasksTotal = tasks.entities.length;
                 if (tasksTotal === 0) {
-                    const errorMessage = `Work Order ${workOrderIdNoBraces}: No work order service tasks found`;
-                    formContext.getAttribute("statuscode").setValue(STATUS_ERROR);
-                    const errorMsgAttr = formContext.getAttribute("ts_errormessage");
-                    if (errorMsgAttr) errorMsgAttr.setValue(errorMessage);
-                    clearProgressNotification(formContext);
-                    setLeavePageGuard(false);
-                    closeCriticalProgressIndicator();
-                    await formContext.data.save();
-                    Xrm.Navigation.openAlertDialog({ text: errorMessage });
-                    return;
+                    nonBlockingSkips.push(`Work Order: ${workOrderIdNoBraces}\nSkip Reason: No work order service tasks found.`);
+                    tasksByWorkOrderId[workOrderIdNoBraces] = [];
+                    continue;
                 }
 
                 const tasksWithQuestionnaires = tasks.entities.filter(task =>
@@ -1001,16 +995,9 @@ namespace ROM.WorkOrderExportJob {
                 );
 
                 if (tasksWithQuestionnaires.length === 0) {
-                    const errorMessage = `Work Order ${workOrderIdNoBraces}: No questionnaires found in any service tasks`;
-                    formContext.getAttribute("statuscode").setValue(STATUS_ERROR);
-                    const errorMsgAttr = formContext.getAttribute("ts_errormessage");
-                    if (errorMsgAttr) errorMsgAttr.setValue(errorMessage);
-                    clearProgressNotification(formContext);
-                    setLeavePageGuard(false);
-                    closeCriticalProgressIndicator();
-                    await formContext.data.save();
-                    Xrm.Navigation.openAlertDialog({ text: errorMessage });
-                    return;
+                    nonBlockingSkips.push(`Work Order: ${workOrderIdNoBraces}\nSkip Reason: No questionnaires found in any service tasks.`);
+                    tasksByWorkOrderId[workOrderIdNoBraces] = tasks.entities;
+                    continue;
                 }
 
                 tasksByWorkOrderId[workOrderIdNoBraces] = tasks.entities;
@@ -1056,13 +1043,24 @@ namespace ROM.WorkOrderExportJob {
                 .sv_p_root {
                   padding-bottom: 0px !important;
                 }
+
+                /* Keep survey blocks together in PDF pages to avoid cut-off at page boundaries. */
+                .sv_q,
+                .sv_row,
+                .sv_panel,
+                .sv_q_title,
+                .sv_q_description,
+                .form-group,
+                .printed-textarea {
+                  break-inside: avoid !important;
+                  page-break-inside: avoid !important;
+                }
               `;
               renderWindow.document.head.appendChild(style);
             }
 
             let currentExportIndex = 0;
             const errors: string[] = [];
-            const nonBlockingSkips: string[] = [];
             
             // Helper function to update progress notification (local UI)
             const updateProgress = (overallMessage: string, detailMessage?: string) => {
@@ -1352,7 +1350,11 @@ namespace ROM.WorkOrderExportJob {
                             filename: filename,
                             image: { type: 'png', quality: 0.98 },
                             html2canvas: { scale: 1, useCORS: true },
-                            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+                            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+                            pagebreak: {
+                                mode: ['css', 'legacy'],
+                                avoid: ['.sv_q', '.sv_row', '.sv_panel', '.form-group', '.printed-textarea']
+                            }
                         };
 
                         const blob = await renderWindow.html2pdf().from(targetElement).set(options).output('blob');
