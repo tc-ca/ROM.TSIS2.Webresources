@@ -5,6 +5,11 @@ var STATUS_READY_FOR_SERVER = 741130002;
 var STATUS_READY_FOR_FLOW = 741130003;
 var STATUS_FLOW_RUNNING = 741130004;
 var STATUS_READY_FOR_MERGE = 741130005;
+var STATUS_MERGE_IN_PROGRESS = 741130008;
+var STATUS_READY_FOR_ZIP = 741130009;
+var STATUS_ZIP_IN_PROGRESS = 741130010;
+var STATUS_READY_FOR_CLEANUP = 741130011;
+var STATUS_CLEANUP_IN_PROGRESS = 741130012;
 
 var ALLOWED_RESTART_ROLES = "System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager";
 
@@ -34,7 +39,12 @@ function woejIsInProgressStatus(statusCode) {
     statusCode === STATUS_READY_FOR_SERVER ||
     statusCode === STATUS_READY_FOR_FLOW ||
     statusCode === STATUS_FLOW_RUNNING ||
-    statusCode === STATUS_READY_FOR_MERGE;
+    statusCode === STATUS_READY_FOR_MERGE ||
+    statusCode === STATUS_MERGE_IN_PROGRESS ||
+    statusCode === STATUS_READY_FOR_ZIP ||
+    statusCode === STATUS_ZIP_IN_PROGRESS ||
+    statusCode === STATUS_READY_FOR_CLEANUP ||
+    statusCode === STATUS_CLEANUP_IN_PROGRESS;
 }
 
 function woejHasRestartRole() {
