@@ -310,25 +310,29 @@ var ROM;
                         case 7:
                             jobId = getJobId(formContext);
                             if (!jobId)
-                                return [2 /*return*/];
+                                return [2 /*return*/, refreshed];
                             reloadKey = "wo_export_completed_reload_once_" + jobId;
                             didReload = sessionStorage.getItem(reloadKey) === "1";
                             if (didReload) {
                                 sessionStorage.removeItem(reloadKey);
-                                return [2 /*return*/];
                             }
                             if (!refreshed) {
-                                sessionStorage.setItem(reloadKey, "1");
-                                window.setTimeout(function () { return window.location.reload(); }, 250);
-                                return [2 /*return*/];
+                                if (!didReload) {
+                                    sessionStorage.setItem(reloadKey, "1");
+                                    window.setTimeout(function () { return window.location.reload(); }, 250);
+                                }
+                                return [2 /*return*/, false];
                             }
                             fileAttr = (_a = formContext.getAttribute) === null || _a === void 0 ? void 0 : _a.call(formContext, "ts_finalexportzip");
                             hasFileValue = !!((_b = fileAttr === null || fileAttr === void 0 ? void 0 : fileAttr.getValue) === null || _b === void 0 ? void 0 : _b.call(fileAttr));
                             if (!hasFileValue) {
-                                sessionStorage.setItem(reloadKey, "1");
-                                window.setTimeout(function () { return window.location.reload(); }, 250);
+                                if (!didReload) {
+                                    sessionStorage.setItem(reloadKey, "1");
+                                    window.setTimeout(function () { return window.location.reload(); }, 250);
+                                }
+                                return [2 /*return*/, false];
                             }
-                            return [2 /*return*/];
+                            return [2 /*return*/, true];
                     }
                 });
             });
@@ -677,7 +681,7 @@ var ROM;
         }
         function pollAndRenderProgress(formContext, jobId) {
             return __awaiter(this, void 0, void 0, function () {
-                var select, job, status, msg, totalUnits, doneUnits, stageLabel, rawMessage, displayMessage, fileName, userChoice;
+                var select, job, status, msg, totalUnits, doneUnits, stageLabel, rawMessage, displayMessage, fileName, readyForDownload, userChoice;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -698,8 +702,6 @@ var ROM;
                             stageLabel = getStatusLabel(status);
                             rawMessage = ((job === null || job === void 0 ? void 0 : job.ts_progressmessage) || "").trim();
                             displayMessage = formatBackendProgressMessage(status, stageLabel, rawMessage, doneUnits, totalUnits);
-                            showCriticalProgressIndicator(displayMessage, status === STATUS_CLIENT_PROCESSING);
-                            clearProgressNotification(formContext);
                             if (!(status === STATUS_COMPLETED)) return [3 /*break*/, 6];
                             fileName = ((job === null || job === void 0 ? void 0 : job.ts_finalexportzip_name) || "").toString().trim();
                             if (!fileName) {
@@ -712,12 +714,22 @@ var ROM;
                                 }
                                 return [2 /*return*/];
                             }
+                            return [4 /*yield*/, refreshFormAfterCompletion(formContext)];
+                        case 2:
+                            readyForDownload = _a.sent();
+                            if (!readyForDownload) {
+                                showCriticalProgressIndicator("Finalizing export...", false);
+                                if (finalizeCheckTimeoutHandle === null) {
+                                    finalizeCheckTimeoutHandle = window.setTimeout(function () {
+                                        finalizeCheckTimeoutHandle = null;
+                                        pollAndRenderProgress(formContext, jobId).catch(function () { });
+                                    }, 3000);
+                                }
+                                return [2 /*return*/];
+                            }
                             stopProgressPoller(formContext);
                             closeCriticalProgressIndicator();
                             setProgressNotification(formContext, "Export completed. The ZIP is ready to download.", "INFO");
-                            return [4 /*yield*/, refreshFormAfterCompletion(formContext)];
-                        case 2:
-                            _a.sent();
                             focusZipControl(formContext);
                             return [4 /*yield*/, Xrm.Navigation.openConfirmDialog({
                                     title: "Export Completed",
@@ -733,7 +745,10 @@ var ROM;
                             _a.sent();
                             _a.label = 5;
                         case 5: return [2 /*return*/];
-                        case 6: return [2 /*return*/];
+                        case 6:
+                            showCriticalProgressIndicator(displayMessage, status === STATUS_CLIENT_PROCESSING);
+                            clearProgressNotification(formContext);
+                            return [2 /*return*/];
                     }
                 });
             });
@@ -835,6 +850,7 @@ var ROM;
                                     status === STATUS_ZIP_IN_PROGRESS ||
                                     status === STATUS_READY_FOR_CLEANUP ||
                                     status === STATUS_CLEANUP_IN_PROGRESS ||
+                                    status === STATUS_COMPLETED ||
                                     status === STATUS_ERROR) {
                                     setLeavePageGuard(false);
                                     startProgressPoller(formContext, jobId);

@@ -236,7 +236,7 @@ namespace ROM.WorkOrderExportJob {
         }
     }
 
-    async function refreshFormAfterCompletion(formContext: any): Promise<void> {
+    async function refreshFormAfterCompletion(formContext: any): Promise<boolean> {
         // Some orgs lag before file column metadata appears in-form.
         // Retry refresh a few times so users don't need manual refresh.
         let refreshed = false;
@@ -254,26 +254,31 @@ namespace ROM.WorkOrderExportJob {
         // Fallback: force one full page reload so file-column UI state is guaranteed fresh.
         // Guard with a per-job one-time flag to avoid reload loops.
         const jobId = getJobId(formContext);
-        if (!jobId) return;
+        if (!jobId) return refreshed;
         const reloadKey = `wo_export_completed_reload_once_${jobId}`;
         const didReload = sessionStorage.getItem(reloadKey) === "1";
         if (didReload) {
             sessionStorage.removeItem(reloadKey);
-            return;
         }
         if (!refreshed) {
-            sessionStorage.setItem(reloadKey, "1");
-            window.setTimeout(() => window.location.reload(), 250);
-            return;
+            if (!didReload) {
+                sessionStorage.setItem(reloadKey, "1");
+                window.setTimeout(() => window.location.reload(), 250);
+            }
+            return false;
         }
 
         // Even when data.refresh succeeds, file columns may still lag in rendering in some clients.
         const fileAttr = formContext.getAttribute?.("ts_finalexportzip");
         const hasFileValue = !!fileAttr?.getValue?.();
         if (!hasFileValue) {
-            sessionStorage.setItem(reloadKey, "1");
-            window.setTimeout(() => window.location.reload(), 250);
+            if (!didReload) {
+                sessionStorage.setItem(reloadKey, "1");
+                window.setTimeout(() => window.location.reload(), 250);
+            }
+            return false;
         }
+        return true;
     }
 
     function setProgressNotification(formContext: any, text: string, level: "INFO" | "WARNING" | "ERROR" = "INFO"): void {
@@ -607,8 +612,6 @@ namespace ROM.WorkOrderExportJob {
         const stageLabel = getStatusLabel(status);
         const rawMessage = (job?.ts_progressmessage || "").trim();
         const displayMessage = formatBackendProgressMessage(status, stageLabel, rawMessage, doneUnits, totalUnits);
-        showCriticalProgressIndicator(displayMessage, status === STATUS_CLIENT_PROCESSING);
-        clearProgressNotification(formContext);
 
         if (status === STATUS_COMPLETED) {
             const fileName = (job?.ts_finalexportzip_name || "").toString().trim();
@@ -623,11 +626,22 @@ namespace ROM.WorkOrderExportJob {
                 }
                 return;
             }
-        
+
+            const readyForDownload = await refreshFormAfterCompletion(formContext);
+            if (!readyForDownload) {
+                showCriticalProgressIndicator("Finalizing export...", false);
+                if (finalizeCheckTimeoutHandle === null) {
+                    finalizeCheckTimeoutHandle = window.setTimeout(() => {
+                        finalizeCheckTimeoutHandle = null;
+                        pollAndRenderProgress(formContext, jobId).catch(() => {});
+                    }, 3_000);
+                }
+                return;
+            }
+
             stopProgressPoller(formContext);
             closeCriticalProgressIndicator();
             setProgressNotification(formContext, "Export completed. The ZIP is ready to download.", "INFO");
-            await refreshFormAfterCompletion(formContext);
             focusZipControl(formContext);
 
             const userChoice = await Xrm.Navigation.openConfirmDialog({
@@ -641,6 +655,9 @@ namespace ROM.WorkOrderExportJob {
             }
             return;
         }
+
+        showCriticalProgressIndicator(displayMessage, status === STATUS_CLIENT_PROCESSING);
+        clearProgressNotification(formContext);
         
     }
 
@@ -741,6 +758,7 @@ namespace ROM.WorkOrderExportJob {
                 status === STATUS_ZIP_IN_PROGRESS ||
                 status === STATUS_READY_FOR_CLEANUP ||
                 status === STATUS_CLEANUP_IN_PROGRESS ||
+                status === STATUS_COMPLETED ||
                 status === STATUS_ERROR) {
                 setLeavePageGuard(false);
 
