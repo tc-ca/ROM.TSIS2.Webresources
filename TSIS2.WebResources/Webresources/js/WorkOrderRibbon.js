@@ -1265,7 +1265,15 @@ async function exportWorkOrderFromSubgrid(selectedControl, includeHiddenQuestion
     async function checkForExistingActiveJobs() {
       const activeStatuses = [741130001, 741130002, 741130003, 741130004, 741130005, 741130008, 741130009, 741130010, 741130011, 741130012];
       const filterConditions = activeStatuses.map(s => `statuscode eq ${s}`).join(" or ");
-      const query = `?$select=ts_name,statuscode&$filter=${filterConditions}&$top=1`;
+      const staleWindowMinutes = 30;
+      const cutoff = new Date(Date.now() - staleWindowMinutes * 60 * 1000);
+      const cutoffIso = cutoff.toISOString();
+      const freshnessFilter =
+        `(ts_lastheartbeat ge ${cutoffIso} or (ts_lastheartbeat eq null and createdon ge ${cutoffIso}))`;
+      const query =
+        `?$select=ts_name,statuscode,ts_lastheartbeat,createdon` +
+        `&$filter=(${filterConditions}) and ${freshnessFilter}` +
+        `&$orderby=createdon desc&$top=1`;
 
       try {
         const result = await Xrm.WebApi.retrieveMultipleRecords("ts_workorderexportjob", query);
