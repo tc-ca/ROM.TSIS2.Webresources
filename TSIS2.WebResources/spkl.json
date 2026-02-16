@@ -305,6 +305,11 @@
                 "description": "ROM TSIS 2.0 Work Order Export Job Scripts"
             },
             {
+                "uniquename": "ts_/js/WorkOrderExportJobRibbon.js",
+                "file": "js\\WorkOrderExportJobRibbon.js",
+                "description": "ROM TSIS 2.0 Work Order Export Ribbon Scripts"
+            },
+            {
                 "uniquename": "ovs_/js/WorkOrderRibbon.js",
                 "file": "js\\WorkOrderRibbon.js",
                 "description": "ROM TSIS 2.0 Work Order Ribbon Scripts"

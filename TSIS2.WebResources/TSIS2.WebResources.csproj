@@ -260,6 +260,7 @@
     <Content Include="Webresources\js\UserRegistration.js" />
     <Content Include="Webresources\js\WorkOrder.js" />
     <Content Include="Webresources\js\WorkOrderCreationWizard.js" />
+    <Content Include="Webresources\js\WorkOrderExportJobRibbon.js" />
     <Content Include="Webresources\js\WorkOrderQuickCreate.js" />
     <Content Include="Webresources\js\TripRibbon.js" />
     <Content Include="Webresources\js\WorkOrderRibbon.js" />
