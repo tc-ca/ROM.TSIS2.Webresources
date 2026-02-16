@@ -217,6 +217,12 @@ var ROM;
             if (stageLabelLower && detailLower.startsWith(stageLabelLower)) {
                 detailMsg = detailMsg.substring(stageLabel.length).replace(/^[:\-\s]+/, "").trim();
             }
+            // Some backend writers append the stage label again at the end.
+            // Example: "Main PDFs: 3/10 | Generating main PDFs"
+            if (stageLabelLower) {
+                var trailingStageLabelPattern = new RegExp("(?:\\||:|-)?\\s*" + stageLabel.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\s*$", "i");
+                detailMsg = detailMsg.replace(trailingStageLabelPattern, "").replace(/\s+\|+\s*$/, "").trim();
+            }
             if (!detailMsg)
                 return stageDisplay + " | Overall " + percent + "%";
             // Common pattern from Flow: "Main PDFs: x/y"
