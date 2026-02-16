@@ -17,8 +17,10 @@ namespace ROM.WorkOrderExportJob {
 
     let progressPollHandle: number | null = null;
     let finalizeCheckTimeoutHandle: number | null = null;
+    let finalizeWaitStartedAtMs: number | null = null;
 
     const PROGRESS_POLL_INTERVAL_MS = 5000;
+    const FINALIZE_MAX_WAIT_MS = 20_000;
     const PROGRESS_WRITE_THROTTLE_MS = 1500;
     const PROGRESS_INDICATOR_UPDATE_THROTTLE_MS = 250;
     const CLIENT_HEARTBEAT_RECENT_MS = 30_000;
@@ -620,6 +622,9 @@ namespace ROM.WorkOrderExportJob {
         const displayMessage = formatBackendProgressMessage(status, stageLabel, rawMessage, doneUnits, totalUnits);
 
         if (status === STATUS_COMPLETED) {
+            if (finalizeWaitStartedAtMs === null) {
+                finalizeWaitStartedAtMs = Date.now();
+            }
             const fileName = (job?.ts_finalexportzip_name || "").toString().trim();
         
             if (!fileName) {
@@ -635,6 +640,11 @@ namespace ROM.WorkOrderExportJob {
 
             const readyForDownload = await refreshFormAfterCompletion(formContext);
             if (!readyForDownload) {
+                const waitedMs = Date.now() - (finalizeWaitStartedAtMs || Date.now());
+                if (waitedMs >= FINALIZE_MAX_WAIT_MS) {
+                    // Fallback: backend completion is authoritative; avoid indefinite spinner when form/file UI lags.
+                    debugLog(`[WOExport] Finalization UI fallback after ${waitedMs}ms (status completed).`);
+                } else {
                 showCriticalProgressIndicator("Finalizing export...", false);
                 if (finalizeCheckTimeoutHandle === null) {
                     finalizeCheckTimeoutHandle = window.setTimeout(() => {
@@ -643,8 +653,10 @@ namespace ROM.WorkOrderExportJob {
                     }, 3_000);
                 }
                 return;
+                }
             }
 
+            finalizeWaitStartedAtMs = null;
             stopProgressPoller(formContext);
             closeCriticalProgressIndicator();
             setProgressNotification(formContext, "Export completed. The ZIP is ready to download.", "INFO");
@@ -662,6 +674,7 @@ namespace ROM.WorkOrderExportJob {
             return;
         }
 
+        finalizeWaitStartedAtMs = null;
         showCriticalProgressIndicator(displayMessage, status === STATUS_CLIENT_PROCESSING);
         clearProgressNotification(formContext);
         
@@ -691,6 +704,7 @@ namespace ROM.WorkOrderExportJob {
             window.clearTimeout(finalizeCheckTimeoutHandle);
             finalizeCheckTimeoutHandle = null;
         }
+        finalizeWaitStartedAtMs = null;
     }
 
     /**

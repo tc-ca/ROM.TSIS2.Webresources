@@ -60,7 +60,9 @@ var ROM;
         var STATUS_CLEANUP_IN_PROGRESS = 741130012;
         var progressPollHandle = null;
         var finalizeCheckTimeoutHandle = null;
+        var finalizeWaitStartedAtMs = null;
         var PROGRESS_POLL_INTERVAL_MS = 5000;
+        var FINALIZE_MAX_WAIT_MS = 20000;
         var PROGRESS_WRITE_THROTTLE_MS = 1500;
         var PROGRESS_INDICATOR_UPDATE_THROTTLE_MS = 250;
         var CLIENT_HEARTBEAT_RECENT_MS = 30000;
@@ -687,7 +689,7 @@ var ROM;
         }
         function pollAndRenderProgress(formContext, jobId) {
             return __awaiter(this, void 0, void 0, function () {
-                var select, job, status, msg, totalUnits, doneUnits, stageLabel, rawMessage, displayMessage, fileName, readyForDownload, userChoice;
+                var select, job, status, msg, totalUnits, doneUnits, stageLabel, rawMessage, displayMessage, fileName, readyForDownload, waitedMs, userChoice;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -709,6 +711,9 @@ var ROM;
                             rawMessage = ((job === null || job === void 0 ? void 0 : job.ts_progressmessage) || "").trim();
                             displayMessage = formatBackendProgressMessage(status, stageLabel, rawMessage, doneUnits, totalUnits);
                             if (!(status === STATUS_COMPLETED)) return [3 /*break*/, 6];
+                            if (finalizeWaitStartedAtMs === null) {
+                                finalizeWaitStartedAtMs = Date.now();
+                            }
                             fileName = ((job === null || job === void 0 ? void 0 : job.ts_finalexportzip_name) || "").toString().trim();
                             if (!fileName) {
                                 showCriticalProgressIndicator("Finalizing export...", false);
@@ -724,15 +729,23 @@ var ROM;
                         case 2:
                             readyForDownload = _a.sent();
                             if (!readyForDownload) {
-                                showCriticalProgressIndicator("Finalizing export...", false);
-                                if (finalizeCheckTimeoutHandle === null) {
-                                    finalizeCheckTimeoutHandle = window.setTimeout(function () {
-                                        finalizeCheckTimeoutHandle = null;
-                                        pollAndRenderProgress(formContext, jobId).catch(function () { });
-                                    }, 3000);
+                                waitedMs = Date.now() - (finalizeWaitStartedAtMs || Date.now());
+                                if (waitedMs >= FINALIZE_MAX_WAIT_MS) {
+                                    // Fallback: backend completion is authoritative; avoid indefinite spinner when form/file UI lags.
+                                    debugLog("[WOExport] Finalization UI fallback after " + waitedMs + "ms (status completed).");
                                 }
-                                return [2 /*return*/];
+                                else {
+                                    showCriticalProgressIndicator("Finalizing export...", false);
+                                    if (finalizeCheckTimeoutHandle === null) {
+                                        finalizeCheckTimeoutHandle = window.setTimeout(function () {
+                                            finalizeCheckTimeoutHandle = null;
+                                            pollAndRenderProgress(formContext, jobId).catch(function () { });
+                                        }, 3000);
+                                    }
+                                    return [2 /*return*/];
+                                }
                             }
+                            finalizeWaitStartedAtMs = null;
                             stopProgressPoller(formContext);
                             closeCriticalProgressIndicator();
                             setProgressNotification(formContext, "Export completed. The ZIP is ready to download.", "INFO");
@@ -752,6 +765,7 @@ var ROM;
                             _a.label = 5;
                         case 5: return [2 /*return*/];
                         case 6:
+                            finalizeWaitStartedAtMs = null;
                             showCriticalProgressIndicator(displayMessage, status === STATUS_CLIENT_PROCESSING);
                             clearProgressNotification(formContext);
                             return [2 /*return*/];
@@ -781,6 +795,7 @@ var ROM;
                 window.clearTimeout(finalizeCheckTimeoutHandle);
                 finalizeCheckTimeoutHandle = null;
             }
+            finalizeWaitStartedAtMs = null;
         }
         /**
          * Waits for survey element to render with measurable content.
