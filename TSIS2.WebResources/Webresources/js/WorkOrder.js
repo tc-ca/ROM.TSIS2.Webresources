@@ -1354,7 +1354,6 @@ var ROM;
                     form.getAttribute("statecode").setValue(0);
                     form.getAttribute("statuscode").setValue(1);
                     form.getControl("ts_canceledinspectionjustification").setVisible(false);
-                    form.getControl("ts_canceledinspectionjustification").setVisible(false);
                     form.getAttribute("ts_canceledinspectionjustification").setRequiredLevel("none");
                     currentSystemStatus = newSystemStatus;
                 }
