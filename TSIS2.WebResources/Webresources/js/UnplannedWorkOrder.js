@@ -414,11 +414,11 @@ var ROM;
             //Check if the Work Order is past the Planned Fiscal Quarter
             //setCantCompleteinspectionVisibility(form);
             //setIncompleteWorkOrderReasonFilteredView(form);
-            //Set visiblity for canceled inspection justification field
-            //if (currentSystemStatus != 690970005) {
-            //    form.getControl("ts_canceledinspectionjustification").setVisible(false);
-            //    form.getControl("ts_othercanceledjustification").setVisible(false);
-            //}
+            // Set visiblity for canceled inspection justification field
+            if (currentSystemStatus != 690970005) {
+                form.getControl("ts_cancelledinspectionjustification").setVisible(false);
+                form.getControl("ts_othercancelledjustification").setVisible(false);
+            }
             //Set the Work Order Status 'Completed', 'Scheduled', and 'In Progress - Do Not Use This' to not visible
             var workOrderStatus = form.getControl("header_ts_recordstatus");
             if (workOrderStatus != null && workOrderStatus != undefined) {
@@ -1283,146 +1283,150 @@ var ROM;
             }
         }
         UnplannedWorkOrder.functionalLocationOnChange = functionalLocationOnChange;
-        //export function systemStatusOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
-        //    const form = <Form.ts_unplannedworkorder.Main.Information>eContext.getFormContext();
-        //    var newSystemStatus = form.getAttribute("ts_recordstatus").getValue();
-        //    //var preparationTime = form.getAttribute("ts_preparationtime").getValue();
-        //    //var conductingOversight = form.getAttribute("ts_conductingoversight").getValue();
-        //    //var woReportingAndDocumentation = form.getAttribute("ts_woreportinganddocumentation").getValue();
-        //    //If user try to cancel Complete WO
-        //    if (currentSystemStatus == 690970003 && newSystemStatus == 690970005) {
-        //        var alertStrings = {
-        //            text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CantCancelText"),
-        //        };
-        //        var alertOptions = { height: 160, width: 340 };
-        //        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
-        //        form.getAttribute("ts_recordstatus").setValue(currentSystemStatus);
-        //    }
-        //    else
-        //        //If system status is set to closed
-        //        if (newSystemStatus == msdyn_wosystemstatus.ClosedInactive || newSystemStatus == msdyn_wosystemstatus.Closed) {
-        //            Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=statecode eq 0 and msdyn_workorder/msdyn_workorderid eq " + form.data.entity.getId() + " and statuscode ne 918640002 and ts_mandatory eq true").then(function success(result) {
-        //                if (result.entities.length > 0) {
-        //                    var alertStrings = {
-        //                        text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithUnCompletedSTText"),
-        //                        title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithUnCompletedSTTitle")
-        //                    };
-        //                    var alertOptions = { height: 160, width: 340 };
-        //                    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
-        //                    form.getAttribute("ts_recordstatus").setValue(currentSystemStatus);
-        //                }
-        //                else {
-        //                    if (newSystemStatus == msdyn_wosystemstatus.ClosedInactive) {
-        //                        var confirmStrings = {
-        //                            text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationText"),
-        //                            title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWorkOrderConfirmationTitle")
-        //                        };
-        //                        var confirmOptions = { height: 200, width: 450 };
-        //                        Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
-        //                            function (success) {
-        //                                if (success.confirmed) {
-        //                                    //Set state to Inactive
-        //                                    form.getAttribute("statecode").setValue(1);
-        //                                    //Set Status Reason to Closed
-        //                                    form.getAttribute("statuscode").setValue(918640000);
-        //                                    currentSystemStatus = newSystemStatus;
-        //                                    //At Transport Canada, Fiscal Years run from Apr 1st to Mar 31, Q1 = Apr-Jun, Q2 = Jul-Sept, Q3 = Oct-Dec, Q4 = Jan-Mar
-        //                                    var currentQuarter = Math.floor(new Date().getMonth() / 3);
-        //                                    if (currentQuarter == 0) {
-        //                                        currentQuarter = 4;
-        //                                    }
-        //                                    form.getAttribute("ts_completedquarter").setValue(717750000 + currentQuarter);
-        //                                    form.getControl("ts_completedquarter").setVisible(true);
-        //                                } else {
-        //                                    //Undo the system status change
-        //                                    form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
-        //                                }
-        //                            });
-        //                    }
-        //                    else {
-        //                        //At Transport Canada, Fiscal Years run from Apr 1st to Mar 31, Q1 = Apr-Jun, Q2 = Jul-Sept, Q3 = Oct-Dec, Q4 = Jan-Mar
-        //                        var currentQuarter = Math.floor(new Date().getMonth() / 3);
-        //                        if (currentQuarter == 0) {
-        //                            currentQuarter = 4;
-        //                        }
-        //                        form.getAttribute("ts_completedquarter").setValue(717750000 + currentQuarter);
-        //                        form.getControl("ts_completedquarter").setVisible(true);
-        //                    }
-        //                    //if (preparationTime == null || woReportingAndDocumentation == null || conductingOversight == null) {
-        //                    //    var alertStrings = {
-        //                    //        text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithoutTimeTrackingFieldsText"),
-        //                    //        title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithoutTimeTrackingFieldsTitle")
-        //                    //    };
-        //                    //    var alertOptions = { height: 160, width: 340 };
-        //                    //    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () {
-        //                    //        form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
-        //                    //        //All required time tracking fields must be input before the Work order can be closed.
-        //                    //        form.getAttribute("ts_preparationtime").setRequiredLevel("required");
-        //                    //        form.getAttribute("ts_conductingoversight").setRequiredLevel("required");
-        //                    //        form.getAttribute("ts_woreportinganddocumentation").setRequiredLevel("required");
-        //                    //    });
-        //                    //}
-        //                    //else {
-        //                    form.getControl("msdyn_workordertype").setDisabled(true);
-        //                    form.getControl("ts_region").setDisabled(true);
-        //                    form.getControl("ts_operationtype").setDisabled(true);
-        //                    //form.getControl("ts_tradenameid").setDisabled(true);
-        //                    form.getControl("ts_site").setDisabled(true);
-        //                    form.getControl("msdyn_worklocation").setDisabled(true);
-        //                    form.getControl("header_ownerid").setDisabled(true);
-        //                    form.getControl("ownerid").setDisabled(true);
-        //                    //       }
-        //                }
-        //            }, function (error) {
-        //                showErrorMessageAlert(error);
-        //            });
-        //        }
-        //        else {
-        //            if (newSystemStatus == 690970005 && currentSystemStatus != 690970003 && userHasRole("System Administrator|ROM - Business Admin|ROM - Planner")) {
-        //                var confirmStrings = {
-        //                    text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CancelWorkOrderConfirmationText"),
-        //                    title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CancelWorkOrderConfirmationTitle")
-        //                };
-        //                var confirmOptions = { height: 200, width: 450 };
-        //                Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(
-        //                    function (success) {
-        //                        if (success.confirmed) {
-        //                            //Set state to Inactive
-        //                            form.getAttribute("statecode").setValue(1);
-        //                            //Set Status Reason to Closed
-        //                            form.getAttribute("statuscode").setValue(918640000);
-        //                            currentSystemStatus = newSystemStatus;
-        //                            //Set visible canceled inspection justification field
-        //                            form.getControl("ts_canceledinspectionjustification").setVisible(true);
-        //                            form.getAttribute("ts_canceledinspectionjustification").setRequiredLevel("required");
-        //                        } else {
-        //                            //Undo the system status change
-        //                            form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
-        //                        }
-        //                    });
-        //            }
-        //            else {
-        //                //Keep record Active
-        //                form.getAttribute("statecode").setValue(0);
-        //                form.getAttribute("statuscode").setValue(1);
-        //                form.getControl("ts_canceledinspectionjustification").setVisible(false);
-        //                form.getControl("ts_canceledinspectionjustification").setVisible(false);
-        //                form.getAttribute("ts_canceledinspectionjustification").setRequiredLevel("none");
-        //                currentSystemStatus = newSystemStatus;
-        //            }
-        //            form.getControl("msdyn_workordertype").setDisabled(false);
-        //            form.getControl("ts_region").setDisabled(false);
-        //            form.getControl("ts_operationtype").setDisabled(false);
-        //            //form.getControl("ts_tradenameid").setDisabled(false);
-        //            form.getControl("ts_site").setDisabled(false);
-        //            form.getControl("msdyn_worklocation").setDisabled(false);
-        //            form.getControl("header_ownerid").setDisabled(false);
-        //            form.getControl("ownerid").setDisabled(false);
-        //            //form.getAttribute("ts_preparationtime").setRequiredLevel("none");
-        //            //form.getAttribute("ts_conductingoversight").setRequiredLevel("none");
-        //            //form.getAttribute("ts_woreportinganddocumentation").setRequiredLevel("none");
-        //        }
-        //}
+        function systemStatusOnChange(eContext) {
+            var form = eContext.getFormContext();
+            var newSystemStatus = form.getAttribute("ts_recordstatus").getValue();
+            //var preparationTime = form.getAttribute("ts_preparationtime").getValue();
+            //var conductingOversight = form.getAttribute("ts_conductingoversight").getValue();
+            //var woReportingAndDocumentation = form.getAttribute("ts_woreportinganddocumentation").getValue();
+            //If user try to cancel Complete WO
+            if (currentSystemStatus == 690970003 && newSystemStatus == 690970005) {
+                var alertStrings = {
+                    text: Xrm.Utility.getResourceString("ts_/resx/UnplannedWorkOrder", "CantCancelText"),
+                };
+                var alertOptions = { height: 160, width: 340 };
+                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                form.getAttribute("ts_recordstatus").setValue(currentSystemStatus);
+            }
+            else 
+            //If system status is set to closed
+            if (newSystemStatus == 690970004 /* msdyn_wosystemstatus.ClosedInactive */ || newSystemStatus == 741130000 /* msdyn_wosystemstatus.Closed */) {
+                var woLookup = form.getAttribute("ts_workorder").getValue();
+                if (woLookup != null) {
+                    var woId = woLookup[0].id.replace(/[{}]/g, "");
+                    Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", "?$select=msdyn_workorder&$filter=statecode eq 0 and msdyn_workorder/msdyn_workorderid eq " + woId + " and statuscode ne 918640002 and ts_mandatory eq true").then(function success(result) {
+                        if (result.entities.length > 0) {
+                            var alertStrings = {
+                                text: Xrm.Utility.getResourceString("ts_/resx/UnplannedWorkOrder", "CloseWOWithUnCompletedSTText"),
+                                title: Xrm.Utility.getResourceString("ts_/resx/UnplannedWorkOrder", "CloseWOWithUnCompletedSTTitle")
+                            };
+                            var alertOptions = { height: 160, width: 340 };
+                            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () { });
+                            form.getAttribute("ts_recordstatus").setValue(currentSystemStatus);
+                        }
+                        else {
+                            if (newSystemStatus == 690970004 /* msdyn_wosystemstatus.ClosedInactive */) {
+                                var confirmStrings = {
+                                    text: Xrm.Utility.getResourceString("ts_/resx/UnplannedWorkOrder", "CloseWorkOrderConfirmationText"),
+                                    title: Xrm.Utility.getResourceString("ts_/resx/UnplannedWorkOrder", "CloseWorkOrderConfirmationTitle")
+                                };
+                                var confirmOptions = { height: 200, width: 450 };
+                                Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(function (success) {
+                                    if (success.confirmed) {
+                                        //Set state to Inactive
+                                        form.getAttribute("statecode").setValue(1);
+                                        //Set Status Reason to Closed
+                                        form.getAttribute("statuscode").setValue(741130001);
+                                        currentSystemStatus = newSystemStatus;
+                                        //At Transport Canada, Fiscal Years run from Apr 1st to Mar 31, Q1 = Apr-Jun, Q2 = Jul-Sept, Q3 = Oct-Dec, Q4 = Jan-Mar
+                                        var currentQuarter = Math.floor(new Date().getMonth() / 3);
+                                        if (currentQuarter == 0) {
+                                            currentQuarter = 4;
+                                        }
+                                        // ts_completedquarter field is not in Unplanned Work Order form.
+                                        //form.getAttribute("ts_completedquarter").setValue(717750000 + currentQuarter);
+                                        //form.getControl("ts_completedquarter").setVisible(true);
+                                    }
+                                    else {
+                                        //Undo the system status change
+                                        form.getAttribute("ts_recordstatus").setValue(currentSystemStatus);
+                                    }
+                                });
+                            }
+                            else {
+                                //At Transport Canada, Fiscal Years run from Apr 1st to Mar 31, Q1 = Apr-Jun, Q2 = Jul-Sept, Q3 = Oct-Dec, Q4 = Jan-Mar
+                                var currentQuarter = Math.floor(new Date().getMonth() / 3);
+                                if (currentQuarter == 0) {
+                                    currentQuarter = 4;
+                                }
+                                // ts_completedquarter field is not in Unplanned Work Order form.
+                                //form.getAttribute("ts_completedquarter").setValue(717750000 + currentQuarter);
+                                //form.getControl("ts_completedquarter").setVisible(true);
+                            }
+                            //if (preparationTime == null || woReportingAndDocumentation == null || conductingOversight == null) {
+                            //    var alertStrings = {
+                            //        text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithoutTimeTrackingFieldsText"),
+                            //        title: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithoutTimeTrackingFieldsTitle")
+                            //    };
+                            //    var alertOptions = { height: 160, width: 340 };
+                            //    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(function () {
+                            //        form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
+                            //        //All required time tracking fields must be input before the Work order can be closed.
+                            //        form.getAttribute("ts_preparationtime").setRequiredLevel("required");
+                            //        form.getAttribute("ts_conductingoversight").setRequiredLevel("required");
+                            //        form.getAttribute("ts_woreportinganddocumentation").setRequiredLevel("required");
+                            //    });
+                            //}
+                            //else {
+                            form.getControl("ts_workordertype").setDisabled(true);
+                            form.getControl("ts_region").setDisabled(true);
+                            form.getControl("ts_operationtype").setDisabled(true);
+                            //form.getControl("ts_tradenameid").setDisabled(true);
+                            form.getControl("ts_site").setDisabled(true);
+                            form.getControl("ts_worklocation").setDisabled(true);
+                            form.getControl("header_ownerid").setDisabled(true);
+                            //       }
+                        }
+                    }, function (error) {
+                        showErrorMessageAlert(error);
+                    });
+                }
+            }
+            else {
+                if (newSystemStatus == 690970005 && currentSystemStatus != 690970003 && userHasRole("System Administrator|ROM - Business Admin|ROM - Planner")) {
+                    var confirmStrings = {
+                        text: Xrm.Utility.getResourceString("ts_/resx/UnplannedWorkOrder", "CancelWorkOrderConfirmationText"),
+                        title: Xrm.Utility.getResourceString("ts_/resx/UnplannedWorkOrder", "CancelWorkOrderConfirmationTitle")
+                    };
+                    var confirmOptions = { height: 200, width: 450 };
+                    Xrm.Navigation.openConfirmDialog(confirmStrings, confirmOptions).then(function (success) {
+                        if (success.confirmed) {
+                            //Set state to Inactive
+                            form.getAttribute("statecode").setValue(1);
+                            //Set Status Reason to Closed
+                            form.getAttribute("statuscode").setValue(741130001);
+                            currentSystemStatus = newSystemStatus;
+                            //Set visible canceled inspection justification field
+                            form.getControl("ts_cancelledinspectionjustification").setVisible(true);
+                            form.getAttribute("ts_cancelledinspectionjustification").setRequiredLevel("required");
+                        }
+                        else {
+                            //Undo the system status change
+                            form.getAttribute("ts_recordstatus").setValue(currentSystemStatus);
+                        }
+                    });
+                }
+                else {
+                    //Keep record Active
+                    form.getAttribute("statecode").setValue(0);
+                    form.getAttribute("statuscode").setValue(1);
+                    form.getControl("ts_cancelledinspectionjustification").setVisible(false);
+                    form.getAttribute("ts_cancelledinspectionjustification").setRequiredLevel("none");
+                    currentSystemStatus = newSystemStatus;
+                }
+                form.getControl("ts_workordertype").setDisabled(false);
+                form.getControl("ts_region").setDisabled(false);
+                form.getControl("ts_operationtype").setDisabled(false);
+                //form.getControl("ts_tradenameid").setDisabled(false);
+                form.getControl("ts_site").setDisabled(false);
+                form.getControl("ts_worklocation").setDisabled(false);
+                form.getControl("header_ownerid").setDisabled(false);
+                //form.getAttribute("ts_preparationtime").setRequiredLevel("none");
+                //form.getAttribute("ts_conductingoversight").setRequiredLevel("none");
+                //form.getAttribute("ts_woreportinganddocumentation").setRequiredLevel("none");
+            }
+        }
+        UnplannedWorkOrder.systemStatusOnChange = systemStatusOnChange;
         function caseOnChange(eContext) {
             var form = eContext.getFormContext();
             var caseAttribute = form.getAttribute("ts_stakeholder");

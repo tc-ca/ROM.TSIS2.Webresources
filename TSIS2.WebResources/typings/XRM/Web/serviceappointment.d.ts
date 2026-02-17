@@ -167,6 +167,7 @@ interface ServiceAppointment extends ServiceAppointment_Base, ServiceAppointment
   regardingobjectid_msdyn_workorderresourcerestriction_serviceappointment_bind$msdyn_workorderresourcerestrictions?: string | null;
   regardingobjectid_msdyn_workorderservice_serviceappointment_bind$msdyn_workorderservices?: string | null;
   regardingobjectid_msdyn_workorderservicetask_serviceappointment_bind$msdyn_workorderservicetasks?: string | null;
+  regardingobjectid_mspp_redirect_serviceappointment_bind$mspp_redirects?: string | null;
   regardingobjectid_new_interactionforemail_serviceappointment_bind$interactionforemails?: string | null;
   regardingobjectid_opportunity_serviceappointment_bind$opportunities?: string | null;
   regardingobjectid_ovs_operation_serviceappointment_bind$ovs_operations?: string | null;

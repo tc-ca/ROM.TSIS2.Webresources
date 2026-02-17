@@ -17,6 +17,7 @@ interface ts_File_Base extends WebEntity {
   ts_isfindingsreport?: boolean | null;
   ts_programaccessteamnameid?: string | null;
   ts_sensitivitylevel?: ts_sensitivitylevel | null;
+  ts_sharepointfilecategory?: string | null;
   ts_sharepointfileidentifier?: string | null;
   ts_sharepointlineofbusiness?: string | null;
   ts_sharepointlink?: string | null;
@@ -106,6 +107,7 @@ interface ts_File_Select {
   ts_programaccessteamnameid: WebAttribute<ts_File_Select, { ts_programaccessteamnameid: string | null }, {  }>;
   ts_securityincident_guid: WebAttribute<ts_File_Select, { ts_securityincident_guid: string | null }, { ts_securityincident_formatted?: string }>;
   ts_sensitivitylevel: WebAttribute<ts_File_Select, { ts_sensitivitylevel: ts_sensitivitylevel | null }, { ts_sensitivitylevel_formatted?: string }>;
+  ts_sharepointfilecategory: WebAttribute<ts_File_Select, { ts_sharepointfilecategory: string | null }, {  }>;
   ts_sharepointfileidentifier: WebAttribute<ts_File_Select, { ts_sharepointfileidentifier: string | null }, {  }>;
   ts_sharepointlineofbusiness: WebAttribute<ts_File_Select, { ts_sharepointlineofbusiness: string | null }, {  }>;
   ts_sharepointlink: WebAttribute<ts_File_Select, { ts_sharepointlink: string | null }, {  }>;
@@ -155,6 +157,7 @@ interface ts_File_Filter {
   ts_programaccessteamnameid: string;
   ts_securityincident_guid: XQW.Guid;
   ts_sensitivitylevel: ts_sensitivitylevel;
+  ts_sharepointfilecategory: string;
   ts_sharepointfileidentifier: string;
   ts_sharepointlineofbusiness: string;
   ts_sharepointlink: string;

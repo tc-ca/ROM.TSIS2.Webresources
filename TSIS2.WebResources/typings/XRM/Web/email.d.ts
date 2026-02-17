@@ -46,6 +46,7 @@ interface Email_Base extends WebEntity {
   messageiddupcheck?: string | null;
   mimetype?: string | null;
   modifiedon?: Date | null;
+  msdyn_associatedagentname?: string | null;
   msdyn_autofill_type?: msdyn_email_msdyn_autofill_type | null;
   msdyn_copilotengaged?: boolean | null;
   msdyn_emailengagementinteractions?: string | null;
@@ -304,6 +305,7 @@ interface Email_Select {
   modifiedby_guid: WebAttribute<Email_Select, { modifiedby_guid: string | null }, { modifiedby_formatted?: string }>;
   modifiedon: WebAttribute<Email_Select, { modifiedon: Date | null }, { modifiedon_formatted?: string }>;
   modifiedonbehalfby_guid: WebAttribute<Email_Select, { modifiedonbehalfby_guid: string | null }, { modifiedonbehalfby_formatted?: string }>;
+  msdyn_associatedagentname: WebAttribute<Email_Select, { msdyn_associatedagentname: string | null }, {  }>;
   msdyn_autofill_type: WebAttribute<Email_Select, { msdyn_autofill_type: msdyn_email_msdyn_autofill_type | null }, { msdyn_autofill_type_formatted?: string }>;
   msdyn_copilotengaged: WebAttribute<Email_Select, { msdyn_copilotengaged: boolean | null }, {  }>;
   msdyn_emailclassificationcategory_guid: WebAttribute<Email_Select, { msdyn_emailclassificationcategory_guid: string | null }, { msdyn_emailclassificationcategory_formatted?: string }>;
@@ -420,6 +422,7 @@ interface Email_Filter {
   modifiedby_guid: XQW.Guid;
   modifiedon: Date;
   modifiedonbehalfby_guid: XQW.Guid;
+  msdyn_associatedagentname: string;
   msdyn_autofill_type: msdyn_email_msdyn_autofill_type;
   msdyn_copilotengaged: boolean;
   msdyn_emailclassificationcategory_guid: XQW.Guid;

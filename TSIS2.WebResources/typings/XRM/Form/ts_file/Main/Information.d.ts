@@ -12,6 +12,7 @@ declare namespace Form.ts_file.Main {
       get(name: "ts_filecategory"): Xrm.LookupAttribute<"ts_filecategory">;
       get(name: "ts_filesubcategory"): Xrm.LookupAttribute<"ts_filesubcategory">;
       get(name: "ts_filetype"): Xrm.Attribute<string>;
+      get(name: "ts_sharepointfilecategory"): Xrm.Attribute<string>;
       get(name: "ts_sharepointlink"): Xrm.Attribute<string>;
       get(name: "ts_visibletootherprograms"): Xrm.OptionSetAttribute<boolean>;
       get(name: string): undefined;
@@ -30,6 +31,7 @@ declare namespace Form.ts_file.Main {
       get(name: "ts_filecategory"): Xrm.LookupControl<"ts_filecategory">;
       get(name: "ts_filesubcategory"): Xrm.LookupControl<"ts_filesubcategory">;
       get(name: "ts_filetype"): Xrm.StringControl;
+      get(name: "ts_sharepointfilecategory"): Xrm.StringControl;
       get(name: "ts_sharepointlink"): Xrm.StringControl;
       get(name: "ts_visibletootherprograms"): Xrm.OptionSetControl<boolean>;
       get(name: string): undefined;
@@ -54,6 +56,7 @@ declare namespace Form.ts_file.Main {
     getAttribute(attributeName: "ts_filecategory"): Xrm.LookupAttribute<"ts_filecategory">;
     getAttribute(attributeName: "ts_filesubcategory"): Xrm.LookupAttribute<"ts_filesubcategory">;
     getAttribute(attributeName: "ts_filetype"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_sharepointfilecategory"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_sharepointlink"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_visibletootherprograms"): Xrm.OptionSetAttribute<boolean>;
     getAttribute(attributeName: string): undefined;
@@ -67,6 +70,7 @@ declare namespace Form.ts_file.Main {
     getControl(controlName: "ts_filecategory"): Xrm.LookupControl<"ts_filecategory">;
     getControl(controlName: "ts_filesubcategory"): Xrm.LookupControl<"ts_filesubcategory">;
     getControl(controlName: "ts_filetype"): Xrm.StringControl;
+    getControl(controlName: "ts_sharepointfilecategory"): Xrm.StringControl;
     getControl(controlName: "ts_sharepointlink"): Xrm.StringControl;
     getControl(controlName: "ts_visibletootherprograms"): Xrm.OptionSetControl<boolean>;
     getControl(controlName: string): undefined;
