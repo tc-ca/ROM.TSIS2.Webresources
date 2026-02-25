@@ -132,6 +132,9 @@
   <data name="CloseWorkOrderConfirmationTitle" xml:space="preserve">
     <value>Confirmation - Fermer l'ordre de travail</value>
   </data>
+  <data name="CloseWOWithNonCompliance" xml:space="preserve">
+    <value>Cet ordre de travail ne peut pas être fermé, car une ou plusieurs constatations de non-conformité ne sont associées à aucune action. Veuillez créer au moins une action avant de procéder à la fermeture.</value>
+  </data>
   <data name="CloseWOWithoutTimeTrackingFieldsText" xml:space="preserve">
     <value>Tous les champs obligatoires de suivi du temps doivent être renseignés avant que l'ordre de travail ne puisse être fermé.</value>
   </data>

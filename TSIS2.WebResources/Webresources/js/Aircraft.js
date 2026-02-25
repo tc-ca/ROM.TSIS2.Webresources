@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -58,32 +58,32 @@ var ROM;
             for (var i = 0; i < options.length; i++)
                 form.getControl("ts_model").removeOption(options[i].value);
             //form.getControl("ts_model").setVisible(true);
-            if (aircraftmanufacturer == 741130000 /* Boeing */) {
+            if (aircraftmanufacturer == 741130000 /* ts_aircraftmanufacturer.Boeing */) {
                 for (var i = 1; i <= 11; i++) {
                     form.getControl("ts_model").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130001 /* Airbus */) {
+            else if (aircraftmanufacturer == 741130001 /* ts_aircraftmanufacturer.Airbus */) {
                 for (var i = 12; i <= 22; i++) {
                     form.getControl("ts_model").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130002 /* DeHavilland */) {
+            else if (aircraftmanufacturer == 741130002 /* ts_aircraftmanufacturer.DeHavilland */) {
                 for (var i = 23; i <= 24; i++) {
                     form.getControl("ts_model").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130003 /* Bombardier */) {
+            else if (aircraftmanufacturer == 741130003 /* ts_aircraftmanufacturer.Bombardier */) {
                 for (var i = 25; i <= 25; i++) {
                     form.getControl("ts_model").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130004 /* Embraer */) {
+            else if (aircraftmanufacturer == 741130004 /* ts_aircraftmanufacturer.Embraer */) {
                 for (var i = 26; i <= 29; i++) {
                     form.getControl("ts_model").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130005 /* Other */) {
+            else if (aircraftmanufacturer == 741130005 /* ts_aircraftmanufacturer.Other */) {
                 //form.getControl("ts_modelother").setVisible(true);
                 //form.getControl("ts_model").setVisible(false);
             }

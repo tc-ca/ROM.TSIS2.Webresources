@@ -998,7 +998,7 @@ namespace ROM.UnplannedWorkOrder {
 
         if (control) {
             control.addPreSearch(() => {
-                    control.addCustomFilter(fetchXml, "ts_canceledinspectionjustification");
+                control.addCustomFilter(fetchXml, "ts_canceledinspectionjustification");
             });
         } else {
             console.warn("Control 'ts_cancelledinspectionjustification' not found on the form.");
@@ -1382,7 +1382,76 @@ namespace ROM.UnplannedWorkOrder {
         //var preparationTime = form.getAttribute("ts_preparationtime").getValue();
         //var conductingOversight = form.getAttribute("ts_conductingoversight").getValue();
         //var woReportingAndDocumentation = form.getAttribute("ts_woreportinganddocumentation").getValue();
+
+        //If AvSec
+        let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+        let currentUserBusinessUnitFetchXML = [
+            "<fetch top='50'>",
+            "  <entity name='businessunit'>",
+            "    <attribute name='name' />",
+            "    <attribute name='businessunitid' />",
+            "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>",
+            "      <filter>",
+            "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
+            "      </filter>",
+            "    </link-entity>",
+            "  </entity>",
+            "</fetch>",
+        ].join("");
+        currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(async function (businessunit) {
+            if (!businessunit || !businessunit.entities || businessunit.entities.length === 0) {
+                return;
+            }
+
+            const userBU = businessunit.entities[0];
+            const userBusinessUnitId = userBU.businessunitid;
+            var woLookup = form.getAttribute("ts_workorder").getValue();
+            const isAvSec = await isAvSecBU(userBusinessUnitId);
+
+            if (isAvSec) {
+                if (woLookup != null) {
+                    var woId = woLookup[0].id.replace(/[{}]/g, "");
+                    // Fetch Non Compliance Findings without related Action
+                    const fetchFindings = `                       
+                        <fetch>
+                          <entity name="ovs_finding">
+                            <attribute name="ovs_findingid" />
+                            <attribute name="ts_findingtype" />
+                            <filter>
+                              <condition attribute="ts_workorder" operator="eq" value="${woId}" />
+                              <condition attribute="ts_findingtype" operator="eq" value="717750002" /> 
+                            </filter>
+                            <link-entity name="ts_action" from="ts_finding" to="ovs_findingid" link-type="outer" alias="action">
+                              <attribute name="ts_actionid" />
+                            </link-entity>                            
+                            <filter type="and">
+                                <condition entityname="action" attribute="ts_actionid" operator="null" />
+                            </filter>
+                          </entity>
+                        </fetch>
+                    `;
+
+                    Xrm.WebApi.retrieveMultipleRecords("ovs_finding", "?fetchXml=" + encodeURIComponent(fetchFindings)).then((findingsResult) => {
+                        const findings = findingsResult.entities;
+
+                        if (findings && findings.length > 0) {
+                            // There are findings
+                            form.getAttribute("ts_recordstatus").setValue(currentSystemStatus);
+                            const alertStrings = {
+                                text: Xrm.Utility.getResourceString("ts_/resx/UnplannedWorkOrder", "CloseWOWithNonCompliance")
+                            };
+                            const alertOptions = { height: 160, width: 340 };
+                            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+                            return;
+                        }
+
+                    });
+                }
+            }
+        });
         //If user try to cancel Complete WO
+
         if (currentSystemStatus == 690970003 && newSystemStatus == 690970005) {
             var alertStrings = {
                 text: Xrm.Utility.getResourceString("ts_/resx/UnplannedWorkOrder", "CantCancelText"),
@@ -2458,16 +2527,16 @@ namespace ROM.UnplannedWorkOrder {
                 console.warn('[isCurrentUserAvSecDomestic] User ID not available');
                 return false;
             }
-            
+
             // Get user's business unit ID
             const user = await Xrm.WebApi.retrieveRecord("systemuser", userId, "?$select=_businessunitid_value");
             const userBuId = user._businessunitid_value;
-            
+
             if (!userBuId) {
                 console.warn('[isCurrentUserAvSecDomestic] User business unit not found');
                 return false;
             }
-            
+
             // Check if user's BU is AvSec Domestic 
             const result = await isBusinessUnit(userBuId, [BU_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC]);
             return result;
@@ -2740,7 +2809,7 @@ namespace ROM.UnplannedWorkOrder {
 
             // Check if user belongs to Domestic AvSec business unit
             const isDomesticAvSec = await isCurrentUserAvSecDomestic();
-            
+
             console.log("[UnplannedWorkOrder.showWorkOrderRationaleByBusinessUnit] Is Domestic AvSec:", isDomesticAvSec);
 
             if (isDomesticAvSec) {
