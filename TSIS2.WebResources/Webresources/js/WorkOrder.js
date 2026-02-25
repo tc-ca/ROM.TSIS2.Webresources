@@ -1237,6 +1237,58 @@ var ROM;
             //var preparationTime = form.getAttribute("ts_preparationtime").getValue();
             //var conductingOversight = form.getAttribute("ts_conductingoversight").getValue();
             //var woReportingAndDocumentation = form.getAttribute("ts_woreportinganddocumentation").getValue();
+            //If AvSec
+            var userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+            var currentUserBusinessUnitFetchXML = [
+                "<fetch top='50'>",
+                "  <entity name='businessunit'>",
+                "    <attribute name='name' />",
+                "    <attribute name='businessunitid' />",
+                "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>",
+                "      <filter>",
+                "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
+                "      </filter>",
+                "    </link-entity>",
+                "  </entity>",
+                "</fetch>",
+            ].join("");
+            currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+            Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(function (businessunit) {
+                return __awaiter(this, void 0, void 0, function () {
+                    var userBU, userBusinessUnitId, workOrderId, isAvSec, fetchFindings;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                if (!businessunit || !businessunit.entities || businessunit.entities.length === 0) {
+                                    return [2 /*return*/];
+                                }
+                                userBU = businessunit.entities[0];
+                                userBusinessUnitId = userBU.businessunitid;
+                                workOrderId = form.data.entity.getId();
+                                return [4 /*yield*/, isAvSecBU(userBusinessUnitId)];
+                            case 1:
+                                isAvSec = _a.sent();
+                                if (isAvSec) {
+                                    fetchFindings = "                       \n                        <fetch>\n                          <entity name=\"ovs_finding\">\n                            <attribute name=\"ovs_findingid\" />\n                            <attribute name=\"ts_findingtype\" />\n                            <filter>\n                              <condition attribute=\"ts_workorder\" operator=\"eq\" value=\"".concat(workOrderId, "\" />\n                              <condition attribute=\"ts_findingtype\" operator=\"eq\" value=\"717750002\" /> \n                            </filter>\n                            <link-entity name=\"ts_action\" from=\"ts_finding\" to=\"ovs_findingid\" link-type=\"outer\" alias=\"action\">\n                              <attribute name=\"ts_actionid\" />\n                            </link-entity>                            \n                            <filter type=\"and\">\n                                <condition entityname=\"action\" attribute=\"ts_actionid\" operator=\"null\" />\n                            </filter>\n                          </entity>\n                        </fetch>\n                    ");
+                                    Xrm.WebApi.retrieveMultipleRecords("ovs_finding", "?fetchXml=" + encodeURIComponent(fetchFindings)).then(function (findingsResult) {
+                                        var findings = findingsResult.entities;
+                                        if (findings && findings.length > 0) {
+                                            // There are findings
+                                            form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
+                                            var alertStrings_1 = {
+                                                text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithNonCompliance")
+                                            };
+                                            var alertOptions_1 = { height: 200, width: 450 };
+                                            Xrm.Navigation.openAlertDialog(alertStrings_1, alertOptions_1);
+                                            return;
+                                        }
+                                    });
+                                }
+                                return [2 /*return*/];
+                        }
+                    });
+                });
+            });
             //If user try to cancel Complete WO
             if (currentSystemStatus == 690970003 && newSystemStatus == 690970005) {
                 var alertStrings = {

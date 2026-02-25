@@ -132,6 +132,9 @@
   <data name="CloseWorkOrderConfirmationTitle" xml:space="preserve">
     <value>Confirmation - Close Work Order</value>
   </data>
+  <data name="CloseWOWithNonCompliance" xml:space="preserve">
+    <value>This Work Order cannot be closed because one or more Non-Compliant findings do not have an associated Action. Please create at least one Action before closing.</value>
+  </data>
   <data name="CloseWOWithoutTimeTrackingFieldsText" xml:space="preserve">
     <value>All required time tracking fields must be input before the Work order can be closed.</value>
   </data>

@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -87,16 +87,16 @@ var ROM;
             if (activityDate != null) {
                 var month = activityDate.getMonth();
                 if (month < 3) { //Q4
-                    form.getAttribute('ts_quarter').setValue(741130003 /* Q4 */);
+                    form.getAttribute('ts_quarter').setValue(741130003 /* ts_quarter.Q4 */);
                 }
                 else if (month >= 3 && month < 6) { //Q1
-                    form.getAttribute('ts_quarter').setValue(741130000 /* Q1 */);
+                    form.getAttribute('ts_quarter').setValue(741130000 /* ts_quarter.Q1 */);
                 }
                 else if (month >= 6 && month < 9) { //Q2
-                    form.getAttribute('ts_quarter').setValue(741130001 /* Q2 */);
+                    form.getAttribute('ts_quarter').setValue(741130001 /* ts_quarter.Q2 */);
                 }
                 else if (month >= 9 && month < 12) { //Q3
-                    form.getAttribute('ts_quarter').setValue(741130002 /* Q3 */);
+                    form.getAttribute('ts_quarter').setValue(741130002 /* ts_quarter.Q3 */);
                 }
                 var fetchXML = "\n            <fetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"false\">\n              <entity name=\"tc_tcfiscalyear\">\n                <attribute name=\"tc_tcfiscalyearid\" />\n                <attribute name=\"tc_name\" />\n                <attribute name=\"tc_tcfiscalyearid\" />\n                <order attribute=\"tc_name\" descending=\"false\" />\n                <filter type=\"and\">\n                  <condition attribute=\"tc_fiscalstart\" operator=\"on-or-before\" value=\"" + activityDate.toISOString().split('T')[0] + "\" />\n                  <condition attribute=\"tc_fiscalend\" operator=\"on-or-after\" value=\"" + activityDate.toISOString().split('T')[0] + "\" />\n                </filter>\n              </entity>\n            </fetch>\n            ";
                 fetchXML = "?fetchXml=" + encodeURIComponent(fetchXML);

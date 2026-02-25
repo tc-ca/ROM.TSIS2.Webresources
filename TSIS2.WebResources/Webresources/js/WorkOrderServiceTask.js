@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -447,17 +447,17 @@ var ROM;
                 var lookupLogicalName = workOrder["_ownerid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
                 var entitySetName = getEntitySetNameFromLogicalName(lookupLogicalName);
                 if (entitySetName) {
-                    return "/" + entitySetName + "(" + cleanOwnerId + ")";
+                    return "/".concat(entitySetName, "(").concat(cleanOwnerId, ")");
                 }
                 return resolveOwnerBindingByEntityType(cleanOwnerId);
             });
         }
         function resolveOwnerBindingByEntityType(ownerId) {
             return Xrm.WebApi.retrieveRecord("systemuser", ownerId, "?$select=systemuserid").then(function () {
-                return "/systemusers(" + ownerId + ")";
+                return "/systemusers(".concat(ownerId, ")");
             }).catch(function () {
                 return Xrm.WebApi.retrieveRecord("team", ownerId, "?$select=teamid").then(function () {
-                    return "/teams(" + ownerId + ")";
+                    return "/teams(".concat(ownerId, ")");
                 }).catch(function () { return null; });
             });
         }
@@ -471,7 +471,7 @@ var ROM;
                 case "team":
                     return "teams";
                 default:
-                    return logicalName.toLowerCase() + "s";
+                    return "".concat(logicalName.toLowerCase(), "s");
             }
         }
         function applyMandatoryFieldFromTaskType(eContext) {
@@ -641,7 +641,7 @@ var ROM;
             // Get formContext
             var Form = eContext.getFormContext();
             var percentComplete = Form.getAttribute("msdyn_percentcomplete").getValue();
-            if (percentComplete != 100.00 && Form.getAttribute("statecode").getValue() == 0 /* Active */) {
+            if (percentComplete != 100.00 && Form.getAttribute("statecode").getValue() == 0 /* msdyn_workorderservicetask_statecode.Active */) {
                 //Set percentComplete to 50.00
                 Form.getAttribute("msdyn_percentcomplete").setValue(50.00);
                 //Set Status Reason to In-Progress
@@ -667,7 +667,7 @@ var ROM;
                 var viewId = '{ae0d8547-6871-4854-91ba-03b0c619dbe1}';
                 var entityName = "msdyn_servicetasktype";
                 var viewDisplayName = (lang == 1036) ? "Type de tâche relative au service" : "Service Task Types";
-                var fetchXml = "<fetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"true\"> <entity name=\"msdyn_servicetasktype\"> <attribute name=\"msdyn_name\" /> <attribute name=\"createdon\" /> <attribute name=\"msdyn_estimatedduration\" /> <attribute name=\"msdyn_description\" /> <attribute name=\"msdyn_servicetasktypeid\" /> <order attribute=\"msdyn_name\" descending=\"false\" /> <link-entity name=\"msdyn_incidenttypeservicetask\" from=\"msdyn_tasktype\" to=\"msdyn_servicetasktypeid\" link-type=\"inner\" alias=\"ae\"> <link-entity name=\"msdyn_incidenttype\" from=\"msdyn_incidenttypeid\" to=\"msdyn_incidenttype\" link-type=\"inner\" alias=\"af\"> <filter type=\"and\"> <condition attribute=\"msdyn_defaultworkordertype\" operator=\"eq\" value=\"" + result._msdyn_workordertype_value + "\" /> </filter> <link-entity name=\"ts_ovs_operationtypes_msdyn_incidenttypes\" from=\"msdyn_incidenttypeid\" to=\"msdyn_incidenttypeid\" visible=\"false\" intersect=\"true\"> <link-entity name=\"ovs_operationtype\" from=\"ovs_operationtypeid\" to=\"ovs_operationtypeid\" alias=\"ag\"> <filter type=\"and\"> <condition attribute=\"ovs_operationtypeid\" operator=\"eq\" value=\"" + result._ovs_operationtypeid_value + "\" /> </filter> </link-entity> </link-entity> </link-entity> </link-entity> </entity> </fetch>";
+                var fetchXml = "<fetch version=\"1.0\" output-format=\"xml-platform\" mapping=\"logical\" distinct=\"true\"> <entity name=\"msdyn_servicetasktype\"> <attribute name=\"msdyn_name\" /> <attribute name=\"createdon\" /> <attribute name=\"msdyn_estimatedduration\" /> <attribute name=\"msdyn_description\" /> <attribute name=\"msdyn_servicetasktypeid\" /> <order attribute=\"msdyn_name\" descending=\"false\" /> <link-entity name=\"msdyn_incidenttypeservicetask\" from=\"msdyn_tasktype\" to=\"msdyn_servicetasktypeid\" link-type=\"inner\" alias=\"ae\"> <link-entity name=\"msdyn_incidenttype\" from=\"msdyn_incidenttypeid\" to=\"msdyn_incidenttype\" link-type=\"inner\" alias=\"af\"> <filter type=\"and\"> <condition attribute=\"msdyn_defaultworkordertype\" operator=\"eq\" value=\"".concat(result._msdyn_workordertype_value, "\" /> </filter> <link-entity name=\"ts_ovs_operationtypes_msdyn_incidenttypes\" from=\"msdyn_incidenttypeid\" to=\"msdyn_incidenttypeid\" visible=\"false\" intersect=\"true\"> <link-entity name=\"ovs_operationtype\" from=\"ovs_operationtypeid\" to=\"ovs_operationtypeid\" alias=\"ag\"> <filter type=\"and\"> <condition attribute=\"ovs_operationtypeid\" operator=\"eq\" value=\"").concat(result._ovs_operationtypeid_value, "\" /> </filter> </link-entity> </link-entity> </link-entity> </link-entity> </entity> </fetch>");
                 var layoutXml = '<grid name="resultset" object="10010" jump="name" select="1" icon="1" preview="1"><row name="result" id="msdyn_servicetasktype"><cell name="msdyn_name" width="200" /></row></grid>';
                 form.getControl("msdyn_tasktype").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
                 var ownerId = getOwnerIdFromRecord(result.ovs_operationtypeid);
@@ -724,16 +724,16 @@ var ROM;
                         distinationCountry = result2._ts_country_value;
                         if (distinationCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7" && originCountry == "208ef8a1-8e75-eb11-a812-000d3af3fac7") { // Canada
                             // Domestic
-                            form.getAttribute("ts_flightcategory").setValue(741130000 /* Domestic */);
+                            form.getAttribute("ts_flightcategory").setValue(741130000 /* ts_flightcategory.Domestic */);
                         }
                         else if ((distinationCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && distinationCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")
                             || (originCountry != "7c01709f-8e75-eb11-a812-000d3af3f6ab" && originCountry != "208ef8a1-8e75-eb11-a812-000d3af3fac7")) { //Not in USA or Canada
                             //International
-                            form.getAttribute("ts_flightcategory").setValue(741130001 /* International */);
+                            form.getAttribute("ts_flightcategory").setValue(741130001 /* ts_flightcategory.International */);
                         }
                         else {
                             //Transborder
-                            form.getAttribute("ts_flightcategory").setValue(741130002 /* Transborder */);
+                            form.getAttribute("ts_flightcategory").setValue(741130002 /* ts_flightcategory.Transborder */);
                         }
                     }, function error(error) {
                         Xrm.Navigation.openAlertDialog({ text: error.message });
@@ -887,32 +887,32 @@ var ROM;
                 form.getControl("ts_aircraftmodel").removeOption(options[i].value);
             form.getControl("ts_aircraftmodelother").setVisible(false);
             form.getControl("ts_aircraftmodel").setVisible(true);
-            if (aircraftmanufacturer == 741130000 /* Boeing */) {
+            if (aircraftmanufacturer == 741130000 /* ts_aircraftmanufacturer.Boeing */) {
                 for (var i = 1; i <= 11; i++) {
                     form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130001 /* Airbus */) {
+            else if (aircraftmanufacturer == 741130001 /* ts_aircraftmanufacturer.Airbus */) {
                 for (var i = 12; i <= 22; i++) {
                     form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130002 /* DeHavilland */) {
+            else if (aircraftmanufacturer == 741130002 /* ts_aircraftmanufacturer.DeHavilland */) {
                 for (var i = 23; i <= 24; i++) {
                     form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130003 /* Bombardier */) {
+            else if (aircraftmanufacturer == 741130003 /* ts_aircraftmanufacturer.Bombardier */) {
                 for (var i = 25; i <= 25; i++) {
                     form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130004 /* Embraer */) {
+            else if (aircraftmanufacturer == 741130004 /* ts_aircraftmanufacturer.Embraer */) {
                 for (var i = 26; i <= 29; i++) {
                     form.getControl("ts_aircraftmodel").addOption(aircraftModelOptions[i]);
                 }
             }
-            else if (aircraftmanufacturer == 741130005 /* Other */) {
+            else if (aircraftmanufacturer == 741130005 /* ts_aircraftmanufacturer.Other */) {
                 form.getControl("ts_aircraftmodelother").setVisible(true);
                 form.getControl("ts_aircraftmodel").setVisible(false);
             }
@@ -975,7 +975,7 @@ var ROM;
                             return [4 /*yield*/, Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderId, "?$select=ts_state")];
                         case 1:
                             workOrder = _a.sent();
-                            return [2 /*return*/, workOrder.ts_state == 717750000 /* Draft */];
+                            return [2 /*return*/, workOrder.ts_state == 717750000 /* ts_planningstate.Draft */];
                     }
                 });
             });

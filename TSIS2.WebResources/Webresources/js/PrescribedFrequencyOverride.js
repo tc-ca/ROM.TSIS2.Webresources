@@ -28,7 +28,7 @@ var ROM;
                 console.warn("Fiscal Year is not set.");
             }
             // Fetch existing records to check for duplicates
-            var fetchXml = "\n        <fetch>\n            <entity name=\"ts_prescribedfrequencyoverride\">\n                <attribute name=\"ts_activitytype\" />\n                <filter>\n                    <condition attribute=\"ts_activitytype\" operator=\"eq\" value=\"" + activityTypeId + "\" />\n                    <condition attribute=\"ts_fiscalyear\" operator=\"eq\" value=\"" + fiscalYearID + "\" />\n                </filter>\n            </entity>\n        </fetch>";
+            var fetchXml = "\n        <fetch>\n            <entity name=\"ts_prescribedfrequencyoverride\">\n                <attribute name=\"ts_activitytype\" />\n                <filter>\n                    <condition attribute=\"ts_activitytype\" operator=\"eq\" value=\"".concat(activityTypeId, "\" />\n                    <condition attribute=\"ts_fiscalyear\" operator=\"eq\" value=\"").concat(fiscalYearID, "\" />\n                </filter>\n            </entity>\n        </fetch>");
             var encodedFetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
             var fiscalYearField = formContext.getControl("ts_fiscalyear");
             // Get the user's language ID
@@ -70,20 +70,19 @@ var ROM;
             };
             // Loop through all possible class codes
             Object.entries(classMappings).forEach(function (_a) {
-                var _b, _c, _d, _e, _f;
                 var codeStr = _a[0], fieldName = _a[1];
                 var code = parseInt(codeStr, 10);
                 var control = formContext.getControl(fieldName);
                 var attribute = formContext.getAttribute(fieldName);
                 if (classSelection.includes(code)) {
-                    (_b = control) === null || _b === void 0 ? void 0 : _b.setVisible(true);
-                    (_c = attribute) === null || _c === void 0 ? void 0 : _c.setRequiredLevel("required");
+                    control === null || control === void 0 ? void 0 : control.setVisible(true);
+                    attribute === null || attribute === void 0 ? void 0 : attribute.setRequiredLevel("required");
                 }
                 else {
                     // Clear the field, hide it, and remove requirement
-                    (_d = attribute) === null || _d === void 0 ? void 0 : _d.setValue(null);
-                    (_e = control) === null || _e === void 0 ? void 0 : _e.setVisible(false);
-                    (_f = attribute) === null || _f === void 0 ? void 0 : _f.setRequiredLevel("none");
+                    attribute === null || attribute === void 0 ? void 0 : attribute.setValue(null);
+                    control === null || control === void 0 ? void 0 : control.setVisible(false);
+                    attribute === null || attribute === void 0 ? void 0 : attribute.setRequiredLevel("none");
                 }
             });
             // Make ts_activitytype field read only
@@ -92,7 +91,7 @@ var ROM;
                 activityTypeField.setDisabled(true);
             }
             // Check if the from is in edit mode
-            if (formContext.ui.getFormType() === 2 /* Update */) {
+            if (formContext.ui.getFormType() === 2 /* Xrm.FormType.Update */) {
                 // If the form is in edit mode, set the ts_fiscalyear field to read only
                 var fiscalYearField = formContext.getControl("ts_fiscalyear");
                 if (fiscalYearField) {
@@ -124,7 +123,7 @@ var ROM;
             if (selectedEntity && selectedEntity.length > 0) {
                 selectedTable = "msdyn_incidenttype";
                 // Fetch the selected activity type record
-                fetchXml = "<fetch>\n                              <entity name=\"msdyn_incidenttype\">\n                                <attribute name=\"ovs_incidenttypenameenglish\" />\n                                <attribute name=\"ovs_incidenttypenamefrench\" />\n                                <filter>\n                                  <condition attribute=\"msdyn_incidenttypeid\" operator=\"eq\" value=\"" + selectedEntity[0].id + "\" />\n                                </filter>\n                              </entity>\n                            </fetch>";
+                fetchXml = "<fetch>\n                              <entity name=\"msdyn_incidenttype\">\n                                <attribute name=\"ovs_incidenttypenameenglish\" />\n                                <attribute name=\"ovs_incidenttypenamefrench\" />\n                                <filter>\n                                  <condition attribute=\"msdyn_incidenttypeid\" operator=\"eq\" value=\"".concat(selectedEntity[0].id, "\" />\n                                </filter>\n                              </entity>\n                            </fetch>");
             }
             // make sure the fetchXml is not empty
             if (fetchXml === "")
@@ -151,7 +150,7 @@ var ROM;
                     if (fiscalYear === null)
                         return;
                     // Get the Fiscal Year
-                    fetchXml = "<fetch>\n                              <entity name=\"tc_tcfiscalyear\">\n                                <attribute name=\"tc_fiscalyearlonglbl\" />\n                                <filter>\n                                  <condition attribute=\"tc_tcfiscalyearid\" operator=\"eq\" value=\"" + fiscalYear[0].id + "\" />\n                                </filter>\n                              </entity>\n                            </fetch>";
+                    fetchXml = "<fetch>\n                              <entity name=\"tc_tcfiscalyear\">\n                                <attribute name=\"tc_fiscalyearlonglbl\" />\n                                <filter>\n                                  <condition attribute=\"tc_tcfiscalyearid\" operator=\"eq\" value=\"".concat(fiscalYear[0].id, "\" />\n                                </filter>\n                              </entity>\n                            </fetch>");
                     encodedFetchXml = "?fetchXml=" + encodeURIComponent(fetchXml);
                     Xrm.WebApi.retrieveMultipleRecords("tc_tcfiscalyear", encodedFetchXml).then(function (result) {
                         if (result.entities.length > 0) {
@@ -188,7 +187,7 @@ var ROM;
             var today = new Date();
             var yearsAgo = today.getFullYear() - 2;
             var yearsFromNow = today.getFullYear() + 5;
-            var fetchXml = "<fetch version=\"1.0\" mapping=\"logical\" distinct=\"true\" returntotalrecordcount=\"true\" page=\"1\" count=\"25\" no-lock=\"false\">\n                            <entity name=\"tc_tcfiscalyear\">\n                              <attribute name=\"tc_tcfiscalyearid\" />\n                              <attribute name=\"tc_name\" />\n                              <order attribute=\"tc_fiscalyearnum\" descending=\"false\" />\n                              <filter>\n                                <condition attribute=\"tc_fiscalyearnum\" operator=\"ge\" value=\"" + yearsAgo + "\" />\n                                <condition attribute=\"tc_fiscalyearnum\" operator=\"le\" value=\"" + yearsFromNow + "\" />\n                              </filter>\n                            </entity>\n                          </fetch>";
+            var fetchXml = "<fetch version=\"1.0\" mapping=\"logical\" distinct=\"true\" returntotalrecordcount=\"true\" page=\"1\" count=\"25\" no-lock=\"false\">\n                            <entity name=\"tc_tcfiscalyear\">\n                              <attribute name=\"tc_tcfiscalyearid\" />\n                              <attribute name=\"tc_name\" />\n                              <order attribute=\"tc_fiscalyearnum\" descending=\"false\" />\n                              <filter>\n                                <condition attribute=\"tc_fiscalyearnum\" operator=\"ge\" value=\"".concat(yearsAgo, "\" />\n                                <condition attribute=\"tc_fiscalyearnum\" operator=\"le\" value=\"").concat(yearsFromNow, "\" />\n                              </filter>\n                            </entity>\n                          </fetch>");
             var layoutXml = '<grid name="resultset" object="10010" jump="tc_name" select="1" icon="1" preview="1"><row name="result" id="tc_tcfiscalyearid"><cell name="tc_name" width="200" /></row></grid>';
             formContext.getControl("ts_fiscalyear").addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
         }

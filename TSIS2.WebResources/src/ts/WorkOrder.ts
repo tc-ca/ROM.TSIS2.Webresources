@@ -1311,6 +1311,71 @@ namespace ROM.WorkOrder {
         //var preparationTime = form.getAttribute("ts_preparationtime").getValue();
         //var conductingOversight = form.getAttribute("ts_conductingoversight").getValue();
         //var woReportingAndDocumentation = form.getAttribute("ts_woreportinganddocumentation").getValue();
+
+        //If AvSec
+        let userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+        let currentUserBusinessUnitFetchXML = [
+            "<fetch top='50'>",
+            "  <entity name='businessunit'>",
+            "    <attribute name='name' />",
+            "    <attribute name='businessunitid' />",
+            "    <link-entity name='systemuser' from='businessunitid' to='businessunitid' link-type='inner' alias='ab'>",
+            "      <filter>",
+            "        <condition attribute='systemuserid' operator='eq' value='", userId, "'/>",
+            "      </filter>",
+            "    </link-entity>",
+            "  </entity>",
+            "</fetch>",
+        ].join("");
+        currentUserBusinessUnitFetchXML = "?fetchXml=" + encodeURIComponent(currentUserBusinessUnitFetchXML);
+        Xrm.WebApi.retrieveMultipleRecords("businessunit", currentUserBusinessUnitFetchXML).then(async function (businessunit) {
+            if (!businessunit || !businessunit.entities || businessunit.entities.length === 0) {
+                return;
+            }
+
+            const userBU = businessunit.entities[0];
+            const userBusinessUnitId = userBU.businessunitid;
+            const workOrderId = form.data.entity.getId();
+            const isAvSec = await isAvSecBU(userBusinessUnitId);
+
+            if (isAvSec) {
+                // Fetch Non Compliance Findings without related Action
+                const fetchFindings = `                       
+                        <fetch>
+                          <entity name="ovs_finding">
+                            <attribute name="ovs_findingid" />
+                            <attribute name="ts_findingtype" />
+                            <filter>
+                              <condition attribute="ts_workorder" operator="eq" value="${workOrderId}" />
+                              <condition attribute="ts_findingtype" operator="eq" value="717750002" /> 
+                            </filter>
+                            <link-entity name="ts_action" from="ts_finding" to="ovs_findingid" link-type="outer" alias="action">
+                              <attribute name="ts_actionid" />
+                            </link-entity>                            
+                            <filter type="and">
+                                <condition entityname="action" attribute="ts_actionid" operator="null" />
+                            </filter>
+                          </entity>
+                        </fetch>
+                    `;
+
+                Xrm.WebApi.retrieveMultipleRecords("ovs_finding", "?fetchXml=" + encodeURIComponent(fetchFindings)).then((findingsResult) => {
+                    const findings = findingsResult.entities;
+
+                    if (findings && findings.length > 0) {
+                        // There are findings
+                        form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
+                        const alertStrings = {
+                            text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithNonCompliance")
+                        };
+                        const alertOptions = { height: 200, width: 450 };
+                        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+                        return;
+                    }
+
+                });
+            }
+        });
         //If user try to cancel Complete WO
         if (currentSystemStatus == 690970003 && newSystemStatus == 690970005) {
             var alertStrings = {

@@ -28,7 +28,7 @@ var ROM;
         function filterInspectorByRegion(form, regionId) {
             var inspector = form.getControl("ts_inspector");
             inspector.addPreSearch(function () {
-                var filterXml = "\n            <filter type=\"and\">\n                <condition attribute=\"territoryid\" operator=\"eq\" value=\"" + regionId + "\" />\n            </filter>";
+                var filterXml = "\n            <filter type=\"and\">\n                <condition attribute=\"territoryid\" operator=\"eq\" value=\"".concat(regionId, "\" />\n            </filter>");
                 inspector.addCustomFilter(filterXml, "systemuser");
             });
         }
