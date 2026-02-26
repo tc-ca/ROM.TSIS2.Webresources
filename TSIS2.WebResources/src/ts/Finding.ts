@@ -36,8 +36,8 @@
 
         formContext.getAttribute("ts_ncatfactorguide").setValue(false);
 
-        // Log Rail Safety ownership status to console
-        logRailSafetyOwnershipStatus(formContext);
+        // Log Team/BU ownership status to console
+        logCurrentTeamOwnershipStatus(formContext);
 
         // Visible tabs for Rail Safety users (logical names)
         const RAIL_SAFETY_VISIBLE_TABS = ['summary', 'wo_details', 'tab_6'];
@@ -235,7 +235,7 @@
         }
 
         try {
-            await assignRailSafetyOwnershipOnSave(formContext);
+            await assignUserTeamOwnershipOnSave(formContext);
         } catch (error) {
             console.error("[Finding.onSave] Error:", error);
         }

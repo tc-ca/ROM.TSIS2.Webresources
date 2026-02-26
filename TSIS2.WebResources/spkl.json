@@ -375,6 +375,16 @@
                 "description": "ROM TSIS 2.0 Planning Data Form Scripts"
             },
             {
+                "uniquename": "ts_/js/PlanningSettings.js",
+                "file": "js\\PlanningSettings.js",
+                "description": "ROM TSIS 2.0 Planning Settings Form Scripts"
+            },
+            {
+                "uniquename": "ts_/js/PlanningReason.js",
+                "file": "js\\PlanningReason.js",
+                "description": "ROM TSIS 2.0 Planning Reason Form Scripts"
+            },
+            {
                 "uniquename": "ts_/js/Plan.js",
                 "file": "js\\Plan.js",
                 "description": "ROM TSIS 2.0 Plan Form Scripts"

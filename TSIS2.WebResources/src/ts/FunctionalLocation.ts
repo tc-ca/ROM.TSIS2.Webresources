@@ -56,8 +56,8 @@ namespace ROM.FunctionalLocation {
                 }
             }
 
-            // Log Rail Safety ownership status to console
-            logRailSafetyOwnershipStatus(form);
+            // Log Team/BU ownership status to console
+            logCurrentTeamOwnershipStatus(form);
 
             //If site type is aerodrome, show ICAO and IATA fields
             //If Region is not International, show Class field
@@ -192,9 +192,9 @@ namespace ROM.FunctionalLocation {
         }
 
         try {
-            // Rail Safety ownership assignment
+            // Team ownership assignment
             // With Async save handler enabled, attribute changes are included in the save
-            await assignRailSafetyOwnershipOnSave(form);
+            await assignUserTeamOwnershipOnSave(form);
 
         } catch (error) {
             console.error("[FunctionalLocation.onSave] Error:", error);

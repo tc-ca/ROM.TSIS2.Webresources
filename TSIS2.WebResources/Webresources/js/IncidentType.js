@@ -128,8 +128,8 @@ var ROM;
                                                             form.ui.tabs.get("tab_risk").setVisible(isAvSecOwner);
                                                         });
                                                     }
-                                                    // Log Rail Safety ownership status after setting owner
-                                                    logRailSafetyOwnershipStatus(form);
+                                                    // Log Team/BU ownership status after setting owner
+                                                    logCurrentTeamOwnershipStatus(form);
                                                     return [3 /*break*/, 7];
                                                 case 6:
                                                     error_2 = _b.sent();
@@ -190,8 +190,8 @@ var ROM;
                             console.error("[IncidentType.onLoad] Error checking AvSec ownership:", error_1);
                             return [3 /*break*/, 4];
                         case 4:
-                            // Log Rail Safety ownership status for existing records
-                            logRailSafetyOwnershipStatus(form);
+                            // Log Team/BU ownership status for existing records
+                            logCurrentTeamOwnershipStatus(form);
                             _a.label = 5;
                         case 5: return [2 /*return*/];
                     }
@@ -209,10 +209,10 @@ var ROM;
                             _a.label = 1;
                         case 1:
                             _a.trys.push([1, 3, , 4]);
-                            // Rail Safety ownership assignment
-                            return [4 /*yield*/, assignRailSafetyOwnershipOnSave(form)];
+                            // Team ownership assignment
+                            return [4 /*yield*/, assignUserTeamOwnershipOnSave(form)];
                         case 2:
-                            // Rail Safety ownership assignment
+                            // Team ownership assignment
                             _a.sent();
                             return [3 /*break*/, 4];
                         case 3:

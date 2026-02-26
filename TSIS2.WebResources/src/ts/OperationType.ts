@@ -13,8 +13,8 @@
             form.getControl("Subgrid_EntityRisk").setVisible(false);
         }
 
-        // Log Rail Safety ownership status to console
-        logRailSafetyOwnershipStatus(form);
+        // Log Team/BU ownership status to console
+        logCurrentTeamOwnershipStatus(form);
 
         // Hide owner field if already owned by Rail Safety
         const isRailSafety = await isOwnedByRailSafety(ownerAttributeValue);
@@ -27,8 +27,8 @@
         const form = <Form.ovs_operationtype.Main.Information>eContext.getFormContext();
 
         try {
-            // Rail Safety ownership assignment
-            await assignRailSafetyOwnershipOnSave(form);
+            // Team ownership assignment
+            await assignUserTeamOwnershipOnSave(form);
         } catch (error) {
             console.error("[OperationType.onSave] Error:", error);
         }

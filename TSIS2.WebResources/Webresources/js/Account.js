@@ -74,8 +74,8 @@ var ROM;
                             }
                             _a.label = 2;
                         case 2:
-                            // Log Rail Safety ownership status to console
-                            logRailSafetyOwnershipStatus(form);
+                            // Log Team/BU ownership status to console
+                            logCurrentTeamOwnershipStatus(form);
                             // Show only specific tabs for Rail Safety team members
                             return [4 /*yield*/, applyTabVisibilityForTeam(form, TEAM_SCHEMA_NAMES.RAIL_SAFETY, RAIL_SAFETY_VISIBLE_TABS)];
                         case 3:
@@ -158,11 +158,11 @@ var ROM;
                             _a.label = 1;
                         case 1:
                             _a.trys.push([1, 3, , 4]);
-                            // Rail Safety ownership assignment
+                            // Team ownership assignment
                             // With Async save handler enabled, attribute changes are included in the save
-                            return [4 /*yield*/, assignRailSafetyOwnershipOnSave(form)];
+                            return [4 /*yield*/, assignUserTeamOwnershipOnSave(form)];
                         case 2:
-                            // Rail Safety ownership assignment
+                            // Team ownership assignment
                             // With Async save handler enabled, attribute changes are included in the save
                             _a.sent();
                             return [3 /*break*/, 4];

@@ -65,8 +65,8 @@ var ROM;
             var formItem = formContext.ui.formSelector.getCurrentItem().getId();
             isROM20Form = formItem.toLowerCase() == "c01347bc-d346-447d-b902-4f411a0e9706";
             formContext.getAttribute("ts_ncatfactorguide").setValue(false);
-            // Log Rail Safety ownership status to console
-            logRailSafetyOwnershipStatus(formContext);
+            // Log Team/BU ownership status to console
+            logCurrentTeamOwnershipStatus(formContext);
             // Visible tabs for Rail Safety users (logical names)
             var RAIL_SAFETY_VISIBLE_TABS = ['summary', 'wo_details', 'tab_6'];
             // Show only those tabs for Rail Safety users
@@ -289,7 +289,7 @@ var ROM;
                             _a.label = 1;
                         case 1:
                             _a.trys.push([1, 3, , 4]);
-                            return [4 /*yield*/, assignRailSafetyOwnershipOnSave(formContext)];
+                            return [4 /*yield*/, assignUserTeamOwnershipOnSave(formContext)];
                         case 2:
                             _a.sent();
                             return [3 /*break*/, 4];

@@ -454,6 +454,7 @@
     <TypeScriptCompile Include="src\ts\OperationActivityQuickCreate.ts" />
     <TypeScriptCompile Include="src\ts\PlanningData.ts" />
     <TypeScriptCompile Include="src\ts\NonOversightActivity.ts" />
+    <TypeScriptCompile Include="src\ts\PlanningReason.ts" />
     <TypeScriptCompile Include="src\ts\PlanningSettings.ts" />
     <TypeScriptCompile Include="src\ts\OperationContact.ts" />
     <TypeScriptCompile Include="src\ts\Questionnaire.ts" />
