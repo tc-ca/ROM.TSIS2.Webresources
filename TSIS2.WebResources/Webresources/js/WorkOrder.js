@@ -1269,20 +1269,22 @@ var ROM;
                             case 1:
                                 isAvSec = _a.sent();
                                 if (isAvSec) {
-                                    fetchFindings = "                       \n                        <fetch>\n                          <entity name=\"ovs_finding\">\n                            <attribute name=\"ovs_findingid\" />\n                            <attribute name=\"ts_findingtype\" />\n                            <filter>\n                              <condition attribute=\"ts_workorder\" operator=\"eq\" value=\"".concat(workOrderId, "\" />\n                              <condition attribute=\"ts_findingtype\" operator=\"eq\" value=\"717750002\" /> \n                            </filter>\n                            <link-entity name=\"ts_action\" from=\"ts_finding\" to=\"ovs_findingid\" link-type=\"outer\" alias=\"action\">\n                              <attribute name=\"ts_actionid\" />\n                            </link-entity>                            \n                            <filter type=\"and\">\n                                <condition entityname=\"action\" attribute=\"ts_actionid\" operator=\"null\" />\n                            </filter>\n                          </entity>\n                        </fetch>\n                    ");
-                                    Xrm.WebApi.retrieveMultipleRecords("ovs_finding", "?fetchXml=" + encodeURIComponent(fetchFindings)).then(function (findingsResult) {
-                                        var findings = findingsResult.entities;
-                                        if (findings && findings.length > 0) {
-                                            // There are findings
-                                            form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
-                                            var alertStrings_1 = {
-                                                text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithNonCompliance")
-                                            };
-                                            var alertOptions_1 = { height: 200, width: 450 };
-                                            Xrm.Navigation.openAlertDialog(alertStrings_1, alertOptions_1);
-                                            return;
-                                        }
-                                    });
+                                    if (newSystemStatus == 741130000) {
+                                        fetchFindings = "                       \n                        <fetch>\n                          <entity name=\"ovs_finding\">\n                            <attribute name=\"ovs_findingid\" />\n                            <attribute name=\"ts_findingtype\" />\n                            <filter>\n                              <condition attribute=\"ts_workorder\" operator=\"eq\" value=\"".concat(workOrderId, "\" />\n                              <condition attribute=\"ts_findingtype\" operator=\"eq\" value=\"717750002\" /> \n                            </filter>\n                            <link-entity name=\"ts_action\" from=\"ts_finding\" to=\"ovs_findingid\" link-type=\"outer\" alias=\"action\">\n                              <attribute name=\"ts_actionid\" />\n                            </link-entity>                            \n                            <filter type=\"and\">\n                                <condition entityname=\"action\" attribute=\"ts_actionid\" operator=\"null\" />\n                            </filter>\n                          </entity>\n                        </fetch>\n                    ");
+                                        Xrm.WebApi.retrieveMultipleRecords("ovs_finding", "?fetchXml=" + encodeURIComponent(fetchFindings)).then(function (findingsResult) {
+                                            var findings = findingsResult.entities;
+                                            if (findings && findings.length > 0) {
+                                                // There are findings
+                                                form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
+                                                var alertStrings_1 = {
+                                                    text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithNonCompliance")
+                                                };
+                                                var alertOptions_1 = { height: 200, width: 450 };
+                                                Xrm.Navigation.openAlertDialog(alertStrings_1, alertOptions_1);
+                                                return;
+                                            }
+                                        });
+                                    }
                                 }
                                 return [2 /*return*/];
                         }

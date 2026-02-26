@@ -1410,10 +1410,11 @@ namespace ROM.UnplannedWorkOrder {
             const isAvSec = await isAvSecBU(userBusinessUnitId);
 
             if (isAvSec) {
-                if (woLookup != null) {
-                    var woId = woLookup[0].id.replace(/[{}]/g, "");
-                    // Fetch Non Compliance Findings without related Action
-                    const fetchFindings = `                       
+                if (newSystemStatus == 741130000) {
+                    if (woLookup != null) {
+                        var woId = woLookup[0].id.replace(/[{}]/g, "");
+                        // Fetch Non Compliance Findings without related Action
+                        const fetchFindings = `                       
                         <fetch>
                           <entity name="ovs_finding">
                             <attribute name="ovs_findingid" />
@@ -1432,21 +1433,22 @@ namespace ROM.UnplannedWorkOrder {
                         </fetch>
                     `;
 
-                    Xrm.WebApi.retrieveMultipleRecords("ovs_finding", "?fetchXml=" + encodeURIComponent(fetchFindings)).then((findingsResult) => {
-                        const findings = findingsResult.entities;
+                        Xrm.WebApi.retrieveMultipleRecords("ovs_finding", "?fetchXml=" + encodeURIComponent(fetchFindings)).then((findingsResult) => {
+                            const findings = findingsResult.entities;
 
-                        if (findings && findings.length > 0) {
-                            // There are findings
-                            form.getAttribute("ts_recordstatus").setValue(currentSystemStatus);
-                            const alertStrings = {
-                                text: Xrm.Utility.getResourceString("ts_/resx/UnplannedWorkOrder", "CloseWOWithNonCompliance")
-                            };
-                            const alertOptions = { height: 160, width: 340 };
-                            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
-                            return;
-                        }
+                            if (findings && findings.length > 0) {
+                                // There are findings
+                                form.getAttribute("ts_recordstatus").setValue(currentSystemStatus);
+                                const alertStrings = {
+                                    text: Xrm.Utility.getResourceString("ts_/resx/UnplannedWorkOrder", "CloseWOWithNonCompliance")
+                                };
+                                const alertOptions = { height: 160, width: 340 };
+                                Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+                                return;
+                            }
 
-                    });
+                        });
+                    }
                 }
             }
         });
