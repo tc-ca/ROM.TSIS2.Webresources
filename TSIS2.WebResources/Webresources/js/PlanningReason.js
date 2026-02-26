@@ -37,41 +37,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var ROM;
 (function (ROM) {
-    var OperationType;
-    (function (OperationType) {
+    var PlanningReason;
+    (function (PlanningReason) {
         function onLoad(eContext) {
-            return __awaiter(this, void 0, void 0, function () {
-                var form, ownerAttribute, ownerAttributeValue, isAvSec, isRailSafety;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            form = eContext.getFormContext();
-                            ownerAttribute = form.getAttribute("ownerid");
-                            ownerAttributeValue = ownerAttribute.getValue();
-                            if (!(ownerAttributeValue != null && ownerAttributeValue[0])) return [3 /*break*/, 2];
-                            return [4 /*yield*/, isOwnedByAvSec(ownerAttributeValue)];
-                        case 1:
-                            isAvSec = _a.sent();
-                            form.getControl("Subgrid_EntityRisk").setVisible(isAvSec);
-                            return [3 /*break*/, 3];
-                        case 2:
-                            form.getControl("Subgrid_EntityRisk").setVisible(false);
-                            _a.label = 3;
-                        case 3:
-                            // Log Team/BU ownership status to console
-                            logCurrentTeamOwnershipStatus(form);
-                            return [4 /*yield*/, isOwnedByRailSafety(ownerAttributeValue)];
-                        case 4:
-                            isRailSafety = _a.sent();
-                            if (isRailSafety) {
-                                form.getControl("ownerid").setVisible(false);
-                            }
-                            return [2 /*return*/];
-                    }
-                });
-            });
+            var form = eContext.getFormContext();
+            // Log Team/BU ownership status to console
+            logCurrentTeamOwnershipStatus(form);
         }
-        OperationType.onLoad = onLoad;
+        PlanningReason.onLoad = onLoad;
         function onSave(eContext) {
             return __awaiter(this, void 0, void 0, function () {
                 var form, error_1;
@@ -90,13 +63,13 @@ var ROM;
                             return [3 /*break*/, 4];
                         case 3:
                             error_1 = _a.sent();
-                            console.error("[OperationType.onSave] Error:", error_1);
+                            console.error("[PlanningReason.onSave] Error:", error_1);
                             return [3 /*break*/, 4];
                         case 4: return [2 /*return*/];
                     }
                 });
             });
         }
-        OperationType.onSave = onSave;
-    })(OperationType = ROM.OperationType || (ROM.OperationType = {}));
+        PlanningReason.onSave = onSave;
+    })(PlanningReason = ROM.PlanningReason || (ROM.PlanningReason = {}));
 })(ROM || (ROM = {}));

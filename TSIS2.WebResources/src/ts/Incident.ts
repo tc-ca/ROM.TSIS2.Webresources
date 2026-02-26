@@ -9,8 +9,8 @@ namespace ROM.Incident {
         form.getAttribute("msdyn_functionallocation").setRequiredLevel("required");
         addEmailTemplateOnChange(eContext);
         
-        // Log Rail Safety ownership status to console
-        logRailSafetyOwnershipStatus(form);
+        // Log Team/BU ownership status to console
+        logCurrentTeamOwnershipStatus(form);
 
         // Hide document tab for Rail Safety team members
         (async function () {
@@ -745,9 +745,9 @@ namespace ROM.Incident {
         const form = <Form.incident.Main.ROMCase>eContext.getFormContext();
 
         try {
-            // Rail Safety ownership assignment
+            // Team ownership assignment
             // With Async save handler enabled, attribute changes are included in the save
-            await assignRailSafetyOwnershipOnSave(form);
+            await assignUserTeamOwnershipOnSave(form);
 
         } catch (error) {
             console.error("[Incident.onSave] Error:", error);

@@ -888,63 +888,105 @@ async function applyTabVisibilityForTeam(formContext, teamSchemaName, visibleTab
 }
 
 /**
- * Assigns Rail Safety Team ownership if user is a Rail Safety team member.
+ * Assigns Team ownership if user is a member of Rail Safety, AvSec, or ISSO teams.
+ * Checks sequentially and assigns the first matching team.
+ * Optimized to fetch environment variables and check membership in parallel.
  * Does not call save() - caller is responsible for save.
  * @param {object} formContext - The form context
  * @returns {Promise<boolean>} True if the form was modified, false otherwise
  */
-async function assignRailSafetyOwnershipOnSave(formContext) {
+async function assignUserTeamOwnershipOnSave(formContext) {
+  const teamSchemas = [
+    TEAM_SCHEMA_NAMES.RAIL_SAFETY,
+    TEAM_SCHEMA_NAMES.AVIATION_SECURITY,
+    TEAM_SCHEMA_NAMES.ISSO_TEAM,
+    TEAM_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL,
+    TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC
+  ];
+
   try {
-    var isMember = await isUserInTeamByEnvVar(TEAM_SCHEMA_NAMES.RAIL_SAFETY);
-    if (!isMember) return false;
+    const userId = Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, "").toLowerCase();
 
-    var teamGuid = await getEnvironmentVariableValue(TEAM_SCHEMA_NAMES.RAIL_SAFETY);
-    if (!teamGuid) return false;
+    // 1. Fetch all team GUIDs from environment variables in parallel
+    const teamGuids = await Promise.all(teamSchemas.map((schemaName) => getEnvironmentVariableValue(schemaName)));
 
-    var ownerAttribute = formContext.getAttribute("ownerid");
-    var currentOwner = ownerAttribute.getValue();
+    // 2. Check membership for all valid team GUIDs in parallel
+    const membershipResults = await Promise.all(
+      teamGuids.map((guid) => (guid ? isUserInTeam(userId, guid) : Promise.resolve(false)))
+    );
 
-    // Check if already owned by Rail Safety team
-    if (currentOwner && currentOwner[0] && currentOwner[0].entityType === "team" &&
-        currentOwner[0].id.replace(/[{}]/g, "").toLowerCase() === teamGuid) {
-      return false;
+    // 3. Find the first team the user belongs to (preserving priority)
+    for (let i = 0; i < teamSchemas.length; i++) {
+      if (membershipResults[i]) {
+        const teamGuid = teamGuids[i].replace(/[{}]/g, "").toLowerCase();
+        const ownerAttribute = formContext.getAttribute("ownerid");
+        const currentOwner = ownerAttribute.getValue();
+
+        // Check if already owned by this team
+        if (
+          currentOwner &&
+          currentOwner[0] &&
+          currentOwner[0].entityType === "team" &&
+          currentOwner[0].id.replace(/[{}]/g, "").toLowerCase() === teamGuid
+        ) {
+          return false;
+        }
+
+        const teamName = (await getTeamNameById(teamGuid)) || "Unknown Team";
+        ownerAttribute.setValue([
+          {
+            id: teamGuid,
+            entityType: "team",
+            name: teamName,
+          },
+        ]);
+        return true;
+      }
     }
-
-    var teamName = (await getTeamNameById(teamGuid)) || "";
-    ownerAttribute.setValue([
-      {
-        id: teamGuid,
-        entityType: "team",
-        name: teamName,
-      },
-    ]);
-    return true;
   } catch (error) {
-    console.error("[Rail Safety] Error in assignRailSafetyOwnershipOnSave:", error);
-    return false;
+    console.error("Error in assignUserTeamOwnershipOnSave:", error);
   }
+
+  return false;
 }
 
 /**
- * Checks if the current record is owned by the Rail Safety Team and logs to console.
+ * Checks if the current record is owned by Rail Safety, AvSec, or ISSO and logs to console.
+ * Uses matchesOwnerTeamOrBU logic internally.
  * @param {object} formContext - The form context
  * @returns {Promise<void>}
  */
-async function logRailSafetyOwnershipStatus(formContext) {
+async function logCurrentTeamOwnershipStatus(formContext) {
+  const ownershipGroups = [
+    { label: "Rail Safety", schemas: [TEAM_SCHEMA_NAMES.RAIL_SAFETY] },
+    { label: "Aviation Security Domestic", schemas: [TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC] },
+    { label: "Aviation Security International", schemas: [TEAM_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL] },
+    { label: "Aviation Security", schemas: [TEAM_SCHEMA_NAMES.AVIATION_SECURITY] },
+    { label: "ISSO", schemas: [TEAM_SCHEMA_NAMES.ISSO_TEAM] },
+  ];
+
   try {
-    var ownerAttribute = formContext.getAttribute("ownerid");
-    var ownerValue = ownerAttribute.getValue();
+    const ownerAttribute = formContext.getAttribute("ownerid");
+    const ownerValue = ownerAttribute.getValue();
+    if (!ownerValue || !ownerValue[0]) return;
 
-    if (!ownerValue) {
-      return;
+    for (const group of ownershipGroups) {
+      const isOwned = await matchesOwnerTeamOrBU(ownerValue, {
+        teamSchemaNames: group.schemas,
+        buSchemaNames: [],
+      });
+
+      if (isOwned) {
+        console.log("This record belongs to " + group.label + ".");
+        return;
+      }
     }
 
-    var isRailSafety = await isOwnedByRailSafety(ownerValue);
-    if (isRailSafety) {
-      console.log("This record belongs to Rail Safety.");
-    }
+    // Default
+    const name = ownerValue[0].name || "Unknown Owner";
+    console.log("This record belongs to " + name);
   } catch (error) {
-    console.error("Error checking Rail Safety ownership:", error);
+    console.error("Error in logCurrentTeamOwnershipStatus:", error);
   }
 }
 

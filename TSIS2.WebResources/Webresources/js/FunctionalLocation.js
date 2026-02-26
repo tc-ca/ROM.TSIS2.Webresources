@@ -78,8 +78,8 @@ var ROM;
                         });
                     }
                 }
-                // Log Rail Safety ownership status to console
-                logRailSafetyOwnershipStatus(form);
+                // Log Team/BU ownership status to console
+                logCurrentTeamOwnershipStatus(form);
                 //If site type is aerodrome, show ICAO and IATA fields
                 //If Region is not International, show Class field
                 var siteTypeAttribute = form.getAttribute("ts_sitetype");
@@ -240,11 +240,11 @@ var ROM;
                             _a.label = 1;
                         case 1:
                             _a.trys.push([1, 3, , 4]);
-                            // Rail Safety ownership assignment
+                            // Team ownership assignment
                             // With Async save handler enabled, attribute changes are included in the save
-                            return [4 /*yield*/, assignRailSafetyOwnershipOnSave(form)];
+                            return [4 /*yield*/, assignUserTeamOwnershipOnSave(form)];
                         case 2:
-                            // Rail Safety ownership assignment
+                            // Team ownership assignment
                             // With Async save handler enabled, attribute changes are included in the save
                             _a.sent();
                             return [3 /*break*/, 4];

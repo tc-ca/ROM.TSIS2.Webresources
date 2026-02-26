@@ -80,8 +80,8 @@ namespace ROM.IncidentType {
                                     });
                                 }
 
-                                // Log Rail Safety ownership status after setting owner
-                                logRailSafetyOwnershipStatus(form);
+                                // Log Team/BU ownership status after setting owner
+                                logCurrentTeamOwnershipStatus(form);
                             } catch (error) {
                                 console.error("[IncidentType.onLoad] Error retrieving team record:", error);
                             }
@@ -130,8 +130,8 @@ namespace ROM.IncidentType {
                 }
             }
 
-            // Log Rail Safety ownership status for existing records
-            logRailSafetyOwnershipStatus(form);
+            // Log Team/BU ownership status for existing records
+            logCurrentTeamOwnershipStatus(form);
         }
     }
 
@@ -139,8 +139,8 @@ namespace ROM.IncidentType {
         const form = <Form.msdyn_incidenttype.Main.Information>eContext.getFormContext();
 
         try {
-            // Rail Safety ownership assignment
-            await assignRailSafetyOwnershipOnSave(form);
+            // Team ownership assignment
+            await assignUserTeamOwnershipOnSave(form);
         } catch (error) {
             console.error("[IncidentType.onSave] Error:", error);
         }

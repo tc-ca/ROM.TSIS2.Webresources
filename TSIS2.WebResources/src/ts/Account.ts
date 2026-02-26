@@ -34,8 +34,8 @@ namespace ROM.Account {
             }
         }
 
-        // Log Rail Safety ownership status to console
-        logRailSafetyOwnershipStatus(form);
+        // Log Team/BU ownership status to console
+        logCurrentTeamOwnershipStatus(form);
 
         // Show only specific tabs for Rail Safety team members
         await applyTabVisibilityForTeam(form, TEAM_SCHEMA_NAMES.RAIL_SAFETY, RAIL_SAFETY_VISIBLE_TABS);
@@ -96,9 +96,9 @@ namespace ROM.Account {
         }
 
         try {
-            // Rail Safety ownership assignment
+            // Team ownership assignment
             // With Async save handler enabled, attribute changes are included in the save
-            await assignRailSafetyOwnershipOnSave(form);
+            await assignUserTeamOwnershipOnSave(form);
 
         } catch (error) {
             console.error("[Account.onSave] Error:", error);
