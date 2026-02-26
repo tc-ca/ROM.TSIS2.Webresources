@@ -183,4 +183,7 @@
   <data name="CloseWOWithoutTimeTrackingFieldsTitle" xml:space="preserve">
     <value>Required time tracking fields</value>
   </data>
+  <data name="CloseWOWithNonCompliance" xml:space="preserve">
+    <value>This Work Order cannot be closed because one or more Non-Compliant findings do not have an associated Action. Please create at least one Action before closing.</value>
+  </data>
 </root>

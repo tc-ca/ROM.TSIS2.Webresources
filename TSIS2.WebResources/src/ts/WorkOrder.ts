@@ -1339,8 +1339,9 @@ namespace ROM.WorkOrder {
             const isAvSec = await isAvSecBU(userBusinessUnitId);
 
             if (isAvSec) {
-                // Fetch Non Compliance Findings without related Action
-                const fetchFindings = `                       
+                if (newSystemStatus == 741130000) {
+                    // Fetch Non Compliance Findings without related Action
+                    const fetchFindings = `                       
                         <fetch>
                           <entity name="ovs_finding">
                             <attribute name="ovs_findingid" />
@@ -1359,21 +1360,22 @@ namespace ROM.WorkOrder {
                         </fetch>
                     `;
 
-                Xrm.WebApi.retrieveMultipleRecords("ovs_finding", "?fetchXml=" + encodeURIComponent(fetchFindings)).then((findingsResult) => {
-                    const findings = findingsResult.entities;
+                    Xrm.WebApi.retrieveMultipleRecords("ovs_finding", "?fetchXml=" + encodeURIComponent(fetchFindings)).then((findingsResult) => {
+                        const findings = findingsResult.entities;
 
-                    if (findings && findings.length > 0) {
-                        // There are findings
-                        form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
-                        const alertStrings = {
-                            text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithNonCompliance")
-                        };
-                        const alertOptions = { height: 200, width: 450 };
-                        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
-                        return;
-                    }
+                        if (findings && findings.length > 0) {
+                            // There are findings
+                            form.getAttribute("msdyn_systemstatus").setValue(currentSystemStatus);
+                            const alertStrings = {
+                                text: Xrm.Utility.getResourceString("ovs_/resx/WorkOrder", "CloseWOWithNonCompliance")
+                            };
+                            const alertOptions = { height: 200, width: 450 };
+                            Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+                            return;
+                        }
 
-                });
+                    });
+                }
             }
         });
         //If user try to cancel Complete WO

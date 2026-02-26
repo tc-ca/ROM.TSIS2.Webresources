@@ -106,6 +106,15 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This Work Order cannot be closed because one or more Non-Compliant findings do not have an associated Action. Please create at least one Action before closing..
+        /// </summary>
+        internal static string CloseWOWithNonCompliance {
+            get {
+                return ResourceManager.GetString("CloseWOWithNonCompliance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All required time tracking fields must be input before the Work order can be closed..
         /// </summary>
         internal static string CloseWOWithoutTimeTrackingFieldsText {

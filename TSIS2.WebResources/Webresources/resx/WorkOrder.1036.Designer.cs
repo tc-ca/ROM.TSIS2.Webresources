@@ -106,6 +106,15 @@ namespace TSIS2.WebResources.Webresources.resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cet ordre de travail ne peut pas être fermé, car une ou plusieurs constatations de non-conformité ne sont associées à aucune action. Veuillez créer au moins une action avant de procéder à la fermeture..
+        /// </summary>
+        internal static string CloseWOWithNonCompliance {
+            get {
+                return ResourceManager.GetString("CloseWOWithNonCompliance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tous les champs obligatoires de suivi du temps doivent être renseignés avant que l&apos;ordre de travail ne puisse être fermé..
         /// </summary>
         internal static string CloseWOWithoutTimeTrackingFieldsText {

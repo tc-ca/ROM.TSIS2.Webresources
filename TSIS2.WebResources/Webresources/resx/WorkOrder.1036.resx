@@ -183,4 +183,7 @@
   <data name="CloseWOWithoutTimeTrackingFieldsTitle" xml:space="preserve">
     <value>Les champs obligatoires de suivi du temps</value>
   </data>
+  <data name="CloseWOWithNonCompliance" xml:space="preserve">
+    <value>Cet ordre de travail ne peut pas être fermé, car une ou plusieurs constatations de non-conformité ne sont associées à aucune action. Veuillez créer au moins une action avant de procéder à la fermeture.</value>
+  </data>
 </root>
