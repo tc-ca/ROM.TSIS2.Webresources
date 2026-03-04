@@ -37,13 +37,17 @@ if (workorderRibbon_lang == 1036) {
 }
 /**
  * Determines if the "Add Existing" ribbon button should be visible on a specific form.
+ * Restricted to System Admins.
  * @param {Xrm.FormContext} primaryControl - The form context passed automatically by Ribbon Workbench
  * @param {string} targetFormId - The GUID of the form where the "Add Existing" button should be visible.
  * @returns {boolean} - True if the current form matches the target form
  */
 function showAddExistingButton(primaryControl, targetFormId) {
-  const currentFormId = primaryControl.ui.formSelector.getCurrentItem().getId();
-  return currentFormId === targetFormId;
+    if (!isSystemAdministrator()) {
+        return false;
+    }
+    const currentFormId = primaryControl.ui.formSelector.getCurrentItem().getId();
+    return currentFormId === targetFormId;
 }
 function addExistingWorkOrdersToCase(primaryControl, selectedEntityTypeName, selectedControl) {
   const formContext = primaryControl;
