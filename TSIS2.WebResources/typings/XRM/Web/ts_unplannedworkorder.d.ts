@@ -56,6 +56,7 @@ interface ts_unplannedworkorder_Base extends WebEntity {
 interface ts_unplannedworkorder_Relationships {
   ts_CancelledInspectionJustification?: ts_canceledinspectionjustification_Result | null;
   ts_Contact_ts_unplannedworkorder_ts_unplannedworkorder?: Contact_Result[] | null;
+  ts_Finding?: ovs_Finding_Result | null;
   ts_ParentWorkOrder?: msdyn_workorder_Result | null;
   ts_PlannedFiscalQuarter?: tc_TCFiscalQuarter_Result | null;
   ts_PlannedFiscalYear?: tc_TCFiscalYear_Result | null;
@@ -80,6 +81,7 @@ interface ts_unplannedworkorder extends ts_unplannedworkorder_Base, ts_unplanned
   ownerid_bind$teams?: string | null;
   transactioncurrencyid_bind$transactioncurrencies?: string | null;
   ts_CancelledInspectionJustification_bind$ts_canceledinspectionjustifications?: string | null;
+  ts_Finding_bind$ovs_findings?: string | null;
   ts_ParentWorkOrder_bind$msdyn_workorders?: string | null;
   ts_PlannedFiscalQuarter_bind$tc_tcfiscalquarters?: string | null;
   ts_PlannedFiscalYear_bind$tc_tcfiscalyears?: string | null;
@@ -141,6 +143,7 @@ interface ts_unplannedworkorder_Select {
   ts_costexplanation: WebAttribute<ts_unplannedworkorder_Select, { ts_costexplanation: string | null }, {  }>;
   ts_country_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_country_guid: string | null }, { ts_country_formatted?: string }>;
   ts_details: WebAttribute<ts_unplannedworkorder_Select, { ts_details: string | null }, {  }>;
+  ts_finding_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_finding_guid: string | null }, { ts_finding_formatted?: string }>;
   ts_functionallocation_guid: WebAttribute<ts_unplannedworkorder_Select, { ts_functionallocation_guid: string | null }, { ts_functionallocation_formatted?: string }>;
   ts_instructions: WebAttribute<ts_unplannedworkorder_Select, { ts_instructions: string | null }, {  }>;
   ts_name: WebAttribute<ts_unplannedworkorder_Select, { ts_name: string | null }, {  }>;
@@ -230,6 +233,7 @@ interface ts_unplannedworkorder_Filter {
   ts_costexplanation: string;
   ts_country_guid: XQW.Guid;
   ts_details: string;
+  ts_finding_guid: XQW.Guid;
   ts_functionallocation_guid: XQW.Guid;
   ts_instructions: string;
   ts_name: string;
@@ -298,6 +302,7 @@ interface ts_unplannedworkorder_Expand {
   owninguser: WebExpand<ts_unplannedworkorder_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_CancelledInspectionJustification: WebExpand<ts_unplannedworkorder_Expand, ts_canceledinspectionjustification_Select, ts_canceledinspectionjustification_Filter, { ts_CancelledInspectionJustification: ts_canceledinspectionjustification_Result }>;
   ts_Contact_ts_unplannedworkorder_ts_unplannedworkorder: WebExpand<ts_unplannedworkorder_Expand, Contact_Select, Contact_Filter, { ts_Contact_ts_unplannedworkorder_ts_unplannedworkorder: Contact_Result[] }>;
+  ts_Finding: WebExpand<ts_unplannedworkorder_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_Finding: ovs_Finding_Result }>;
   ts_ParentWorkOrder: WebExpand<ts_unplannedworkorder_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_ParentWorkOrder: msdyn_workorder_Result }>;
   ts_PlannedFiscalQuarter: WebExpand<ts_unplannedworkorder_Expand, tc_TCFiscalQuarter_Select, tc_TCFiscalQuarter_Filter, { ts_PlannedFiscalQuarter: tc_TCFiscalQuarter_Result }>;
   ts_PlannedFiscalYear: WebExpand<ts_unplannedworkorder_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_PlannedFiscalYear: tc_TCFiscalYear_Result }>;
@@ -351,6 +356,7 @@ interface ts_unplannedworkorder_FormattedResult {
   ts_completedquarter_formatted?: string;
   ts_contact_formatted?: string;
   ts_country_formatted?: string;
+  ts_finding_formatted?: string;
   ts_functionallocation_formatted?: string;
   ts_operation_formatted?: string;
   ts_operationtype_formatted?: string;
@@ -398,6 +404,7 @@ interface ts_unplannedworkorder_Result extends ts_unplannedworkorder_Base, ts_un
   ts_cancelledinspectionjustification_guid: string | null;
   ts_contact_guid: string | null;
   ts_country_guid: string | null;
+  ts_finding_guid: string | null;
   ts_functionallocation_guid: string | null;
   ts_operation_guid: string | null;
   ts_operationtype_guid: string | null;
@@ -430,6 +437,7 @@ interface ts_unplannedworkorder_RelatedOne {
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_CancelledInspectionJustification: WebMappingRetrieve<ts_canceledinspectionjustification_Select,ts_canceledinspectionjustification_Expand,ts_canceledinspectionjustification_Filter,ts_canceledinspectionjustification_Fixed,ts_canceledinspectionjustification_Result,ts_canceledinspectionjustification_FormattedResult>;
+  ts_Finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_ParentWorkOrder: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_PlannedFiscalQuarter: WebMappingRetrieve<tc_TCFiscalQuarter_Select,tc_TCFiscalQuarter_Expand,tc_TCFiscalQuarter_Filter,tc_TCFiscalQuarter_Fixed,tc_TCFiscalQuarter_Result,tc_TCFiscalQuarter_FormattedResult>;
   ts_PlannedFiscalYear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;

@@ -68,7 +68,9 @@ interface ovs_Finding_Relationships {
   ts_WorkOrderServiceTaskWorkspace?: ts_WorkOrderServiceTaskWorkspace_Result | null;
   ts_finding_ts_action_finding?: ts_action_Result[] | null;
   ts_finding_ts_causefinding_Finding?: ts_causefinding_Result[] | null;
+  ts_msdyn_workorder_Finding_ovs_finding?: msdyn_workorder_Result[] | null;
   ts_ovs_Finding_ts_File_ts_File?: ts_File_Result[] | null;
+  ts_unplannedworkorder_Finding_ovs_finding?: ts_unplannedworkorder_Result[] | null;
 }
 interface ovs_Finding extends ovs_Finding_Base, ovs_Finding_Relationships {
   ovs_CaseId_bind$incidents?: string | null;
@@ -343,10 +345,12 @@ interface ovs_Finding_Expand {
   ts_finding_ts_causefinding_Finding: WebExpand<ovs_Finding_Expand, ts_causefinding_Select, ts_causefinding_Filter, { ts_finding_ts_causefinding_Finding: ts_causefinding_Result[] }>;
   ts_functionallocation: WebExpand<ovs_Finding_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { ts_functionallocation: msdyn_FunctionalLocation_Result }>;
   ts_infraction: WebExpand<ovs_Finding_Expand, ts_infraction_Select, ts_infraction_Filter, { ts_infraction: ts_infraction_Result }>;
+  ts_msdyn_workorder_Finding_ovs_finding: WebExpand<ovs_Finding_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { ts_msdyn_workorder_Finding_ovs_finding: msdyn_workorder_Result[] }>;
   ts_operationid: WebExpand<ovs_Finding_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_operationid: ovs_operation_Result }>;
   ts_ovs_Finding_ts_File_ts_File: WebExpand<ovs_Finding_Expand, ts_File_Select, ts_File_Filter, { ts_ovs_Finding_ts_File_ts_File: ts_File_Result[] }>;
   ts_ovs_operationtype: WebExpand<ovs_Finding_Expand, ovs_operationtype_Select, ovs_operationtype_Filter, { ts_ovs_operationtype: ovs_operationtype_Result }>;
   ts_qm_rclegislation: WebExpand<ovs_Finding_Expand, qm_rclegislation_Select, qm_rclegislation_Filter, { ts_qm_rclegislation: qm_rclegislation_Result }>;
+  ts_unplannedworkorder_Finding_ovs_finding: WebExpand<ovs_Finding_Expand, ts_unplannedworkorder_Select, ts_unplannedworkorder_Filter, { ts_unplannedworkorder_Finding_ovs_finding: ts_unplannedworkorder_Result[] }>;
 }
 interface ovs_Finding_FormattedResult {
   createdby_formatted?: string;
@@ -509,7 +513,9 @@ interface ovs_Finding_RelatedMany {
   ts_File_Finding_ovs_Finding: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
   ts_finding_ts_action_finding: WebMappingRetrieve<ts_action_Select,ts_action_Expand,ts_action_Filter,ts_action_Fixed,ts_action_Result,ts_action_FormattedResult>;
   ts_finding_ts_causefinding_Finding: WebMappingRetrieve<ts_causefinding_Select,ts_causefinding_Expand,ts_causefinding_Filter,ts_causefinding_Fixed,ts_causefinding_Result,ts_causefinding_FormattedResult>;
+  ts_msdyn_workorder_Finding_ovs_finding: WebMappingRetrieve<msdyn_workorder_Select,msdyn_workorder_Expand,msdyn_workorder_Filter,msdyn_workorder_Fixed,msdyn_workorder_Result,msdyn_workorder_FormattedResult>;
   ts_ovs_Finding_ts_File_ts_File: WebMappingRetrieve<ts_File_Select,ts_File_Expand,ts_File_Filter,ts_File_Fixed,ts_File_Result,ts_File_FormattedResult>;
+  ts_unplannedworkorder_Finding_ovs_finding: WebMappingRetrieve<ts_unplannedworkorder_Select,ts_unplannedworkorder_Expand,ts_unplannedworkorder_Filter,ts_unplannedworkorder_Fixed,ts_unplannedworkorder_Result,ts_unplannedworkorder_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   ovs_findings: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;

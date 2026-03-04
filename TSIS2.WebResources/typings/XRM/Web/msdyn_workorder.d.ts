@@ -178,6 +178,7 @@ interface msdyn_workorder_Relationships {
   ts_DepartureAerodrome_Site?: ts_site_Result | null;
   ts_File_msdyn_workorder_msdyn_workorder?: ts_File_Result[] | null;
   ts_Files_msdyn_workorders?: ts_File_Result[] | null;
+  ts_Finding?: ovs_Finding_Result | null;
   ts_FunctionalLocation?: ts_site_Result | null;
   ts_IncompleteWorkOrderReason?: ts_IncompleteWorkOrderReason_Result | null;
   ts_OperatingCarrierOperation?: ovs_operation_Result | null;
@@ -256,6 +257,7 @@ interface msdyn_workorder extends msdyn_workorder_Base, msdyn_workorder_Relation
   ts_Contact_bind$contacts?: string | null;
   ts_Country_bind$tc_countries?: string | null;
   ts_DepartureAerodrome_Site_bind$ts_sites?: string | null;
+  ts_Finding_bind$ovs_findings?: string | null;
   ts_FunctionalLocation_bind$ts_sites?: string | null;
   ts_IncompleteWorkOrderReason_bind$ts_incompleteworkorderreasons?: string | null;
   ts_OperatingCarrierOperation_bind$ovs_operations?: string | null;
@@ -444,6 +446,7 @@ interface msdyn_workorder_Select {
   ts_details: WebAttribute<msdyn_workorder_Select, { ts_details: string | null }, {  }>;
   ts_documenteddate: WebAttribute<msdyn_workorder_Select, { ts_documenteddate: Date | null }, { ts_documenteddate_formatted?: string }>;
   ts_endofvalidfields: WebAttribute<msdyn_workorder_Select, { ts_endofvalidfields: string | null }, {  }>;
+  ts_finding_guid: WebAttribute<msdyn_workorder_Select, { ts_finding_guid: string | null }, { ts_finding_formatted?: string }>;
   ts_flightnumber: WebAttribute<msdyn_workorder_Select, { ts_flightnumber: string | null }, {  }>;
   ts_flighttype: WebAttribute<msdyn_workorder_Select, { ts_flighttype: ts_flighttype | null }, { ts_flighttype_formatted?: string }>;
   ts_functionallocation_guid: WebAttribute<msdyn_workorder_Select, { ts_functionallocation_guid: string | null }, { ts_functionallocation_formatted?: string }>;
@@ -674,6 +677,7 @@ interface msdyn_workorder_Filter {
   ts_details: string;
   ts_documenteddate: Date;
   ts_endofvalidfields: string;
+  ts_finding_guid: XQW.Guid;
   ts_flightnumber: string;
   ts_flighttype: ts_flighttype;
   ts_functionallocation_guid: XQW.Guid;
@@ -798,6 +802,7 @@ interface msdyn_workorder_Expand {
   ts_DepartureAerodrome_Site: WebExpand<msdyn_workorder_Expand, ts_site_Select, ts_site_Filter, { ts_DepartureAerodrome_Site: ts_site_Result }>;
   ts_File_msdyn_workorder_msdyn_workorder: WebExpand<msdyn_workorder_Expand, ts_File_Select, ts_File_Filter, { ts_File_msdyn_workorder_msdyn_workorder: ts_File_Result[] }>;
   ts_Files_msdyn_workorders: WebExpand<msdyn_workorder_Expand, ts_File_Select, ts_File_Filter, { ts_Files_msdyn_workorders: ts_File_Result[] }>;
+  ts_Finding: WebExpand<msdyn_workorder_Expand, ovs_Finding_Select, ovs_Finding_Filter, { ts_Finding: ovs_Finding_Result }>;
   ts_FunctionalLocation: WebExpand<msdyn_workorder_Expand, ts_site_Select, ts_site_Filter, { ts_FunctionalLocation: ts_site_Result }>;
   ts_IncompleteWorkOrderReason: WebExpand<msdyn_workorder_Expand, ts_IncompleteWorkOrderReason_Select, ts_IncompleteWorkOrderReason_Filter, { ts_IncompleteWorkOrderReason: ts_IncompleteWorkOrderReason_Result }>;
   ts_OperatingCarrierOperation: WebExpand<msdyn_workorder_Expand, ovs_operation_Select, ovs_operation_Filter, { ts_OperatingCarrierOperation: ovs_operation_Result }>;
@@ -937,6 +942,7 @@ interface msdyn_workorder_FormattedResult {
   ts_departureaerodrome_formatted?: string;
   ts_departureaerodrome_site_formatted?: string;
   ts_documenteddate_formatted?: string;
+  ts_finding_formatted?: string;
   ts_flighttype_formatted?: string;
   ts_functionallocation_formatted?: string;
   ts_incident_formatted?: string;
@@ -1041,6 +1047,7 @@ interface msdyn_workorder_Result extends msdyn_workorder_Base, msdyn_workorder_R
   ts_country_guid: string | null;
   ts_departureaerodrome_guid: string | null;
   ts_departureaerodrome_site_guid: string | null;
+  ts_finding_guid: string | null;
   ts_functionallocation_guid: string | null;
   ts_incompleteworkorderreason_guid: string | null;
   ts_operatingcarrier_guid: string | null;
@@ -1102,6 +1109,7 @@ interface msdyn_workorder_RelatedOne {
   ts_CaseTimeTracking: WebMappingRetrieve<Incident_Select,Incident_Expand,Incident_Filter,Incident_Fixed,Incident_Result,Incident_FormattedResult>;
   ts_Contact: WebMappingRetrieve<Contact_Select,Contact_Expand,Contact_Filter,Contact_Fixed,Contact_Result,Contact_FormattedResult>;
   ts_DepartureAerodrome_Site: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
+  ts_Finding: WebMappingRetrieve<ovs_Finding_Select,ovs_Finding_Expand,ovs_Finding_Filter,ovs_Finding_Fixed,ovs_Finding_Result,ovs_Finding_FormattedResult>;
   ts_FunctionalLocation: WebMappingRetrieve<ts_site_Select,ts_site_Expand,ts_site_Filter,ts_site_Fixed,ts_site_Result,ts_site_FormattedResult>;
   ts_IncompleteWorkOrderReason: WebMappingRetrieve<ts_IncompleteWorkOrderReason_Select,ts_IncompleteWorkOrderReason_Expand,ts_IncompleteWorkOrderReason_Filter,ts_IncompleteWorkOrderReason_Fixed,ts_IncompleteWorkOrderReason_Result,ts_IncompleteWorkOrderReason_FormattedResult>;
   ts_OperatingCarrierOperation: WebMappingRetrieve<ovs_operation_Select,ovs_operation_Expand,ovs_operation_Filter,ovs_operation_Fixed,ovs_operation_Result,ovs_operation_FormattedResult>;

@@ -449,6 +449,7 @@ interface Incident_Expand {
   modifiedby: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<Incident_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   msdyn_FunctionalLocation: WebExpand<Incident_Expand, msdyn_FunctionalLocation_Select, msdyn_FunctionalLocation_Filter, { msdyn_FunctionalLocation: msdyn_FunctionalLocation_Result }>;
+  msdyn_aiagentstatus: WebExpand<Incident_Expand, msdyn_aiagentstatus_Select, msdyn_aiagentstatus_Filter, { msdyn_aiagentstatus: msdyn_aiagentstatus_Result }>;
   msdyn_incident_msdyn_customerasset: WebExpand<Incident_Expand, msdyn_customerasset_Select, msdyn_customerasset_Filter, { msdyn_incident_msdyn_customerasset: msdyn_customerasset_Result[] }>;
   msdyn_incident_msdyn_workorder_ServiceRequest: WebExpand<Incident_Expand, msdyn_workorder_Select, msdyn_workorder_Filter, { msdyn_incident_msdyn_workorder_ServiceRequest: msdyn_workorder_Result[] }>;
   msdyn_incidenttype: WebExpand<Incident_Expand, msdyn_incidenttype_Select, msdyn_incidenttype_Filter, { msdyn_incidenttype: msdyn_incidenttype_Result }>;
@@ -623,6 +624,7 @@ interface Incident_RelatedOne {
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   msdyn_FunctionalLocation: WebMappingRetrieve<msdyn_FunctionalLocation_Select,msdyn_FunctionalLocation_Expand,msdyn_FunctionalLocation_Filter,msdyn_FunctionalLocation_Fixed,msdyn_FunctionalLocation_Result,msdyn_FunctionalLocation_FormattedResult>;
+  msdyn_aiagentstatus: WebMappingRetrieve<msdyn_aiagentstatus_Select,msdyn_aiagentstatus_Expand,msdyn_aiagentstatus_Filter,msdyn_aiagentstatus_Fixed,msdyn_aiagentstatus_Result,msdyn_aiagentstatus_FormattedResult>;
   msdyn_incidenttype: WebMappingRetrieve<msdyn_incidenttype_Select,msdyn_incidenttype_Expand,msdyn_incidenttype_Filter,msdyn_incidenttype_Fixed,msdyn_incidenttype_Result,msdyn_incidenttype_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;

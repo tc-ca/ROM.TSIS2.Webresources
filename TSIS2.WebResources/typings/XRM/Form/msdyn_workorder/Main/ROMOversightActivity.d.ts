@@ -224,6 +224,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_departureaerodrome"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_details"): Xrm.Attribute<string>;
       get(name: "ts_documenteddate"): Xrm.DateAttribute;
+      get(name: "ts_finding"): Xrm.LookupAttribute<"ovs_finding">;
       get(name: "ts_flightnumber"): Xrm.Attribute<string>;
       get(name: "ts_flighttype"): Xrm.OptionSetAttribute<ts_flighttype>;
       get(name: "ts_incompleteworkorderreason"): Xrm.LookupAttribute<"ts_incompleteworkorderreason">;
@@ -420,6 +421,7 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "ts_details"): Xrm.StringControl;
       get(name: "ts_documenteddate"): Xrm.DateControl;
       get(name: "ts_documenteddate1"): Xrm.DateControl;
+      get(name: "ts_finding"): Xrm.LookupControl<"ovs_finding">;
       get(name: "ts_flightnumber"): Xrm.StringControl;
       get(name: "ts_flighttype"): Xrm.OptionSetControl<ts_flighttype>;
       get(name: "ts_incompleteworkorderreason"): Xrm.LookupControl<"ts_incompleteworkorderreason">;
@@ -596,6 +598,7 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "ts_departureaerodrome"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_details"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_documenteddate"): Xrm.DateAttribute;
+    getAttribute(attributeName: "ts_finding"): Xrm.LookupAttribute<"ovs_finding">;
     getAttribute(attributeName: "ts_flightnumber"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_flighttype"): Xrm.OptionSetAttribute<ts_flighttype>;
     getAttribute(attributeName: "ts_incompleteworkorderreason"): Xrm.LookupAttribute<"ts_incompleteworkorderreason">;
@@ -787,6 +790,7 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "ts_details"): Xrm.StringControl;
     getControl(controlName: "ts_documenteddate"): Xrm.DateControl;
     getControl(controlName: "ts_documenteddate1"): Xrm.DateControl;
+    getControl(controlName: "ts_finding"): Xrm.LookupControl<"ovs_finding">;
     getControl(controlName: "ts_flightnumber"): Xrm.StringControl;
     getControl(controlName: "ts_flighttype"): Xrm.OptionSetControl<ts_flighttype>;
     getControl(controlName: "ts_incompleteworkorderreason"): Xrm.LookupControl<"ts_incompleteworkorderreason">;
