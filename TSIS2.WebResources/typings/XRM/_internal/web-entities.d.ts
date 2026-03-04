@@ -1734,6 +1734,29 @@ interface ts_trip_Create extends ts_trip {
 }
 interface ts_trip_Update extends ts_trip {
 }
+interface ts_tripinspector_Base extends WebEntity {
+}
+interface ts_tripinspector_Fixed extends WebEntity_Fixed {
+  ts_tripinspectorid: string;
+}
+interface ts_tripinspector extends ts_tripinspector_Base, ts_tripinspector_Relationships {
+}
+interface ts_tripinspector_Relationships {
+}
+interface ts_tripinspector_Result extends ts_tripinspector_Base, ts_tripinspector_Relationships {
+}
+interface ts_tripinspector_FormattedResult {
+}
+interface ts_tripinspector_Select {
+}
+interface ts_tripinspector_Expand {
+}
+interface ts_tripinspector_Filter {
+}
+interface ts_tripinspector_Create extends ts_tripinspector {
+}
+interface ts_tripinspector_Update extends ts_tripinspector {
+}
 interface ts_ts_file_ts_trip_Base extends WebEntity {
 }
 interface ts_ts_file_ts_trip_Fixed extends WebEntity_Fixed {
@@ -2308,6 +2331,29 @@ interface BookingStatus_Filter {
 interface BookingStatus_Create extends BookingStatus {
 }
 interface BookingStatus_Update extends BookingStatus {
+}
+interface msdyn_aiagentstatus_Base extends WebEntity {
+}
+interface msdyn_aiagentstatus_Fixed extends WebEntity_Fixed {
+  msdyn_aiagentstatusid: string;
+}
+interface msdyn_aiagentstatus extends msdyn_aiagentstatus_Base, msdyn_aiagentstatus_Relationships {
+}
+interface msdyn_aiagentstatus_Relationships {
+}
+interface msdyn_aiagentstatus_Result extends msdyn_aiagentstatus_Base, msdyn_aiagentstatus_Relationships {
+}
+interface msdyn_aiagentstatus_FormattedResult {
+}
+interface msdyn_aiagentstatus_Select {
+}
+interface msdyn_aiagentstatus_Expand {
+}
+interface msdyn_aiagentstatus_Filter {
+}
+interface msdyn_aiagentstatus_Create extends msdyn_aiagentstatus {
+}
+interface msdyn_aiagentstatus_Update extends msdyn_aiagentstatus {
 }
 interface TeamMembership_Base extends WebEntity {
 }

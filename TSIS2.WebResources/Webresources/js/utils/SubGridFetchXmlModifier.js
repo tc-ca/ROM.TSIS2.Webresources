@@ -44,9 +44,9 @@ var ROM;
         Utils.removeLinkedEntities = removeLinkedEntities;
         function removeXmlNode(xml, nodeName) {
             // Remove Empty tags i.e. <example /> or <example a="b" />
-            xml = xml.replace(new RegExp("<[s]*".concat(nodeName, "[^/>]*\\/>"), "gm"), "");
+            xml = xml.replace(new RegExp("<[s]*" + nodeName + "[^/>]*\\/>", "gm"), "");
             var startTag = "<" + nodeName;
-            var endTag = "</".concat(nodeName, ">");
+            var endTag = "</" + nodeName + ">";
             var endIndex = xml.indexOf(endTag);
             // use first end Tag to do inner search
             while (endIndex >= 0) {

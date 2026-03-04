@@ -45,6 +45,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "ts_contact"): Xrm.LookupAttribute<"contact">;
       get(name: "ts_country"): Xrm.LookupAttribute<"tc_country">;
       get(name: "ts_details"): Xrm.Attribute<string>;
+      get(name: "ts_finding"): Xrm.LookupAttribute<"ovs_finding">;
       get(name: "ts_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
       get(name: "ts_instructions"): Xrm.Attribute<string>;
       get(name: "ts_name"): Xrm.Attribute<string>;
@@ -112,6 +113,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
       get(name: "ts_country"): Xrm.LookupControl<"tc_country">;
       get(name: "ts_details"): Xrm.StringControl;
       get(name: "ts_details1"): Xrm.StringControl;
+      get(name: "ts_finding"): Xrm.LookupControl<"ovs_finding">;
       get(name: "ts_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
       get(name: "ts_instructions"): Xrm.StringControl;
       get(name: "ts_name"): Xrm.StringControl;
@@ -188,6 +190,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getAttribute(attributeName: "ts_contact"): Xrm.LookupAttribute<"contact">;
     getAttribute(attributeName: "ts_country"): Xrm.LookupAttribute<"tc_country">;
     getAttribute(attributeName: "ts_details"): Xrm.Attribute<string>;
+    getAttribute(attributeName: "ts_finding"): Xrm.LookupAttribute<"ovs_finding">;
     getAttribute(attributeName: "ts_functionallocation"): Xrm.LookupAttribute<"msdyn_functionallocation">;
     getAttribute(attributeName: "ts_instructions"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
@@ -250,6 +253,7 @@ declare namespace Form.ts_unplannedworkorder.Main {
     getControl(controlName: "ts_country"): Xrm.LookupControl<"tc_country">;
     getControl(controlName: "ts_details"): Xrm.StringControl;
     getControl(controlName: "ts_details1"): Xrm.StringControl;
+    getControl(controlName: "ts_finding"): Xrm.LookupControl<"ovs_finding">;
     getControl(controlName: "ts_functionallocation"): Xrm.LookupControl<"msdyn_functionallocation">;
     getControl(controlName: "ts_instructions"): Xrm.StringControl;
     getControl(controlName: "ts_name"): Xrm.StringControl;

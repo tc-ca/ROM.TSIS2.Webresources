@@ -36,6 +36,7 @@ declare namespace Form.ts_operationactivity.Main {
       get(name: "ts_name"): Xrm.Attribute<string>;
       get(name: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
       get(name: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
+      get(name: "ts_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
       get(name: "ts_plannedstatus"): Xrm.OptionSetAttribute<ts_planningstatus>;
       get(name: "ts_programarea"): Xrm.LookupAttribute<"ts_programarea">;
       get(name: "ts_riskscore"): Xrm.NumberAttribute;
@@ -58,6 +59,7 @@ declare namespace Form.ts_operationactivity.Main {
       get(name: "ts_closedondatemostrecentwo"): Xrm.DateControl;
       get(name: "ts_name"): Xrm.StringControl;
       get(name: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
+      get(name: "ts_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
       get(name: "ts_programarea"): Xrm.LookupControl<"ts_programarea">;
       get(name: "ts_riskscore"): Xrm.NumberControl;
       get(name: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;
@@ -85,6 +87,7 @@ declare namespace Form.ts_operationactivity.Main {
     getAttribute(attributeName: "ts_name"): Xrm.Attribute<string>;
     getAttribute(attributeName: "ts_operation"): Xrm.LookupAttribute<"ovs_operation">;
     getAttribute(attributeName: "ts_operationalstatus"): Xrm.OptionSetAttribute<ts_operationalstatus>;
+    getAttribute(attributeName: "ts_operationtype"): Xrm.LookupAttribute<"ovs_operationtype">;
     getAttribute(attributeName: "ts_plannedstatus"): Xrm.OptionSetAttribute<ts_planningstatus>;
     getAttribute(attributeName: "ts_programarea"): Xrm.LookupAttribute<"ts_programarea">;
     getAttribute(attributeName: "ts_riskscore"): Xrm.NumberAttribute;
@@ -102,6 +105,7 @@ declare namespace Form.ts_operationactivity.Main {
     getControl(controlName: "ts_closedondatemostrecentwo"): Xrm.DateControl;
     getControl(controlName: "ts_name"): Xrm.StringControl;
     getControl(controlName: "ts_operation"): Xrm.LookupControl<"ovs_operation">;
+    getControl(controlName: "ts_operationtype"): Xrm.LookupControl<"ovs_operationtype">;
     getControl(controlName: "ts_programarea"): Xrm.LookupControl<"ts_programarea">;
     getControl(controlName: "ts_riskscore"): Xrm.NumberControl;
     getControl(controlName: "ts_site"): Xrm.LookupControl<"msdyn_functionallocation">;

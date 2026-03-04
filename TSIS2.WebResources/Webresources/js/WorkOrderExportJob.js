@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -70,29 +70,29 @@ var ROM;
             }
         }
         function formatSurveyOverall(done, total) {
-            return "Export \u2014 Questionnaires ".concat(Math.min(done, total), "/").concat(total);
+            return "Export \u2014 Questionnaires " + Math.min(done, total) + "/" + total;
         }
         function formatBackendProgressMessage(status, stageLabel, rawMessage, doneUnits, totalUnits) {
             var percent = totalUnits > 0 ? Math.max(0, Math.min(100, Math.round((doneUnits * 100) / totalUnits))) : 0;
             var msg = (rawMessage || "").trim();
             if (!msg)
-                return "Export ".concat(percent, "% \u2014 ").concat(stageLabel);
+                return "Export " + percent + "% \u2014 " + stageLabel;
             // Common pattern from Flow: "Main PDFs: x/y"
             var mainMatch = msg.match(/^Main PDFs:\s*(\d+)\s*\/\s*(\d+)\s*$/i);
             if (mainMatch) {
                 var done = Number(mainMatch[1] || 0);
                 var total = Number(mainMatch[2] || 0);
                 var next = (done >= total) ? "Next: merge + ZIP." : "";
-                return "Export ".concat(percent, "% \u2014 ").concat(stageLabel, " \u2014 ").concat(done, " of ").concat(total, " done. ").concat(next).trim();
+                return ("Export " + percent + "% \u2014 " + stageLabel + " \u2014 " + done + " of " + total + " done. " + next).trim();
             }
             // If survey stage completed but we're now in backend, replace technical survey-only messages with a clearer handoff.
             if ((status === STATUS_READY_FOR_SERVER || status === STATUS_READY_FOR_FLOW || status === STATUS_FLOW_RUNNING || status === STATUS_READY_FOR_MERGE) &&
                 (msg.toLowerCase().includes("survey pdfs") || msg.toLowerCase().includes("questionnaire pdfs") || msg.toLowerCase().includes("questionnaires")) &&
                 msg.toLowerCase().includes("complete")) {
-                return "Export ".concat(percent, "% \u2014 Questionnaires complete. Continuing with main PDFs and final ZIP...");
+                return "Export " + percent + "% \u2014 Questionnaires complete. Continuing with main PDFs and final ZIP...";
             }
             // Default: prefix with stage so message always has context.
-            return "Export ".concat(percent, "% \u2014 ").concat(stageLabel, " \u2014 ").concat(msg);
+            return "Export " + percent + "% \u2014 " + stageLabel + " \u2014 " + msg;
         }
         function safeUpdateJob(jobId, patch) {
             return __awaiter(this, void 0, void 0, function () {
@@ -108,7 +108,7 @@ var ROM;
                         case 2:
                             e_1 = _a.sent();
                             // Don't fail the export if progress writes fail (e.g., column not on form, permissions, etc.)
-                            console.log("[WOExport] Progress update failed: ".concat((e_1 === null || e_1 === void 0 ? void 0 : e_1.message) || e_1));
+                            console.log("[WOExport] Progress update failed: " + ((e_1 === null || e_1 === void 0 ? void 0 : e_1.message) || e_1));
                             return [3 /*break*/, 3];
                         case 3: return [2 /*return*/];
                     }
@@ -187,7 +187,7 @@ var ROM;
                     baseUrl = getClientUrl();
                     if (!baseUrl)
                         return [2 /*return*/, false];
-                    url = "".concat(baseUrl, "/api/data/v9.2/ts_workorderexportjobs(").concat(jobId, ")/ts_finalexportzip/$value");
+                    url = baseUrl + "/api/data/v9.2/ts_workorderexportjobs(" + jobId + ")/ts_finalexportzip/$value";
                     window.open(url, "_blank");
                     return [2 /*return*/, true];
                 });
@@ -205,12 +205,12 @@ var ROM;
                             if (_c.sent()) {
                                 return [2 /*return*/];
                             }
-                            zipFileName = "WorkOrderExport_".concat(jobId, ".zip");
+                            zipFileName = "WorkOrderExport_" + jobId + ".zip";
                             _c.label = 2;
                         case 2:
                             _c.trys.push([2, 6, , 7]);
                             q = "?$select=annotationid,filename,subject" +
-                                "&$filter=_objectid_value eq ".concat(jobId, " and filename eq '").concat(zipFileName, "'") +
+                                ("&$filter=_objectid_value eq " + jobId + " and filename eq '" + zipFileName + "'") +
                                 "&$top=1";
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("annotation", q)];
                         case 3:
@@ -228,7 +228,7 @@ var ROM;
                         case 5: return [3 /*break*/, 7];
                         case 6:
                             e_3 = _c.sent();
-                            console.log("[WOExport] Failed to locate ZIP note: ".concat((e_3 === null || e_3 === void 0 ? void 0 : e_3.message) || e_3));
+                            console.log("[WOExport] Failed to locate ZIP note: " + ((e_3 === null || e_3 === void 0 ? void 0 : e_3.message) || e_3));
                             return [3 /*break*/, 7];
                         case 7:
                             Xrm.Navigation.openAlertDialog({ text: "Export completed, but the ZIP could not be located automatically. Please check Notes on the export job (or the Final Export ZIP lookup)." });
@@ -251,7 +251,7 @@ var ROM;
                             if (status === STATUS_ERROR) {
                                 stopProgressPoller(formContext);
                                 msg = (job === null || job === void 0 ? void 0 : job.ts_errormessage) || "Export failed. See error message.";
-                                setProgressNotification(formContext, "Error: ".concat(msg), "ERROR");
+                                setProgressNotification(formContext, "Error: " + msg, "ERROR");
                                 return [2 /*return*/];
                             }
                             totalUnits = Number((job === null || job === void 0 ? void 0 : job.ts_totalunits) || 0);
@@ -295,12 +295,12 @@ var ROM;
                 return;
             progressPollHandle = window.setInterval(function () {
                 pollAndRenderProgress(formContext, jobId).catch(function (e) {
-                    console.log("[WOExport] Progress polling error: ".concat((e === null || e === void 0 ? void 0 : e.message) || e));
+                    console.log("[WOExport] Progress polling error: " + ((e === null || e === void 0 ? void 0 : e.message) || e));
                 });
             }, PROGRESS_POLL_INTERVAL_MS);
             // kick once immediately
             pollAndRenderProgress(formContext, jobId).catch(function (e) {
-                console.log("[WOExport] Progress polling error: ".concat((e === null || e === void 0 ? void 0 : e.message) || e));
+                console.log("[WOExport] Progress polling error: " + ((e === null || e === void 0 ? void 0 : e.message) || e));
             });
         }
         function stopProgressPoller(formContext) {
@@ -418,7 +418,7 @@ var ROM;
                                 rawPayload = JSON.parse(payloadStr);
                             }
                             catch (e) {
-                                throw new Error("Invalid payload JSON (parse failed): ".concat(e.message || e));
+                                throw new Error("Invalid payload JSON (parse failed): " + (e.message || e));
                             }
                             if (!rawPayload || !Array.isArray(rawPayload.ids)) {
                                 throw new Error("Invalid payload JSON format. Expected { ids: string[], includeHiddenQuestions?: boolean }.");
@@ -440,13 +440,13 @@ var ROM;
                             workOrderIdNoBraces = workOrderId.replace(/[{}]/g, "");
                             fetchOptions = "?$select=msdyn_workorderservicetaskid,ovs_questionnairedefinition,ovs_questionnaireresponse" +
                                 "&$filter=_msdyn_workorder_value eq " + workOrderIdNoBraces;
-                            setProgressNotification(formContext, "Preparing export (1/2): counting questionnaires (".concat(countIndex, "/").concat(totalExports, ")..."), "INFO");
+                            setProgressNotification(formContext, "Preparing export (1/2): counting questionnaires (" + countIndex + "/" + totalExports + ")...", "INFO");
                             return [4 /*yield*/, Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", fetchOptions)];
                         case 4:
                             tasks = _g.sent();
                             tasksTotal = tasks.entities.length;
                             if (!(tasksTotal === 0)) return [3 /*break*/, 6];
-                            errorMessage = "Work Order ".concat(workOrderIdNoBraces, ": No work order service tasks found");
+                            errorMessage = "Work Order " + workOrderIdNoBraces + ": No work order service tasks found";
                             formContext.getAttribute("statuscode").setValue(STATUS_ERROR);
                             errorMsgAttr = formContext.getAttribute("ts_errormessage");
                             if (errorMsgAttr)
@@ -462,7 +462,7 @@ var ROM;
                                 return task.ovs_questionnairedefinition && task.ovs_questionnaireresponse;
                             });
                             if (!(tasksWithQuestionnaires.length === 0)) return [3 /*break*/, 8];
-                            errorMessage = "Work Order ".concat(workOrderIdNoBraces, ": No questionnaires found in any service tasks");
+                            errorMessage = "Work Order " + workOrderIdNoBraces + ": No questionnaires found in any service tasks";
                             formContext.getAttribute("statuscode").setValue(STATUS_ERROR);
                             errorMsgAttr = formContext.getAttribute("ts_errormessage");
                             if (errorMsgAttr)
@@ -487,7 +487,7 @@ var ROM;
                             return [4 /*yield*/, safeUpdateJob(exportJobId_1, {
                                     ts_totalunits: totalUnits,
                                     ts_doneunits: doneUnits_1,
-                                    ts_progressmessage: "Questionnaire PDFs: 0/".concat(totalSurveyPdfs),
+                                    ts_progressmessage: "Questionnaire PDFs: 0/" + totalSurveyPdfs,
                                     ts_lastheartbeat: new Date().toISOString()
                                 })];
                         case 11:
@@ -507,7 +507,7 @@ var ROM;
                             errors = [];
                             updateProgress = function (overallMessage, detailMessage) {
                                 var combined = detailMessage
-                                    ? "".concat(overallMessage, " \u2014 ").concat(detailMessage)
+                                    ? overallMessage + " \u2014 " + detailMessage
                                     : overallMessage;
                                 setProgressNotification(formContext, combined, "WARNING");
                             };
@@ -555,11 +555,11 @@ var ROM;
                             return [3 /*break*/, 17];
                         case 16:
                             e_4 = _g.sent();
-                            console.log("[WOExport] Could not retrieve work order name for ".concat(workOrderIdNoBraces, ": ").concat(e_4.message));
+                            console.log("[WOExport] Could not retrieve work order name for " + workOrderIdNoBraces + ": " + e_4.message);
                             return [3 /*break*/, 17];
                         case 17:
-                            woDisplayName = workOrderName ? " - ".concat(workOrderName) : "";
-                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order ".concat(currentExportIndex, " of ").concat(totalExports).concat(woDisplayName, ": starting (do not close this tab)"));
+                            woDisplayName = workOrderName ? " - " + workOrderName : "";
+                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + ": starting (do not close this tab)");
                             tasksEntities = tasksByWorkOrderId[workOrderIdNoBraces] || [];
                             tasksTotal = tasksEntities.length;
                             renderedCount = 0;
@@ -583,7 +583,7 @@ var ROM;
                                             _l.label = 1;
                                         case 1:
                                             _l.trys.push([1, 7, , 8]);
-                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order ".concat(currentExportIndex, " of ").concat(totalExports).concat(woDisplayName, " \u2014 Questionnaire ").concat(currentTaskIndex, " of ").concat(totalQuestionnaires, ": preparing"));
+                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + " \u2014 Questionnaire " + currentTaskIndex + " of " + totalQuestionnaires + ": preparing");
                                             // ---------------------------------------------------------
                                             // RENDER LOGIC
                                             // ---------------------------------------------------------
@@ -609,7 +609,7 @@ var ROM;
                                                 surveyDef = JSON.parse(def.trim());
                                             }
                                             catch (parseError) {
-                                                console.log("[WOExport] ERROR parsing survey definition for Work Order Service Task ".concat(taskId, ": ").concat(parseError.message));
+                                                console.log("[WOExport] ERROR parsing survey definition for Work Order Service Task " + taskId + ": " + parseError.message);
                                                 return [2 /*return*/, "continue"];
                                             }
                                             // If includeHiddenQuestions is true: clear visibleIf on ALL elements on ALL pages
@@ -666,17 +666,17 @@ var ROM;
                                                     detailBox.value = sender.getValue(detailSurveyId);
                                             });
                                             // 4. Render
-                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order ".concat(currentExportIndex, " of ").concat(totalExports).concat(woDisplayName, " \u2014 Questionnaire ").concat(currentTaskIndex, " of ").concat(totalQuestionnaires, ": rendering"));
+                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + " \u2014 Questionnaire " + currentTaskIndex + " of " + totalQuestionnaires + ": rendering");
                                             renderWindow_1.jQuery(targetId).Survey({ model: survey });
                                             // Wait for rendering with polling
-                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order ".concat(currentExportIndex, " of ").concat(totalExports).concat(woDisplayName, " \u2014 Questionnaire ").concat(currentTaskIndex, " of ").concat(totalQuestionnaires, ": finalizing layout"));
+                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + " \u2014 Questionnaire " + currentTaskIndex + " of " + totalQuestionnaires + ": finalizing layout");
                                             return [4 /*yield*/, waitForRender(targetElement, 10000)];
                                         case 2:
                                             _l.sent();
                                             // ---------------------------------------------------------
                                             // FIX: Convert TextAreas to Divs
                                             // ---------------------------------------------------------
-                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order ".concat(currentExportIndex, " of ").concat(totalExports).concat(woDisplayName, " \u2014 Questionnaire ").concat(currentTaskIndex, " of ").concat(totalQuestionnaires, ": formatting"));
+                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + " \u2014 Questionnaire " + currentTaskIndex + " of " + totalQuestionnaires + ": formatting");
                                             if (renderWindow_1.jQuery) {
                                                 renderWindow_1.jQuery("textarea").each(function (index, el) {
                                                     var val = (renderWindow_1.jQuery(el).val() || "").toString();
@@ -695,8 +695,8 @@ var ROM;
                                                     renderWindow_1.jQuery(el).replaceWith(newDiv);
                                                 });
                                             }
-                                            filename_1 = "WO_".concat(workOrderIdNoBraces, "_SURVEY_").concat(taskId, ".pdf");
-                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order ".concat(currentExportIndex, " of ").concat(totalExports).concat(woDisplayName, " \u2014 Questionnaire ").concat(currentTaskIndex, " of ").concat(totalQuestionnaires, ": generating PDF"));
+                                            filename_1 = "WO_" + workOrderIdNoBraces + "_SURVEY_" + taskId + ".pdf";
+                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + " \u2014 Questionnaire " + currentTaskIndex + " of " + totalQuestionnaires + ": generating PDF");
                                             options = {
                                                 margin: 0.5,
                                                 filename: filename_1,
@@ -708,14 +708,14 @@ var ROM;
                                         case 3:
                                             blob_1 = _l.sent();
                                             sizeMB_1 = (blob_1.size / (1024 * 1024)).toFixed(2);
-                                            console.log("[WOExport] PDF Generated for Work Order Service Task ".concat(taskId, ". Size: ").concat(sizeMB_1, " MB"));
+                                            console.log("[WOExport] PDF Generated for Work Order Service Task " + taskId + ". Size: " + sizeMB_1 + " MB");
                                             if (blob_1.size < 5 * 1024) {
-                                                console.warn("[WOExport] Warning: ".concat(filename_1, " is unusually small (").concat(sizeMB_1, " MB). It may be blank."));
+                                                console.warn("[WOExport] Warning: " + filename_1 + " is unusually small (" + sizeMB_1 + " MB). It may be blank.");
                                             }
                                             // ---------------------------------------------------------
                                             // UPLOAD
                                             // ---------------------------------------------------------
-                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order ".concat(currentExportIndex, " of ").concat(totalExports).concat(woDisplayName, " \u2014 Questionnaire ").concat(currentTaskIndex, " of ").concat(totalQuestionnaires, ": uploading PDF"));
+                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + " \u2014 Questionnaire " + currentTaskIndex + " of " + totalQuestionnaires + ": uploading PDF");
                                             return [4 /*yield*/, new Promise(function (resolve, reject) {
                                                     var READER_TIMEOUT_MS = 60000; // 60 seconds max for blob read
                                                     var reader = new FileReader();
@@ -725,7 +725,7 @@ var ROM;
                                                             return;
                                                         settled = true;
                                                         reader.abort();
-                                                        reject(new Error("FileReader timed out after ".concat(READER_TIMEOUT_MS / 1000, "s for ").concat(filename_1, " (").concat(sizeMB_1, " MB)")));
+                                                        reject(new Error("FileReader timed out after " + READER_TIMEOUT_MS / 1000 + "s for " + filename_1 + " (" + sizeMB_1 + " MB)"));
                                                     }, READER_TIMEOUT_MS);
                                                     reader.onloadend = function () {
                                                         if (settled)
@@ -734,7 +734,7 @@ var ROM;
                                                         clearTimeout(timeoutId);
                                                         var result = reader.result;
                                                         if (!result) {
-                                                            reject(new Error("FileReader returned empty result for ".concat(filename_1)));
+                                                            reject(new Error("FileReader returned empty result for " + filename_1));
                                                             return;
                                                         }
                                                         var data = result.split(',')[1];
@@ -746,14 +746,14 @@ var ROM;
                                                             return;
                                                         settled = true;
                                                         clearTimeout(timeoutId);
-                                                        reject(new Error("FileReader failed for ".concat(filename_1, ": ").concat(((_a = reader.error) === null || _a === void 0 ? void 0 : _a.message) || 'Unknown error')));
+                                                        reject(new Error("FileReader failed for " + filename_1 + ": " + (((_a = reader.error) === null || _a === void 0 ? void 0 : _a.message) || 'Unknown error')));
                                                     };
                                                     reader.onabort = function () {
                                                         if (settled)
                                                             return;
                                                         settled = true;
                                                         clearTimeout(timeoutId);
-                                                        reject(new Error("FileReader aborted for ".concat(filename_1)));
+                                                        reject(new Error("FileReader aborted for " + filename_1));
                                                     };
                                                     reader.readAsDataURL(blob_1);
                                                 })];
@@ -766,25 +766,25 @@ var ROM;
                                             note.isdocument = true;
                                             note.documentbody = base64Data;
                                             note.mimetype = "application/pdf";
-                                            note["objectid_ts_workorderexportjob@odata.bind"] = "/ts_workorderexportjobs(".concat(exportJobId_2, ")");
+                                            note["objectid_ts_workorderexportjob@odata.bind"] = "/ts_workorderexportjobs(" + exportJobId_2 + ")";
                                             return [4 /*yield*/, Xrm.WebApi.createRecord("annotation", note)];
                                         case 5:
                                             _l.sent();
-                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order ".concat(currentExportIndex, " of ").concat(totalExports).concat(woDisplayName, " \u2014 Questionnaire ").concat(currentTaskIndex, " of ").concat(totalQuestionnaires, ": done"));
+                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + " \u2014 Questionnaire " + currentTaskIndex + " of " + totalQuestionnaires + ": done");
                                             renderedCount++;
                                             uploadedCount++;
                                             // Progress unit completed (one survey PDF)
                                             doneUnits_1++;
-                                            return [4 /*yield*/, writeProgress("Questionnaire PDFs: ".concat(Math.min(doneUnits_1, totalSurveyPdfs), "/").concat(totalSurveyPdfs))];
+                                            return [4 /*yield*/, writeProgress("Questionnaire PDFs: " + Math.min(doneUnits_1, totalSurveyPdfs) + "/" + totalSurveyPdfs)];
                                         case 6:
                                             _l.sent();
                                             return [3 /*break*/, 8];
                                         case 7:
                                             taskError_1 = _l.sent();
-                                            errorMessage = "Work Order: ".concat(workOrderIdNoBraces, " - Work order service task: ").concat(taskId, ":\n```\n").concat(taskError_1.message || taskError_1.toString(), "\n```");
+                                            errorMessage = "Work Order: " + workOrderIdNoBraces + " - Work order service task: " + taskId + ":\n```\n" + (taskError_1.message || taskError_1.toString()) + "\n```";
                                             errors.push(errorMessage);
-                                            console.error("[WOExport] Error processing Work Order Service Task ".concat(taskId, " for Work Order ").concat(workOrderIdNoBraces, ":"), taskError_1);
-                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order ".concat(currentExportIndex, " of ").concat(totalExports).concat(woDisplayName, " \u2014 Questionnaire ").concat(currentTaskIndex, " of ").concat(totalQuestionnaires, ": ERROR (").concat(taskError_1.message || taskError_1.toString(), ")"));
+                                            console.error("[WOExport] Error processing Work Order Service Task " + taskId + " for Work Order " + workOrderIdNoBraces + ":", taskError_1);
+                                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + " \u2014 Questionnaire " + currentTaskIndex + " of " + totalQuestionnaires + ": ERROR (" + (taskError_1.message || taskError_1.toString()) + ")");
                                             return [3 /*break*/, 8];
                                         case 8: return [3 /*break*/, 10];
                                         case 9:
@@ -807,8 +807,8 @@ var ROM;
                             _f++;
                             return [3 /*break*/, 18];
                         case 21:
-                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order ".concat(currentExportIndex, " of ").concat(totalExports).concat(woDisplayName, ": done (").concat(renderedCount, " PDFs generated, ").concat(skippedCount, " skipped)"));
-                            console.log("[WOExport] Work Order ".concat(workOrderIdNoBraces, ": tasks=").concat(tasksTotal, ", rendered=").concat(renderedCount, ", uploaded=").concat(uploadedCount, ", skipped=").concat(skippedCount));
+                            updateProgress(formatSurveyOverall(doneUnits_1, totalSurveyPdfs), "Export \u2014 Work order " + currentExportIndex + " of " + totalExports + woDisplayName + ": done (" + renderedCount + " PDFs generated, " + skippedCount + " skipped)");
+                            console.log("[WOExport] Work Order " + workOrderIdNoBraces + ": tasks=" + tasksTotal + ", rendered=" + renderedCount + ", uploaded=" + uploadedCount + ", skipped=" + skippedCount);
                             _g.label = 22;
                         case 22:
                             _e++;
@@ -826,9 +826,9 @@ var ROM;
                             return [4 /*yield*/, formContext.data.save()];
                         case 24:
                             _g.sent();
-                            Xrm.Navigation.openAlertDialog({ text: "Export completed with ".concat(errors.length, " error(s). Check error message field for details.") });
+                            Xrm.Navigation.openAlertDialog({ text: "Export completed with " + errors.length + " error(s). Check error message field for details." });
                             return [3 /*break*/, 28];
-                        case 25: return [4 /*yield*/, writeProgress("Questionnaire PDFs: ".concat(Math.min(doneUnits_1, totalSurveyPdfs), "/").concat(totalSurveyPdfs, " (complete)"), true)];
+                        case 25: return [4 /*yield*/, writeProgress("Questionnaire PDFs: " + Math.min(doneUnits_1, totalSurveyPdfs) + "/" + totalSurveyPdfs + " (complete)", true)];
                         case 26:
                             _g.sent();
                             setProgressNotification(formContext, "Export in progress (background processing continues).", "INFO");

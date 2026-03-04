@@ -35,6 +35,7 @@ interface ts_PlanningData_Base extends WebEntity {
   ts_plannedwo?: number | null;
   ts_plannedwouncalculated?: number | null;
   ts_planningdataid?: string | null;
+  ts_riskfrequencyname?: string | null;
   ts_target?: number | null;
   ts_teamestimatedduration?: number | null;
   ts_variance?: number | null;
@@ -129,6 +130,7 @@ interface ts_PlanningData_Select {
   ts_plannedwouncalculated: WebAttribute<ts_PlanningData_Select, { ts_plannedwouncalculated: number | null }, {  }>;
   ts_planningdataid: WebAttribute<ts_PlanningData_Select, { ts_planningdataid: string | null }, {  }>;
   ts_planningdetail_guid: WebAttribute<ts_PlanningData_Select, { ts_planningdetail_guid: string | null }, { ts_planningdetail_formatted?: string }>;
+  ts_riskfrequencyname: WebAttribute<ts_PlanningData_Select, { ts_riskfrequencyname: string | null }, {  }>;
   ts_site_guid: WebAttribute<ts_PlanningData_Select, { ts_site_guid: string | null }, { ts_site_formatted?: string }>;
   ts_site_site_guid: WebAttribute<ts_PlanningData_Select, { ts_site_site_guid: string | null }, { ts_site_site_formatted?: string }>;
   ts_stakeholder_guid: WebAttribute<ts_PlanningData_Select, { ts_stakeholder_guid: string | null }, { ts_stakeholder_formatted?: string }>;
@@ -194,6 +196,7 @@ interface ts_PlanningData_Filter {
   ts_plannedwouncalculated: number;
   ts_planningdataid: XQW.Guid;
   ts_planningdetail_guid: XQW.Guid;
+  ts_riskfrequencyname: string;
   ts_site_guid: XQW.Guid;
   ts_site_site_guid: XQW.Guid;
   ts_stakeholder_guid: XQW.Guid;

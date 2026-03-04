@@ -35,6 +35,7 @@ interface Email_Base extends WebEntity {
   isduplicatesenderunresolved?: boolean | null;
   isemailfollowed?: boolean | null;
   isemailreminderset?: boolean | null;
+  isprotected?: boolean | null;
   isregularactivity?: boolean | null;
   issafedescriptiontruncated?: number | null;
   isunsafe?: number | null;
@@ -101,6 +102,7 @@ interface Email_Relationships {
   emailsender_systemuser?: SystemUser_Result | null;
   modifiedby_email?: SystemUser_Result | null;
   modifiedonbehalfby_email?: SystemUser_Result | null;
+  msdyn_email_msdyn_aiagentstatus?: msdyn_aiagentstatus_Result[] | null;
   ownerid_email?: Team_Result | null;
   ownerid_email1?: SystemUser_Result | null;
   owningteam_email?: Team_Result | null;
@@ -292,6 +294,7 @@ interface Email_Select {
   isduplicatesenderunresolved: WebAttribute<Email_Select, { isduplicatesenderunresolved: boolean | null }, {  }>;
   isemailfollowed: WebAttribute<Email_Select, { isemailfollowed: boolean | null }, {  }>;
   isemailreminderset: WebAttribute<Email_Select, { isemailreminderset: boolean | null }, {  }>;
+  isprotected: WebAttribute<Email_Select, { isprotected: boolean | null }, {  }>;
   isregularactivity: WebAttribute<Email_Select, { isregularactivity: boolean | null }, {  }>;
   issafedescriptiontruncated: WebAttribute<Email_Select, { issafedescriptiontruncated: number | null }, {  }>;
   isunsafe: WebAttribute<Email_Select, { isunsafe: number | null }, {  }>;
@@ -409,6 +412,7 @@ interface Email_Filter {
   isduplicatesenderunresolved: boolean;
   isemailfollowed: boolean;
   isemailreminderset: boolean;
+  isprotected: boolean;
   isregularactivity: boolean;
   issafedescriptiontruncated: number;
   isunsafe: number;
@@ -496,6 +500,7 @@ interface Email_Expand {
   emailsender_systemuser: WebExpand<Email_Expand, SystemUser_Select, SystemUser_Filter, { emailsender_systemuser: SystemUser_Result }>;
   modifiedby_email: WebExpand<Email_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby_email: SystemUser_Result }>;
   modifiedonbehalfby_email: WebExpand<Email_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby_email: SystemUser_Result }>;
+  msdyn_email_msdyn_aiagentstatus: WebExpand<Email_Expand, msdyn_aiagentstatus_Select, msdyn_aiagentstatus_Filter, { msdyn_email_msdyn_aiagentstatus: msdyn_aiagentstatus_Result[] }>;
   ownerid_email: WebExpand<Email_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid_email: SystemUser_Result } & { ownerid_email: Team_Result }>;
   owningteam_email: WebExpand<Email_Expand, Team_Select, Team_Filter, { owningteam_email: Team_Result }>;
   owninguser_email: WebExpand<Email_Expand, SystemUser_Select, SystemUser_Filter, { owninguser_email: SystemUser_Result }>;
@@ -642,6 +647,7 @@ interface Email_RelatedMany {
   email_connections2: WebMappingRetrieve<Connection_Select,Connection_Expand,Connection_Filter,Connection_Fixed,Connection_Result,Connection_FormattedResult>;
   email_email_CorrelatedActivityId: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
   email_email_parentactivityid: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
+  msdyn_email_msdyn_aiagentstatus: WebMappingRetrieve<msdyn_aiagentstatus_Select,msdyn_aiagentstatus_Expand,msdyn_aiagentstatus_Filter,msdyn_aiagentstatus_Fixed,msdyn_aiagentstatus_Result,msdyn_aiagentstatus_FormattedResult>;
 }
 interface WebEntitiesRetrieve {
   emails: WebMappingRetrieve<Email_Select,Email_Expand,Email_Filter,Email_Fixed,Email_Result,Email_FormattedResult>;
