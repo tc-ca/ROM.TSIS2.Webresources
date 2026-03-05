@@ -888,103 +888,161 @@ async function applyTabVisibilityForTeam(formContext, teamSchemaName, visibleTab
 }
 
 /**
- * Assigns Team ownership if user is a member of Rail Safety, AvSec, or ISSO teams.
- * Checks sequentially and assigns the first matching team.
- * Optimized to fetch environment variables and check membership in parallel.
+ * Assigns ownership to the business unit's main team that the user belongs to.
+ * Each business unit has a default team with the same name.
  * Does not call save() - caller is responsible for save.
  * @param {object} formContext - The form context
  * @returns {Promise<boolean>} True if the form was modified, false otherwise
  */
 async function assignUserTeamOwnershipOnSave(formContext) {
-  const teamSchemas = [
-    TEAM_SCHEMA_NAMES.RAIL_SAFETY,
-    TEAM_SCHEMA_NAMES.AVIATION_SECURITY,
-    TEAM_SCHEMA_NAMES.ISSO_TEAM,
-    TEAM_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL,
-    TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC
-  ];
-
   try {
-    const userId = Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, "").toLowerCase();
+    const globalContext = Xrm.Utility.getGlobalContext();
+    const userId = globalContext.userSettings.userId.replace(/[{}]/g, "").toLowerCase();
 
-    // 1. Fetch all team GUIDs from environment variables in parallel
-    const teamGuids = await Promise.all(teamSchemas.map((schemaName) => getEnvironmentVariableValue(schemaName)));
-
-    // 2. Check membership for all valid team GUIDs in parallel
-    const membershipResults = await Promise.all(
-      teamGuids.map((guid) => (guid ? isUserInTeam(userId, guid) : Promise.resolve(false)))
+    // 1. Get the user's business unit
+    const user = await Xrm.WebApi.retrieveRecord(
+      "systemuser",
+      userId,
+      "?$select=_businessunitid_value"
     );
 
-    // 3. Find the first team the user belongs to (preserving priority)
-    for (let i = 0; i < teamSchemas.length; i++) {
-      if (membershipResults[i]) {
-        const teamGuid = teamGuids[i].replace(/[{}]/g, "").toLowerCase();
-        const ownerAttribute = formContext.getAttribute("ownerid");
-        const currentOwner = ownerAttribute.getValue();
-
-        // Check if already owned by this team
-        if (
-          currentOwner &&
-          currentOwner[0] &&
-          currentOwner[0].entityType === "team" &&
-          currentOwner[0].id.replace(/[{}]/g, "").toLowerCase() === teamGuid
-        ) {
-          return false;
-        }
-
-        const teamName = (await getTeamNameById(teamGuid)) || "Unknown Team";
-        ownerAttribute.setValue([
-          {
-            id: teamGuid,
-            entityType: "team",
-            name: teamName,
-          },
-        ]);
-        return true;
-      }
+    const userBuId = user._businessunitid_value;
+    if (!userBuId) {
+      console.warn("User Business Unit not found");
+      return false;
     }
+
+    const userBuIdNormalized = userBuId.replace(/[{}]/g, "").toLowerCase();
+
+    // 2. Get the business unit name
+    const buRecord = await Xrm.WebApi.retrieveRecord("businessunit", userBuIdNormalized, "?$select=name");
+    const buName = buRecord.name || "Unknown Business Unit";
+
+    // 3. Find the team with the same name as the business unit (BU's main team)
+    const teamFetchXml = [
+      "<fetch top='1'>",
+      "  <entity name='team'>",
+      "    <attribute name='name' />",
+      "    <attribute name='teamid' />",
+      "    <filter>",
+      "      <condition attribute='name' operator='eq' value='",
+      buName,
+      "'/>",
+      "    </filter>",
+      "  </entity>",
+      "</fetch>",
+    ].join("");
+
+    const encodedFetchXml = "?fetchXml=" + encodeURIComponent(teamFetchXml);
+    const teamResult = await Xrm.WebApi.retrieveMultipleRecords("team", encodedFetchXml);
+
+    if (!teamResult.entities || teamResult.entities.length === 0) {
+      console.warn("Team for business unit not found:", buName);
+      return false;
+    }
+
+    const targetTeamId = teamResult.entities[0].teamid;
+    const targetTeamName = teamResult.entities[0].name;
+
+    // 4. Check if already owned by this team and return early if so
+    const ownerAttribute = formContext.getAttribute("ownerid");
+    const currentOwner = ownerAttribute.getValue();
+
+    if (
+      currentOwner &&
+      currentOwner[0] &&
+      currentOwner[0].entityType === "team" &&
+      currentOwner[0].id.replace(/[{}]/g, "").toLowerCase() === targetTeamId.replace(/[{}]/g, "").toLowerCase()
+    ) {
+      return false;
+    }
+
+    // 5. Set the owner to the business unit's main team
+    ownerAttribute.setValue([
+      {
+        id: targetTeamId,
+        entityType: "team",
+        name: targetTeamName,
+      },
+    ]);
+
+    console.log("Record owner has been updated to: " + targetTeamName);
+    return true;
   } catch (error) {
     console.error("Error in assignUserTeamOwnershipOnSave:", error);
+    return false;
   }
-
-  return false;
 }
 
 /**
- * Checks if the current record is owned by Rail Safety, AvSec, or ISSO and logs to console.
- * Uses matchesOwnerTeamOrBU logic internally.
+ * Checks if the current record is owned by Rail Safety, AvSec, or ISSO dynamically
+ * by determining the owner's business unit and logging the result.
  * @param {object} formContext - The form context
  * @returns {Promise<void>}
  */
 async function logCurrentTeamOwnershipStatus(formContext) {
-  const ownershipGroups = [
-    { label: "Rail Safety", schemas: [TEAM_SCHEMA_NAMES.RAIL_SAFETY] },
-    { label: "Aviation Security Domestic", schemas: [TEAM_SCHEMA_NAMES.AVIATION_SECURITY_DOMESTIC] },
-    { label: "Aviation Security International", schemas: [TEAM_SCHEMA_NAMES.AVIATION_SECURITY_INTERNATIONAL] },
-    { label: "Aviation Security", schemas: [TEAM_SCHEMA_NAMES.AVIATION_SECURITY] },
-    { label: "ISSO", schemas: [TEAM_SCHEMA_NAMES.ISSO_TEAM] },
-  ];
-
   try {
     const ownerAttribute = formContext.getAttribute("ownerid");
     const ownerValue = ownerAttribute.getValue();
-    if (!ownerValue || !ownerValue[0]) return;
 
-    for (const group of ownershipGroups) {
-      const isOwned = await matchesOwnerTeamOrBU(ownerValue, {
-        teamSchemaNames: group.schemas,
-        buSchemaNames: [],
-      });
-
-      if (isOwned) {
-        console.log("This record belongs to " + group.label + ".");
-        return;
-      }
+    if (!ownerValue || !ownerValue[0]) {
+      console.log("No owner assigned to this record");
+      return;
     }
 
-    // Default
-    const name = ownerValue[0].name || "Unknown Owner";
-    console.log("This record belongs to " + name);
+    const ownerId = ownerValue[0].id.replace(/[{}]/g, "").toLowerCase();
+    const ownerEntityType = ownerValue[0].entityType;
+    const ownerName = ownerValue[0].name || "Unknown Owner";
+
+    let ownerBuId = null;
+
+    // Determine the business unit of the owner
+    if (ownerEntityType === "team") {
+      try {
+        const team = await Xrm.WebApi.retrieveRecord("team", ownerId, "?$select=_businessunitid_value");
+        ownerBuId = team._businessunitid_value;
+      } catch (error) {
+        console.warn("Error retrieving team business unit:", error);
+        return;
+      }
+    } else if (ownerEntityType === "systemuser") {
+      try {
+        const user = await Xrm.WebApi.retrieveRecord("systemuser", ownerId, "?$select=_businessunitid_value");
+        ownerBuId = user._businessunitid_value;
+      } catch (error) {
+        console.warn("Error retrieving user business unit:", error);
+        return;
+      }
+    } else {
+      console.log("This record is owned by: " + ownerName);
+      return;
+    }
+
+    if (!ownerBuId) {
+      console.log("Could not determine business unit for owner: " + ownerName);
+      return;
+    }
+
+    const ownerBuIdNormalized = ownerBuId.replace(/[{}]/g, "").toLowerCase();
+
+    // Check which organization BU the owner belongs to
+    if (await isRailSafetyBU(ownerBuIdNormalized)) {
+      console.log("This record belongs to Rail Safety (via " + ownerName + ").");
+      return;
+    }
+
+    if (await isAvSecBU(ownerBuIdNormalized)) {
+      console.log("This record belongs to Aviation Security (via " + ownerName + ").");
+      return;
+    }
+
+    if (await isISSOBU(ownerBuIdNormalized)) {
+      console.log("This record belongs to ISSO (via " + ownerName + ").");
+      return;
+    }
+
+    // Default: just log the owner name
+    console.log("This record belongs to " + ownerName);
   } catch (error) {
     console.error("Error in logCurrentTeamOwnershipStatus:", error);
   }
