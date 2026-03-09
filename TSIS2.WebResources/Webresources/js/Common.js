@@ -888,91 +888,87 @@ async function applyTabVisibilityForTeam(formContext, teamSchemaName, visibleTab
 }
 
 /**
- * Assigns ownership to the business unit's main team that the user belongs to.
- * Each business unit has a default team with the same name.
- * Does not call save() - caller is responsible for save.
+ * Assigns ownership to the Business Unit's default (main) team of the current user.
+ * Does NOT call save(); caller handles saving.
  * @param {object} formContext - The form context
  * @returns {Promise<boolean>} True if the form was modified, false otherwise
  */
+
 async function assignUserTeamOwnershipOnSave(formContext) {
   try {
     const globalContext = Xrm.Utility.getGlobalContext();
-    const userId = globalContext.userSettings.userId.replace(/[{}]/g, "").toLowerCase();
+    const normalize = (s) => (s || "").replace(/[{}]/g, "").toLowerCase();
 
-    // 1. Get the user's business unit
+    const userId = normalize(globalContext.userSettings.userId);
+
+    // 1) Get user's Business Unit Id
     const user = await Xrm.WebApi.retrieveRecord(
       "systemuser",
       userId,
       "?$select=_businessunitid_value"
     );
 
-    const userBuId = user._businessunitid_value;
-    if (!userBuId) {
-      console.warn("User Business Unit not found");
+    const buId = normalize(user._businessunitid_value);
+    if (!buId) {
+      console.warn("[assignUserTeamOwnershipOnSave] User Business Unit not found");
       return false;
     }
 
-    const userBuIdNormalized = userBuId.replace(/[{}]/g, "").toLowerCase();
+    // 2) OData: Get BU's default Owner Team (single call)
+    const defaultTeamResult = await Xrm.WebApi.retrieveMultipleRecords(
+      "team",
+      `?$select=teamid,name&$filter=_businessunitid_value eq ${buId} and isdefault eq true and teamtype eq 0&$top=1`
+    );
 
-    // 2. Get the business unit name
-    const buRecord = await Xrm.WebApi.retrieveRecord("businessunit", userBuIdNormalized, "?$select=name");
-    const buName = buRecord.name || "Unknown Business Unit";
-
-    // 3. Find the team with the same name as the business unit (BU's main team)
-    const teamFetchXml = [
-      "<fetch top='1'>",
-      "  <entity name='team'>",
-      "    <attribute name='name' />",
-      "    <attribute name='teamid' />",
-      "    <filter>",
-      "      <condition attribute='name' operator='eq' value='",
-      buName,
-      "'/>",
-      "    </filter>",
-      "  </entity>",
-      "</fetch>",
-    ].join("");
-
-    const encodedFetchXml = "?fetchXml=" + encodeURIComponent(teamFetchXml);
-    const teamResult = await Xrm.WebApi.retrieveMultipleRecords("team", encodedFetchXml);
-
-    if (!teamResult.entities || teamResult.entities.length === 0) {
-      console.warn("Team for business unit not found:", buName);
+    if (!defaultTeamResult.entities || defaultTeamResult.entities.length === 0) {
+      console.warn("[assignUserTeamOwnershipOnSave] No default Owner Team found for user's BU", { buId });
       return false;
     }
 
-    const targetTeamId = teamResult.entities[0].teamid;
-    const targetTeamName = teamResult.entities[0].name;
+    const targetTeamId = defaultTeamResult.entities[0].teamid;
+    const targetTeamName = defaultTeamResult.entities[0].name;
 
-    // 4. Check if already owned by this team and return early if so
+    // 3) Skip if already owned by that team
     const ownerAttribute = formContext.getAttribute("ownerid");
+    if (!ownerAttribute) {
+      console.warn("[assignUserTeamOwnershipOnSave] 'ownerid' attribute not present on form.");
+      return false;
+    }
+
     const currentOwner = ownerAttribute.getValue();
+    const targetIdNorm = normalize(targetTeamId);
 
     if (
       currentOwner &&
       currentOwner[0] &&
       currentOwner[0].entityType === "team" &&
-      currentOwner[0].id.replace(/[{}]/g, "").toLowerCase() === targetTeamId.replace(/[{}]/g, "").toLowerCase()
+      normalize(currentOwner[0].id) === targetIdNorm
     ) {
       return false;
     }
 
-    // 5. Set the owner to the business unit's main team
+    // 4) Assign owner to the BU default team
     ownerAttribute.setValue([
       {
-        id: targetTeamId,
+        id: `{${targetIdNorm}}`, // lookup often prefers braces
         entityType: "team",
         name: targetTeamName,
       },
     ]);
 
-    console.log("Record owner has been updated to: " + targetTeamName);
+    // Ensure it gets submitted
+    if (typeof ownerAttribute.setSubmitMode === "function") {
+      ownerAttribute.setSubmitMode("always");
+    }
+
+    console.log("[assignUserTeamOwnershipOnSave] Owner updated to team:", targetTeamName);
     return true;
   } catch (error) {
     console.error("Error in assignUserTeamOwnershipOnSave:", error);
     return false;
   }
 }
+
 
 /**
  * Checks if the current record is owned by Rail Safety, AvSec, or ISSO dynamically
