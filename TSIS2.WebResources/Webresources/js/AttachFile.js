@@ -8,6 +8,8 @@ var railsafetyOwnerName = "Rail Safety";
 var avsecDisplayName = null;
 var issoDisplayName = null;
 
+var isOwnedByRailSafetyButNotUsingRailSafetyApp = false;
+
 function FileUploadData() {
     this.recordTableNameEnglish = "";
     this.recordTableNameFrench = "";
@@ -56,6 +58,14 @@ async function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, Primary
         " ou " +
         issoDisplayName +
         ".";
+
+    let invalidAppMessageEnglish =
+        "The record is owned by " + railsafetyOwnerName +
+        " but you are not using the Rail Safety app. Please switch to the Rail Safety app.";
+
+    let invalidAppMessageFrench =
+        "L'enregistrement est détenu par " + railsafetyOwnerName +
+        " mais vous n'utilisez pas l'application Rail Safety. Veuillez passer à l'application Rail Safety.";
 
     // Wait for securityToken and flowURL to be retrieved
     var turnOffDocumentCentre = await getEnvironmentVariableByName("ts_TurnoffDocumentCentre");
@@ -112,11 +122,23 @@ async function OpenFileUploadPage(PrimaryControl, PrimaryTypeEntityName, Primary
                     }
                     // }
                 } else {
-                    // display the error message
-                    if (lang == 1033) {
-                        alert(invalidOwnerMessageEnglish);
+
+                    if (!isOwnedByRailSafetyButNotUsingRailSafetyApp) {
+
+                        // display the error message
+                        if (lang == 1033) {
+                            alert(invalidOwnerMessageEnglish);
+                        } else {
+                            alert(invalidOwnerMessageFrench);
+                        }
                     } else {
-                        alert(invalidOwnerMessageFrench);
+                        // display the error message stating that they need to use the Rail Safety app if the record is owned by Rail Safety
+                        // display the error message
+                        if (lang == 1033) {
+                            alert(invalidAppMessageEnglish);
+                        } else {
+                            alert(invalidAppMessageFrench);
+                        }
                     }
                 }
             } else {
@@ -562,17 +584,27 @@ async function modifyRecordOwner(entityName, myRecordOwner, myRecordName, mySite
 
     if (await isUserUsingRailSafetyApp()) {
         if (fileUploadData.recordOwnerTeamId) {
-            const ownerId = fileUploadData.recordOwnerTeamId;            
+            const ownerId = fileUploadData.recordOwnerTeamId;
             const isRailSafety = await isOwnedByRailSafety(ownerId);
 
             if (isRailSafety) {
                 fileUploadData.recordOwner = railsafetyOwnerName;
                 fileUploadData.validOwner = true;
-            } else  {
+            } else {
                 fileUploadData.recordOwner = "";
             }
         }
-        
+    } else { 
+        if (fileUploadData.recordOwnerTeamId) {
+            const ownerId = fileUploadData.recordOwnerTeamId;
+            const isRailSafety = await isOwnedByRailSafety(ownerId);
+
+            if (isRailSafety) {
+                fileUploadData.recordOwner = railsafetyOwnerName;
+                fileUploadData.validOwner = false;
+                isOwnedByRailSafetyButNotUsingRailSafetyApp = true;
+            } 
+        }
     }
 
     if (fileUploadData.recordOwner == avsecOwnerName || fileUploadData.recordOwner == issoOwnerName) {
