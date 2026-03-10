@@ -87,8 +87,7 @@ var ROM;
             isUserUsingRailSafetyApp().then(function (isUsing) {
                 if (isUsing) {
                     setWorkOrderTypeFilteredView(form, true);
-                    showFindingsFieldIfRailSafetyApp(form, true);
-                    filterFindingsByParentWorkOrder(eContext);
+                    showFindingsFieldIfRailSafetyApp(form, true, eContext);
                 }
                 else {
                     setWorkOrderTypeFilteredView(form, false);
@@ -2715,7 +2714,7 @@ var ROM;
                 });
             });
         }
-        function showFindingsFieldIfRailSafetyApp(form, isRailSafetyApp) {
+        function showFindingsFieldIfRailSafetyApp(form, isRailSafetyApp, eContext) {
             return __awaiter(this, void 0, void 0, function () {
                 var parentWOAttribute, parentWOValue, findingsControl;
                 return __generator(this, function (_a) {
@@ -2727,6 +2726,7 @@ var ROM;
                                 findingsControl = form.getControl("ts_finding");
                                 if (findingsControl != null) {
                                     findingsControl.setVisible(true);
+                                    filterFindingsByParentWorkOrder(eContext);
                                 }
                             }
                         }
@@ -2738,18 +2738,13 @@ var ROM;
                 });
             });
         }
-        /**
-        * Sets a filtered view on the Finding lookup to show only findings
-        * related to the parent work order.
-        *
-        * @param {Xrm.ExecutionContext<any, any>} eContext The execution context
-         */
+        //Sets a filtered view on the Finding lookup to show only findings 
         function filterFindingsByParentWorkOrder(eContext) {
+            var _a;
             try {
                 var form = eContext.getFormContext();
-                // Get the parent work order value
-                var parentWOAttribute = form.getAttribute("ts_parentworkorder");
-                var parentWOValue = parentWOAttribute === null || parentWOAttribute === void 0 ? void 0 : parentWOAttribute.getValue();
+                var parentWOValue = (_a = form.getAttribute("ts_parentworkorder")) === null || _a === void 0 ? void 0 : _a.getValue();
+                var findingControl = form.getControl("ts_finding");
                 // Only apply filter if parent work order exists
                 if (parentWOValue != null && parentWOValue.length > 0) {
                     var parentWOId_1 = parentWOValue[0].id.replace(/[{}]/g, "");
@@ -2789,5 +2784,40 @@ var ROM;
             }
         }
         UnplannedWorkOrder.filterFindingsByParentWorkOrder = filterFindingsByParentWorkOrder;
+        function parentWorkOrderOnChange(eContext) {
+            try {
+                var form_7 = eContext.getFormContext();
+                // Check if user is using Rail Safety App
+                isUserUsingRailSafetyApp().then(function (isUsing) {
+                    if (isUsing) {
+                        var parentWOAttribute = form_7.getAttribute("ts_parentworkorder");
+                        var parentWOValue = parentWOAttribute === null || parentWOAttribute === void 0 ? void 0 : parentWOAttribute.getValue();
+                        var findingsControl = form_7.getControl("ts_finding");
+                        if (parentWOValue != null && parentWOValue.length > 0) {
+                            // Parent WO exists - show and filter findings
+                            if (findingsControl) {
+                                findingsControl.setVisible(true);
+                                form_7.getAttribute("ts_finding").setValue(null);
+                                filterFindingsByParentWorkOrder(eContext);
+                            }
+                        }
+                        else {
+                            // Parent WO cleared - hide findings
+                            if (findingsControl) {
+                                // clear findingscontrol value to prevent orphaned references since the filter will no longer apply once parent WO is cleared
+                                form_7.getAttribute("ts_finding").setValue(null);
+                                findingsControl.setVisible(false);
+                            }
+                        }
+                    }
+                }).catch(function (error) {
+                    console.error("[UnplannedWorkOrder.parentWorkOrderOnChange] Error:", error);
+                });
+            }
+            catch (error) {
+                console.error("[UnplannedWorkOrder.parentWorkOrderOnChange] Unexpected error:", error);
+            }
+        }
+        UnplannedWorkOrder.parentWorkOrderOnChange = parentWorkOrderOnChange;
     })(UnplannedWorkOrder = ROM.UnplannedWorkOrder || (ROM.UnplannedWorkOrder = {}));
 })(ROM || (ROM = {}));

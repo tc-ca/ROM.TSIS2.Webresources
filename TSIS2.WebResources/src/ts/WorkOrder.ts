@@ -17,8 +17,7 @@ namespace ROM.WorkOrder {
         isUserUsingRailSafetyApp().then(isUsing => {
             if (isUsing) {
                 setWorkOrderTypeFilteredView(form, true);
-                showFindingsFieldIfRailSafetyApp(form, true);
-                filterFindingsByParentWorkOrder(eContext);
+                showFindingsFieldIfRailSafetyApp(form, true, eContext);
             }
             else {
                 setWorkOrderTypeFilteredView(form, false);
@@ -2952,10 +2951,10 @@ namespace ROM.WorkOrder {
             .addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
     }
 
-    async function showFindingsFieldIfRailSafetyApp(form: Form.msdyn_workorder.Main.ROMOversightActivity, isRailSafetyApp: boolean): Promise<void> {
+    async function showFindingsFieldIfRailSafetyApp(form: Form.msdyn_workorder.Main.ROMOversightActivity, isRailSafetyApp: boolean, eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
         try {
             if (isRailSafetyApp) {
-                // Check if msdyn_parentworkorder has a value
+                // Check if ts_parentworkorder has a value
                 const parentWOAttribute = form.getAttribute("msdyn_parentworkorder");
                 const parentWOValue = parentWOAttribute?.getValue();
 
@@ -2963,6 +2962,7 @@ namespace ROM.WorkOrder {
                     const findingsControl = form.getControl("ts_finding");
                     if (findingsControl != null) {
                         findingsControl.setVisible(true);
+                        filterFindingsByParentWorkOrder(eContext);
                     }
                 }
             }
@@ -2971,20 +2971,13 @@ namespace ROM.WorkOrder {
         }
     }
 
-    /**
-    * Sets a filtered view on the Finding lookup to show only findings 
-    * related to the parent work order.
-    * 
-    * @param {Xrm.ExecutionContext<any, any>} eContext The execution context
-     */
+    //Sets a filtered view on the Finding lookup to show only findings
     export function filterFindingsByParentWorkOrder(eContext: Xrm.ExecutionContext<any, any>): void {
         try {
             const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+            const parentWOValue = form.getAttribute("msdyn_parentworkorder")?.getValue();
 
-            // Get the parent work order value
-            const parentWOAttribute = form.getAttribute("msdyn_parentworkorder");
-            const parentWOValue = parentWOAttribute?.getValue();
-
+            const findingControl = form.getControl("ts_finding");
             // Only apply filter if parent work order exists
             if (parentWOValue != null && parentWOValue.length > 0) {
                 const parentWOId = parentWOValue[0].id.replace(/[{}]/g, "");
@@ -3026,7 +3019,43 @@ namespace ROM.WorkOrder {
                 }
             }
         } catch (error) {
-            console.error("[UnplannedWorkOrder.filterFindingsByParentWorkOrder] Error:", error);
+            console.error("[WorkOrder.filterFindingsByParentWorkOrder] Error:", error);
+        }
+    }
+    export function parentWorkOrderOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        try {
+            const form = <Form.msdyn_workorder.Main.ROMOversightActivity>eContext.getFormContext();
+
+            // Check if user is using Rail Safety App
+            isUserUsingRailSafetyApp().then(isUsing => {
+                if (isUsing) {
+                    const parentWOAttribute = form.getAttribute("msdyn_parentworkorder");
+                    const parentWOValue = parentWOAttribute?.getValue();
+
+                    const findingsControl = form.getControl("ts_finding");
+
+                    if (parentWOValue != null && parentWOValue.length > 0) {
+                        // Parent WO exists - show and filter findings
+                        if (findingsControl) {
+                            findingsControl.setVisible(true);
+                            form.getAttribute("ts_finding").setValue(null);
+                            filterFindingsByParentWorkOrder(eContext);
+                        }
+                    } else {
+                        // Parent WO cleared - hide findings
+                        if (findingsControl) {
+                            // clear findingscontrol value to prevent orphaned references since the filter will no longer apply once parent WO is cleared
+                            form.getAttribute("ts_finding").setValue(null);
+                            findingsControl.setVisible(false);
+                        }
+                    }
+                }
+            }).catch(error => {
+                console.error("[WorkOrder.parentWorkOrderOnChange] Error:", error);
+            });
+
+        } catch (error) {
+            console.error("[WorkOrder.parentWorkOrderOnChange] Unexpected error:", error);
         }
     }
 }
