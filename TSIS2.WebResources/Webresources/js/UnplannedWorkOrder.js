@@ -53,15 +53,6 @@ var ROM;
         function onLoad(eContext) {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j;
             var form = eContext.getFormContext();
-            //Check if user is using Rail Safety App to set filtered view for Work Order Type
-            isUserUsingRailSafetyApp().then(function (isUsing) {
-                if (isUsing) {
-                    setWorkOrderTypeFilteredView(form, true);
-                }
-                else {
-                    setWorkOrderTypeFilteredView(form, false);
-                }
-            });
             // Check flag and navigate to WO if needed
             var flagAttr = form.getAttribute("ts_openworkorderoncreation");
             if (flagAttr && flagAttr.getValue() === true && form.ui.getFormType() === 2) {
@@ -92,6 +83,17 @@ var ROM;
                     console.error("Error saving flag change:", err);
                 });
             }
+            //Check if user is using Rail Safety App to set filtered view for Work Order Type and show/hide findings field
+            isUserUsingRailSafetyApp().then(function (isUsing) {
+                if (isUsing) {
+                    setWorkOrderTypeFilteredView(form, true);
+                    showFindingsFieldIfRailSafetyApp(form, true);
+                    filterFindingsByParentWorkOrder(eContext);
+                }
+                else {
+                    setWorkOrderTypeFilteredView(form, false);
+                }
+            });
             var state = (_a = form.getAttribute("statecode").getValue()) !== null && _a !== void 0 ? _a : null;
             var regionAttribute = form.getAttribute("ts_region");
             var regionAttributeValue = regionAttribute.getValue();
@@ -2713,5 +2715,79 @@ var ROM;
                 });
             });
         }
+        function showFindingsFieldIfRailSafetyApp(form, isRailSafetyApp) {
+            return __awaiter(this, void 0, void 0, function () {
+                var parentWOAttribute, parentWOValue, findingsControl;
+                return __generator(this, function (_a) {
+                    try {
+                        if (isRailSafetyApp) {
+                            parentWOAttribute = form.getAttribute("ts_parentworkorder");
+                            parentWOValue = parentWOAttribute === null || parentWOAttribute === void 0 ? void 0 : parentWOAttribute.getValue();
+                            if (parentWOValue != null && parentWOValue.length > 0) {
+                                findingsControl = form.getControl("ts_finding");
+                                if (findingsControl != null) {
+                                    findingsControl.setVisible(true);
+                                }
+                            }
+                        }
+                    }
+                    catch (error) {
+                        console.error("Error checking Rail Safety App or showing ts_findings field:", error);
+                    }
+                    return [2 /*return*/];
+                });
+            });
+        }
+        /**
+        * Sets a filtered view on the Finding lookup to show only findings
+        * related to the parent work order.
+        *
+        * @param {Xrm.ExecutionContext<any, any>} eContext The execution context
+         */
+        function filterFindingsByParentWorkOrder(eContext) {
+            try {
+                var form = eContext.getFormContext();
+                // Get the parent work order value
+                var parentWOAttribute = form.getAttribute("ts_parentworkorder");
+                var parentWOValue = parentWOAttribute === null || parentWOAttribute === void 0 ? void 0 : parentWOAttribute.getValue();
+                // Only apply filter if parent work order exists
+                if (parentWOValue != null && parentWOValue.length > 0) {
+                    var parentWOId_1 = parentWOValue[0].id.replace(/[{}]/g, "");
+                    var findingControl_1 = form.getControl("ts_finding");
+                    if (findingControl_1) {
+                        // Add pre-search event to apply filter
+                        findingControl_1.addPreSearch(function () {
+                            var viewId = '{8A92F38E-3D74-5BED-BC3A-C55899F99D73}';
+                            var entityName = "ovs_finding";
+                            var viewDisplayName = "Findings from Parent Work Order";
+                            var fetchXml = '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">' +
+                                '  <entity name="ovs_finding">' +
+                                '    <attribute name="ovs_findingid" />' +
+                                '    <attribute name="ovs_finding" />' +
+                                '    <attribute name="ts_findingtype" />' +
+                                '    <attribute name="createdon" />' +
+                                '    <order attribute="ovs_finding" descending="false" />' +
+                                '    <filter type="and">' +
+                                ("      <condition attribute=\"ts_workorder\" operator=\"eq\" value=\"" + parentWOId_1 + "\" />") +
+                                '      <condition attribute="statecode" operator="eq" value="0" />' +
+                                '    </filter>' +
+                                '  </entity>' +
+                                '</fetch>';
+                            var layoutXml = '<grid name="resultset" object="10010" jump="ovs_name" select="1" icon="1" preview="1">' +
+                                '  <row name="result" id="ovs_findingid">' +
+                                '    <cell name="ovs_finding" width="200" />' +
+                                '    <cell name="ts_findingtype" width="150" />' +
+                                '  </row>' +
+                                '</grid>';
+                            findingControl_1.addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                        });
+                    }
+                }
+            }
+            catch (error) {
+                console.error("[UnplannedWorkOrder.filterFindingsByParentWorkOrder] Error:", error);
+            }
+        }
+        UnplannedWorkOrder.filterFindingsByParentWorkOrder = filterFindingsByParentWorkOrder;
     })(UnplannedWorkOrder = ROM.UnplannedWorkOrder || (ROM.UnplannedWorkOrder = {}));
 })(ROM || (ROM = {}));
