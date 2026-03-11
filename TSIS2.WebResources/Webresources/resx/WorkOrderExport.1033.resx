@@ -502,4 +502,134 @@ Do you want to download it now?</value>
         <value>{0} added, {1} removed</value>
         <comment/>
     </data>
+    <data name="UnknownError" xml:space="preserve">
+        <value>Unknown error</value>
+        <comment/>
+    </data>
+    <data name="RenderHostLoadTimeout" xml:space="preserve">
+        <value>Render host did not finish loading required libraries (Survey/html2pdf/jQuery).</value>
+        <comment/>
+    </data>
+    <data name="WaitingForDocumentGeneration" xml:space="preserve">
+        <value>Waiting for document generation.</value>
+        <comment/>
+    </data>
+    <data name="QuestionnaireExportIncomplete" xml:space="preserve">
+        <value>Questionnaire export incomplete</value>
+        <comment/>
+    </data>
+    <data name="Stage1Initializing" xml:space="preserve">
+        <value>[Stage 1/3] Initializing</value>
+        <comment/>
+    </data>
+    <data name="WorkOrderPDFsProgress" xml:space="preserve">
+        <value>Work order PDFs: {0}/{1} ({2}%)</value>
+        <comment/>
+    </data>
+    <data name="FinalizingExport" xml:space="preserve">
+        <value>Finalizing export...</value>
+        <comment/>
+    </data>
+    <data name="VerifyingZIPAndPreparingCleanup" xml:space="preserve">
+        <value>Verifying ZIP and preparing cleanup</value>
+        <comment/>
+    </data>
+    <data name="PreparingArchive" xml:space="preserve">
+        <value>Preparing archive</value>
+        <comment/>
+    </data>
+    <data name="CleaningUpTemporaryArtifacts" xml:space="preserve">
+        <value>Cleaning up temporary artifacts...</value>
+        <comment/>
+    </data>
+    <data name="ZIPSizeLimitReachedDetail" xml:space="preserve">
+        <value>ZIP size limit reached before continuing. Current ZIP: {0}, Next estimated: {1}, Projected: {2}, Limit: {3}.</value>
+        <comment/>
+    </data>
+    <data name="ExportCompletedWithErrors" xml:space="preserve">
+        <value>Export completed with {0} error(s). Check error message field for details.</value>
+        <comment/>
+    </data>
+    <data name="Stage1StalledSameStep" xml:space="preserve">
+        <value>
+            Stage 1 stalled {0} times at the same step. Export stopped.
+            Last known progress: {1}
+        </value>
+        <comment/>
+    </data>
+    <data name="Stage1AutoResumeFailed" xml:space="preserve">
+        <value>
+            Stage 1 auto-resume failed after {0} attempt(s). Export stopped due to repeated stalls.
+            Last known progress: {1}
+        </value>
+        <comment/>
+    </data>
+    <data name="Stage1StalledRepeatedly" xml:space="preserve">
+        <value>[Error] Stage 1 stalled repeatedly. Export stopped.</value>
+        <comment/>
+    </data>
+    <data name="StallDetectedAutoResume" xml:space="preserve">
+        <value>[Stage 1/3] Stall detected | Auto-resume attempt {0}/{1}</value>
+        <comment/>
+    </data>
+    <data name="ResumingAutomatically" xml:space="preserve">
+        <value>Resuming questionnaire export automatically ({0}/{1}) from {2} existing PDF(s)...</value>
+        <comment/>
+    </data>
+    <data name="ResumingFromExisting" xml:space="preserve">
+        <value>Resuming questionnaire export from {0} existing PDF(s)...</value>
+        <comment/>
+    </data>
+    <data name="QuestionnaireExportCancelledByUser" xml:space="preserve">
+        <value>Questionnaire export was interrupted (the page was left or reloaded), and resume was cancelled by the user.</value>
+        <comment/>
+    </data>
+    <data name="Stage1InProgressAlreadyRunning" xml:space="preserve">
+        <value>[Stage 1/3] In progress | Questionnaire export is already running. Do not close or reload this form if you started it.</value>
+        <comment/>
+    </data>
+    <data name="RenderHostControlNotFound" xml:space="preserve">
+        <value>Render host control not found on form: {0}</value>
+        <comment/>
+    </data>
+    <data name="RenderHostWindowNotAccessible" xml:space="preserve">
+        <value>Render host content window not accessible: {0}</value>
+        <comment/>
+    </data>
+    <data name="NoPayloadJSONFound" xml:space="preserve">
+        <value>No payload JSON found (ts_surveypayloadjson is empty).</value>
+        <comment/>
+    </data>
+    <data name="InvalidPayloadJSONParse" xml:space="preserve">
+        <value>Invalid payload JSON (parse failed): {0}</value>
+        <comment/>
+    </data>
+    <data name="InvalidPayloadJSONFormat" xml:space="preserve">
+        <value>Invalid payload JSON format. Expected { ids: string[], includeHiddenQuestions?: boolean }.</value>
+        <comment/>
+    </data>
+    <data name="FailedLoadingServiceTasks" xml:space="preserve">
+        <value>Failed loading service tasks for work order {0}: {1}</value>
+        <comment/>
+    </data>
+    <data name="PreparingExportScanning" xml:space="preserve">
+        <value>Preparing export (1/2): scanning selected work orders...</value>
+        <comment/>
+    </data>
+    <data name="RetryExportWithoutWorkOrder" xml:space="preserve">
+        <value>Please try again. If this keeps failing, retry the export without this Work Order/Service Task.</value>
+        <comment/>
+    </data>
+    <data name="ErrorProcessingExportJob" xml:space="preserve">
+        <value>Error processing export job: {0}</value>
+        <comment/>
+    </data>
+    <data name="SaveFailedWhileSettingError" xml:space="preserve">
+        <value>Save failed while setting error state: {0}</value>
+        <comment/>
+    </data>
+    <data name="NonBlockingSkipsCount" xml:space="preserve">
+        <value>Non-blocking skips ({0}):</value>
+        <comment/>
+    </data>
 </root>

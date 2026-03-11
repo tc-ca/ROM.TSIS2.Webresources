@@ -503,4 +503,134 @@ Voulez-vous le télécharger maintenant?</value>
     <value>{0} ajouté(s), {1} retiré(s)</value>
     <comment/>
   </data>
+    <data name="UnknownError" xml:space="preserve">
+        <value>Erreur inconnue</value>
+        <comment/>
+    </data>
+    <data name="RenderHostLoadTimeout" xml:space="preserve">
+        <value>Le conteneur de rendu n'a pas terminé le chargement des bibliothèques requises (Survey/html2pdf/jQuery).</value>
+        <comment/>
+    </data>
+    <data name="WaitingForDocumentGeneration" xml:space="preserve">
+        <value>En attente de génération des documents.</value>
+        <comment/>
+    </data>
+    <data name="QuestionnaireExportIncomplete" xml:space="preserve">
+        <value>Export des questionnaires incomplet</value>
+        <comment/>
+    </data>
+    <data name="Stage1Initializing" xml:space="preserve">
+        <value>[Étape 1/3] Initialisation</value>
+        <comment/>
+    </data>
+    <data name="WorkOrderPDFsProgress" xml:space="preserve">
+        <value>PDF ordres de travail : {0}/{1} ({2} %)</value>
+        <comment/>
+    </data>
+    <data name="FinalizingExport" xml:space="preserve">
+        <value>Finalisation de l'export...</value>
+        <comment/>
+    </data>
+    <data name="VerifyingZIPAndPreparingCleanup" xml:space="preserve">
+        <value>Vérification du ZIP et préparation du nettoyage</value>
+        <comment/>
+    </data>
+    <data name="PreparingArchive" xml:space="preserve">
+        <value>Préparation de l'archive</value>
+        <comment/>
+    </data>
+    <data name="CleaningUpTemporaryArtifacts" xml:space="preserve">
+        <value>Nettoyage des artefacts temporaires...</value>
+        <comment/>
+    </data>
+    <data name="ZIPSizeLimitReachedDetail" xml:space="preserve">
+        <value>Limite de taille du ZIP atteinte. ZIP actuel : {0}, prochaine estimation : {1}, projeté : {2}, limite : {3}.</value>
+        <comment/>
+    </data>
+    <data name="ExportCompletedWithErrors" xml:space="preserve">
+        <value>Export terminé avec {0} erreur(s). Consultez le champ message d'erreur pour les détails.</value>
+        <comment/>
+    </data>
+    <data name="Stage1StalledSameStep" xml:space="preserve">
+        <value>
+            L'étape 1 a bloqué {0} fois au même point. Export arrêté.
+            Dernier progrès connu : {1}
+        </value>
+        <comment/>
+    </data>
+    <data name="Stage1AutoResumeFailed" xml:space="preserve">
+        <value>
+            Reprise automatique de l'étape 1 échouée après {0} tentative(s). Export arrêté (blocages répétés).
+            Dernier progrès connu : {1}
+        </value>
+        <comment/>
+    </data>
+    <data name="Stage1StalledRepeatedly" xml:space="preserve">
+        <value>[Erreur] L'étape 1 a bloqué à plusieurs reprises. Export arrêté.</value>
+        <comment/>
+    </data>
+    <data name="StallDetectedAutoResume" xml:space="preserve">
+        <value>[Étape 1/3] Blocage détecté | Tentative de reprise automatique {0}/{1}</value>
+        <comment/>
+    </data>
+    <data name="ResumingAutomatically" xml:space="preserve">
+        <value>Reprise automatique de l'export des questionnaires ({0}/{1}) à partir de {2} PDF existant(s)...</value>
+        <comment/>
+    </data>
+    <data name="ResumingFromExisting" xml:space="preserve">
+        <value>Reprise de l'export des questionnaires à partir de {0} PDF existant(s)...</value>
+        <comment/>
+    </data>
+    <data name="QuestionnaireExportCancelledByUser" xml:space="preserve">
+        <value>L'export des questionnaires a été interrompu (page quittée ou actualisée) et la reprise a été annulée par l'utilisateur.</value>
+        <comment/>
+    </data>
+    <data name="Stage1InProgressAlreadyRunning" xml:space="preserve">
+        <value>[Étape 1/3] En cours | L'export des questionnaires est déjà en cours. Ne fermez pas et n'actualisez pas ce formulaire si vous l'avez démarré.</value>
+        <comment/>
+    </data>
+    <data name="RenderHostControlNotFound" xml:space="preserve">
+        <value>Contrôle du conteneur de rendu introuvable sur le formulaire : {0}</value>
+        <comment/>
+    </data>
+    <data name="RenderHostWindowNotAccessible" xml:space="preserve">
+        <value>Fenêtre du conteneur de rendu inaccessible : {0}</value>
+        <comment/>
+    </data>
+    <data name="NoPayloadJSONFound" xml:space="preserve">
+        <value>Aucun JSON de charge trouvé (ts_surveypayloadjson est vide).</value>
+        <comment/>
+    </data>
+    <data name="InvalidPayloadJSONParse" xml:space="preserve">
+        <value>JSON de charge invalide (échec du parsing) : {0}</value>
+        <comment/>
+    </data>
+    <data name="InvalidPayloadJSONFormat" xml:space="preserve">
+        <value>Format JSON de charge invalide. Attendu : { ids: string[], includeHiddenQuestions?: boolean }.</value>
+        <comment/>
+    </data>
+    <data name="FailedLoadingServiceTasks" xml:space="preserve">
+        <value>Échec du chargement des tâches de service pour l'ordre de travail {0} : {1}</value>
+        <comment/>
+    </data>
+    <data name="PreparingExportScanning" xml:space="preserve">
+        <value>Préparation de l'export (1/2) : analyse des ordres de travail sélectionnés...</value>
+        <comment/>
+    </data>
+    <data name="RetryExportWithoutWorkOrder" xml:space="preserve">
+        <value>Veuillez réessayer. Si l'échec persiste, relancez l'export sans cet ordre de travail / cette tâche de service.</value>
+        <comment/>
+    </data>
+    <data name="ErrorProcessingExportJob" xml:space="preserve">
+        <value>Erreur lors du traitement de l'export : {0}</value>
+        <comment/>
+    </data>
+    <data name="SaveFailedWhileSettingError" xml:space="preserve">
+        <value>Échec de l'enregistrement lors de la définition de l'état d'erreur : {0}</value>
+        <comment/>
+    </data>
+    <data name="NonBlockingSkipsCount" xml:space="preserve">
+        <value>Ignorés non bloquants ({0}) :</value>
+        <comment/>
+    </data>
 </root>
