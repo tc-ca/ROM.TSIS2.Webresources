@@ -13,16 +13,6 @@ namespace ROM.UnplannedWorkOrder {
     export function onLoad(eContext: Xrm.ExecutionContext<any, any>): void {
         const form = <Form.ts_unplannedworkorder.Main.Information>eContext.getFormContext();
 
-        //Check if user is using Rail Safety App to set filtered view for Work Order Type
-        isUserUsingRailSafetyApp().then(isUsing => {
-            if (isUsing) {
-                setWorkOrderTypeFilteredView(form, true);
-            }
-            else {
-                setWorkOrderTypeFilteredView(form, false);
-            }
-        });
-
         // Check flag and navigate to WO if needed
         const flagAttr = form.getAttribute("ts_openworkorderoncreation");
         if (flagAttr && flagAttr.getValue() === true && form.ui.getFormType() === 2) {
@@ -61,6 +51,17 @@ namespace ROM.UnplannedWorkOrder {
                 }
             );
         }
+
+        //Check if user is using Rail Safety App to set filtered view for Work Order Type and show/hide findings field
+        isUserUsingRailSafetyApp().then(isUsing => {
+            if (isUsing) {
+                setWorkOrderTypeFilteredView(form, true);
+                showFindingsFieldIfRailSafetyApp(form, true, eContext);
+            }
+            else {
+                setWorkOrderTypeFilteredView(form, false);
+            }
+        });
 
         const state = form.getAttribute("statecode").getValue() ?? null;
 
@@ -2958,5 +2959,112 @@ namespace ROM.UnplannedWorkOrder {
         form.getControl("ts_workordertype")
             .addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
     }
-}
 
+    async function showFindingsFieldIfRailSafetyApp(form: Form.ts_unplannedworkorder.Main.Information, isRailSafetyApp: boolean, eContext: Xrm.ExecutionContext<any, any>): Promise<void> {
+        try {
+            if (isRailSafetyApp) {
+                // Check if ts_parentworkorder has a value
+                const parentWOAttribute = form.getAttribute("ts_parentworkorder");
+                const parentWOValue = parentWOAttribute?.getValue();
+
+                if (parentWOValue != null && parentWOValue.length > 0) {
+                    const findingsControl = form.getControl("ts_finding");
+                    if (findingsControl != null) {
+                        findingsControl.setVisible(true);
+                        filterFindingsByParentWorkOrder(eContext);
+                    }
+                }
+            }
+        } catch (error) {
+            console.error("Error checking Rail Safety App or showing ts_findings field:", error);
+        }
+    }
+
+    //Sets a filtered view on the Finding lookup to show only findings 
+    export function filterFindingsByParentWorkOrder(eContext: Xrm.ExecutionContext<any, any>): void {
+        try {
+            const form = <Form.ts_unplannedworkorder.Main.Information>eContext.getFormContext();
+            const parentWOValue = form.getAttribute("ts_parentworkorder")?.getValue();
+
+            const findingControl = form.getControl("ts_finding");
+            // Only apply filter if parent work order exists
+            if (parentWOValue != null && parentWOValue.length > 0) {
+                const parentWOId = parentWOValue[0].id.replace(/[{}]/g, "");
+
+                const findingControl = form.getControl("ts_finding");
+
+                if (findingControl) {
+                    // Add pre-search event to apply filter
+                    findingControl.addPreSearch(function () {
+                        const viewId = '{8A92F38E-3D74-5BED-BC3A-C55899F99D73}';
+                        const entityName = "ovs_finding";
+                        const viewDisplayName = "Findings from Parent Work Order";
+
+                        const fetchXml =
+                            '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">' +
+                            '  <entity name="ovs_finding">' +
+                            '    <attribute name="ovs_findingid" />' +
+                            '    <attribute name="ovs_finding" />' +
+                            '    <attribute name="ts_findingtype" />' +
+                            '    <attribute name="createdon" />' +
+                            '    <order attribute="ovs_finding" descending="false" />' +
+                            '    <filter type="and">' +
+                            `      <condition attribute="ts_workorder" operator="eq" value="${parentWOId}" />` +
+                            '      <condition attribute="statecode" operator="eq" value="0" />' +
+                            '    </filter>' +
+                            '  </entity>' +
+                            '</fetch>';
+
+                        const layoutXml =
+                            '<grid name="resultset" object="10010" jump="ovs_name" select="1" icon="1" preview="1">' +
+                            '  <row name="result" id="ovs_findingid">' +
+                            '    <cell name="ovs_finding" width="200" />' +
+                            '    <cell name="ts_findingtype" width="150" />' +
+                            '  </row>' +
+                            '</grid>';
+
+                        findingControl.addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+                    });
+                }
+            }
+        } catch (error) {
+            console.error("[UnplannedWorkOrder.filterFindingsByParentWorkOrder] Error:", error);
+        }
+    }
+    export function parentWorkOrderOnChange(eContext: Xrm.ExecutionContext<any, any>): void {
+        try {
+            const form = <Form.ts_unplannedworkorder.Main.Information>eContext.getFormContext();
+
+            // Check if user is using Rail Safety App
+            isUserUsingRailSafetyApp().then(isUsing => {
+                if (isUsing) {
+                    const parentWOAttribute = form.getAttribute("ts_parentworkorder");
+                    const parentWOValue = parentWOAttribute?.getValue();
+
+                    const findingsControl = form.getControl("ts_finding");
+
+                    if (parentWOValue != null && parentWOValue.length > 0) {
+                        // Parent WO exists - show and filter findings
+                        if (findingsControl) {
+                            findingsControl.setVisible(true);
+                            form.getAttribute("ts_finding").setValue(null);
+                            filterFindingsByParentWorkOrder(eContext);
+                        }
+                    } else {
+                        // Parent WO cleared - hide findings
+                        if (findingsControl) {
+                            // clear findingscontrol value to prevent orphaned references since the filter will no longer apply once parent WO is cleared
+                            form.getAttribute("ts_finding").setValue(null);
+                            findingsControl.setVisible(false);
+                        }
+                    }
+                }
+            }).catch(error => {
+                console.error("[UnplannedWorkOrder.parentWorkOrderOnChange] Error:", error);
+            });
+
+        } catch (error) {
+            console.error("[UnplannedWorkOrder.parentWorkOrderOnChange] Unexpected error:", error);
+        }
+    }
+}
