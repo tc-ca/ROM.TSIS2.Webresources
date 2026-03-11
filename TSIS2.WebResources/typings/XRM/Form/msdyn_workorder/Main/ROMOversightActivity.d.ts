@@ -156,7 +156,6 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_longitude"): Xrm.NumberAttribute;
       get(name: "msdyn_mapcontrol"): Xrm.Attribute<any>;
       get(name: "msdyn_name"): Xrm.Attribute<string>;
-      get(name: "msdyn_opportunityid"): Xrm.LookupAttribute<"opportunity">;
       get(name: "msdyn_parentworkorder"): Xrm.LookupAttribute<"msdyn_workorder">;
       get(name: "msdyn_postalcode"): Xrm.Attribute<string>;
       get(name: "msdyn_preferredresource"): Xrm.LookupAttribute<"bookableresource">;
@@ -347,7 +346,6 @@ declare namespace Form.msdyn_workorder.Main {
       get(name: "msdyn_longitude1"): Xrm.NumberControl;
       get(name: "msdyn_mapcontrol"): Xrm.Control<Xrm.Attribute<any>>;
       get(name: "msdyn_name"): Xrm.StringControl;
-      get(name: "msdyn_opportunityid"): Xrm.LookupControl<"opportunity">;
       get(name: "msdyn_parentworkorder"): Xrm.LookupControl<"msdyn_workorder">;
       get(name: "msdyn_postalcode"): Xrm.StringControl;
       get(name: "msdyn_preferredresource"): Xrm.LookupControl<"bookableresource">;
@@ -530,7 +528,6 @@ declare namespace Form.msdyn_workorder.Main {
     getAttribute(attributeName: "msdyn_longitude"): Xrm.NumberAttribute;
     getAttribute(attributeName: "msdyn_mapcontrol"): Xrm.Attribute<any>;
     getAttribute(attributeName: "msdyn_name"): Xrm.Attribute<string>;
-    getAttribute(attributeName: "msdyn_opportunityid"): Xrm.LookupAttribute<"opportunity">;
     getAttribute(attributeName: "msdyn_parentworkorder"): Xrm.LookupAttribute<"msdyn_workorder">;
     getAttribute(attributeName: "msdyn_postalcode"): Xrm.Attribute<string>;
     getAttribute(attributeName: "msdyn_preferredresource"): Xrm.LookupAttribute<"bookableresource">;
@@ -716,7 +713,6 @@ declare namespace Form.msdyn_workorder.Main {
     getControl(controlName: "msdyn_longitude1"): Xrm.NumberControl;
     getControl(controlName: "msdyn_mapcontrol"): Xrm.Control<Xrm.Attribute<any>>;
     getControl(controlName: "msdyn_name"): Xrm.StringControl;
-    getControl(controlName: "msdyn_opportunityid"): Xrm.LookupControl<"opportunity">;
     getControl(controlName: "msdyn_parentworkorder"): Xrm.LookupControl<"msdyn_workorder">;
     getControl(controlName: "msdyn_postalcode"): Xrm.StringControl;
     getControl(controlName: "msdyn_preferredresource"): Xrm.LookupControl<"bookableresource">;
