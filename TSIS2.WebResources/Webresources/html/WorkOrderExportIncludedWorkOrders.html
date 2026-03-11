@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Included Work Orders</title>
+    <style>
+        :root {
+            --border: #d9d9d9;
+            --text: #1f1f1f;
+            --muted: #6b6b6b;
+            --bg: #ffffff;
+            --header-bg: #f5f7fa;
+            --row-hover: #f9fbff;
+            --accent: #005a9c;
+        }
+
+        body {
+            margin: 0;
+            padding: 12px;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            font-size: 13px;
+        }
+
+        .wo-sticky-panel {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: var(--bg);
+            padding-top: 12px;
+            padding-bottom: 8px;
+            margin-top: -12px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #eceff3;
+        }
+
+        .wo-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wo-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wo-count {
+            font-weight: 600;
+        }
+
+        .wo-status {
+            color: var(--muted);
+        }
+
+        .wo-refresh {
+            border: 1px solid var(--border);
+            background: #fff;
+            color: var(--text);
+            border-radius: 4px;
+            padding: 6px 10px;
+            cursor: pointer;
+        }
+
+        .wo-refresh:hover {
+            border-color: #b8b8b8;
+        }
+
+        .wo-section {
+            margin-bottom: 10px;
+        }
+
+        .wo-subtitle {
+            color: var(--muted);
+            margin: 4px 0;
+            font-size: 12px;
+        }
+
+        .wo-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid var(--border);
+        }
+
+        .wo-table th,
+        .wo-table td {
+            text-align: left;
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        .wo-table thead th {
+            background: var(--header-bg);
+            font-weight: 600;
+        }
+
+        .wo-sort {
+            border: 0;
+            background: transparent;
+            color: inherit;
+            font: inherit;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .wo-sort:hover {
+            text-decoration: underline;
+        }
+
+        .wo-sort-indicator {
+            margin-left: 4px;
+        }
+
+        .wo-table tbody tr:hover {
+            background: var(--row-hover);
+        }
+
+        .wo-table a {
+            color: var(--accent);
+            text-decoration: none;
+            padding: 2px 4px;
+            border-radius: 3px;
+            transition: background-color 120ms ease, color 120ms ease;
+        }
+
+        .wo-table a:hover {
+            text-decoration: underline;
+            background: #e8f1fb;
+            color: #004578;
+        }
+
+        .wo-empty {
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 10px;
+            color: var(--muted);
+            background: #fafafa;
+        }
+
+        .wo-dock {
+            margin-top: 20px;
+            padding-top: 0;
+            margin-bottom: 12px;
+        }
+
+        .wo-dock-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .wo-pending-panel {
+            flex: 1 1 auto;
+            min-width: 320px;
+        }
+
+        .wo-right-panel {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            flex: 0 0 auto;
+        }
+
+        .wo-add-inner {
+            width: 30%;
+            min-width: 90px;
+            max-width: 100%;
+            position: relative;
+        }
+
+        .wo-search-wrap {
+            display: flex;
+            align-items: stretch;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--bg);
+        }
+
+        .wo-search-prefix {
+            padding: 7px 9px;
+            background: #f0f0f0;
+            color: var(--muted);
+            border-right: 1px solid var(--border);
+            border-radius: 4px 0 0 4px;
+            font: inherit;
+            user-select: none;
+        }
+
+        .wo-search {
+            flex: 1;
+            min-width: 0;
+            box-sizing: border-box;
+            border: 0;
+            border-radius: 0 4px 4px 0;
+            padding: 7px 9px;
+            font: inherit;
+        }
+
+        .wo-search::placeholder {
+            color: #aaa;
+        }
+
+        .wo-dropdown {
+            position: absolute;
+            left: 0;
+            top: 34px;
+            min-width: 280px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: #fff;
+            max-height: 220px;
+            overflow: auto;
+            display: none;
+            z-index: 10;
+        }
+
+        .wo-dd-item {
+            display: block;
+            width: 100%;
+            border: 0;
+            background: #fff;
+            text-align: left;
+            padding: 8px 10px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .wo-dd-item:hover {
+            background: var(--row-hover);
+        }
+
+        .wo-dd-name {
+            display: block;
+        }
+
+        .wo-dd-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2px;
+            font-size: 11px;
+            color: var(--muted);
+            padding-right: 8px;
+            gap: 10px;
+        }
+
+        .wo-dd-owner {
+            display: block;
+        }
+
+        .wo-dd-date {
+            display: block;
+            text-align: right;
+        }
+
+        .wo-help {
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .wo-added-row {
+            background: #eef8ee;
+        }
+
+        .wo-removed-row {
+            background: rgba(205, 68, 68, 0.12);
+        }
+
+        .wo-removed-row td {
+            color: #8a8a8a;
+        }
+
+        .wo-removed-row td:not(:last-child) {
+            text-decoration: line-through;
+            font-style: italic;
+        }
+
+        .wo-removed-row a,
+        .wo-removed-row a:hover {
+            color: #8a8a8a;
+            background: transparent;
+            text-decoration: line-through;
+            font-style: italic;
+        }
+
+        .wo-apply {
+            border: 1px solid #7da3c7;
+            background: #729ec7;
+            color: #fff;
+            border-radius: 4px;
+            padding: 7px 12px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .wo-apply:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .wo-remove-icon {
+            cursor: pointer;
+            user-select: none;
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        .wo-col-action {
+            width: 1%;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .wo-loading {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #5f6a7a;
+            padding: 10px 0;
+        }
+
+        .wo-spinner {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #d5dbe6;
+            border-top-color: #3f7fbf;
+            border-radius: 50%;
+            animation: wo-spin 0.8s linear infinite;
+        }
+
+        @keyframes wo-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="wo-sticky-panel">
+        <div class="wo-top">
+            <div class="wo-meta">
+                <div id="wo-export-included-count" class="wo-count"></div>
+                <div id="wo-export-included-status" class="wo-status"></div>
+                <div id="wo-export-pending-summary" class="wo-status"></div>
+            </div>
+            <button id="wo-export-included-refresh" class="wo-refresh" type="button" data-resx="RefreshList">Refresh List</button>
+        </div>
+
+        <div class="wo-dock">
+            <div class="wo-dock-inner">
+                <div class="wo-pending-panel">
+                    <div id="wo-export-pending-table"></div>
+                </div>
+                <div class="wo-right-panel">
+                    <div class="wo-add-inner">
+                        <div class="wo-search-wrap">
+                            <span class="wo-search-prefix" id="wo-export-search-prefix">300-</span>
+                            <input id="wo-export-search" class="wo-search" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="XXXXXX" maxlength="6" />
+                        </div>
+                        <div id="wo-export-search-dropdown" class="wo-dropdown"></div>
+                    </div>
+                    <button id="wo-export-apply-restart" class="wo-apply" type="button" data-resx="ApplyChangesAndRestartJob">Apply Changes and Restart Job</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wo-section">
+        <div class="wo-subtitle" id="wo-export-included-subtitle">Included Work Orders</div>
+        <div id="wo-export-included-table"></div>
+    </div>
+
+    <script>
+        (function () {
+            "use strict";
+
+            var STATUS_ID = "wo-export-included-status";
+            var COUNT_ID = "wo-export-included-count";
+            var PENDING_SUMMARY_ID = "wo-export-pending-summary";
+            var TABLE_WRAP_ID = "wo-export-included-table";
+            var PENDING_WRAP_ID = "wo-export-pending-table";
+            var REFRESH_BTN_ID = "wo-export-included-refresh";
+            var SEARCH_INPUT_ID = "wo-export-search";
+            var SEARCH_DROPDOWN_ID = "wo-export-search-dropdown";
+            var APPLY_BTN_ID = "wo-export-apply-restart";
+            var WO_SEARCH_PREFIX = "300-";
+            var SEARCH_MIN_SUFFIX_LENGTH = 3;
+            var PAYLOAD_LOAD_RETRY_MAX_ATTEMPTS = 10;
+            var PAYLOAD_LOAD_RETRY_DELAY_MS = 300;
+            var STATUS_CLIENT_PROCESSING = 741130001;
+            var currentRows = [];
+            var pendingRows = [];
+            var removedExistingMap = {};
+            var currentPayloadRaw = "";
+            var searchTimer = null;
+            var sortState = { key: "name", asc: true };
+            var pendingSortState = { key: "name", asc: true };
+
+            function getXrm() {
+                return (window.parent && window.parent.Xrm) || window.Xrm || null;
+            }
+
+            function getResx(key) {
+                try {
+                    var xrm = getXrm();
+                    if (!xrm || !xrm.Utility || typeof xrm.Utility.getResourceString !== "function") return key;
+                    var s = xrm.Utility.getResourceString("ts_/resx/WorkOrderExport", key);
+                    return (s && s.trim()) ? s.trim() : key;
+                } catch (e) {
+                    return key;
+                }
+            }
+
+            function getFormContext() {
+                var xrm = getXrm();
+                return xrm && xrm.Page ? xrm.Page : null;
+            }
+
+            function normalizeGuid(value) {
+                return (value || "").replace(/[{}]/g, "").toLowerCase().trim();
+            }
+
+            function escapeHtml(input) {
+                return (input || "")
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#39;");
+            }
+
+            function setStatus(text) {
+                var el = document.getElementById(STATUS_ID);
+                if (el) el.textContent = text;
+            }
+
+            function setCount(text) {
+                var el = document.getElementById(COUNT_ID);
+                if (el) el.textContent = text;
+            }
+
+            function delayMs(ms) {
+                return new Promise(function (resolve) {
+                    window.setTimeout(resolve, ms);
+                });
+            }
+
+            function getRemovedCount() {
+                var removed = 0;
+                var keys = Object.keys(removedExistingMap);
+                for (var i = 0; i < keys.length; i++) {
+                    if (removedExistingMap[keys[i]]) removed++;
+                }
+                return removed;
+            }
+
+            function updatePendingSummary() {
+                var el = document.getElementById(PENDING_SUMMARY_ID);
+                if (!el) return;
+                var removed = getRemovedCount();
+                var added = pendingRows.length;
+                if (added === 0 && removed === 0) {
+                    el.textContent = "";
+                    return;
+                }
+                el.textContent = getResx("AddedRemovedSummary").replace("{0}", added).replace("{1}", removed);
+            }
+
+            function updateApplyButtonState() {
+                var btn = document.getElementById(APPLY_BTN_ID);
+                if (!btn) return;
+                var removed = getRemovedCount();
+                btn.disabled = (pendingRows.length === 0 && removed === 0);
+                updatePendingSummary();
+            }
+
+            function parseIdsFromPayload(payload) {
+                if (!payload || !payload.trim()) return [];
+                var parsed;
+                try {
+                    parsed = JSON.parse(payload);
+                } catch (e) {
+                    return [];
+                }
+
+                var idMap = {};
+                var ids = [];
+                var pushId = function (raw) {
+                    var id = normalizeGuid((raw || "").toString());
+                    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(id)) return;
+                    if (idMap[id]) return;
+                    idMap[id] = true;
+                    ids.push(id);
+                };
+
+                var rawIds = Array.isArray(parsed && parsed.ids) ? parsed.ids : [];
+                for (var i = 0; i < rawIds.length; i++) {
+                    pushId(rawIds[i]);
+                }
+
+                var workOrders = Array.isArray(parsed && parsed.WorkOrders) ? parsed.WorkOrders : [];
+                for (var j = 0; j < workOrders.length; j++) {
+                    var wo = workOrders[j];
+                    if (typeof wo === "string") {
+                        pushId(wo);
+                        continue;
+                    }
+                    if (wo && typeof wo === "object") {
+                        pushId(wo.msdyn_workorderid || wo.WorkOrderId || wo.workOrderId || wo.id);
+                    }
+                }
+                return ids;
+            }
+
+            function getPayloadFromCurrentJob(attempt) {
+                var currentAttempt = attempt || 0;
+                return new Promise(function (resolve, reject) {
+                    try {
+                        var formContext = getFormContext();
+                        if (!formContext) {
+                            if (currentAttempt < PAYLOAD_LOAD_RETRY_MAX_ATTEMPTS) {
+                                delayMs(PAYLOAD_LOAD_RETRY_DELAY_MS).then(function () {
+                                    getPayloadFromCurrentJob(currentAttempt + 1).then(resolve).catch(reject);
+                                });
+                                return;
+                            }
+                            resolve("");
+                            return;
+                        }
+
+                        var surveyAttr = formContext.getAttribute && formContext.getAttribute("ts_surveypayloadjson");
+                        var payloadAttr = formContext.getAttribute && formContext.getAttribute("ts_payloadjson");
+                        var surveyInForm = (surveyAttr && surveyAttr.getValue ? (surveyAttr.getValue() || "").toString() : "");
+                        var payloadInForm = (payloadAttr && payloadAttr.getValue ? (payloadAttr.getValue() || "").toString() : "");
+
+                        if (parseIdsFromPayload(surveyInForm).length > 0) {
+                            resolve(surveyInForm);
+                            return;
+                        }
+                        if (parseIdsFromPayload(payloadInForm).length > 0) {
+                            resolve(payloadInForm);
+                            return;
+                        }
+
+                        var jobId = normalizeGuid(formContext.data && formContext.data.entity && formContext.data.entity.getId ? formContext.data.entity.getId() : "");
+                        if (!jobId) {
+                            if (currentAttempt < PAYLOAD_LOAD_RETRY_MAX_ATTEMPTS) {
+                                delayMs(PAYLOAD_LOAD_RETRY_DELAY_MS).then(function () {
+                                    getPayloadFromCurrentJob(currentAttempt + 1).then(resolve).catch(reject);
+                                });
+                                return;
+                            }
+                            resolve("");
+                            return;
+                        }
+
+                        var xrm = getXrm();
+                        xrm.WebApi.retrieveRecord("ts_workorderexportjob", jobId, "?$select=ts_surveypayloadjson,ts_payloadjson").then(function (job) {
+                            var survey = (job && job.ts_surveypayloadjson ? job.ts_surveypayloadjson : "").toString();
+                            var payload = (job && job.ts_payloadjson ? job.ts_payloadjson : "").toString();
+                            if (parseIdsFromPayload(survey).length > 0) {
+                                resolve(survey);
+                                return;
+                            }
+                            resolve(payload);
+                        }).catch(reject);
+                    } catch (e) {
+                        reject(e);
+                    }
+                });
+            }
+
+            function formatDate(value) {
+                if (!value) return "";
+                var date = new Date(value);
+                if (isNaN(date.getTime())) return value;
+                var pad2 = function (n) { return n < 10 ? "0" + n : "" + n; };
+                return date.getFullYear() + "-" + pad2(date.getMonth() + 1) + "-" + pad2(date.getDate()) +
+                    " " + pad2(date.getHours()) + ":" + pad2(date.getMinutes());
+            }
+
+            function queryWorkOrders(ids) {
+                var xrm = getXrm();
+                var filter = "(" + ids.map(function (id) { return "msdyn_workorderid eq " + id; }).join(" or ") + ") and statecode eq 0";
+                var query = "?$select=msdyn_workorderid,msdyn_name,createdon,_ownerid_value&$filter=" + filter;
+
+                return xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", query).then(function (result) {
+                    var entities = (result && result.entities) ? result.entities : [];
+                    var orderMap = {};
+                    for (var i = 0; i < ids.length; i++) orderMap[ids[i]] = i;
+
+                    var rows = entities.map(function (e) {
+                        var id = normalizeGuid(e && e.msdyn_workorderid ? e.msdyn_workorderid : "");
+                        return {
+                            sequence: (id in orderMap) ? orderMap[id] : Number.MAX_VALUE,
+                            id: id,
+                            name: (e && e.msdyn_name ? e.msdyn_name : "").toString(),
+                            owner: (e && e["_ownerid_value@OData.Community.Display.V1.FormattedValue"])
+                                ? e["_ownerid_value@OData.Community.Display.V1.FormattedValue"].toString()
+                                : "",
+                            createdOnRaw: (e && e.createdon ? e.createdon : "").toString(),
+                            createdOnTicks: (function () {
+                                var raw = (e && e.createdon ? e.createdon : "").toString();
+                                var ts = Date.parse(raw);
+                                return isNaN(ts) ? 0 : ts;
+                            })(),
+                            createdOn: formatDate((e && e.createdon ? e.createdon : "").toString())
+                        };
+                    });
+
+                    rows.sort(function (a, b) {
+                        return a.sequence - b.sequence;
+                    });
+                    return rows;
+                });
+            }
+
+            function getCurrentAppId() {
+                try {
+                    var href = (window.parent && window.parent.location && window.parent.location.href) || window.location.href;
+                    var url = new URL(href);
+                    return (url.searchParams.get("appid") || "").trim();
+                } catch (e) {
+                    return "";
+                }
+            }
+
+            function getWorkOrderUrl(id) {
+                var xrm = getXrm();
+                var baseUrl = (xrm && xrm.Utility && xrm.Utility.getGlobalContext)
+                    ? xrm.Utility.getGlobalContext().getClientUrl()
+                    : ((window.parent && window.parent.location && window.parent.location.origin) || window.location.origin);
+                var appId = getCurrentAppId();
+                var encodedId = encodeURIComponent(id);
+
+                if (appId) {
+                    return baseUrl + "/main.aspx?appid=" + encodeURIComponent(appId) +
+                        "&pagetype=entityrecord&etn=msdyn_workorder&id=" + encodedId;
+                }
+                return baseUrl + "/main.aspx?pagetype=entityrecord&etn=msdyn_workorder&id=" + encodedId;
+            }
+
+            function getSortIndicator(state, column) {
+                if (state.key !== column) return "";
+                return state.asc ? '<span class="wo-sort-indicator">&uarr;</span>' : '<span class="wo-sort-indicator">&darr;</span>';
+            }
+
+            function toSortableValue(row, key) {
+                if (key === "createdOn") return row.createdOnTicks || 0;
+                return (row[key] || "").toString().toLowerCase();
+            }
+
+            function sortRows(rows, state) {
+                rows.sort(function (a, b) {
+                    var av = toSortableValue(a, state.key);
+                    var bv = toSortableValue(b, state.key);
+                    if (av < bv) return state.asc ? -1 : 1;
+                    if (av > bv) return state.asc ? 1 : -1;
+                    return (a.sequence || 0) - (b.sequence || 0);
+                });
+            }
+
+            function renderRows(rows) {
+                var wrap = document.getElementById(TABLE_WRAP_ID);
+                if (!wrap) return;
+
+                if (!rows || rows.length === 0) {
+                    wrap.innerHTML = '<div class="wo-empty">' + escapeHtml(getResx("NoWorkOrdersForExport")) + '</div>';
+                    return;
+                }
+
+                var html = '';
+                var toHeader = function (label, key) {
+                    return '<button type="button" class="wo-sort" data-sort="' + key + '">' + escapeHtml(label) + getSortIndicator(sortState, key) + '</button>';
+                };
+                html += '<table class="wo-table">';
+                html += '<thead><tr>';
+                html += '<th>' + toHeader(getResx("WorkOrder"), "name") + '</th>';
+                html += '<th>' + toHeader(getResx("Owner"), "owner") + '</th>';
+                html += '<th>' + toHeader(getResx("CreatedOn"), "createdOn") + '</th>';
+                html += '<th class="wo-col-action">' + escapeHtml(getResx("Action")) + '</th>';
+                html += '</tr></thead>';
+                html += '<tbody>';
+                var displayRows = rows.slice(0);
+                sortRows(displayRows, sortState);
+                for (var i = 0; i < displayRows.length; i++) {
+                    var r = displayRows[i];
+                    var rowId = normalizeGuid(r.id);
+                    var isRemoved = !!removedExistingMap[rowId];
+                    html += '<tr class="' + (isRemoved ? 'wo-removed-row' : '') + '">';
+                    var href = getWorkOrderUrl(r.id);
+                    html += '<td><a href="' + escapeHtml(href) + '" class="wo-link wo-name-cell" data-id="' + escapeHtml(r.id) + '" target="_blank" rel="noopener noreferrer" title="' + escapeHtml(getResx("OpenWorkOrder")) + '">' + escapeHtml(r.name || "(unnamed)") + '</a></td>';
+                    html += '<td>' + escapeHtml(r.owner || "") + '</td>';
+                    html += '<td>' + escapeHtml(r.createdOn || "") + '</td>';
+                    html += '<td class="wo-col-action"><span class="wo-remove-icon" title="' + escapeHtml(isRemoved ? getResx("UndoRemove") : getResx("MarkForRemove")) + '" data-existing-remove-id="' + escapeHtml(r.id) + '">' + (isRemoved ? '&#8634;' : '&#10060;') + '</span></td>';
+                    html += '</tr>';
+                }
+                html += '</tbody></table>';
+                wrap.innerHTML = html;
+
+                var sortButtons = wrap.querySelectorAll(".wo-sort");
+                for (var j = 0; j < sortButtons.length; j++) {
+                    sortButtons[j].addEventListener("click", function (ev) {
+                        var key = (ev.currentTarget && ev.currentTarget.getAttribute("data-sort")) || "";
+                        if (!key) return;
+                        if (sortState.key === key) {
+                            sortState.asc = !sortState.asc;
+                        } else {
+                            sortState.key = key;
+                            sortState.asc = true;
+                        }
+                        renderRows(currentRows);
+                    });
+                }
+
+                var removeExistingIcons = wrap.querySelectorAll("[data-existing-remove-id]");
+                for (var k = 0; k < removeExistingIcons.length; k++) {
+                    removeExistingIcons[k].addEventListener("click", function (ev) {
+                        var id = normalizeGuid((ev.currentTarget && ev.currentTarget.getAttribute("data-existing-remove-id")) || "");
+                        if (!id) return;
+                        removedExistingMap[id] = !removedExistingMap[id];
+                        renderRows(currentRows);
+                        updateApplyButtonState();
+                    });
+                }
+            }
+
+            function renderLoadingTable(message) {
+                var wrap = document.getElementById(TABLE_WRAP_ID);
+                if (!wrap) return;
+                wrap.innerHTML = '<div class="wo-loading"><span class="wo-spinner"></span><span>' + escapeHtml(message || getResx("LoadingWorkOrders")) + '</span></div>';
+            }
+
+            function renderPendingRows() {
+                var wrap = document.getElementById(PENDING_WRAP_ID);
+                if (!wrap) return;
+
+                if (!pendingRows || pendingRows.length === 0) {
+                    wrap.innerHTML = '<div class="wo-empty">' + escapeHtml(getResx("NoPendingAdditions")) + '</div>';
+                    updateApplyButtonState();
+                    return;
+                }
+
+                var html = '';
+                var toHeader = function (label, key) {
+                    return '<button type="button" class="wo-sort" data-pending-sort="' + key + '">' + escapeHtml(label) + getSortIndicator(pendingSortState, key) + '</button>';
+                };
+                html += '<table class="wo-table">';
+                html += '<thead><tr>';
+                html += '<th>' + toHeader(getResx("WorkOrder"), "name") + '</th>';
+                html += '<th>' + toHeader(getResx("Owner"), "owner") + '</th>';
+                html += '<th>' + toHeader(getResx("CreatedOn"), "createdOn") + '</th>';
+                html += '<th class="wo-col-action">' + escapeHtml(getResx("Action")) + '</th>';
+                html += '</tr></thead>';
+                html += '<tbody>';
+                var displayRows = pendingRows.slice(0);
+                sortRows(displayRows, pendingSortState);
+                for (var i = 0; i < displayRows.length; i++) {
+                    var r = displayRows[i];
+                    var href = getWorkOrderUrl(r.id);
+                    html += '<tr class="wo-added-row">';
+                    html += '<td><a href="' + escapeHtml(href) + '" class="wo-link wo-name-cell" data-id="' + escapeHtml(r.id) + '" target="_blank" rel="noopener noreferrer" title="' + escapeHtml(getResx("OpenWorkOrder")) + '">' + escapeHtml(r.name || "(unnamed)") + '</a></td>';
+                    html += '<td>' + escapeHtml(r.owner || "") + '</td>';
+                    html += '<td>' + escapeHtml(r.createdOn || "") + '</td>';
+                    html += '<td class="wo-col-action"><span class="wo-remove-icon" title="' + escapeHtml(getResx("RemoveFromPending")) + '" data-remove-id="' + escapeHtml(r.id) + '">&#10060;</span></td>';
+                    html += '</tr>';
+                }
+                html += '</tbody></table>';
+                wrap.innerHTML = html;
+
+                var sortButtons = wrap.querySelectorAll("[data-pending-sort]");
+                for (var j = 0; j < sortButtons.length; j++) {
+                    sortButtons[j].addEventListener("click", function (ev) {
+                        var key = (ev.currentTarget && ev.currentTarget.getAttribute("data-pending-sort")) || "";
+                        if (!key) return;
+                        if (pendingSortState.key === key) {
+                            pendingSortState.asc = !pendingSortState.asc;
+                        } else {
+                            pendingSortState.key = key;
+                            pendingSortState.asc = true;
+                        }
+                        renderPendingRows();
+                    });
+                }
+
+                var removeButtons = wrap.querySelectorAll("[data-remove-id]");
+                for (var k = 0; k < removeButtons.length; k++) {
+                    removeButtons[k].addEventListener("click", function (ev) {
+                        var id = normalizeGuid((ev.currentTarget && ev.currentTarget.getAttribute("data-remove-id")) || "");
+                        if (!id) return;
+                        var kept = [];
+                        for (var i = 0; i < pendingRows.length; i++) {
+                            if (normalizeGuid(pendingRows[i].id) !== id) kept.push(pendingRows[i]);
+                        }
+                        pendingRows = kept;
+                        renderPendingRows();
+                    });
+                }
+                updateApplyButtonState();
+            }
+
+            function searchWorkOrders(term) {
+                var xrm = getXrm();
+                var safe = (term || "").replace(/'/g, "''");
+                var query = "?$select=msdyn_workorderid,msdyn_name,createdon,_ownerid_value&$filter=statecode eq 0 and contains(msdyn_name,'" + safe + "')&$orderby=msdyn_name asc&$top=10";
+                return xrm.WebApi.retrieveMultipleRecords("msdyn_workorder", query).then(function (result) {
+                    var entities = (result && result.entities) ? result.entities : [];
+                    return entities.map(function (e, idx) {
+                        var rawCreated = (e && e.createdon ? e.createdon : "").toString();
+                        var ts = Date.parse(rawCreated);
+                        return {
+                            sequence: idx,
+                            id: normalizeGuid(e && e.msdyn_workorderid ? e.msdyn_workorderid : ""),
+                            name: (e && e.msdyn_name ? e.msdyn_name : "").toString(),
+                            owner: (e && e["_ownerid_value@OData.Community.Display.V1.FormattedValue"])
+                                ? e["_ownerid_value@OData.Community.Display.V1.FormattedValue"].toString()
+                                : "",
+                            createdOnTicks: isNaN(ts) ? 0 : ts,
+                            createdOn: formatDate(rawCreated)
+                        };
+                    }).filter(function (r) { return !!r.id; });
+                });
+            }
+
+            function buildPayloadWithIds(existingPayload, ids) {
+                var payloadObj = {};
+                try {
+                    payloadObj = existingPayload && existingPayload.trim() ? JSON.parse(existingPayload) : {};
+                } catch (e) {
+                    payloadObj = {};
+                }
+                payloadObj.ids = ids.slice(0);
+                payloadObj.WorkOrders = ids.slice(0);
+                return JSON.stringify(payloadObj);
+            }
+
+            function updateNameWithCount(currentName, count) {
+                var defaultName = getResx("ExportDefaultName");
+                var name = (currentName || defaultName).toString();
+                if (/\(\d+\s+Work\s+Orders?\)/i.test(name)) {
+                    var suffix = count === 1 ? getResx("WorkOrderCount").replace("{0}", count) : getResx("WorkOrdersCount").replace("{0}", count);
+                    return name.replace(/\(\d+\s+Work\s+Orders?\)/i, "(" + suffix + ")");
+                }
+                return name;
+            }
+
+            function renderSearchDropdown(rows) {
+                var dd = document.getElementById(SEARCH_DROPDOWN_ID);
+                if (!dd) return;
+
+                if (!rows || rows.length === 0) {
+                    dd.style.display = "none";
+                    dd.innerHTML = "";
+                    return;
+                }
+
+                var existingMap = {};
+                var pendingMap = {};
+                for (var i = 0; i < currentRows.length; i++) existingMap[normalizeGuid(currentRows[i].id)] = true;
+                for (var j = 0; j < pendingRows.length; j++) pendingMap[normalizeGuid(pendingRows[j].id)] = true;
+
+                var html = "";
+                for (var k = 0; k < rows.length; k++) {
+                    var r = rows[k];
+                    var id = normalizeGuid(r.id);
+                    var disabled = !!existingMap[id] || !!pendingMap[id];
+                    html += '<button type="button" class="wo-dd-item" data-add-id="' + escapeHtml(id) + '" ' + (disabled ? 'disabled="disabled"' : '') + '>' +
+                        '<span class="wo-dd-name">' + escapeHtml(r.name || "(unnamed)") + (disabled ? escapeHtml(getResx("AlreadyAdded")) : "") + '</span>' +
+                        '<span class="wo-dd-meta"><span class="wo-dd-owner">' + escapeHtml(r.owner || "") + '</span><span class="wo-dd-date">' + escapeHtml(r.createdOn || "") + '</span></span>' +
+                        "</button>";
+                }
+                dd.innerHTML = html;
+                dd.style.display = "block";
+
+                var buttons = dd.querySelectorAll("[data-add-id]");
+                for (var b = 0; b < buttons.length; b++) {
+                    buttons[b].addEventListener("click", function (ev) {
+                        var id = normalizeGuid((ev.currentTarget && ev.currentTarget.getAttribute("data-add-id")) || "");
+                        if (!id) return;
+                        var selected = null;
+                        for (var i = 0; i < rows.length; i++) {
+                            if (normalizeGuid(rows[i].id) === id) {
+                                selected = rows[i];
+                                break;
+                            }
+                        }
+                        if (!selected) return;
+                        pendingRows.push(selected);
+                        renderPendingRows();
+                        updateApplyButtonState();
+                        dd.style.display = "none";
+                        dd.innerHTML = "";
+                        var input = document.getElementById(SEARCH_INPUT_ID);
+                        if (input) input.value = "";
+                    });
+                }
+            }
+
+            function applyChangesAndRestart() {
+                var removedCount = getRemovedCount();
+                if (pendingRows.length === 0 && removedCount === 0) {
+                    setStatus(getResx("NoChangesToApply"));
+                    return;
+                }
+
+                var xrm = getXrm();
+                var formContext = getFormContext();
+                if (!xrm || !formContext) {
+                    setStatus(getResx("CannotApplyFormContextUnavailable"));
+                    return;
+                }
+
+                var jobId = normalizeGuid(formContext.data && formContext.data.entity && formContext.data.entity.getId ? formContext.data.entity.getId() : "");
+                if (!jobId) {
+                    setStatus(getResx("CannotApplyJobIdUnavailable"));
+                    return;
+                }
+
+                var map = {};
+                var allIds = [];
+                var push = function (id) {
+                    var n = normalizeGuid(id);
+                    if (!n || map[n]) return;
+                    map[n] = true;
+                    allIds.push(n);
+                };
+                for (var i = 0; i < currentRows.length; i++) {
+                    var existingId = normalizeGuid(currentRows[i].id);
+                    if (!removedExistingMap[existingId]) push(existingId);
+                }
+                for (var j = 0; j < pendingRows.length; j++) push(pendingRows[j].id);
+
+                var nextPayload = buildPayloadWithIds(currentPayloadRaw, allIds);
+                var currentName = (formContext.getAttribute("ts_name") && formContext.getAttribute("ts_name").getValue())
+                    ? formContext.getAttribute("ts_name").getValue()
+                    : "";
+                var nextName = updateNameWithCount(currentName, allIds.length);
+
+                xrm.Utility.showProgressIndicator(getResx("ApplyingChangesAndRestarting"));
+                if (window.parent && window.parent.WorkOrderExportJobRibbon && typeof window.parent.WorkOrderExportJobRibbon.restartJob === "function") {
+                    window.parent.WorkOrderExportJobRibbon.restartJob(formContext, {
+                        forceRestart: true,
+                        preRestartUpdate: {
+                            ts_surveypayloadjson: nextPayload,
+                            ts_name: nextName
+                        }
+                    }).then(function () {
+                        xrm.Utility.closeProgressIndicator();
+                    }).catch(function (e) {
+                        try { xrm.Utility.closeProgressIndicator(); } catch (ignored) { }
+                        var msg = (e && e.message ? e.message : (e || "Unknown error")).toString();
+                        setStatus(getResx("FailedToApplyChanges") + msg);
+                    });
+                    return;
+                }
+
+                xrm.WebApi.updateRecord("ts_workorderexportjob", jobId, {
+                    ts_surveypayloadjson: nextPayload,
+                    ts_name: nextName
+                }).then(function () {
+                    xrm.Utility.closeProgressIndicator();
+                    setStatus(getResx("ChangesSavedRestartUnavailable"));
+                }).catch(function (e) {
+                    try { xrm.Utility.closeProgressIndicator(); } catch (ignored) { }
+                    var msg = (e && e.message ? e.message : (e || "Unknown error")).toString();
+                    setStatus(getResx("FailedToApplyChanges") + msg);
+                });
+            }
+
+            function loadRows() {
+                var loadingMsg = getResx("LoadingWorkOrders");
+                setStatus(loadingMsg);
+                setCount("");
+                renderLoadingTable(loadingMsg);
+                return getPayloadFromCurrentJob()
+                    .then(function (payload) {
+                        currentPayloadRaw = (payload || "").toString();
+                        var ids = parseIdsFromPayload(payload);
+                        if (ids.length === 0) {
+                            setStatus(getResx("NoWorkOrdersSelected"));
+                            setCount(getResx("WorkOrdersCount").replace("{0}", "0"));
+                            currentRows = [];
+                            pendingRows = [];
+                            removedExistingMap = {};
+                            renderRows([]);
+                            renderPendingRows();
+                            updateApplyButtonState();
+                            return;
+                        }
+                        return queryWorkOrders(ids).then(function (rows) {
+                            currentRows = rows || [];
+                            pendingRows = [];
+                            removedExistingMap = {};
+                            setCount(rows.length === 1 ? getResx("WorkOrderCount").replace("{0}", rows.length) : getResx("WorkOrdersCount").replace("{0}", rows.length));
+                            setStatus("");
+                            renderRows(rows);
+                            renderPendingRows();
+                            updateApplyButtonState();
+                        });
+                    })
+                    .catch(function (e) {
+                        var msg = (e && e.message ? e.message : (e || "Unknown error")).toString();
+                        console.error("WorkOrderExportIncludedWorkOrders load error:", msg);
+                        setStatus(getResx("CouldNotLoadWorkOrders"));
+                        setCount("");
+                        pendingRows = [];
+                        removedExistingMap = {};
+                        renderRows([]);
+                        renderPendingRows();
+                        updateApplyButtonState();
+                    });
+            }
+
+            function onLoad() {
+                var refreshBtn = document.getElementById(REFRESH_BTN_ID);
+                if (refreshBtn) {
+                    refreshBtn.textContent = getResx("RefreshList");
+                    refreshBtn.addEventListener("click", function () {
+                        loadRows();
+                    });
+                }
+
+                var applyBtn = document.getElementById(APPLY_BTN_ID);
+                if (applyBtn) {
+                    applyBtn.textContent = getResx("ApplyChangesAndRestartJob");
+                    applyBtn.addEventListener("click", function () {
+                        applyChangesAndRestart();
+                    });
+                }
+
+                var subtitleEl = document.getElementById("wo-export-included-subtitle");
+                if (subtitleEl) subtitleEl.textContent = getResx("IncludedWorkOrders");
+
+                var searchInput = document.getElementById(SEARCH_INPUT_ID);
+                var dropdown = document.getElementById(SEARCH_DROPDOWN_ID);
+                if (searchInput && dropdown) {
+                    searchInput.addEventListener("input", function () {
+                        var raw = (searchInput.value || "").replace(/\D/g, "");
+                        if (raw !== searchInput.value) searchInput.value = raw;
+                        var suffix = raw.trim();
+                        if (searchTimer) {
+                            window.clearTimeout(searchTimer);
+                            searchTimer = null;
+                        }
+                        if (suffix.length < SEARCH_MIN_SUFFIX_LENGTH) {
+                            renderSearchDropdown([]);
+                            return;
+                        }
+                        var term = WO_SEARCH_PREFIX + suffix;
+                        searchTimer = window.setTimeout(function () {
+                            searchWorkOrders(term).then(function (rows) {
+                                renderSearchDropdown(rows || []);
+                            }).catch(function () {
+                                renderSearchDropdown([]);
+                            });
+                        }, 250);
+                    });
+
+                    document.addEventListener("click", function (ev) {
+                        var target = ev.target;
+                        var insideInput = target === searchInput;
+                        var insideDropdown = dropdown.contains(target);
+                        if (!insideInput && !insideDropdown) {
+                            dropdown.style.display = "none";
+                        }
+                    });
+                }
+                updateApplyButtonState();
+                loadRows();
+            }
+
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", onLoad);
+            } else {
+                onLoad();
+            }
+        })();
+    </script>
+</body>
+</html>

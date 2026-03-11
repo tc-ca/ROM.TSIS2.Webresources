@@ -31,6 +31,11 @@ const OPERATION_TYPE_NAMES = {
     RAILWAY_CARRIER: "ts_RailwayCarrierOperationTypeId"
 }
 
+// Shared Work Order Export timing values used by the form and ribbon.
+var WORK_ORDER_EXPORT_TIMING = {
+  BACKEND_STALL_DEAD_AFTER_MINUTES: 10
+};
+
 function userHasRole(rolesName) {
   var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles;
   var hasRole = false;
@@ -400,6 +405,16 @@ function getOwnerIdFromRecord(record) {
   return null;
 }
 
+
+function getCurrentUserLanguageEnglishFrench() {
+  var languageId = (Xrm.Utility.getGlobalContext().userSettings && Xrm.Utility.getGlobalContext().userSettings.languageId) || 1033;
+  return languageId === 1036 ? "fr" : "en";
+}
+
+
+function isCurrentUserFrench() {
+  return getCurrentUserLanguageEnglishFrench() === "fr";
+}
 
 /**
  * Polymorphic owner check:
