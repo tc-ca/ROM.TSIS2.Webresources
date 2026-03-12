@@ -78,7 +78,7 @@ var ROM;
         var finalizeWaitStartedAtMs = null;
         var isProgressPollInFlight = false;
         var hasPendingProgressPoll = false;
-        var PROGRESS_POLL_INTERVAL_MS = 3000;
+        var PROGRESS_POLL_INTERVAL_MS = 5000;
         var FINALIZE_MAX_WAIT_MS = 20000;
         var PROGRESS_WRITE_THROTTLE_MS = 1500;
         var PROGRESS_INDICATOR_UPDATE_THROTTLE_MS = 250;
@@ -224,8 +224,15 @@ var ROM;
         function isStage3Status(status) {
             return isStatusInList(status, STAGE3_STATUSES);
         }
+        var STAGE1_PREFIX = "[Stage 1/3] Preparing questionnaires...";
         function formatSurveyOverall(done, total) {
-            return "[Stage 1/3] Preparing questionnaires... (" + formatRatioWithPercent(done, total) + ")";
+            var pct = getStage1Percent(done, total);
+            return STAGE1_PREFIX + " (" + formatRatio(done, total) + ") - " + pct + "%";
+        }
+        /** Stage 1 detail: WO | Q (done/total) - XX% | action. Percentage from questionnaire count (done/total survey PDFs). */
+        function formatStage1DetailWithWoFirst(woIdx, totalWos, taskIdx, totalTasksInWo, doneUnits, totalUnits, action) {
+            var pct = getStage1Percent(doneUnits, totalUnits);
+            return formatWorkOrderTaskProgress(woIdx, totalWos, taskIdx, totalTasksInWo) + " (" + formatRatio(doneUnits, totalUnits) + ") - " + pct + "% | " + action;
         }
         function formatQuestionnaireExportProgress(done, total, complete) {
             if (complete === void 0) { complete = false; }
@@ -243,11 +250,20 @@ var ROM;
         function formatWorkOrderTaskProgress(workOrderIndex, totalWorkOrders, taskIndex, totalTasksInWorkOrder) {
             return "WO " + workOrderIndex + "/" + totalWorkOrders + " | Q " + taskIndex + "/" + totalTasksInWorkOrder;
         }
-        function formatRatioWithPercent(done, total) {
+        function formatRatio(done, total) {
             var safeTotal = Math.max(0, total);
             var safeDone = Math.max(0, Math.min(done, safeTotal));
-            var ratioPercent = safeTotal > 0 ? Math.round((safeDone * 100) / safeTotal) : 0;
-            return safeDone + "/" + safeTotal + ", " + ratioPercent + "%";
+            return safeDone + "/" + safeTotal;
+        }
+        function getStage1Percent(done, total) {
+            var safeTotal = Math.max(0, total);
+            var safeDone = Math.max(0, Math.min(done, safeTotal));
+            return safeTotal > 0 ? Math.round((safeDone * 100) / safeTotal) : 0;
+        }
+        function formatRatioWithPercent(done, total) {
+            var r = formatRatio(done, total);
+            var p = getStage1Percent(done, total);
+            return r + ", " + p + "%";
         }
         function formatStageProgress(stagePrefix, actionLabel, overallPercent, detail) {
             var percentSuffix = typeof overallPercent === "number" ? " | Overall " + overallPercent + "%" : "";
@@ -341,16 +357,17 @@ var ROM;
             var zipDoneFromMessage = zipCountMatch ? Math.max(0, Number(zipCountMatch[1] || 0)) : null;
             var zipTotalFromMessage = zipCountMatch ? Math.max(0, Number(zipCountMatch[2] || 0)) : null;
             if (isStage2Status(status)) {
-                // Stage 2 (flow): show coarse completed-count. Flow sends progressMessage (EN/FR); if it contains X/Y (Z%) we show it as-is with stage prefix.
+                // Stage 2 (flow): prefer ts_progressmessage written by the flow (polled ~5s). Only use when it looks like flow progress, not leftover Stage 1.
+                var looksLikeStage1Message = /\[Stage\s+1\/3\]|Questionnaire\s+PDFs/i.test(msg);
                 var ratioInMessage = msg.match(/\d+\s*\/\s*\d+\s*\(\s*\d+\s*%\s*\)/);
-                if (ratioInMessage) {
-                    var stagePrefix_1 = getStagePrefix(status);
-                    return stagePrefix_1 + " " + msg;
+                var hasFlowProgress = ratioInMessage && !looksLikeStage1Message;
+                if (hasFlowProgress) {
+                    return getStagePrefix(status) + " " + msg;
                 }
-                var safeDone = Math.max(0, doneUnits);
+                // No flow message yet or still Stage 1 text: show initial "0/XX (0%)" from ts_totalunits (flow should set ts_totalunits when it claims).
                 var safeTotal = Math.max(0, totalUnits);
-                var stagePrefix_2 = getStagePrefix(status);
-                return stagePrefix_2 + " Work order PDFs: " + safeDone + "/" + safeTotal + " (" + percent + "%)";
+                var safeDone = Math.max(0, doneUnits);
+                return getStagePrefix(status) + " Work order PDFs: " + safeDone + "/" + safeTotal + " (" + (safeTotal > 0 ? Math.min(99, Math.round((safeDone * 100) / safeTotal)) : 0) + "%)";
             }
             if (status === STATUS_READY_FOR_ZIP || status === STATUS_ZIP_IN_PROGRESS) {
                 // Keep ZIP assembly visually distinct from cleanup/finalization.
@@ -375,6 +392,10 @@ var ROM;
                 return formatStageProgress(stagePrefix, "Cleaning up temporary artifacts...");
             }
             if (status === STATUS_READY_FOR_MERGE || status === STATUS_MERGE_IN_PROGRESS) {
+                // Flow sets a final message when moving to ReadyForMerge; show it until merge worker overwrites.
+                if (msg.length > 0 && msg.includes("[Stage 2/3]") && (msg.includes("Completed") || msg.includes("Terminé"))) {
+                    return (msg.startsWith("[") || msg.startsWith("✅")) ? msg : stagePrefix + " " + msg;
+                }
                 var safeDone = Math.max(0, doneUnits);
                 var safeTotal = Math.max(0, totalUnits);
                 return formatStageProgressWithRatio(stagePrefix, "Merging PDFs...", safeDone, safeTotal, percent);
@@ -1054,10 +1075,36 @@ var ROM;
                             else if (!hasStalledWarning) {
                                 clearProgressNotification(formContext);
                             }
+                            // Tell Included Work Orders iframe to refresh Stage 2 (main PDF) row state from annotations (same cadence as done-units poll)
+                            if (status != null && status !== STATUS_ERROR && status !== STATUS_COMPLETED && status >= STATUS_READY_FOR_FLOW) {
+                                notifyIncludedWorkOrdersRefreshStage2(formContext, jobId);
+                            }
                             return [2 /*return*/];
                     }
                 });
             });
+        }
+        function notifyIncludedWorkOrdersRefreshStage2(formContext, jobId) {
+            var _a;
+            try {
+                var controls = formContext.ui.controls.get();
+                for (var idx = 0; idx < controls.length; idx++) {
+                    try {
+                        var ctrl = controls[idx];
+                        var obj = (_a = ctrl.getObject) === null || _a === void 0 ? void 0 : _a.call(ctrl);
+                        if ((obj === null || obj === void 0 ? void 0 : obj.tagName) === "IFRAME" && typeof obj.src === "string" && obj.src.indexOf("WorkOrderExportIncludedWorkOrders") !== -1 && obj.contentWindow) {
+                            obj.contentWindow.postMessage({ type: "wo-export-refresh-stage2", jobId: jobId }, "*");
+                            break;
+                        }
+                    }
+                    catch (_b) {
+                        /* ignore */
+                    }
+                }
+            }
+            catch (_c) {
+                /* ignore */
+            }
         }
         function triggerProgressPoll(formContext, jobId) {
             if (isProgressPollInFlight) {
@@ -1144,7 +1191,7 @@ var ROM;
                 return;
             var style = rw.document.createElement("style");
             style.id = cssId;
-            style.innerHTML = "\n            .sv_nav,\n            .sv_next_btn,\n            .sv_prev_btn,\n            .sv_complete_btn,\n            .sv_preview_btn,\n            .sv_progress {\n              display: none !important;\n            }\n            .sv_p_root {\n              padding-bottom: 0px !important;\n            }\n            /* Keep survey blocks together in PDF pages to avoid cut-off at page boundaries. */\n            .sv_q,\n            .sv_row,\n            .sv_panel,\n            .sv_q_title,\n            .sv_q_description,\n            .form-group,\n            .printed-textarea {\n              break-inside: avoid !important;\n              page-break-inside: avoid !important;\n            }\n          ";
+            style.innerHTML = "\n            .sv_nav,\n            .sv_next_btn,\n            .sv_prev_btn,\n            .sv_complete_btn,\n            .sv_preview_btn,\n            .sv_progress {\n              display: none !important;\n            }\n            .sv_p_root {\n              padding-bottom: 0px !important;\n            }\n            /* Keep survey blocks together in PDF pages to avoid cut-off at page boundaries. */\n            .sv_q,\n            .sv_row,\n            .sv_panel,\n            .sv_q_title,\n            .sv_q_description,\n            .form-group,\n            .printed-textarea {\n              break-inside: avoid !important;\n              page-break-inside: avoid !important;\n            }\n            .printed-textarea {\n              display: block !important;\n              width: 100% !important;\n              min-height: 50px;\n              height: auto !important;\n              padding: 6px 12px;\n              color: #555;\n              background-color: #fff;\n              background-image: none;\n              border: 1px solid #ccc;\n              border-radius: 4px;\n              box-sizing: border-box;\n              overflow: visible !important;\n            }\n          ";
             rw.document.head.appendChild(style);
         }
         function renderSingleSurvey(params) {
@@ -1272,10 +1319,7 @@ var ROM;
                                     newDiv.html((newDiv.html() || "").replace(/\n/g, "<br />"));
                                     newDiv.css("white-space", "pre-wrap");
                                     newDiv.css("word-wrap", "break-word");
-                                    newDiv.css("border", "1px solid #ccc");
-                                    newDiv.css("padding", "5px");
-                                    newDiv.css("min-height", "50px");
-                                    newDiv.addClass("form-control");
+                                    newDiv.css("overflow-wrap", "break-word");
                                     renderWindow.jQuery(el).replaceWith(newDiv);
                                 });
                             }
@@ -1427,10 +1471,10 @@ var ROM;
         function onLoad(eContext) {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
             return __awaiter(this, void 0, void 0, function () {
-                var formContext, isSystemAdmin, adminDebugTab, formType, slot, status, jobId, stopStallWatchdog, recoveryMode, resumedTaskIds, stallWatchdogHandle_1, lastProgressActivityMs_1, lastProgressContext_1, autoReloadTriggered_1, touchProgressActivity_1, handleStallDetected_1, currentJob, currentStatus, hasInterruptionFlag, autoResumeRequested, currentProgressMessage, progressIndicatesAutoResume, hasPartialProgress, heartbeatRecent, isInterruptedRun, _o, existingSurveyNotes, _i, existingSurveyNotes_1, note, existingTaskId, userCancelledMessage, _p, renderWindows_3, slot, ctrlName, ctrl, rw, payloadAttr, payloadStr, rawPayload, ids, includeHiddenQuestions_1, totalExports_1, totalSurveyPdfs_1, tasksByWorkOrderId, nonBlockingSkips, skippedEmptyCount, skippedInvalidDefinitionCount, skippedNoQuestionnaireCount, workOrderNames, countIndex, _q, ids_1, workOrderId, workOrderIdNoBraces, fetchOptions, scanMessage, tasks, _r, wo, fetchedTasks, scanErr_1, tasksTotal, tasksWithQuestionnaires, allSurveys, woIdx, _t, ids_2, workOrderId, wId, woName, workOrderLabel, tasksEntities, tasksWithQ, taskIdx, _u, tasksWithQ_1, task, taskId, totalUnits, doneUnits_1, userSettings, locale_1, _v, renderWindows_1, rw, errors_1, updateProgress_1, lastProgressWriteMs_1, writeProgress, pendingUploadPromises, i, chunk, chunkLabel, renderPromises, results, _loop_1, r, _w, renderWindows_2, rw, errorMsgAttr, parts, completionMsg, skipBreakdown, completionWithSkips, warningSummary, errorMsgAttr, e_4, errorMsgAttr, saveErrText, saveErr_1, baseError, finalError;
+                var formContext, isSystemAdmin, adminDebugTab, formType, slot, status, jobId, stopStallWatchdog, recoveryMode, resumedTaskIds, stallWatchdogHandle_1, lastProgressActivityMs_1, lastProgressContext_1, autoReloadTriggered_1, touchProgressActivity_1, handleStallDetected_1, currentJob, currentStatus, hasInterruptionFlag, autoResumeRequested, currentProgressMessage, progressIndicatesAutoResume, hasPartialProgress, heartbeatRecent, isInterruptedRun, _o, existingSurveyNotes, _i, existingSurveyNotes_1, note, existingTaskId, userCancelledMessage, _p, renderWindows_3, slot, ctrlName, ctrl, rw, payloadAttr, payloadStr, rawPayload, ids, includeHiddenQuestions_1, totalExports_1, totalSurveyPdfs_1, tasksByWorkOrderId, nonBlockingSkips, skippedEmptyCount, skippedInvalidDefinitionCount, skippedNoQuestionnaireCount, workOrderNames, countIndex, _q, ids_1, workOrderId, workOrderIdNoBraces, fetchOptions, scanMessage, tasks, _r, wo, fetchedTasks, scanErr_1, tasksTotal, tasksWithQuestionnaires, allSurveys, woIdx, _t, ids_2, workOrderId, wId, woName, workOrderLabel, tasksEntities, tasksWithQ, taskIdx, _u, tasksWithQ_1, task, taskId, totalUnits, doneUnits_1, userSettings, locale_1, _v, renderWindows_1, rw, errors_1, totalTasksPerWo_1, _w, allSurveys_1, s, w, completedCountByWo_1, stage1CompletedSet_1, stage1FailedSet_1, notifyIncludedWorkOrdersStage1_1, notifyIncludedWorkOrdersStage1Failed_1, onWoStage1Complete_1, updateProgress_1, lastProgressWriteMs_1, writeProgress, pendingUploadPromises, i, chunk, pct, chunkLabel, renderPromises, results, _loop_1, r, _x, renderWindows_2, rw, errorMsgAttr, parts, completionMsg, skipBreakdown, completionWithSkips, warningSummary, errorMsgAttr, e_4, errorMsgAttr, saveErrText, saveErr_1, baseError, finalError;
                 var _this = this;
-                return __generator(this, function (_x) {
-                    switch (_x.label) {
+                return __generator(this, function (_y) {
+                    switch (_y.label) {
                         case 0:
                             formContext = eContext.getFormContext();
                             isSystemAdmin = userHasRole("System Administrator");
@@ -1471,9 +1515,9 @@ var ROM;
                             if (status !== STATUS_CLIENT_PROCESSING)
                                 return [2 /*return*/];
                             stopStallWatchdog = function () { };
-                            _x.label = 1;
+                            _y.label = 1;
                         case 1:
-                            _x.trys.push([1, 47, , 52]);
+                            _y.trys.push([1, 47, , 52]);
                             recoveryMode = "none";
                             resumedTaskIds = new Set();
                             stallWatchdogHandle_1 = null;
@@ -1563,7 +1607,7 @@ var ROM;
                             if (!jobId) return [3 /*break*/, 15];
                             return [4 /*yield*/, Xrm.WebApi.retrieveRecord("ts_workorderexportjob", jobId, "?$select=statuscode,ts_lastheartbeat,ts_doneunits,ts_progressmessage")];
                         case 2:
-                            currentJob = _x.sent();
+                            currentJob = _y.sent();
                             currentStatus = currentJob === null || currentJob === void 0 ? void 0 : currentJob.statuscode;
                             hasInterruptionFlag = consumeInterruptionFlag(jobId);
                             autoResumeRequested = consumeAutoResumeFlag(jobId);
@@ -1583,14 +1627,14 @@ var ROM;
                             return [3 /*break*/, 5];
                         case 3: return [4 /*yield*/, promptResumeOrCancel()];
                         case 4:
-                            _o = _x.sent();
-                            _x.label = 5;
+                            _o = _y.sent();
+                            _y.label = 5;
                         case 5:
                             recoveryMode = _o;
                             if (!(recoveryMode === "resume")) return [3 /*break*/, 7];
                             return [4 /*yield*/, getSurveyPdfAnnotations(jobId)];
                         case 6:
-                            existingSurveyNotes = _x.sent();
+                            existingSurveyNotes = _y.sent();
                             resumedTaskIds = new Set();
                             for (_i = 0, existingSurveyNotes_1 = existingSurveyNotes; _i < existingSurveyNotes_1.length; _i++) {
                                 note = existingSurveyNotes_1[_i];
@@ -1611,20 +1655,20 @@ var ROM;
                                     ts_lastheartbeat: new Date().toISOString()
                                 })];
                         case 8:
-                            _x.sent();
+                            _y.sent();
                             clearProgressNotification(formContext);
                             setLeavePageGuard(false);
                             closeCriticalProgressIndicator();
                             clearJobLocalState(jobId);
-                            _x.label = 9;
+                            _y.label = 9;
                         case 9:
-                            _x.trys.push([9, 11, , 12]);
+                            _y.trys.push([9, 11, , 12]);
                             return [4 /*yield*/, formContext.data.refresh(false)];
                         case 10:
-                            _x.sent();
+                            _y.sent();
                             return [3 /*break*/, 12];
                         case 11:
-                            _p = _x.sent();
+                            _p = _y.sent();
                             return [3 /*break*/, 12];
                         case 12:
                             Xrm.Navigation.openAlertDialog({ text: userCancelledMessage });
@@ -1637,7 +1681,7 @@ var ROM;
                                 startProgressPoller(formContext, jobId);
                                 return [2 /*return*/];
                             }
-                            _x.label = 15;
+                            _y.label = 15;
                         case 15:
                             if (jobId) {
                                 // Stage 2 is running in this form: warn and prevent accidental close.
@@ -1655,7 +1699,7 @@ var ROM;
                             }
                             renderWindows_3 = [];
                             slot = 1;
-                            _x.label = 16;
+                            _y.label = 16;
                         case 16:
                             if (!(slot <= RENDER_HOST_COUNT)) return [3 /*break*/, 20];
                             ctrlName = "" + RENDER_HOST_CONTROL_PREFIX + slot;
@@ -1664,14 +1708,14 @@ var ROM;
                                 throw new Error("Render host control not found on form: " + ctrlName);
                             return [4 /*yield*/, ctrl.getContentWindow()];
                         case 17:
-                            rw = _x.sent();
+                            rw = _y.sent();
                             if (!rw)
                                 throw new Error("Render host content window not accessible: " + ctrlName);
                             return [4 /*yield*/, waitForRenderHostRuntime(rw, ctrlName)];
                         case 18:
-                            _x.sent();
+                            _y.sent();
                             renderWindows_3.push(rw);
-                            _x.label = 19;
+                            _y.label = 19;
                         case 19:
                             slot++;
                             return [3 /*break*/, 16];
@@ -1705,7 +1749,7 @@ var ROM;
                             workOrderNames = new Map();
                             countIndex = 0;
                             _q = 0, ids_1 = ids;
-                            _x.label = 21;
+                            _y.label = 21;
                         case 21:
                             if (!(_q < ids_1.length)) return [3 /*break*/, 27];
                             workOrderId = ids_1[_q];
@@ -1717,21 +1761,21 @@ var ROM;
                             setProgressNotification(formContext, scanMessage, "INFO");
                             showCriticalProgressIndicator(scanMessage);
                             tasks = void 0;
-                            _x.label = 22;
+                            _y.label = 22;
                         case 22:
-                            _x.trys.push([22, 24, , 25]);
+                            _y.trys.push([22, 24, , 25]);
                             return [4 /*yield*/, Promise.all([
                                     Xrm.WebApi.retrieveRecord("msdyn_workorder", workOrderIdNoBraces, "?$select=msdyn_name")
                                         .catch(function () { return null; }),
                                     Xrm.WebApi.retrieveMultipleRecords("msdyn_workorderservicetask", fetchOptions)
                                 ])];
                         case 23:
-                            _r = _x.sent(), wo = _r[0], fetchedTasks = _r[1];
+                            _r = _y.sent(), wo = _r[0], fetchedTasks = _r[1];
                             workOrderNames.set(workOrderIdNoBraces, ((_j = wo) === null || _j === void 0 ? void 0 : _j.msdyn_name) || "");
                             tasks = fetchedTasks;
                             return [3 /*break*/, 25];
                         case 24:
-                            scanErr_1 = _x.sent();
+                            scanErr_1 = _y.sent();
                             throw new Error("Failed loading service tasks for work order " + workOrderIdNoBraces + ": " + getErrorText(scanErr_1));
                         case 25:
                             tasksTotal = tasks.entities.length;
@@ -1752,7 +1796,7 @@ var ROM;
                             }
                             tasksByWorkOrderId[workOrderIdNoBraces] = tasks.entities;
                             totalSurveyPdfs_1 += tasksWithQuestionnaires.length;
-                            _x.label = 26;
+                            _y.label = 26;
                         case 26:
                             _q++;
                             return [3 /*break*/, 21];
@@ -1807,8 +1851,8 @@ var ROM;
                                     ts_lastheartbeat: new Date().toISOString()
                                 })];
                         case 28:
-                            _x.sent();
-                            _x.label = 29;
+                            _y.sent();
+                            _y.label = 29;
                         case 29:
                             userSettings = Xrm.Utility.getGlobalContext().userSettings;
                             locale_1 = (userSettings.languageId === 1036) ? 'fr' : 'en';
@@ -1818,6 +1862,67 @@ var ROM;
                                 injectExportCss(rw);
                             }
                             errors_1 = [];
+                            totalTasksPerWo_1 = {};
+                            for (_w = 0, allSurveys_1 = allSurveys; _w < allSurveys_1.length; _w++) {
+                                s = allSurveys_1[_w];
+                                w = s.workOrderIdNoBraces;
+                                totalTasksPerWo_1[w] = (totalTasksPerWo_1[w] || 0) + 1;
+                            }
+                            completedCountByWo_1 = {};
+                            stage1CompletedSet_1 = new Set();
+                            stage1FailedSet_1 = new Set();
+                            notifyIncludedWorkOrdersStage1_1 = function (woIds) {
+                                var _a;
+                                try {
+                                    var controls = formContext.ui.controls.get();
+                                    for (var idx = 0; idx < controls.length; idx++) {
+                                        try {
+                                            var ctrl = controls[idx];
+                                            var obj = (_a = ctrl.getObject) === null || _a === void 0 ? void 0 : _a.call(ctrl);
+                                            if ((obj === null || obj === void 0 ? void 0 : obj.tagName) === "IFRAME" && typeof obj.src === "string" && obj.src.indexOf("WorkOrderExportIncludedWorkOrders") !== -1 && obj.contentWindow) {
+                                                obj.contentWindow.postMessage({ type: "wo-export-stage1-completed", workOrderIds: woIds }, "*");
+                                                break;
+                                            }
+                                        }
+                                        catch (_b) {
+                                            /* ignore */
+                                        }
+                                    }
+                                }
+                                catch (_c) {
+                                    /* ignore */
+                                }
+                            };
+                            notifyIncludedWorkOrdersStage1Failed_1 = function (woIds) {
+                                var _a;
+                                try {
+                                    var controls = formContext.ui.controls.get();
+                                    for (var idx = 0; idx < controls.length; idx++) {
+                                        try {
+                                            var ctrl = controls[idx];
+                                            var obj = (_a = ctrl.getObject) === null || _a === void 0 ? void 0 : _a.call(ctrl);
+                                            if ((obj === null || obj === void 0 ? void 0 : obj.tagName) === "IFRAME" && typeof obj.src === "string" && obj.src.indexOf("WorkOrderExportIncludedWorkOrders") !== -1 && obj.contentWindow) {
+                                                obj.contentWindow.postMessage({ type: "wo-export-stage1-failed", workOrderIds: woIds }, "*");
+                                                break;
+                                            }
+                                        }
+                                        catch (_b) {
+                                            /* ignore */
+                                        }
+                                    }
+                                }
+                                catch (_c) {
+                                    /* ignore */
+                                }
+                            };
+                            onWoStage1Complete_1 = function (workOrderIdNoBraces) {
+                                completedCountByWo_1[workOrderIdNoBraces] = (completedCountByWo_1[workOrderIdNoBraces] || 0) + 1;
+                                var total = totalTasksPerWo_1[workOrderIdNoBraces];
+                                if (total && completedCountByWo_1[workOrderIdNoBraces] === total) {
+                                    stage1CompletedSet_1.add(workOrderIdNoBraces);
+                                    notifyIncludedWorkOrdersStage1_1(Array.from(stage1CompletedSet_1));
+                                }
+                            };
                             updateProgress_1 = function (overallMessage, detailMessage) {
                                 var combined = detailMessage ? overallMessage + " | " + detailMessage : overallMessage;
                                 touchProgressActivity_1(combined);
@@ -1853,21 +1958,23 @@ var ROM;
                             };
                             pendingUploadPromises = [];
                             i = 0;
-                            _x.label = 30;
+                            _y.label = 30;
                         case 30:
                             if (!(i < allSurveys.length)) return [3 /*break*/, 39];
                             if (!(pendingUploadPromises.length > 0)) return [3 /*break*/, 32];
                             return [4 /*yield*/, Promise.all(pendingUploadPromises)];
                         case 31:
-                            _x.sent();
+                            _y.sent();
                             pendingUploadPromises = [];
-                            _x.label = 32;
+                            _y.label = 32;
                         case 32:
                             chunk = allSurveys.slice(i, i + RENDER_HOST_COUNT);
+                            pct = getStage1Percent(doneUnits_1, totalSurveyPdfs_1);
                             chunkLabel = chunk
                                 .map(function (s) { return formatWorkOrderTaskProgress(s.woIndex, totalExports_1, s.taskIndex, s.totalQuestionnairesInWo); })
-                                .join(" & ");
-                            updateProgress_1(formatSurveyOverall(doneUnits_1, totalSurveyPdfs_1), chunkLabel + " | Rendering");
+                                .join(" & ") +
+                                (" (" + formatRatio(doneUnits_1, totalSurveyPdfs_1) + ") - " + pct + "% | Rendering");
+                            updateProgress_1(STAGE1_PREFIX, chunkLabel);
                             renderPromises = chunk.map(function (item, slotIndex) {
                                 var task = item.task, workOrderIdNoBraces = item.workOrderIdNoBraces, wIdx = item.woIndex, tIdx = item.taskIndex, totalQuestionnairesInWo = item.totalQuestionnairesInWo;
                                 var taskId = (task.msdyn_workorderservicetaskid || "unknown").replace(/[{}]/g, "");
@@ -1883,17 +1990,17 @@ var ROM;
                                     includeHiddenQuestions: includeHiddenQuestions_1,
                                     filename: filename,
                                     onProgress: function (stage) {
-                                        updateProgress_1(formatSurveyOverall(doneUnits_1, totalSurveyPdfs_1), formatWorkOrderTaskProgress(wIdx, totalExports_1, tIdx, totalQuestionnairesInWo) + " | " + stage);
+                                        updateProgress_1(STAGE1_PREFIX, formatStage1DetailWithWoFirst(wIdx, totalExports_1, tIdx, totalQuestionnairesInWo, doneUnits_1, totalSurveyPdfs_1, stage));
                                     }
                                 });
                             });
                             return [4 /*yield*/, Promise.all(renderPromises)];
                         case 33:
-                            results = _x.sent();
+                            results = _y.sent();
                             _loop_1 = function (r) {
                                 var result, item, task, workOrderIdNoBraces, workOrderLabel, wIdx, tIdx, totalQuestionnairesInWo, taskId, taskName, taskLabel, userGuidance, capturedFilename, uploadPromise;
-                                return __generator(this, function (_y) {
-                                    switch (_y.label) {
+                                return __generator(this, function (_z) {
+                                    switch (_z.label) {
                                         case 0:
                                             result = results[r];
                                             item = chunk[r];
@@ -1911,26 +2018,32 @@ var ROM;
                                                 skippedInvalidDefinitionCount++;
                                             }
                                             doneUnits_1++;
-                                            updateProgress_1(formatSurveyOverall(doneUnits_1, totalSurveyPdfs_1), formatWorkOrderTaskProgress(wIdx, totalExports_1, tIdx, totalQuestionnairesInWo) + " | Skipped");
+                                            onWoStage1Complete_1(workOrderIdNoBraces);
+                                            updateProgress_1(STAGE1_PREFIX, formatStage1DetailWithWoFirst(wIdx, totalExports_1, tIdx, totalQuestionnairesInWo, doneUnits_1, totalSurveyPdfs_1, "Skipped"));
                                             return [4 /*yield*/, writeProgress(formatQuestionnaireExportProgress(doneUnits_1, totalSurveyPdfs_1))];
                                         case 1:
-                                            _y.sent();
+                                            _z.sent();
                                             return [3 /*break*/, 5];
                                         case 2:
                                             if (!(result.status === "error")) return [3 /*break*/, 3];
+                                            stage1FailedSet_1.add(workOrderIdNoBraces);
+                                            notifyIncludedWorkOrdersStage1Failed_1(Array.from(stage1FailedSet_1));
                                             userGuidance = "Please try again. If this keeps failing, retry the export without this Work Order/Service Task.";
                                             errors_1.push("Work Order: " + workOrderLabel + "\n" +
                                                 ("Work Order Service Task: " + taskLabel + "\n") +
                                                 ("Error: " + result.error + "\n") +
                                                 ("" + userGuidance));
                                             console.error("[WOExport][TaskError] wo=" + workOrderIdNoBraces + " task=" + taskId + " msg=" + result.error);
-                                            updateProgress_1(formatSurveyOverall(doneUnits_1, totalSurveyPdfs_1), formatWorkOrderTaskProgress(wIdx, totalExports_1, tIdx, totalQuestionnairesInWo) + " | Error");
+                                            updateProgress_1(STAGE1_PREFIX, formatStage1DetailWithWoFirst(wIdx, totalExports_1, tIdx, totalQuestionnairesInWo, doneUnits_1, totalSurveyPdfs_1, "Error"));
                                             return [3 /*break*/, 5];
                                         case 3:
                                             if (!(result.status === "ok")) return [3 /*break*/, 5];
                                             capturedFilename = result.filename;
                                             uploadPromise = uploadSurveyBlob(result.blob, capturedFilename, jobId)
+                                                .then(function () { return onWoStage1Complete_1(workOrderIdNoBraces); })
                                                 .catch(function (uploadErr) {
+                                                stage1FailedSet_1.add(workOrderIdNoBraces);
+                                                notifyIncludedWorkOrdersStage1Failed_1(Array.from(stage1FailedSet_1));
                                                 var userGuidance = "Please try again. If this keeps failing, retry the export without this Work Order/Service Task.";
                                                 errors_1.push("Work Order: " + workOrderLabel + "\n" +
                                                     ("Work Order Service Task: " + taskLabel + "\n") +
@@ -1940,33 +2053,33 @@ var ROM;
                                             });
                                             pendingUploadPromises.push(uploadPromise);
                                             doneUnits_1++;
-                                            updateProgress_1(formatSurveyOverall(doneUnits_1, totalSurveyPdfs_1), formatWorkOrderTaskProgress(wIdx, totalExports_1, tIdx, totalQuestionnairesInWo) + " | Uploading");
+                                            updateProgress_1(STAGE1_PREFIX, formatStage1DetailWithWoFirst(wIdx, totalExports_1, tIdx, totalQuestionnairesInWo, doneUnits_1, totalSurveyPdfs_1, "Uploading"));
                                             return [4 /*yield*/, writeProgress(formatQuestionnaireExportProgress(doneUnits_1, totalSurveyPdfs_1))];
                                         case 4:
-                                            _y.sent();
-                                            _y.label = 5;
+                                            _z.sent();
+                                            _z.label = 5;
                                         case 5: return [2 /*return*/];
                                     }
                                 });
                             };
                             r = 0;
-                            _x.label = 34;
+                            _y.label = 34;
                         case 34:
                             if (!(r < results.length)) return [3 /*break*/, 37];
                             return [5 /*yield**/, _loop_1(r)];
                         case 35:
-                            _x.sent();
-                            _x.label = 36;
+                            _y.sent();
+                            _y.label = 36;
                         case 36:
                             r++;
                             return [3 /*break*/, 34];
                         case 37:
                             // Clear all render windows after the chunk is processed
-                            for (_w = 0, renderWindows_2 = renderWindows_3; _w < renderWindows_2.length; _w++) {
-                                rw = renderWindows_2[_w];
+                            for (_x = 0, renderWindows_2 = renderWindows_3; _x < renderWindows_2.length; _x++) {
+                                rw = renderWindows_2[_x];
                                 (_m = (_l = (_k = rw.jQuery) === null || _k === void 0 ? void 0 : _k.call(rw, "#surveyElement")) === null || _l === void 0 ? void 0 : _l.empty) === null || _m === void 0 ? void 0 : _m.call(_l);
                             }
-                            _x.label = 38;
+                            _y.label = 38;
                         case 38:
                             i += RENDER_HOST_COUNT;
                             return [3 /*break*/, 30];
@@ -1975,9 +2088,9 @@ var ROM;
                             updateProgress_1(formatSurveyOverall(doneUnits_1, totalSurveyPdfs_1), "Finishing uploads...");
                             return [4 /*yield*/, Promise.all(pendingUploadPromises)];
                         case 40:
-                            _x.sent();
+                            _y.sent();
                             pendingUploadPromises = [];
-                            _x.label = 41;
+                            _y.label = 41;
                         case 41:
                             if (!(errors_1.length > 0)) return [3 /*break*/, 43];
                             // Set error status and message
@@ -2000,7 +2113,7 @@ var ROM;
                             clearJobLocalState(jobId);
                             return [4 /*yield*/, formContext.data.save()];
                         case 42:
-                            _x.sent();
+                            _y.sent();
                             Xrm.Navigation.openAlertDialog({ text: "Export completed with " + errors_1.length + " error(s). Check error message field for details." });
                             return [3 /*break*/, 46];
                         case 43:
@@ -2011,7 +2124,7 @@ var ROM;
                                 : completionMsg;
                             return [4 /*yield*/, writeProgress(completionWithSkips, true)];
                         case 44:
-                            _x.sent();
+                            _y.sent();
                             stopStallWatchdog();
                             closeCriticalProgressIndicator();
                             clearProgressNotification(formContext);
@@ -2028,14 +2141,14 @@ var ROM;
                             clearJobLocalState(jobId);
                             return [4 /*yield*/, formContext.data.save()];
                         case 45:
-                            _x.sent();
+                            _y.sent();
                             if (jobId) {
                                 startProgressPoller(formContext, jobId);
                             }
-                            _x.label = 46;
+                            _y.label = 46;
                         case 46: return [3 /*break*/, 52];
                         case 47:
-                            e_4 = _x.sent();
+                            e_4 = _y.sent();
                             console.error("[WOExport] ERROR: ", e_4);
                             stopStallWatchdog();
                             clearProgressNotification(formContext);
@@ -2049,15 +2162,15 @@ var ROM;
                             }
                             updateErrorMessageVisibility(formContext);
                             saveErrText = "";
-                            _x.label = 48;
+                            _y.label = 48;
                         case 48:
-                            _x.trys.push([48, 50, , 51]);
+                            _y.trys.push([48, 50, , 51]);
                             return [4 /*yield*/, formContext.data.save()];
                         case 49:
-                            _x.sent();
+                            _y.sent();
                             return [3 /*break*/, 51];
                         case 50:
-                            saveErr_1 = _x.sent();
+                            saveErr_1 = _y.sent();
                             saveErrText = getErrorText(saveErr_1);
                             return [3 /*break*/, 51];
                         case 51:

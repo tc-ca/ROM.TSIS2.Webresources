@@ -15,9 +15,16 @@
             --accent: #005a9c;
         }
 
+        html {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             padding: 12px;
+            width: 100%;
+            box-sizing: border-box;
             font-family: "Segoe UI", Tahoma, sans-serif;
             color: var(--text);
             background: var(--bg);
@@ -136,6 +143,7 @@
             background: #e8f1fb;
             color: #004578;
         }
+        
 
         .wo-empty {
             border: 1px solid var(--border);
@@ -146,9 +154,10 @@
         }
 
         .wo-dock {
-            margin-top: 20px;
             padding-top: 0;
-            margin-bottom: 12px;
+            margin-bottom: 4px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .wo-dock-inner {
@@ -156,18 +165,25 @@
             justify-content: space-between;
             align-items: flex-start;
             gap: 16px;
+            width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
         }
 
         .wo-pending-panel {
-            flex: 1 1 auto;
-            min-width: 320px;
+            flex: 1 1 0%;
+            min-width: 0;
+            max-width: 100%;
         }
 
         .wo-right-panel {
             display: flex;
             align-items: flex-start;
+            justify-content: flex-end;
             gap: 10px;
             flex: 0 0 auto;
+            flex-shrink: 0;
+            margin-left: auto;
         }
 
         .wo-add-inner {
@@ -293,6 +309,22 @@
             font-style: italic;
         }
 
+        .wo-stage1-done {
+            background: rgba(0, 128, 0, 0.08);
+        }
+
+        .wo-stage2-done {
+            background: rgba(0, 90, 156, 0.08);
+        }
+
+        .wo-stage1-done.wo-stage2-done {
+            background: rgba(0, 100, 80, 0.12);
+        }
+
+        .wo-stage1-error {
+            background: rgba(180, 40, 40, 0.12);
+        }
+
         .wo-apply {
             border: 1px solid #7da3c7;
             background: #729ec7;
@@ -318,6 +350,11 @@
         .wo-col-action {
             width: 1%;
             white-space: nowrap;
+            text-align: center;
+        }
+
+        .wo-table td.wo-col-action,
+        .wo-table th.wo-col-action {
             text-align: center;
         }
 
@@ -397,6 +434,7 @@
             var PAYLOAD_LOAD_RETRY_MAX_ATTEMPTS = 10;
             var PAYLOAD_LOAD_RETRY_DELAY_MS = 300;
             var STATUS_CLIENT_PROCESSING = 741130001;
+            var STATUS_READY_FOR_FLOW = 741130003;
             var currentRows = [];
             var pendingRows = [];
             var removedExistingMap = {};
@@ -404,6 +442,9 @@
             var searchTimer = null;
             var sortState = { key: "name", asc: true };
             var pendingSortState = { key: "name", asc: true };
+            var stage1CompletedIds = {};
+            var stage1FailedIds = {};
+            var stage2CompletedIds = {};
 
             function getXrm() {
                 return (window.parent && window.parent.Xrm) || window.Xrm || null;
@@ -519,6 +560,27 @@
                     }
                 }
                 return ids;
+            }
+
+            function fetchStage2CompletedIds(jobId) {
+                var xrm = getXrm();
+                if (!xrm || !jobId) return Promise.resolve();
+                var query = "?$select=filename&$filter=_objectid_value eq " + jobId + " and isdocument eq true";
+                return xrm.WebApi.retrieveMultipleRecords("annotation", query).then(function (result) {
+                    var entities = (result && result.entities) ? result.entities : [];
+                    stage2CompletedIds = {};
+                    for (var i = 0; i < entities.length; i++) {
+                        var fn = (entities[i].filename || "").toString();
+                        if (fn.indexOf("_MAIN.pdf") !== -1) {
+                            var match = fn.match(/^WO_([0-9a-f-]{36})_MAIN\.pdf$/i);
+                            if (match) {
+                                stage2CompletedIds[normalizeGuid(match[1])] = true;
+                            }
+                        }
+                    }
+                }).catch(function () {
+                    stage2CompletedIds = {};
+                });
             }
 
             function getPayloadFromCurrentJob(attempt) {
@@ -696,7 +758,15 @@
                     var r = displayRows[i];
                     var rowId = normalizeGuid(r.id);
                     var isRemoved = !!removedExistingMap[rowId];
-                    html += '<tr class="' + (isRemoved ? 'wo-removed-row' : '') + '">';
+                    var stage1Done = !!stage1CompletedIds[rowId];
+                    var stage1Failed = !!stage1FailedIds[rowId];
+                    var stage2Done = !!stage2CompletedIds[rowId];
+                    var rowClasses = [];
+                    if (isRemoved) rowClasses.push("wo-removed-row");
+                    if (stage1Failed) rowClasses.push("wo-stage1-error");
+                    if (stage1Done) rowClasses.push("wo-stage1-done");
+                    if (stage2Done) rowClasses.push("wo-stage2-done");
+                    html += '<tr class="' + rowClasses.join(" ") + '">';
                     var href = getWorkOrderUrl(r.id);
                     html += '<td><a href="' + escapeHtml(href) + '" class="wo-link wo-name-cell" data-id="' + escapeHtml(r.id) + '" target="_blank" rel="noopener noreferrer" title="' + escapeHtml(getResx("OpenWorkOrder")) + '">' + escapeHtml(r.name || "(unnamed)") + '</a></td>';
                     html += '<td>' + escapeHtml(r.owner || "") + '</td>';
@@ -991,12 +1061,29 @@
                             currentRows = [];
                             pendingRows = [];
                             removedExistingMap = {};
+                            stage2CompletedIds = {};
                             renderRows([]);
                             renderPendingRows();
                             updateApplyButtonState();
                             return;
                         }
-                        return queryWorkOrders(ids).then(function (rows) {
+                        var xrm = getXrm();
+                        var formContext = getFormContext();
+                        var jobId = formContext && formContext.data && formContext.data.entity && formContext.data.entity.getId
+                            ? normalizeGuid(formContext.data.entity.getId()) : "";
+                        var statusPromise = Promise.resolve(null);
+                        if (jobId && xrm && xrm.WebApi) {
+                            statusPromise = xrm.WebApi.retrieveRecord("ts_workorderexportjob", jobId, "?$select=statuscode")
+                                .then(function (job) {
+                                    var status = Number(job && job.statuscode !== undefined ? job.statuscode : 0);
+                                    if (status >= STATUS_READY_FOR_FLOW) {
+                                        return fetchStage2CompletedIds(jobId);
+                                    }
+                                }).catch(function () { });
+                        }
+                        return statusPromise.then(function () {
+                            return queryWorkOrders(ids);
+                        }).then(function (rows) {
                             currentRows = rows || [];
                             pendingRows = [];
                             removedExistingMap = {};
@@ -1020,7 +1107,36 @@
                     });
             }
 
+            function onMessage(ev) {
+                try {
+                    var data = ev && ev.data;
+                    if (!data || !data.type) return;
+                    if (data.type === "wo-export-stage1-completed" && Array.isArray(data.workOrderIds)) {
+                        for (var i = 0; i < data.workOrderIds.length; i++) {
+                            var id = normalizeGuid(data.workOrderIds[i]);
+                            if (id) stage1CompletedIds[id] = true;
+                        }
+                        renderRows(currentRows);
+                        return;
+                    }
+                    if (data.type === "wo-export-stage1-failed" && Array.isArray(data.workOrderIds)) {
+                        for (var j = 0; j < data.workOrderIds.length; j++) {
+                            var fid = normalizeGuid(data.workOrderIds[j]);
+                            if (fid) stage1FailedIds[fid] = true;
+                        }
+                        renderRows(currentRows);
+                        return;
+                    }
+                    if (data.type === "wo-export-refresh-stage2" && data.jobId) {
+                        fetchStage2CompletedIds(normalizeGuid(data.jobId)).then(function () {
+                            renderRows(currentRows);
+                        });
+                    }
+                } catch (e) { }
+            }
+
             function onLoad() {
+                window.addEventListener("message", onMessage);
                 var refreshBtn = document.getElementById(REFRESH_BTN_ID);
                 if (refreshBtn) {
                     refreshBtn.textContent = getResx("RefreshList");

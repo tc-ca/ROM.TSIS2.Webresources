@@ -36,7 +36,7 @@ namespace ROM.WorkOrderExportJob {
     let isProgressPollInFlight = false;
     let hasPendingProgressPoll = false;
 
-    const PROGRESS_POLL_INTERVAL_MS = 3000;
+    const PROGRESS_POLL_INTERVAL_MS = 5000;
     const FINALIZE_MAX_WAIT_MS = 20_000;
     const PROGRESS_WRITE_THROTTLE_MS = 1500;
     const PROGRESS_INDICATOR_UPDATE_THROTTLE_MS = 250;
@@ -169,8 +169,25 @@ namespace ROM.WorkOrderExportJob {
         return isStatusInList(status, STAGE3_STATUSES);
     }
 
+    const STAGE1_PREFIX = "[Stage 1/3] Preparing questionnaires...";
+
     function formatSurveyOverall(done: number, total: number): string {
-        return `[Stage 1/3] Preparing questionnaires... (${formatRatioWithPercent(done, total)})`;
+        const pct = getStage1Percent(done, total);
+        return `${STAGE1_PREFIX} (${formatRatio(done, total)}) - ${pct}%`;
+    }
+
+    /** Stage 1 detail: WO | Q (done/total) - XX% | action. Percentage from questionnaire count (done/total survey PDFs). */
+    function formatStage1DetailWithWoFirst(
+        woIdx: number,
+        totalWos: number,
+        taskIdx: number,
+        totalTasksInWo: number,
+        doneUnits: number,
+        totalUnits: number,
+        action: string
+    ): string {
+        const pct = getStage1Percent(doneUnits, totalUnits);
+        return `${formatWorkOrderTaskProgress(woIdx, totalWos, taskIdx, totalTasksInWo)} (${formatRatio(doneUnits, totalUnits)}) - ${pct}% | ${action}`;
     }
 
     function formatQuestionnaireExportProgress(done: number, total: number, complete: boolean = false): string {
@@ -196,11 +213,22 @@ namespace ROM.WorkOrderExportJob {
         return `WO ${workOrderIndex}/${totalWorkOrders} | Q ${taskIndex}/${totalTasksInWorkOrder}`;
     }
 
-    function formatRatioWithPercent(done: number, total: number): string {
+    function formatRatio(done: number, total: number): string {
         const safeTotal = Math.max(0, total);
         const safeDone = Math.max(0, Math.min(done, safeTotal));
-        const ratioPercent = safeTotal > 0 ? Math.round((safeDone * 100) / safeTotal) : 0;
-        return `${safeDone}/${safeTotal}, ${ratioPercent}%`;
+        return `${safeDone}/${safeTotal}`;
+    }
+
+    function getStage1Percent(done: number, total: number): number {
+        const safeTotal = Math.max(0, total);
+        const safeDone = Math.max(0, Math.min(done, safeTotal));
+        return safeTotal > 0 ? Math.round((safeDone * 100) / safeTotal) : 0;
+    }
+
+    function formatRatioWithPercent(done: number, total: number): string {
+        const r = formatRatio(done, total);
+        const p = getStage1Percent(done, total);
+        return `${r}, ${p}%`;
     }
 
     function formatStageProgress(
@@ -328,16 +356,17 @@ namespace ROM.WorkOrderExportJob {
         const zipTotalFromMessage = zipCountMatch ? Math.max(0, Number(zipCountMatch[2] || 0)) : null;
 
         if (isStage2Status(status)) {
-            // Stage 2 (flow): show coarse completed-count. Flow sends progressMessage (EN/FR); if it contains X/Y (Z%) we show it as-is with stage prefix.
+            // Stage 2 (flow): prefer ts_progressmessage written by the flow (polled ~5s). Only use when it looks like flow progress, not leftover Stage 1.
+            const looksLikeStage1Message = /\[Stage\s+1\/3\]|Questionnaire\s+PDFs/i.test(msg);
             const ratioInMessage = msg.match(/\d+\s*\/\s*\d+\s*\(\s*\d+\s*%\s*\)/);
-            if (ratioInMessage) {
-                const stagePrefix = getStagePrefix(status);
-                return `${stagePrefix} ${msg}`;
+            const hasFlowProgress = ratioInMessage && !looksLikeStage1Message;
+            if (hasFlowProgress) {
+                return `${getStagePrefix(status)} ${msg}`;
             }
-            const safeDone = Math.max(0, doneUnits);
+            // No flow message yet or still Stage 1 text: show initial "0/XX (0%)" from ts_totalunits (flow should set ts_totalunits when it claims).
             const safeTotal = Math.max(0, totalUnits);
-            const stagePrefix = getStagePrefix(status);
-            return `${stagePrefix} Work order PDFs: ${safeDone}/${safeTotal} (${percent}%)`;
+            const safeDone = Math.max(0, doneUnits);
+            return `${getStagePrefix(status)} Work order PDFs: ${safeDone}/${safeTotal} (${safeTotal > 0 ? Math.min(99, Math.round((safeDone * 100) / safeTotal)) : 0}%)`;
         }
 
         if (status === STATUS_READY_FOR_ZIP || status === STATUS_ZIP_IN_PROGRESS) {
@@ -374,6 +403,10 @@ namespace ROM.WorkOrderExportJob {
         }
 
         if (status === STATUS_READY_FOR_MERGE || status === STATUS_MERGE_IN_PROGRESS) {
+            // Flow sets a final message when moving to ReadyForMerge; show it until merge worker overwrites.
+            if (msg.length > 0 && msg.includes("[Stage 2/3]") && (msg.includes("Completed") || msg.includes("Terminé"))) {
+                return (msg.startsWith("[") || msg.startsWith("✅")) ? msg : `${stagePrefix} ${msg}`;
+            }
             const safeDone = Math.max(0, doneUnits);
             const safeTotal = Math.max(0, totalUnits);
             return formatStageProgressWithRatio(stagePrefix, "Merging PDFs...", safeDone, safeTotal, percent);
@@ -1010,7 +1043,31 @@ namespace ROM.WorkOrderExportJob {
         } else if (!hasStalledWarning) {
             clearProgressNotification(formContext);
         }
-        
+
+        // Tell Included Work Orders iframe to refresh Stage 2 (main PDF) row state from annotations (same cadence as done-units poll)
+        if (status != null && status !== STATUS_ERROR && status !== STATUS_COMPLETED && status >= STATUS_READY_FOR_FLOW) {
+            notifyIncludedWorkOrdersRefreshStage2(formContext, jobId);
+        }
+    }
+
+    function notifyIncludedWorkOrdersRefreshStage2(formContext: any, jobId: string): void {
+        try {
+            const controls = formContext.ui.controls.get();
+            for (let idx = 0; idx < controls.length; idx++) {
+                try {
+                    const ctrl = controls[idx] as any;
+                    const obj = ctrl.getObject?.();
+                    if (obj?.tagName === "IFRAME" && typeof obj.src === "string" && obj.src.indexOf("WorkOrderExportIncludedWorkOrders") !== -1 && obj.contentWindow) {
+                        obj.contentWindow.postMessage({ type: "wo-export-refresh-stage2", jobId }, "*");
+                        break;
+                    }
+                } catch {
+                    /* ignore */
+                }
+            }
+        } catch {
+            /* ignore */
+        }
     }
 
     function triggerProgressPoll(formContext: any, jobId: string): void {
@@ -1124,6 +1181,20 @@ namespace ROM.WorkOrderExportJob {
             .printed-textarea {
               break-inside: avoid !important;
               page-break-inside: avoid !important;
+            }
+            .printed-textarea {
+              display: block !important;
+              width: 100% !important;
+              min-height: 50px;
+              height: auto !important;
+              padding: 6px 12px;
+              color: #555;
+              background-color: #fff;
+              background-image: none;
+              border: 1px solid #ccc;
+              border-radius: 4px;
+              box-sizing: border-box;
+              overflow: visible !important;
             }
           `;
         rw.document.head.appendChild(style);
@@ -1269,10 +1340,7 @@ namespace ROM.WorkOrderExportJob {
                     newDiv.html((newDiv.html() || "").replace(/\n/g, "<br />"));
                     newDiv.css("white-space", "pre-wrap");
                     newDiv.css("word-wrap", "break-word");
-                    newDiv.css("border", "1px solid #ccc");
-                    newDiv.css("padding", "5px");
-                    newDiv.css("min-height", "50px");
-                    newDiv.addClass("form-control");
+                    newDiv.css("overflow-wrap", "break-word");
                     renderWindow.jQuery(el).replaceWith(newDiv);
                 });
             }
@@ -1779,7 +1847,63 @@ namespace ROM.WorkOrderExportJob {
             }
 
             const errors: string[] = [];
-            
+
+            // Per-WO completion for Included Work Orders table (Stage 1 row coloring)
+            const totalTasksPerWo: Record<string, number> = {};
+            for (const s of allSurveys) {
+                const w = s.workOrderIdNoBraces;
+                totalTasksPerWo[w] = (totalTasksPerWo[w] || 0) + 1;
+            }
+            const completedCountByWo: Record<string, number> = {};
+            const stage1CompletedSet = new Set<string>();
+            const stage1FailedSet = new Set<string>();
+            const notifyIncludedWorkOrdersStage1 = (woIds: string[]) => {
+                try {
+                    const controls = formContext.ui.controls.get();
+                    for (let idx = 0; idx < controls.length; idx++) {
+                        try {
+                            const ctrl = controls[idx] as any;
+                            const obj = ctrl.getObject?.();
+                            if (obj?.tagName === "IFRAME" && typeof obj.src === "string" && obj.src.indexOf("WorkOrderExportIncludedWorkOrders") !== -1 && obj.contentWindow) {
+                                obj.contentWindow.postMessage({ type: "wo-export-stage1-completed", workOrderIds: woIds }, "*");
+                                break;
+                            }
+                        } catch {
+                            /* ignore */
+                        }
+                    }
+                } catch {
+                    /* ignore */
+                }
+            };
+            const notifyIncludedWorkOrdersStage1Failed = (woIds: string[]) => {
+                try {
+                    const controls = formContext.ui.controls.get();
+                    for (let idx = 0; idx < controls.length; idx++) {
+                        try {
+                            const ctrl = controls[idx] as any;
+                            const obj = ctrl.getObject?.();
+                            if (obj?.tagName === "IFRAME" && typeof obj.src === "string" && obj.src.indexOf("WorkOrderExportIncludedWorkOrders") !== -1 && obj.contentWindow) {
+                                obj.contentWindow.postMessage({ type: "wo-export-stage1-failed", workOrderIds: woIds }, "*");
+                                break;
+                            }
+                        } catch {
+                            /* ignore */
+                        }
+                    }
+                } catch {
+                    /* ignore */
+                }
+            };
+            const onWoStage1Complete = (workOrderIdNoBraces: string) => {
+                completedCountByWo[workOrderIdNoBraces] = (completedCountByWo[workOrderIdNoBraces] || 0) + 1;
+                const total = totalTasksPerWo[workOrderIdNoBraces];
+                if (total && completedCountByWo[workOrderIdNoBraces] === total) {
+                    stage1CompletedSet.add(workOrderIdNoBraces);
+                    notifyIncludedWorkOrdersStage1(Array.from(stage1CompletedSet));
+                }
+            };
+
             // Helper function to update progress notification (local UI)
             const updateProgress = (overallMessage: string, detailMessage?: string) => {
                 const combined = detailMessage ? `${overallMessage} | ${detailMessage}` : overallMessage;
@@ -1815,13 +1939,13 @@ namespace ROM.WorkOrderExportJob {
                 }
 
                 const chunk = allSurveys.slice(i, i + RENDER_HOST_COUNT);
-                const chunkLabel = chunk
-                    .map(s => formatWorkOrderTaskProgress(s.woIndex, totalExports, s.taskIndex, s.totalQuestionnairesInWo))
-                    .join(" & ");
-                updateProgress(
-                    formatSurveyOverall(doneUnits, totalSurveyPdfs),
-                    `${chunkLabel} | Rendering`
-                );
+                const pct = getStage1Percent(doneUnits, totalSurveyPdfs);
+                const chunkLabel =
+                    chunk
+                        .map(s => formatWorkOrderTaskProgress(s.woIndex, totalExports, s.taskIndex, s.totalQuestionnairesInWo))
+                        .join(" & ") +
+                    ` (${formatRatio(doneUnits, totalSurveyPdfs)}) - ${pct}% | Rendering`;
+                updateProgress(STAGE1_PREFIX, chunkLabel);
 
                 // Fire all renders in the chunk in parallel — each uses its own render window (separate iframe)
                 const renderPromises = chunk.map((item, slotIndex) => {
@@ -1840,8 +1964,8 @@ namespace ROM.WorkOrderExportJob {
                         filename,
                         onProgress: (stage) => {
                             updateProgress(
-                                formatSurveyOverall(doneUnits, totalSurveyPdfs),
-                                `${formatWorkOrderTaskProgress(wIdx, totalExports, tIdx, totalQuestionnairesInWo)} | ${stage}`
+                                STAGE1_PREFIX,
+                                formatStage1DetailWithWoFirst(wIdx, totalExports, tIdx, totalQuestionnairesInWo, doneUnits, totalSurveyPdfs, stage)
                             );
                         }
                     });
@@ -1867,13 +1991,16 @@ namespace ROM.WorkOrderExportJob {
                             skippedInvalidDefinitionCount++;
                         }
                         doneUnits++;
+                        onWoStage1Complete(workOrderIdNoBraces);
                         updateProgress(
-                            formatSurveyOverall(doneUnits, totalSurveyPdfs),
-                            `${formatWorkOrderTaskProgress(wIdx, totalExports, tIdx, totalQuestionnairesInWo)} | Skipped`
+                            STAGE1_PREFIX,
+                            formatStage1DetailWithWoFirst(wIdx, totalExports, tIdx, totalQuestionnairesInWo, doneUnits, totalSurveyPdfs, "Skipped")
                         );
                         await writeProgress(formatQuestionnaireExportProgress(doneUnits, totalSurveyPdfs));
 
                     } else if (result.status === "error") {
+                        stage1FailedSet.add(workOrderIdNoBraces);
+                        notifyIncludedWorkOrdersStage1Failed(Array.from(stage1FailedSet));
                         const userGuidance = "Please try again. If this keeps failing, retry the export without this Work Order/Service Task.";
                         errors.push(
                             `Work Order: ${workOrderLabel}\n` +
@@ -1883,15 +2010,18 @@ namespace ROM.WorkOrderExportJob {
                         );
                         console.error(`[WOExport][TaskError] wo=${workOrderIdNoBraces} task=${taskId} msg=${result.error}`);
                         updateProgress(
-                            formatSurveyOverall(doneUnits, totalSurveyPdfs),
-                            `${formatWorkOrderTaskProgress(wIdx, totalExports, tIdx, totalQuestionnairesInWo)} | Error`
+                            STAGE1_PREFIX,
+                            formatStage1DetailWithWoFirst(wIdx, totalExports, tIdx, totalQuestionnairesInWo, doneUnits, totalSurveyPdfs, "Error")
                         );
 
                     } else if (result.status === "ok") {
                         // Pipeline: fire upload in the background — don't await here so the next chunk can start rendering.
                         const capturedFilename = result.filename;
                         const uploadPromise = uploadSurveyBlob(result.blob, capturedFilename, jobId)
+                            .then(() => onWoStage1Complete(workOrderIdNoBraces))
                             .catch((uploadErr: any) => {
+                                stage1FailedSet.add(workOrderIdNoBraces);
+                                notifyIncludedWorkOrdersStage1Failed(Array.from(stage1FailedSet));
                                 const userGuidance = "Please try again. If this keeps failing, retry the export without this Work Order/Service Task.";
                                 errors.push(
                                     `Work Order: ${workOrderLabel}\n` +
@@ -1904,8 +2034,8 @@ namespace ROM.WorkOrderExportJob {
                         pendingUploadPromises.push(uploadPromise);
                         doneUnits++;
                         updateProgress(
-                            formatSurveyOverall(doneUnits, totalSurveyPdfs),
-                            `${formatWorkOrderTaskProgress(wIdx, totalExports, tIdx, totalQuestionnairesInWo)} | Uploading`
+                            STAGE1_PREFIX,
+                            formatStage1DetailWithWoFirst(wIdx, totalExports, tIdx, totalQuestionnairesInWo, doneUnits, totalSurveyPdfs, "Uploading")
                         );
                         await writeProgress(formatQuestionnaireExportProgress(doneUnits, totalSurveyPdfs));
                     }
