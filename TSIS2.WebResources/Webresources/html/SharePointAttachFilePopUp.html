@@ -108,16 +108,20 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="form-group">
-                    <label for="fileCategories">SharePoint Folder:</label>
+                    <label for="sharePointFolders">SharePoint Folder:</label>
                     <select class="form-control" id="sharePointFolders">
                         <!--Options will be populated here-->
                     </select>
+                    <div id="folderWarning" style="display: none; margin-top: 10px;" class="alert alert-warning">
+                        <strong id="folderWarningTitle"></strong>
+                        <p id="folderWarningMessage" style="margin: 5px 0 0 0;"></p>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <button id="uploadAttachments" class="btn btn-default" style="background-color: #637685; color: white; border-radius: 10px " onclick="uploadAttachments()">Upload</button>
+                <button id="uploadAttachments" class="btn btn-default" style="background-color: #637685; color: white; border-radius: 10px" onclick="uploadAttachments()" aria-describedby="folderWarningMessage">Upload</button>
             </div>
         </div>
     </div>
@@ -240,7 +244,6 @@
                 fileCategoryListText = "Catégorie";
                 uploadLoading = "Veuillez patienter";
                 uploadConfirmation = "Téléversement terminé";
-
             }
             // Set English labels by default
             else {
@@ -722,6 +725,84 @@
             }
         }
 
+        async function checkTeamSharePointFields() {
+            try {
+                const fetchXML = `
+                    <fetch top="1">
+                        <entity name="team">
+                            <attribute name="name" />
+                            <attribute name="teamid" />
+                            <attribute name="ts_sharepointfoldername" />
+                            <attribute name="ts_sharepointfolderid" />
+                            <filter>
+                                <condition attribute="businessunitid" operator="eq" value="${businessUnitId}" />
+                                <condition attribute="teamtype" operator="eq" value="0" />
+                            </filter>
+                        </entity>
+                    </fetch>`;
+
+                const result = await parent.Xrm.WebApi.retrieveMultipleRecords("team", "?fetchXml=" + encodeURIComponent(fetchXML));
+
+                const missingFields = [];
+                let teamName = "";
+                let teamId = "";
+
+                if (result.entities.length > 0) {
+                    const team = result.entities[0];
+                    teamName = team["name"] || "Team";
+                    teamId = team["teamid"] || "";
+                    if (!team["ts_sharepointfoldername"]) missingFields.push("SharePoint Folder Name");
+                    if (!team["ts_sharepointfolderid"]) missingFields.push("SharePoint Folder ID");
+                }
+
+                const baseUrl = parent.Xrm.Utility.getGlobalContext().getClientUrl();
+                const teamLink = teamId
+                    ? `<a href="${baseUrl}/main.aspx?etn=team&id=${teamId}&pagetype=entityrecord" target="_blank">${teamName}</a>`
+                    : teamName;
+
+                const isEnglish = userLanguage !== 1036;
+                const title = isEnglish
+                    ? `Missing fields for team "${teamName}"`
+                    : `Champs manquants pour l'équipe "${teamName}"`;
+                const message = isEnglish
+                    ? `The following fields are not filled in for ${teamLink}: ${missingFields.join(", ")}. Please contact your system administrator.`
+                    : `Les champs suivants ne sont pas remplis pour ${teamLink}: ${missingFields.join(", ")}. Veuillez contacter votre administrateur système.`;
+
+                document.getElementById('folderWarning').style.display = 'block';
+                document.getElementById('folderWarningTitle').textContent = title;
+                document.getElementById('folderWarningMessage').innerHTML = message;
+
+                const disableUI = (elemId) => {
+                    const elem = document.getElementById(elemId);
+                    elem.setAttribute('aria-disabled', 'true');
+                    elem.style.opacity = '0.5';
+                    elem.style.cursor = 'not-allowed';
+                    elem.style.pointerEvents = 'none';
+                };
+                disableUI('uploadAttachments');
+                disableUI('sharePointFolders');
+
+            } catch (error) {
+                console.error('Error checking team configuration:', error);
+                const title = userLanguage == 1036 ? "Erreur de configuration" : "Configuration error";
+                const message = userLanguage == 1036
+                    ? "Impossible de vérifier la configuration. Veuillez contacter votre administrateur système."
+                    : "Unable to verify configuration. Please contact your system administrator.";
+
+                document.getElementById('folderWarning').style.display = 'block';
+                document.getElementById('folderWarningTitle').textContent = title;
+                document.getElementById('folderWarningMessage').textContent = message;
+
+                ['uploadAttachments', 'sharePointFolders'].forEach(elemId => {
+                    const elem = document.getElementById(elemId);
+                    elem.setAttribute('aria-disabled', 'true');
+                    elem.style.opacity = '0.5';
+                    elem.style.cursor = 'not-allowed';
+                    elem.style.pointerEvents = 'none';
+                });
+            }
+        }
+
         function associateManyToManyRecord(relationshipName, sourceEntityName, sourceId, targetEntityName, targetId) {
             const url = `/api/data/v9.2/${sourceEntityName}(${sourceId})/${relationshipName}/$ref`;
 
@@ -825,6 +906,11 @@
 
                         firstLoop = false;
                     });
+
+                    // If no folders returned, check the team record directly to report which fields are missing
+                    if (foldersList.length === 0) {
+                        await checkTeamSharePointFields();
+                    }
 
                     return true;
                 } else {
