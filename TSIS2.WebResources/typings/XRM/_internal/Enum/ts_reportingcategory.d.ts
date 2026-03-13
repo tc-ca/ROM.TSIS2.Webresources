@@ -1,4 +1,5 @@
 declare const enum ts_reportingcategory {
+  InFlightSupplies = 447390001,
   Aerodrome = 741130000,
   AirCarrier = 741130001,
   SecureSupplyChain = 741130002,

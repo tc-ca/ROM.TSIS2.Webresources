@@ -1,4 +1,5 @@
 declare const enum ts_deliverymethod {
+  TCSCP = 447390001,
   Verbal = 741130000,
   Email = 741130001,
   SSCIMS = 741130002,

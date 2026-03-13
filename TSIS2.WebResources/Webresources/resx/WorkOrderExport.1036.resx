@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!-- Ribbon: Resume / Restart -->
+  <data name="ResumeOrStartOverTitle" xml:space="preserve">
+    <value>Reprendre ou recommencer</value>
+    <comment/>
+  </data>
+  <data name="ResumeOrStartOverText" xml:space="preserve">
+    <value>Choisissez OK pour reprendre à partir de l'état actuel, ou Annuler pour recommencer.</value>
+    <comment/>
+  </data>
+  <data name="OKResume" xml:space="preserve">
+    <value>OK (Reprendre)</value>
+    <comment/>
+  </data>
+  <data name="StartOver" xml:space="preserve">
+    <value>Recommencer</value>
+    <comment/>
+  </data>
+  <data name="StartOverExportJobTitle" xml:space="preserve">
+    <value>Recommencer l'export</value>
+    <comment/>
+  </data>
+  <data name="RestartExportJobTitle" xml:space="preserve">
+    <value>Redémarrer l'export</value>
+    <comment/>
+  </data>
+  <data name="RestartExportConfirmText" xml:space="preserve">
+    <value>Ceci redémarrera l'export et remplacera les fichiers déjà générés (PDF/ZIP). Continuer?</value>
+    <comment/>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Annuler</value>
+    <comment/>
+  </data>
+  <data name="ResumingExportJob" xml:space="preserve">
+    <value>Reprise de l'export en cours...</value>
+    <comment/>
+  </data>
+  <data name="RestartingExportJob" xml:space="preserve">
+    <value>Redémarrage de l'export en cours...</value>
+    <comment/>
+  </data>
+  <data name="ExportJobRestartedRefresh" xml:space="preserve">
+    <value>Export redémarré. Le formulaire sera actualisé dans 5 secondes.</value>
+    <comment/>
+  </data>
+  <data name="CouldNotDetermineFormContext" xml:space="preserve">
+    <value>Impossible de déterminer le contexte du formulaire.</value>
+    <comment/>
+  </data>
+  <data name="OnlyRolesCanRestart" xml:space="preserve">
+    <value>Seuls l'administrateur système, ROM - Admin métier, ROM - Planificateur et ROM - Gestionnaire peuvent redémarrer un export.</value>
+    <comment/>
+  </data>
+  <data name="CouldNotDetermineJobId" xml:space="preserve">
+    <value>Impossible de déterminer l'ID de l'export.</value>
+    <comment/>
+  </data>
+  <data name="ExportJobStillRunning" xml:space="preserve">
+    <value>Cet export est encore en cours. Reprendre/Recommencer est disponible si l'export semble bloqué (aucune mise à jour depuis au moins 4 minutes).</value>
+    <comment/>
+  </data>
+  <data name="ResumeRequestedReloading" xml:space="preserve">
+    <value>Reprise demandée. Rechargement du formulaire...</value>
+    <comment/>
+  </data>
+  <data name="FailedToRestartExportJob" xml:space="preserve">
+    <value>Échec du redémarrage de l'export : </value>
+    <comment/>
+  </data>
+  <data name="ExportDefaultName" xml:space="preserve">
+    <value>Export</value>
+    <comment/>
+  </data>
+  <data name="UnknownUser" xml:space="preserve">
+    <value>Utilisateur inconnu</value>
+    <comment/>
+  </data>
+  <data name="RestartedAtByFormat" xml:space="preserve">
+    <value> | Redémarré le {0} par {1}</value>
+    <comment/>
+  </data>
+  <!-- Work Order Ribbon: start export -->
+  <data name="OnlyRolesCanExportPDFs" xml:space="preserve">
+    <value>Seuls les utilisateurs ayant les rôles Administrateur système, ROM - Admin métier, ROM - Planificateur ou ROM - Gestionnaire peuvent exporter en PDF.</value>
+    <comment/>
+  </data>
+  <data name="PleaseSelectOneWorkOrder" xml:space="preserve">
+    <value>Veuillez sélectionner au moins un ordre de travail.</value>
+    <comment/>
+  </data>
+  <data name="ConfirmExportTitle" xml:space="preserve">
+    <value>Confirmer l'export</value>
+    <comment/>
+  </data>
+  <data name="ConfirmExportText" xml:space="preserve">
+    <value>Ceci démarrera un export pour {0} ordre(s) de travail.
+
+La première étape s'exécute dans ce formulaire. Ne pas l'actualiser ni le fermer.</value>
+    <comment/>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+    <comment/>
+  </data>
+  <data name="WorkOrderLabel" xml:space="preserve">
+    <value>Ordre de travail</value>
+    <comment/>
+  </data>
+  <data name="WorkOrdersLabel" xml:space="preserve">
+    <value>Ordres de travail</value>
+    <comment/>
+  </data>
+  <!-- WorkOrderExportJob.ts: progress / dialogs -->
+  <data name="DoNotCloseOrReloadForm" xml:space="preserve">
+    <value>Ne pas fermer ni actualiser ce formulaire.</value>
+    <comment/>
+  </data>
+  <data name="QuestionnaireExportInProgress" xml:space="preserve">
+    <value>L'export des questionnaires est en cours.</value>
+    <comment/>
+  </data>
+  <data name="FinalizingExportRefreshing" xml:space="preserve">
+    <value>Finalisation de l'export... Actualisation du statut...</value>
+    <comment/>
+  </data>
+  <data name="ExportFailedSeeError" xml:space="preserve">
+    <value>Échec de l'export. Voir le message d'erreur.</value>
+    <comment/>
+  </data>
+  <data name="ExportTooLargeTitle" xml:space="preserve">
+    <value>Export trop volumineux</value>
+    <comment/>
+  </data>
+  <data name="ExportCompletedZipReady" xml:space="preserve">
+    <value>Export terminé. Votre ZIP est prêt à être téléchargé.</value>
+    <comment/>
+  </data>
+  <data name="ExportCompleteMessage" xml:space="preserve">
+    <value>Export des ordres de travail terminé.</value>
+    <comment/>
+  </data>
+  <data name="ExportCompletedDownloadPromptTitle" xml:space="preserve">
+    <value>Export terminé</value>
+    <comment/>
+  </data>
+  <data name="ExportCompletedDownloadPromptText" xml:space="preserve">
+    <value>L'export est terminé. Votre ZIP est prêt.
+
+Voulez-vous le télécharger maintenant?</value>
+    <comment/>
+  </data>
+  <data name="DownloadZIP" xml:space="preserve">
+    <value>Télécharger le ZIP</value>
+    <comment/>
+  </data>
+  <data name="Later" xml:space="preserve">
+    <value>Plus tard</value>
+    <comment/>
+  </data>
+  <data name="QuestionnaireExportInterruptedTitle" xml:space="preserve">
+    <value>Export des questionnaires interrompu</value>
+    <comment/>
+  </data>
+  <data name="QuestionnaireExportInterruptedText" xml:space="preserve">
+    <value>L'export des questionnaires semble avoir été interrompu (fermeture ou actualisation). Choisissez OK pour reprendre, ou Annuler pour annuler cet export.</value>
+    <comment/>
+  </data>
+  <data name="CancelJob" xml:space="preserve">
+    <value>Annuler l'export</value>
+    <comment/>
+  </data>
+  <data name="ExportCompletedZIPNotFound" xml:space="preserve">
+    <value>Export terminé, mais le ZIP n'a pas été trouvé automatiquement. Vérifiez les notes de l'export ou le champ ZIP final.</value>
+    <comment/>
+  </data>
+  <data name="ExportStalledWarning" xml:space="preserve">
+    <value>L'export semble bloqué (aucune mise à jour depuis au moins 12 minutes). Vous pouvez attendre ou utiliser Redémarrer l'export si nécessaire.</value>
+    <comment/>
+  </data>
+  <data name="ReduceWorkOrdersAndRetry" xml:space="preserve">
+    <value> Réduisez le nombre d'ordres de travail et réessayez.</value>
+    <comment/>
+  </data>
+  <data name="ExportTooLargeForSingleZIP" xml:space="preserve">
+    <value>L'export est trop volumineux pour un seul fichier ZIP.</value>
+    <comment/>
+  </data>
+  <data name="LongRunningNotice" xml:space="preserve">
+    <value>Cet export prend plus de temps que d'habitude ({0} min sans mise à jour). Vous pouvez attendre ou redémarrer avec moins d'ordres de travail.</value>
+    <comment/>
+  </data>
+  <!-- Status labels -->
+  <data name="PreparingQuestionnaires" xml:space="preserve">
+    <value>Préparation des questionnaires</value>
+    <comment/>
+  </data>
+  <data name="PreparingExportPayload" xml:space="preserve">
+    <value>Préparation du contenu d'export</value>
+    <comment/>
+  </data>
+  <data name="QueuedForDocumentGeneration" xml:space="preserve">
+    <value>En attente de génération des documents</value>
+    <comment/>
+  </data>
+  <data name="GeneratingExportDocuments" xml:space="preserve">
+    <value>Génération des documents d'export</value>
+    <comment/>
+  </data>
+  <data name="MergingPDFsAndPackagingZIP" xml:space="preserve">
+    <value>Fusion des PDF et création du ZIP</value>
+    <comment/>
+  </data>
+  <data name="MergingPDFs" xml:space="preserve">
+    <value>Fusion des PDF</value>
+    <comment/>
+  </data>
+  <data name="PreparingZIP" xml:space="preserve">
+    <value>Préparation du ZIP</value>
+    <comment/>
+  </data>
+  <data name="BuildingZIP" xml:space="preserve">
+    <value>Création du ZIP</value>
+    <comment/>
+  </data>
+  <data name="PreparingCleanup" xml:space="preserve">
+    <value>Préparation du nettoyage</value>
+    <comment/>
+  </data>
+  <data name="CleaningUpIntermediateFiles" xml:space="preserve">
+    <value>Nettoyage des fichiers intermédiaires</value>
+    <comment/>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Terminé</value>
+    <comment/>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Erreur</value>
+    <comment/>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Inconnu</value>
+    <comment/>
+  </data>
+  <!-- Plugin (C#) progress/error messages -->
+  <data name="ServerProcessingFailed" xml:space="preserve">
+    <value>Échec du traitement serveur : {0}</value>
+    <comment/>
+  </data>
+  <data name="ValidatingArtifactsFor" xml:space="preserve">
+    <value>Validation des artefacts pour {0} ordre(s) de travail...</value>
+    <comment/>
+  </data>
+  <data name="ValidatedWorkOrders" xml:space="preserve">
+    <value>{0} ordre(s) validé(s) ({1} PDF questionnaire(s), ~{2} Mo estimé)</value>
+    <comment/>
+  </data>
+  <data name="BuildingFinalZIP" xml:space="preserve">
+    <value>Création du ZIP final ({0}/{1})</value>
+    <comment/>
+  </data>
+  <data name="WaitingForZipConfirmation" xml:space="preserve">
+    <value>En attente de confirmation du ZIP</value>
+    <comment/>
+  </data>
+  <data name="ZIPReadyStartingCleanup" xml:space="preserve">
+    <value>ZIP prêt, démarrage du nettoyage</value>
+    <comment/>
+  </data>
+  <data name="DeletingTemporaryPDFArtifacts" xml:space="preserve">
+    <value>Suppression des PDF temporaires</value>
+    <comment/>
+  </data>
+  <data name="ZIPVerificationFailedRetrying" xml:space="preserve">
+    <value>Échec de vérification du ZIP après nettoyage, nouvelle tentative de création du ZIP</value>
+    <comment/>
+  </data>
+  <data name="CleanupCompleted" xml:space="preserve">
+    <value>Nettoyage terminé</value>
+    <comment/>
+  </data>
+  <data name="Stage3WorkerFailed" xml:space="preserve">
+    <value>Échec du traitement (étape 3) : {0}</value>
+    <comment/>
+  </data>
+  <!-- Included Work Orders HTML page -->
+  <data name="RefreshList" xml:space="preserve">
+    <value>Actualiser la liste</value>
+    <comment/>
+  </data>
+  <data name="ApplyChangesAndRestartJob" xml:space="preserve">
+    <value>Appliquer les modifications et redémarrer</value>
+    <comment/>
+  </data>
+  <data name="IncludedWorkOrders" xml:space="preserve">
+    <value>Ordres de travail inclus</value>
+    <comment/>
+  </data>
+  <data name="WorkOrder" xml:space="preserve">
+    <value>Ordre de travail</value>
+    <comment/>
+  </data>
+  <data name="Owner" xml:space="preserve">
+    <value>Propriétaire</value>
+    <comment/>
+  </data>
+  <data name="CreatedOn" xml:space="preserve">
+    <value>Créé le</value>
+    <comment/>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+    <comment/>
+  </data>
+  <data name="NoWorkOrdersForExport" xml:space="preserve">
+    <value>Aucun ordre de travail à afficher pour cet export.</value>
+    <comment/>
+  </data>
+  <data name="OpenWorkOrder" xml:space="preserve">
+    <value>Ouvrir l'ordre de travail</value>
+    <comment/>
+  </data>
+  <data name="MarkForRemove" xml:space="preserve">
+    <value>Marquer pour retrait</value>
+    <comment/>
+  </data>
+  <data name="UndoRemove" xml:space="preserve">
+    <value>Annuler le retrait</value>
+    <comment/>
+  </data>
+  <data name="NoPendingAdditions" xml:space="preserve">
+    <value>Aucune addition en attente.</value>
+    <comment/>
+  </data>
+  <data name="RemoveFromPending" xml:space="preserve">
+    <value>Retirer des ajouts en attente</value>
+    <comment/>
+  </data>
+  <data name="AlreadyAdded" xml:space="preserve">
+    <value> (déjà ajouté)</value>
+    <comment/>
+  </data>
+  <data name="LoadingWorkOrders" xml:space="preserve">
+    <value>Chargement des ordres de travail...</value>
+    <comment/>
+  </data>
+  <data name="NoChangesToApply" xml:space="preserve">
+    <value>Aucune modification à appliquer.</value>
+    <comment/>
+  </data>
+  <data name="CannotApplyFormContextUnavailable" xml:space="preserve">
+    <value>Impossible d'appliquer : le contexte du formulaire est indisponible.</value>
+    <comment/>
+  </data>
+  <data name="CannotApplyJobIdUnavailable" xml:space="preserve">
+    <value>Impossible d'appliquer : l'ID de l'export est indisponible.</value>
+    <comment/>
+  </data>
+  <data name="ApplyingChangesAndRestarting" xml:space="preserve">
+    <value>Application des modifications et redémarrage...</value>
+    <comment/>
+  </data>
+  <data name="ChangesSavedRestartUnavailable" xml:space="preserve">
+    <value>Modifications enregistrées, mais le redémarrage automatique est indisponible. Redémarrez l'export depuis le ruban.</value>
+    <comment/>
+  </data>
+  <data name="FailedToApplyChanges" xml:space="preserve">
+    <value>Échec de l'application des modifications : </value>
+    <comment/>
+  </data>
+  <data name="NoWorkOrdersSelected" xml:space="preserve">
+    <value>Aucun ordre de travail sélectionné pour cet export.</value>
+    <comment/>
+  </data>
+  <data name="WorkOrderCount" xml:space="preserve">
+    <value>{0} ordre de travail</value>
+    <comment/>
+  </data>
+  <data name="WorkOrdersCount" xml:space="preserve">
+    <value>{0} ordres de travail</value>
+    <comment/>
+  </data>
+  <data name="CouldNotLoadWorkOrders" xml:space="preserve">
+    <value>Impossible de charger les ordres de travail. Actualisez la liste.</value>
+    <comment/>
+  </data>
+  <data name="AddedRemovedSummary" xml:space="preserve">
+    <value>{0} ajouté(s), {1} retiré(s)</value>
+    <comment/>
+  </data>
+    <data name="UnknownError" xml:space="preserve">
+        <value>Erreur inconnue</value>
+        <comment/>
+    </data>
+    <data name="RenderHostLoadTimeout" xml:space="preserve">
+        <value>Le conteneur de rendu n'a pas terminé le chargement des bibliothèques requises (Survey/html2pdf/jQuery).</value>
+        <comment/>
+    </data>
+    <data name="WaitingForDocumentGeneration" xml:space="preserve">
+        <value>En attente de génération des documents.</value>
+        <comment/>
+    </data>
+    <data name="QuestionnaireExportIncomplete" xml:space="preserve">
+        <value>Export des questionnaires incomplet</value>
+        <comment/>
+    </data>
+    <data name="Stage1Initializing" xml:space="preserve">
+        <value>[Étape 1/3] Initialisation</value>
+        <comment/>
+    </data>
+    <data name="WorkOrderPDFsProgress" xml:space="preserve">
+        <value>PDF ordres de travail : {0}/{1} ({2} %)</value>
+        <comment/>
+    </data>
+    <data name="FinalizingExport" xml:space="preserve">
+        <value>Finalisation de l'export...</value>
+        <comment/>
+    </data>
+    <data name="VerifyingZIPAndPreparingCleanup" xml:space="preserve">
+        <value>Vérification du ZIP et préparation du nettoyage</value>
+        <comment/>
+    </data>
+    <data name="PreparingArchive" xml:space="preserve">
+        <value>Préparation de l'archive</value>
+        <comment/>
+    </data>
+    <data name="CleaningUpTemporaryArtifacts" xml:space="preserve">
+        <value>Nettoyage des artefacts temporaires...</value>
+        <comment/>
+    </data>
+    <data name="ZIPSizeLimitReachedDetail" xml:space="preserve">
+        <value>Limite de taille du ZIP atteinte. ZIP actuel : {0}, prochaine estimation : {1}, projeté : {2}, limite : {3}.</value>
+        <comment/>
+    </data>
+    <data name="ExportCompletedWithErrors" xml:space="preserve">
+        <value>Export terminé avec {0} erreur(s). Consultez le champ message d'erreur pour les détails.</value>
+        <comment/>
+    </data>
+    <data name="Stage1StalledSameStep" xml:space="preserve">
+        <value>
+            L'étape 1 a bloqué {0} fois au même point. Export arrêté.
+            Dernier progrès connu : {1}
+        </value>
+        <comment/>
+    </data>
+    <data name="Stage1AutoResumeFailed" xml:space="preserve">
+        <value>
+            Reprise automatique de l'étape 1 échouée après {0} tentative(s). Export arrêté (blocages répétés).
+            Dernier progrès connu : {1}
+        </value>
+        <comment/>
+    </data>
+    <data name="Stage1StalledRepeatedly" xml:space="preserve">
+        <value>[Erreur] L'étape 1 a bloqué à plusieurs reprises. Export arrêté.</value>
+        <comment/>
+    </data>
+    <data name="StallDetectedAutoResume" xml:space="preserve">
+        <value>[Étape 1/3] Blocage détecté | Tentative de reprise automatique {0}/{1}</value>
+        <comment/>
+    </data>
+    <data name="ResumingAutomatically" xml:space="preserve">
+        <value>Reprise automatique de l'export des questionnaires ({0}/{1}) à partir de {2} PDF existant(s)...</value>
+        <comment/>
+    </data>
+    <data name="ResumingFromExisting" xml:space="preserve">
+        <value>Reprise de l'export des questionnaires à partir de {0} PDF existant(s)...</value>
+        <comment/>
+    </data>
+    <data name="QuestionnaireExportCancelledByUser" xml:space="preserve">
+        <value>L'export des questionnaires a été interrompu (page quittée ou actualisée) et la reprise a été annulée par l'utilisateur.</value>
+        <comment/>
+    </data>
+    <data name="Stage1InProgressAlreadyRunning" xml:space="preserve">
+        <value>[Étape 1/3] En cours | L'export des questionnaires est déjà en cours. Ne fermez pas et n'actualisez pas ce formulaire si vous l'avez démarré.</value>
+        <comment/>
+    </data>
+    <data name="RenderHostControlNotFound" xml:space="preserve">
+        <value>Contrôle du conteneur de rendu introuvable sur le formulaire : {0}</value>
+        <comment/>
+    </data>
+    <data name="RenderHostWindowNotAccessible" xml:space="preserve">
+        <value>Fenêtre du conteneur de rendu inaccessible : {0}</value>
+        <comment/>
+    </data>
+    <data name="NoPayloadJSONFound" xml:space="preserve">
+        <value>Aucun JSON de charge trouvé (ts_surveypayloadjson est vide).</value>
+        <comment/>
+    </data>
+    <data name="InvalidPayloadJSONParse" xml:space="preserve">
+        <value>JSON de charge invalide (échec du parsing) : {0}</value>
+        <comment/>
+    </data>
+    <data name="InvalidPayloadJSONFormat" xml:space="preserve">
+        <value>Format JSON de charge invalide. Attendu : { ids: string[], includeHiddenQuestions?: boolean }.</value>
+        <comment/>
+    </data>
+    <data name="FailedLoadingServiceTasks" xml:space="preserve">
+        <value>Échec du chargement des tâches de service pour l'ordre de travail {0} : {1}</value>
+        <comment/>
+    </data>
+    <data name="PreparingExportScanning" xml:space="preserve">
+        <value>Préparation de l'export (1/2) : analyse des ordres de travail sélectionnés...</value>
+        <comment/>
+    </data>
+    <data name="RetryExportWithoutWorkOrder" xml:space="preserve">
+        <value>Veuillez réessayer. Si l'échec persiste, relancez l'export sans cet ordre de travail / cette tâche de service.</value>
+        <comment/>
+    </data>
+    <data name="ErrorProcessingExportJob" xml:space="preserve">
+        <value>Erreur lors du traitement de l'export : {0}</value>
+        <comment/>
+    </data>
+    <data name="SaveFailedWhileSettingError" xml:space="preserve">
+        <value>Échec de l'enregistrement lors de la définition de l'état d'erreur : {0}</value>
+        <comment/>
+    </data>
+    <data name="NonBlockingSkipsCount" xml:space="preserve">
+        <value>Ignorés non bloquants ({0}) :</value>
+        <comment/>
+    </data>
+</root>

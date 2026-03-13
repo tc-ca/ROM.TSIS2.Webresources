@@ -18,6 +18,7 @@ interface ts_nonoversightactivity_Base extends WebEntity {
 }
 interface ts_nonoversightactivity_Relationships {
   ts_FiscalYear?: tc_TCFiscalYear_Result | null;
+  ts_Program?: BusinessUnit_Result | null;
   ts_Stakeholder?: Account_Result | null;
 }
 interface ts_nonoversightactivity extends ts_nonoversightactivity_Base, ts_nonoversightactivity_Relationships {
@@ -98,9 +99,11 @@ interface ts_nonoversightactivity_Expand {
   modifiedby: WebExpand<ts_nonoversightactivity_Expand, SystemUser_Select, SystemUser_Filter, { modifiedby: SystemUser_Result }>;
   modifiedonbehalfby: WebExpand<ts_nonoversightactivity_Expand, SystemUser_Select, SystemUser_Filter, { modifiedonbehalfby: SystemUser_Result }>;
   ownerid: WebExpand<ts_nonoversightactivity_Expand, SystemUser_Select & Team_Select, SystemUser_Filter & Team_Filter, { ownerid: SystemUser_Result } & { ownerid: Team_Result }>;
+  owningbusinessunit: WebExpand<ts_nonoversightactivity_Expand, BusinessUnit_Select, BusinessUnit_Filter, { owningbusinessunit: BusinessUnit_Result }>;
   owningteam: WebExpand<ts_nonoversightactivity_Expand, Team_Select, Team_Filter, { owningteam: Team_Result }>;
   owninguser: WebExpand<ts_nonoversightactivity_Expand, SystemUser_Select, SystemUser_Filter, { owninguser: SystemUser_Result }>;
   ts_FiscalYear: WebExpand<ts_nonoversightactivity_Expand, tc_TCFiscalYear_Select, tc_TCFiscalYear_Filter, { ts_FiscalYear: tc_TCFiscalYear_Result }>;
+  ts_Program: WebExpand<ts_nonoversightactivity_Expand, BusinessUnit_Select, BusinessUnit_Filter, { ts_Program: BusinessUnit_Result }>;
   ts_Stakeholder: WebExpand<ts_nonoversightactivity_Expand, Account_Select, Account_Filter, { ts_Stakeholder: Account_Result }>;
 }
 interface ts_nonoversightactivity_FormattedResult {
@@ -145,9 +148,11 @@ interface ts_nonoversightactivity_RelatedOne {
   modifiedby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   modifiedonbehalfby: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ownerid: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult> & WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
+  owningbusinessunit: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   owningteam: WebMappingRetrieve<Team_Select,Team_Expand,Team_Filter,Team_Fixed,Team_Result,Team_FormattedResult>;
   owninguser: WebMappingRetrieve<SystemUser_Select,SystemUser_Expand,SystemUser_Filter,SystemUser_Fixed,SystemUser_Result,SystemUser_FormattedResult>;
   ts_FiscalYear: WebMappingRetrieve<tc_TCFiscalYear_Select,tc_TCFiscalYear_Expand,tc_TCFiscalYear_Filter,tc_TCFiscalYear_Fixed,tc_TCFiscalYear_Result,tc_TCFiscalYear_FormattedResult>;
+  ts_Program: WebMappingRetrieve<BusinessUnit_Select,BusinessUnit_Expand,BusinessUnit_Filter,BusinessUnit_Fixed,BusinessUnit_Result,BusinessUnit_FormattedResult>;
   ts_Stakeholder: WebMappingRetrieve<Account_Select,Account_Expand,Account_Filter,Account_Fixed,Account_Result,Account_FormattedResult>;
 }
 interface ts_nonoversightactivity_RelatedMany {

@@ -132,6 +132,16 @@
                 "file": "resx\\AttachFile.1036.resx",
                 "description": "ROM TSIS 2.0 Attach File Custom Page Resource Strings"
             },
+            {
+                "uniquename": "ts_/resx/WorkOrderExport.1033.resx",
+                "file": "resx\\WorkOrderExport.1033.resx",
+                "description": "ROM TSIS 2.0 Work Order PDF Export English Resource Strings"
+            },
+            {
+                "uniquename": "ts_/resx/WorkOrderExport.1036.resx",
+                "file": "resx\\WorkOrderExport.1036.resx",
+                "description": "ROM TSIS 2.0 Work Order PDF Export French Resource Strings"
+            },
             /* Libraries */
             {
                 "uniquename": "ovs_/lib/dg.xrmquery.web.min.js",
@@ -303,6 +313,11 @@
                 "uniquename": "ts_/js/WorkOrderExportJob.js",
                 "file": "js\\WorkOrderExportJob.js",
                 "description": "ROM TSIS 2.0 Work Order Export Job Scripts"
+            },
+            {
+                "uniquename": "ts_/js/WorkOrderExportJobRibbon.js",
+                "file": "js\\WorkOrderExportJobRibbon.js",
+                "description": "ROM TSIS 2.0 Work Order Export Ribbon Scripts"
             },
             {
                 "uniquename": "ovs_/js/WorkOrderRibbon.js",
@@ -547,6 +562,11 @@
                 "file": "html\\SurveyRenderPrint.html",
                 "description": "ROM TSIS 2.0 SurveyJS Printable Renderer"
             },
+            {
+                "uniquename": "ts_/html/SurveyRenderExport.html",
+                "file": "html\\SurveyRenderExport.html",
+                "description": "ROM TSIS 2.0 Export render host for parallel PDF generation"
+            },
             /* RATE Factor Guides */
             {
                 "uniquename": "ts_/html/RATEFactorGuide_AcceptanceOfResponsibility.html",
@@ -692,6 +712,11 @@
                 "uniquename": "ts_/html/SiteAssessmentGuidance.html",
                 "file": "html\\SiteAssessmentGuidance.html",
                 "description": "Display the Site Assessment Guidance on the Site Assessment tab under the Operation Risk Assessment form"
+            },
+            {
+                "uniquename": "ts_/html/WorkOrderExportIncludedWorkOrders.html",
+                "file": "html\\WorkOrderExportIncludedWorkOrders.html",
+                "description": "Display Work Orders included in the current Work Order Export Job payload"
             },
             /* SurveyJS dependencies */
             {
