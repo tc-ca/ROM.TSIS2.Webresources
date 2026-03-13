@@ -356,17 +356,12 @@ namespace ROM.WorkOrderExportJob {
         const zipTotalFromMessage = zipCountMatch ? Math.max(0, Number(zipCountMatch[2] || 0)) : null;
 
         if (isStage2Status(status)) {
-            // Stage 2 (flow): prefer ts_progressmessage written by the flow (polled ~5s). Only use when it looks like flow progress, not leftover Stage 1.
+            // Stage 2 (flow): treat ts_progressmessage as the source of truth once it no longer looks like leftover Stage 1 text.
             const looksLikeStage1Message = /\[Stage\s+1\/3\]|Questionnaire\s+PDFs/i.test(msg);
-            const ratioInMessage = msg.match(/\d+\s*\/\s*\d+\s*\(\s*\d+\s*%\s*\)/);
-            const hasFlowProgress = ratioInMessage && !looksLikeStage1Message;
-            if (hasFlowProgress) {
-                return `${getStagePrefix(status)} ${msg}`;
+            if (msg.length > 0 && !looksLikeStage1Message) {
+                return (msg.startsWith("[") || msg.startsWith("✅")) ? msg : `${stagePrefix} ${msg}`;
             }
-            // No flow message yet or still Stage 1 text: show initial "0/XX (0%)" from ts_totalunits (flow should set ts_totalunits when it claims).
-            const safeTotal = Math.max(0, totalUnits);
-            const safeDone = Math.max(0, doneUnits);
-            return `${getStagePrefix(status)} Work order PDFs: ${safeDone}/${safeTotal} (${safeTotal > 0 ? Math.min(99, Math.round((safeDone * 100) / safeTotal)) : 0}%)`;
+            return `${stagePrefix} Generating main PDFs...`;
         }
 
         if (status === STATUS_READY_FOR_ZIP || status === STATUS_ZIP_IN_PROGRESS) {
@@ -1007,23 +1002,26 @@ namespace ROM.WorkOrderExportJob {
             pollDebug(jobId, "completed-ready-for-download", `file=${fileName}`);
             stopProgressPoller(formContext);
             closeCriticalProgressIndicator();
-            setProgressNotification(formContext, "✅ " + getResx("ExportCompletedZipReady"), "INFO");
-            focusZipControl(formContext);
+            setProgressNotification(formContext, "✅ " + getResx("ExportCompleteMessage"), "INFO");
 
             if (hasShownCompletedPrompt(jobId)) {
                 return;
             }
             markCompletedPromptShown(jobId);
 
-            const userChoice = await Xrm.Navigation.openConfirmDialog({
-                title: getResx("ExportCompletedDownloadPromptTitle"),
-                text: getResx("ExportCompletedDownloadPromptText"),
-                confirmButtonLabel: getResx("DownloadZIP"),
-                cancelButtonLabel: getResx("Later")
-            });
-            if (userChoice?.confirmed) {
-                await openFinalArtifact(jobId, job);
-            }
+            window.setTimeout(async () => {
+                await refreshFormAfterCompletion(formContext);
+                focusZipControl(formContext);
+                const userChoice = await Xrm.Navigation.openConfirmDialog({
+                    title: getResx("ExportCompletedDownloadPromptTitle"),
+                    text: getResx("ExportCompletedDownloadPromptText"),
+                    confirmButtonLabel: getResx("DownloadZIP"),
+                    cancelButtonLabel: getResx("Later")
+                });
+                if (userChoice?.confirmed) {
+                    await openFinalArtifact(jobId, job);
+                }
+            }, 2000);
             return;
         }
 

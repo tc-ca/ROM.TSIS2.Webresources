@@ -257,6 +257,10 @@ The first stage runs in this form. Please do not refresh or close it.</value>
         <value>Export completed. Your ZIP is ready to download.</value>
         <comment/>
     </data>
+    <data name="ExportCompleteMessage" xml:space="preserve">
+        <value>Work Order export complete.</value>
+        <comment/>
+    </data>
     <data name="ExportCompletedDownloadPromptTitle" xml:space="preserve">
         <value>Export Completed</value>
         <comment/>

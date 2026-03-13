@@ -357,17 +357,12 @@ var ROM;
             var zipDoneFromMessage = zipCountMatch ? Math.max(0, Number(zipCountMatch[1] || 0)) : null;
             var zipTotalFromMessage = zipCountMatch ? Math.max(0, Number(zipCountMatch[2] || 0)) : null;
             if (isStage2Status(status)) {
-                // Stage 2 (flow): prefer ts_progressmessage written by the flow (polled ~5s). Only use when it looks like flow progress, not leftover Stage 1.
+                // Stage 2 (flow): treat ts_progressmessage as the source of truth once it no longer looks like leftover Stage 1 text.
                 var looksLikeStage1Message = /\[Stage\s+1\/3\]|Questionnaire\s+PDFs/i.test(msg);
-                var ratioInMessage = msg.match(/\d+\s*\/\s*\d+\s*\(\s*\d+\s*%\s*\)/);
-                var hasFlowProgress = ratioInMessage && !looksLikeStage1Message;
-                if (hasFlowProgress) {
-                    return getStagePrefix(status) + " " + msg;
+                if (msg.length > 0 && !looksLikeStage1Message) {
+                    return (msg.startsWith("[") || msg.startsWith("✅")) ? msg : stagePrefix + " " + msg;
                 }
-                // No flow message yet or still Stage 1 text: show initial "0/XX (0%)" from ts_totalunits (flow should set ts_totalunits when it claims).
-                var safeTotal = Math.max(0, totalUnits);
-                var safeDone = Math.max(0, doneUnits);
-                return getStagePrefix(status) + " Work order PDFs: " + safeDone + "/" + safeTotal + " (" + (safeTotal > 0 ? Math.min(99, Math.round((safeDone * 100) / safeTotal)) : 0) + "%)";
+                return stagePrefix + " Generating main PDFs...";
             }
             if (status === STATUS_READY_FOR_ZIP || status === STATUS_ZIP_IN_PROGRESS) {
                 // Keep ZIP assembly visually distinct from cleanup/finalization.
@@ -952,7 +947,8 @@ var ROM;
         }
         function pollAndRenderProgress(formContext, jobId) {
             return __awaiter(this, void 0, void 0, function () {
-                var select, job, status, msg, isSizeError, displayMsg, totalUnits, doneUnits, stageLabel, rawMessage, displayMessage, hasStalledWarning, fileName, readyForDownload, waitedMs, userChoice, longRunningNotice;
+                var select, job, status, msg, isSizeError, displayMsg, totalUnits, doneUnits, stageLabel, rawMessage, displayMessage, hasStalledWarning, fileName, readyForDownload, waitedMs, longRunningNotice;
+                var _this = this;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -994,7 +990,7 @@ var ROM;
                             if (hasStalledWarning) {
                                 setProgressNotification(formContext, getResx("ExportStalledWarning"), "WARNING");
                             }
-                            if (!(status === STATUS_COMPLETED)) return [3 /*break*/, 9];
+                            if (!(status === STATUS_COMPLETED)) return [3 /*break*/, 6];
                             if (finalizeWaitStartedAtMs === null) {
                                 finalizeWaitStartedAtMs = Date.now();
                             }
@@ -1036,27 +1032,38 @@ var ROM;
                             pollDebug(jobId, "completed-ready-for-download", "file=" + fileName);
                             stopProgressPoller(formContext);
                             closeCriticalProgressIndicator();
-                            setProgressNotification(formContext, "✅ " + getResx("ExportCompletedZipReady"), "INFO");
-                            focusZipControl(formContext);
+                            setProgressNotification(formContext, "✅ " + getResx("ExportCompleteMessage"), "INFO");
                             if (hasShownCompletedPrompt(jobId)) {
                                 return [2 /*return*/];
                             }
                             markCompletedPromptShown(jobId);
-                            return [4 /*yield*/, Xrm.Navigation.openConfirmDialog({
-                                    title: getResx("ExportCompletedDownloadPromptTitle"),
-                                    text: getResx("ExportCompletedDownloadPromptText"),
-                                    confirmButtonLabel: getResx("DownloadZIP"),
-                                    cancelButtonLabel: getResx("Later")
-                                })];
+                            window.setTimeout(function () { return __awaiter(_this, void 0, void 0, function () {
+                                var userChoice;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0: return [4 /*yield*/, refreshFormAfterCompletion(formContext)];
+                                        case 1:
+                                            _a.sent();
+                                            focusZipControl(formContext);
+                                            return [4 /*yield*/, Xrm.Navigation.openConfirmDialog({
+                                                    title: getResx("ExportCompletedDownloadPromptTitle"),
+                                                    text: getResx("ExportCompletedDownloadPromptText"),
+                                                    confirmButtonLabel: getResx("DownloadZIP"),
+                                                    cancelButtonLabel: getResx("Later")
+                                                })];
+                                        case 2:
+                                            userChoice = _a.sent();
+                                            if (!(userChoice === null || userChoice === void 0 ? void 0 : userChoice.confirmed)) return [3 /*break*/, 4];
+                                            return [4 /*yield*/, openFinalArtifact(jobId, job)];
+                                        case 3:
+                                            _a.sent();
+                                            _a.label = 4;
+                                        case 4: return [2 /*return*/];
+                                    }
+                                });
+                            }); }, 2000);
+                            return [2 /*return*/];
                         case 6:
-                            userChoice = _a.sent();
-                            if (!(userChoice === null || userChoice === void 0 ? void 0 : userChoice.confirmed)) return [3 /*break*/, 8];
-                            return [4 /*yield*/, openFinalArtifact(jobId, job)];
-                        case 7:
-                            _a.sent();
-                            _a.label = 8;
-                        case 8: return [2 /*return*/];
-                        case 9:
                             finalizeWaitStartedAtMs = null;
                             if (lastPolledStatusForDebug !== status) {
                                 pollDebug(jobId, "status-change", "from=" + (lastPolledStatusForDebug !== null && lastPolledStatusForDebug !== void 0 ? lastPolledStatusForDebug : "null") + "; to=" + (status !== null && status !== void 0 ? status : "null") + "; label=" + stageLabel);

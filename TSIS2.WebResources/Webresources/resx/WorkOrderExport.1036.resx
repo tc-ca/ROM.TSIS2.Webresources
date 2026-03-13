@@ -254,6 +254,10 @@ La première étape s'exécute dans ce formulaire. Ne pas l'actualiser ni le fer
     <value>Export terminé. Votre ZIP est prêt à être téléchargé.</value>
     <comment/>
   </data>
+  <data name="ExportCompleteMessage" xml:space="preserve">
+    <value>Export des ordres de travail terminé.</value>
+    <comment/>
+  </data>
   <data name="ExportCompletedDownloadPromptTitle" xml:space="preserve">
     <value>Export terminé</value>
     <comment/>
