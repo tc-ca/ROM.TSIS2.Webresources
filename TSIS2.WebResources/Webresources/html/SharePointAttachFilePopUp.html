@@ -19,8 +19,33 @@
             /* margin-top: 10em; */
         }
 
-        .filepond--item {
-            width: calc(50% - 0.5em);
+        /* Force items to take up the full width */
+        #my-filepond .filepond--item {
+            width: 100%;
+        }
+
+        /* 1. Target the filename text specifically */
+        #my-filepond .filepond--file-info-main {
+            font-size: 1.25rem !important; /* Increase this to 1.5rem if you want it even bigger */
+            font-weight: 600; /* Makes the name slightly bolder/easier to read */
+        }
+
+        /* 2. Target the sub-text (file size like "787 KB") */
+        #my-filepond .filepond--file-info-sub {
+            font-size: 0.9rem !important;
+            opacity: 0.8; /* Keeps it distinct from the filename */
+        }
+
+        /* Target the label text specifically */
+        #my-filepond .filepond--drop-label label {
+            font-size: 1.5rem; /* Adjust this number as needed */
+            font-weight: bold; /* Makes it pop more */
+            cursor: pointer;
+        }
+
+        /* Lock the total height of the upload area */
+        #my-filepond.filepond--root {
+            height: 250px !important;
         }
 
         .btn:hover {
@@ -87,7 +112,7 @@
                 <input id="my-filepond" type="file" class="filepond" style="margin-top: 20px" name="filepond" multiple>
             </div>
         </div>
-        <div class="row" style="margin-top:150px">
+        <div class="row" >
             <div class="col-sm-12">
                 <div class="form-group">
                     <label for="fileDescription">Description:</label>
@@ -238,7 +263,7 @@
 
             // Set French labels
             if (userLanguage == 1036) {
-                noFilesText = "Faites glisser les fichiers ici ou cliquez pour les joindre.";
+                noFilesText = "Glissez les fichiers ou cliquez ici pour les joindre. (Maximum de 5 fichiers)";
                 clearAttachmentsButtonText = "Effacer les pièces jointes";
                 descriptionText = "Description";
                 fileCategoryListText = "Catégorie";
@@ -247,7 +272,7 @@
             }
             // Set English labels by default
             else {
-                noFilesText = "Drag file(s) here or click to attach.";
+                noFilesText = "Drag files or click here to attach. (Maximum 5 files)";
                 clearAttachmentsButtonText = "Clear Attachments";
                 descriptionText = "Description";
                 fileCategoryListText = "Category";
@@ -268,6 +293,7 @@
 
             pond = FilePond.create(inputElement, {
                 labelIdle: `${noFilesText}`,
+                allowDrop: true,
                 maxFiles: 5
             });
         }
