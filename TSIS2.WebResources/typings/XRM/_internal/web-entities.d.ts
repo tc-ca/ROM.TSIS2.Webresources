@@ -423,29 +423,6 @@ interface ovs_Questionnaire_Create extends ovs_Questionnaire {
 }
 interface ovs_Questionnaire_Update extends ovs_Questionnaire {
 }
-interface SystemUser_Base extends WebEntity {
-}
-interface SystemUser_Fixed extends WebEntity_Fixed {
-  systemuserid: string;
-}
-interface SystemUser extends SystemUser_Base, SystemUser_Relationships {
-}
-interface SystemUser_Relationships {
-}
-interface SystemUser_Result extends SystemUser_Base, SystemUser_Relationships {
-}
-interface SystemUser_FormattedResult {
-}
-interface SystemUser_Select {
-}
-interface SystemUser_Expand {
-}
-interface SystemUser_Filter {
-}
-interface SystemUser_Create extends SystemUser {
-}
-interface SystemUser_Update extends SystemUser {
-}
 interface Team_Base extends WebEntity {
 }
 interface Team_Fixed extends WebEntity_Fixed {
@@ -468,29 +445,6 @@ interface Team_Filter {
 interface Team_Create extends Team {
 }
 interface Team_Update extends Team {
-}
-interface TeamMembership_Base extends WebEntity {
-}
-interface TeamMembership_Fixed extends WebEntity_Fixed {
-  teammembershipid: string;
-}
-interface TeamMembership extends TeamMembership_Base, TeamMembership_Relationships {
-}
-interface TeamMembership_Relationships {
-}
-interface TeamMembership_Result extends TeamMembership_Base, TeamMembership_Relationships {
-}
-interface TeamMembership_FormattedResult {
-}
-interface TeamMembership_Select {
-}
-interface TeamMembership_Expand {
-}
-interface TeamMembership_Filter {
-}
-interface TeamMembership_Create extends TeamMembership {
-}
-interface TeamMembership_Update extends TeamMembership {
 }
 interface ts_action_Base extends WebEntity {
 }
@@ -1228,29 +1182,6 @@ interface ts_msdyn_workorder_ts_operationcontact_Create extends ts_msdyn_workord
 }
 interface ts_msdyn_workorder_ts_operationcontact_Update extends ts_msdyn_workorder_ts_operationcontact {
 }
-interface ts_msdyn_workorderservicetask_systemuser_Base extends WebEntity {
-}
-interface ts_msdyn_workorderservicetask_systemuser_Fixed extends WebEntity_Fixed {
-  ts_msdyn_workorderservicetask_systemuserid: string;
-}
-interface ts_msdyn_workorderservicetask_systemuser extends ts_msdyn_workorderservicetask_systemuser_Base, ts_msdyn_workorderservicetask_systemuser_Relationships {
-}
-interface ts_msdyn_workorderservicetask_systemuser_Relationships {
-}
-interface ts_msdyn_workorderservicetask_systemuser_Result extends ts_msdyn_workorderservicetask_systemuser_Base, ts_msdyn_workorderservicetask_systemuser_Relationships {
-}
-interface ts_msdyn_workorderservicetask_systemuser_FormattedResult {
-}
-interface ts_msdyn_workorderservicetask_systemuser_Select {
-}
-interface ts_msdyn_workorderservicetask_systemuser_Expand {
-}
-interface ts_msdyn_workorderservicetask_systemuser_Filter {
-}
-interface ts_msdyn_workorderservicetask_systemuser_Create extends ts_msdyn_workorderservicetask_systemuser {
-}
-interface ts_msdyn_workorderservicetask_systemuser_Update extends ts_msdyn_workorderservicetask_systemuser {
-}
 interface ts_nonoversightactivity_Base extends WebEntity {
 }
 interface ts_nonoversightactivity_Fixed extends WebEntity_Fixed {
@@ -1849,29 +1780,6 @@ interface ts_ts_file_ts_trip_Create extends ts_ts_file_ts_trip {
 }
 interface ts_ts_file_ts_trip_Update extends ts_ts_file_ts_trip {
 }
-interface ts_ts_suggestedinspection_systemuser_Base extends WebEntity {
-}
-interface ts_ts_suggestedinspection_systemuser_Fixed extends WebEntity_Fixed {
-  ts_ts_suggestedinspection_systemuserid: string;
-}
-interface ts_ts_suggestedinspection_systemuser extends ts_ts_suggestedinspection_systemuser_Base, ts_ts_suggestedinspection_systemuser_Relationships {
-}
-interface ts_ts_suggestedinspection_systemuser_Relationships {
-}
-interface ts_ts_suggestedinspection_systemuser_Result extends ts_ts_suggestedinspection_systemuser_Base, ts_ts_suggestedinspection_systemuser_Relationships {
-}
-interface ts_ts_suggestedinspection_systemuser_FormattedResult {
-}
-interface ts_ts_suggestedinspection_systemuser_Select {
-}
-interface ts_ts_suggestedinspection_systemuser_Expand {
-}
-interface ts_ts_suggestedinspection_systemuser_Filter {
-}
-interface ts_ts_suggestedinspection_systemuser_Create extends ts_ts_suggestedinspection_systemuser {
-}
-interface ts_ts_suggestedinspection_systemuser_Update extends ts_ts_suggestedinspection_systemuser {
-}
 interface ts_unplannedworkorder_Base extends WebEntity {
 }
 interface ts_unplannedworkorder_Fixed extends WebEntity_Fixed {
@@ -1986,29 +1894,6 @@ interface ts_WorkOrderServiceTaskWorkspace_Filter {
 interface ts_WorkOrderServiceTaskWorkspace_Create extends ts_WorkOrderServiceTaskWorkspace {
 }
 interface ts_WorkOrderServiceTaskWorkspace_Update extends ts_WorkOrderServiceTaskWorkspace {
-}
-interface ts_WorkOrderServiceTaskWorkspace_System_Base extends WebEntity {
-}
-interface ts_WorkOrderServiceTaskWorkspace_System_Fixed extends WebEntity_Fixed {
-  ts_workorderservicetaskworkspace_systemid: string;
-}
-interface ts_WorkOrderServiceTaskWorkspace_System extends ts_WorkOrderServiceTaskWorkspace_System_Base, ts_WorkOrderServiceTaskWorkspace_System_Relationships {
-}
-interface ts_WorkOrderServiceTaskWorkspace_System_Relationships {
-}
-interface ts_WorkOrderServiceTaskWorkspace_System_Result extends ts_WorkOrderServiceTaskWorkspace_System_Base, ts_WorkOrderServiceTaskWorkspace_System_Relationships {
-}
-interface ts_WorkOrderServiceTaskWorkspace_System_FormattedResult {
-}
-interface ts_WorkOrderServiceTaskWorkspace_System_Select {
-}
-interface ts_WorkOrderServiceTaskWorkspace_System_Expand {
-}
-interface ts_WorkOrderServiceTaskWorkspace_System_Filter {
-}
-interface ts_WorkOrderServiceTaskWorkspace_System_Create extends ts_WorkOrderServiceTaskWorkspace_System {
-}
-interface ts_WorkOrderServiceTaskWorkspace_System_Update extends ts_WorkOrderServiceTaskWorkspace_System {
 }
 interface tc_TCFiscalQuarter_Base extends WebEntity {
 }
@@ -2148,29 +2033,6 @@ interface Connection_Create extends Connection {
 }
 interface Connection_Update extends Connection {
 }
-interface Post_Base extends WebEntity {
-}
-interface Post_Fixed extends WebEntity_Fixed {
-  postid: string;
-}
-interface Post extends Post_Base, Post_Relationships {
-}
-interface Post_Relationships {
-}
-interface Post_Result extends Post_Base, Post_Relationships {
-}
-interface Post_FormattedResult {
-}
-interface Post_Select {
-}
-interface Post_Expand {
-}
-interface Post_Filter {
-}
-interface Post_Create extends Post {
-}
-interface Post_Update extends Post {
-}
 interface ts_workordertimetracking_Base extends WebEntity {
 }
 interface ts_workordertimetracking_Fixed extends WebEntity_Fixed {
@@ -2193,6 +2055,29 @@ interface ts_workordertimetracking_Filter {
 interface ts_workordertimetracking_Create extends ts_workordertimetracking {
 }
 interface ts_workordertimetracking_Update extends ts_workordertimetracking {
+}
+interface SystemUser_Base extends WebEntity {
+}
+interface SystemUser_Fixed extends WebEntity_Fixed {
+  systemuserid: string;
+}
+interface SystemUser extends SystemUser_Base, SystemUser_Relationships {
+}
+interface SystemUser_Relationships {
+}
+interface SystemUser_Result extends SystemUser_Base, SystemUser_Relationships {
+}
+interface SystemUser_FormattedResult {
+}
+interface SystemUser_Select {
+}
+interface SystemUser_Expand {
+}
+interface SystemUser_Filter {
+}
+interface SystemUser_Create extends SystemUser {
+}
+interface SystemUser_Update extends SystemUser {
 }
 interface ServiceAppointment_Base extends WebEntity {
 }
@@ -2262,29 +2147,6 @@ interface ts_role_Filter {
 interface ts_role_Create extends ts_role {
 }
 interface ts_role_Update extends ts_role {
-}
-interface BusinessUnit_Base extends WebEntity {
-}
-interface BusinessUnit_Fixed extends WebEntity_Fixed {
-  businessunitid: string;
-}
-interface BusinessUnit extends BusinessUnit_Base, BusinessUnit_Relationships {
-}
-interface BusinessUnit_Relationships {
-}
-interface BusinessUnit_Result extends BusinessUnit_Base, BusinessUnit_Relationships {
-}
-interface BusinessUnit_FormattedResult {
-}
-interface BusinessUnit_Select {
-}
-interface BusinessUnit_Expand {
-}
-interface BusinessUnit_Filter {
-}
-interface BusinessUnit_Create extends BusinessUnit {
-}
-interface BusinessUnit_Update extends BusinessUnit {
 }
 interface qm_rclegislation_Base extends WebEntity {
 }
@@ -2447,29 +2309,6 @@ interface msdyn_customerassetcategory_Create extends msdyn_customerassetcategory
 }
 interface msdyn_customerassetcategory_Update extends msdyn_customerassetcategory {
 }
-interface SystemUserRoles_Base extends WebEntity {
-}
-interface SystemUserRoles_Fixed extends WebEntity_Fixed {
-  systemuserroleid: string;
-}
-interface SystemUserRoles extends SystemUserRoles_Base, SystemUserRoles_Relationships {
-}
-interface SystemUserRoles_Relationships {
-}
-interface SystemUserRoles_Result extends SystemUserRoles_Base, SystemUserRoles_Relationships {
-}
-interface SystemUserRoles_FormattedResult {
-}
-interface SystemUserRoles_Select {
-}
-interface SystemUserRoles_Expand {
-}
-interface SystemUserRoles_Filter {
-}
-interface SystemUserRoles_Create extends SystemUserRoles {
-}
-interface SystemUserRoles_Update extends SystemUserRoles {
-}
 interface BookingStatus_Base extends WebEntity {
 }
 interface BookingStatus_Fixed extends WebEntity_Fixed {
@@ -2515,4 +2354,27 @@ interface msdyn_aiagentstatus_Filter {
 interface msdyn_aiagentstatus_Create extends msdyn_aiagentstatus {
 }
 interface msdyn_aiagentstatus_Update extends msdyn_aiagentstatus {
+}
+interface TeamMembership_Base extends WebEntity {
+}
+interface TeamMembership_Fixed extends WebEntity_Fixed {
+  teammembershipid: string;
+}
+interface TeamMembership extends TeamMembership_Base, TeamMembership_Relationships {
+}
+interface TeamMembership_Relationships {
+}
+interface TeamMembership_Result extends TeamMembership_Base, TeamMembership_Relationships {
+}
+interface TeamMembership_FormattedResult {
+}
+interface TeamMembership_Select {
+}
+interface TeamMembership_Expand {
+}
+interface TeamMembership_Filter {
+}
+interface TeamMembership_Create extends TeamMembership {
+}
+interface TeamMembership_Update extends TeamMembership {
 }

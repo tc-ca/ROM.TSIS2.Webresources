@@ -18,4 +18,5 @@ declare const enum msdyn_aiagentstatus_msdyn_fallbackreason {
   OOFemailresponsefromcustomer = 17,
   Unabletoproceedduetovariousreasons = 18,
   Couldnotsetlanguagecode = 19,
+  Guardrailchecksfailed = 20,
 }
