@@ -148,7 +148,7 @@
         <comment/>
     </data>
     <data name="RestartExportConfirmText" xml:space="preserve">
-        <value>This will restart the export job and replace any previously generated export files (PDF/ZIP). Continue?</value>
+        <value>This will restart the export job and replace the previously generated export. Continue?</value>
         <comment/>
     </data>
     <data name="Cancel" xml:space="preserve">
@@ -164,7 +164,7 @@
         <comment/>
     </data>
     <data name="ExportJobRestartedRefresh" xml:space="preserve">
-        <value>Export job restarted. The form will auto-refresh in 5 seconds to resume processing.</value>
+        <value>Export job restarted. The form will auto-refresh in 3 seconds to resume processing.</value>
         <comment/>
     </data>
     <data name="CouldNotDetermineFormContext" xml:space="preserve">
@@ -240,6 +240,18 @@ The first stage runs in this form. Please do not refresh or close it.</value>
     <data name="QuestionnaireExportInProgress" xml:space="preserve">
         <value>Questionnaire export is in progress.</value>
         <comment/>
+    </data>
+    <data name="ExportProgressStarting" xml:space="preserve">
+        <value>Starting export ({0} work order(s))…</value>
+        <comment>Progress overlay; {0} = work order count</comment>
+    </data>
+    <data name="ExportProgressGeneratingPdf" xml:space="preserve">
+        <value>Generating PDF {0} of {1}…</value>
+        <comment>Progress overlay; {0} = current index, {1} = total</comment>
+    </data>
+    <data name="ExportProgressCompressing" xml:space="preserve">
+        <value>Compressing ZIP…</value>
+        <comment>Progress overlay</comment>
     </data>
     <data name="FinalizingExportRefreshing" xml:space="preserve">
         <value>Finalizing export... Refreshing job status...</value>

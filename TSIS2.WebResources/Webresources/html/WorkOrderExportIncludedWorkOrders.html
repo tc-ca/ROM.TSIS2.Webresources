@@ -325,6 +325,14 @@
             background: rgba(180, 40, 40, 0.12);
         }
 
+        .wo-stage1-active td,
+        .wo-stage1-active a,
+        .wo-stage1-active a:hover,
+        .wo-stage1-active .wo-name-cell {
+            font-weight: 600;
+            font-style: italic;
+        }
+
         .wo-apply {
             border: 1px solid #7da3c7;
             background: #729ec7;
@@ -444,7 +452,41 @@
             var pendingSortState = { key: "name", asc: true };
             var stage1CompletedIds = {};
             var stage1FailedIds = {};
+            var stage1ActiveId = "";
             var stage2CompletedIds = {};
+
+            function getRowProgressStorageKey(jobId) {
+                return "wo-export-progress:" + normalizeGuid(jobId);
+            }
+
+            function syncRowProgressFromStorage(jobId) {
+                var cleanJobId = normalizeGuid(jobId);
+                if (!cleanJobId) return;
+                try {
+                    var raw = window.localStorage.getItem(getRowProgressStorageKey(cleanJobId));
+                    if (!raw) {
+                        stage1CompletedIds = {};
+                        stage1FailedIds = {};
+                        stage1ActiveId = "";
+                        return;
+                    }
+                    var parsed = JSON.parse(raw);
+                    var completed = Array.isArray(parsed && parsed.completedIds) ? parsed.completedIds : [];
+                    var failed = Array.isArray(parsed && parsed.failedIds) ? parsed.failedIds : [];
+                    var currentProcessingId = normalizeGuid(parsed && parsed.currentProcessingId);
+                    stage1CompletedIds = {};
+                    stage1FailedIds = {};
+                    stage1ActiveId = currentProcessingId || "";
+                    for (var i = 0; i < completed.length; i++) {
+                        var cid = normalizeGuid(completed[i]);
+                        if (cid) stage1CompletedIds[cid] = true;
+                    }
+                    for (var j = 0; j < failed.length; j++) {
+                        var fid = normalizeGuid(failed[j]);
+                        if (fid) stage1FailedIds[fid] = true;
+                    }
+                } catch (e) { }
+            }
 
             function getXrm() {
                 return (window.parent && window.parent.Xrm) || window.Xrm || null;
@@ -760,11 +802,13 @@
                     var isRemoved = !!removedExistingMap[rowId];
                     var stage1Done = !!stage1CompletedIds[rowId];
                     var stage1Failed = !!stage1FailedIds[rowId];
+                    var stage1Active = stage1ActiveId === rowId;
                     var stage2Done = !!stage2CompletedIds[rowId];
                     var rowClasses = [];
                     if (isRemoved) rowClasses.push("wo-removed-row");
                     if (stage1Failed) rowClasses.push("wo-stage1-error");
                     if (stage1Done) rowClasses.push("wo-stage1-done");
+                    if (stage1Active) rowClasses.push("wo-stage1-active");
                     if (stage2Done) rowClasses.push("wo-stage2-done");
                     html += '<tr class="' + rowClasses.join(" ") + '">';
                     var href = getWorkOrderUrl(r.id);
@@ -1071,6 +1115,7 @@
                         var formContext = getFormContext();
                         var jobId = formContext && formContext.data && formContext.data.entity && formContext.data.entity.getId
                             ? normalizeGuid(formContext.data.entity.getId()) : "";
+                        syncRowProgressFromStorage(jobId);
                         var statusPromise = Promise.resolve(null);
                         if (jobId && xrm && xrm.WebApi) {
                             statusPromise = xrm.WebApi.retrieveRecord("ts_workorderexportjob", jobId, "?$select=statuscode")
@@ -1137,6 +1182,21 @@
 
             function onLoad() {
                 window.addEventListener("message", onMessage);
+                window.setInterval(function () {
+                    try {
+                        var formContext = getFormContext();
+                        var jobId = formContext && formContext.data && formContext.data.entity && formContext.data.entity.getId
+                            ? normalizeGuid(formContext.data.entity.getId()) : "";
+                        if (!jobId) return;
+                        var beforeCompleted = JSON.stringify(stage1CompletedIds);
+                        var beforeFailed = JSON.stringify(stage1FailedIds);
+                        var beforeActive = stage1ActiveId;
+                        syncRowProgressFromStorage(jobId);
+                        if (beforeCompleted !== JSON.stringify(stage1CompletedIds) || beforeFailed !== JSON.stringify(stage1FailedIds) || beforeActive !== stage1ActiveId) {
+                            renderRows(currentRows);
+                        }
+                    } catch (e) { }
+                }, 1000);
                 var refreshBtn = document.getElementById(REFRESH_BTN_ID);
                 if (refreshBtn) {
                     refreshBtn.textContent = getResx("RefreshList");
