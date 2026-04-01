@@ -29,22 +29,6 @@ var IN_PROGRESS_STATUSES = [
   STATUS_READY_FOR_CLEANUP,
   STATUS_CLEANUP_IN_PROGRESS
 ];
-var STAGE3_RESUME_STATUSES = [
-  STATUS_READY_FOR_MERGE,
-  STATUS_MERGE_IN_PROGRESS,
-  STATUS_READY_FOR_ZIP,
-  STATUS_ZIP_IN_PROGRESS,
-  STATUS_READY_FOR_CLEANUP,
-  STATUS_CLEANUP_IN_PROGRESS
-];
-var STAGE2_RESUME_STATUSES = [
-  STATUS_READY_FOR_SERVER,
-  STATUS_READY_FOR_FLOW,
-  STATUS_FLOW_RUNNING,
-  STATUS_CLIENT_PROCESSING,
-  STATUS_ACTIVE,
-  741130007 // STATUS_ERROR in plugin
-];
 
 var ALLOWED_RESTART_ROLES = "System Administrator|ROM - Business Admin|ROM - Planner|ROM - Manager";
 
@@ -101,18 +85,7 @@ function woejGetResourceString(key) {
   return (Xrm.Utility.getResourceString("ts_/resx/WorkOrderExport", key) || "").trim() || key;
 }
 
-async function woejPromptResumeOrRestart() {
-  var choice = await Xrm.Navigation.openConfirmDialog({
-    title: woejGetResourceString("ResumeOrStartOverTitle"),
-    text: woejGetResourceString("ResumeOrStartOverText"),
-    confirmButtonLabel: woejGetResourceString("OKResume"),
-    cancelButtonLabel: woejGetResourceString("StartOver")
-  });
-
-  if (choice && choice.confirmed) {
-    return "resume";
-  }
-
+async function woejPromptRestartOnly() {
   var restartConfirm = await Xrm.Navigation.openConfirmDialog({
     title: woejGetResourceString("StartOverExportJobTitle"),
     text: woejGetResourceString("RestartExportConfirmText"),
@@ -157,18 +130,6 @@ async function woejGetLiveJobState(jobId) {
     jobId,
     "?$select=statuscode,ts_lastheartbeat,modifiedon,ts_progressmessage,ts_nextmergeindex,ts_doneunits"
   );
-}
-
-function woejGetResumeTargetStatus(statusCode) {
-  if (woejIsOneOf(statusCode, STAGE3_RESUME_STATUSES)) {
-    return STATUS_READY_FOR_MERGE;
-  }
-
-  if (woejIsOneOf(statusCode, STAGE2_RESUME_STATUSES)) {
-    return STATUS_READY_FOR_SERVER;
-  }
-
-  return STATUS_READY_FOR_SERVER;
 }
 
 async function woejReloadExportJobForm(jobId, formContext) {
@@ -217,40 +178,6 @@ function woejFormatRestartedName(existingName) {
 
   var fmt = woejGetResourceString("RestartedAtByFormat");
   return base + " " + (fmt.replace("{0}", stamp).replace("{1}", userName));
-}
-
-function woejIsGeneratedExportArtifact(filename) {
-  var name = (filename || "").toString().trim().toLowerCase();
-  if (!name) return false;
-
-  if (/^wo_.+_survey_.+\.pdf$/i.test(name)) return true;
-  if (/^wo_.+_main\.pdf$/i.test(name)) return true;
-  if (/^wo_.+_merged\.pdf$/i.test(name)) return true;
-  if (name === "__woexport_tmp__.wip") return true;
-  if (name.endsWith(".zip")) return true;
-  return false;
-}
-
-async function woejGetGeneratedArtifactNotes(jobId) {
-  var query =
-    "?$select=annotationid,filename,isdocument" +
-    "&$filter=_objectid_value eq " + jobId + " and isdocument eq true" +
-    "&$top=5000";
-
-  var result = await Xrm.WebApi.retrieveMultipleRecords("annotation", query);
-  return (result.entities || []).filter(function (n) {
-    return !!n.annotationid && woejIsGeneratedExportArtifact(n.filename);
-  });
-}
-
-async function woejDeleteNotes(notes) {
-  for (var i = 0; i < notes.length; i++) {
-    try {
-      await Xrm.WebApi.deleteRecord("annotation", notes[i].annotationid);
-    } catch (e) {
-      // Keep restart resilient even if one note cannot be deleted.
-    }
-  }
 }
 
 function canRestartJob(primaryControl) {
@@ -303,25 +230,10 @@ async function restartJob(primaryControl, options) {
     return;
   }
 
-  var mode = forceRestart ? "restart" : (inProgress ? await woejPromptResumeOrRestart() : "restart");
+  var mode = forceRestart ? "restart" : (inProgress ? await woejPromptRestartOnly() : "restart");
   if (mode === "cancelled") return;
 
   try {
-    if (mode === "resume") {
-      Xrm.Utility.showProgressIndicator(woejGetResourceString("ResumingExportJob"));
-
-      var targetStatus = woejGetResumeTargetStatus(statusCode);
-      await Xrm.WebApi.updateRecord("ts_workorderexportjob", jobId, {
-        statuscode: targetStatus,
-        ts_errormessage: ""
-      });
-
-      Xrm.Utility.closeProgressIndicator();
-      await woejShowAlert(woejGetResourceString("ResumeRequestedReloading"));
-      await woejReloadExportJobForm(jobId, formContext);
-      return;
-    }
-
     if (!inProgress) {
       var confirm = await Xrm.Navigation.openConfirmDialog({
         title: woejGetResourceString("RestartExportJobTitle"),
@@ -332,11 +244,6 @@ async function restartJob(primaryControl, options) {
 
     Xrm.Utility.showProgressIndicator(woejGetResourceString("RestartingExportJob"));
 
-    var notes = await woejGetGeneratedArtifactNotes(jobId);
-    if (notes.length > 0) {
-      await woejDeleteNotes(notes);
-    }
-
     var existingNameAttr = formContext.getAttribute("ts_name");
     var existingName = existingNameAttr ? existingNameAttr.getValue() : "";
     var restartedName = woejFormatRestartedName(existingName);
@@ -345,7 +252,6 @@ async function restartJob(primaryControl, options) {
       statuscode: STATUS_CLIENT_PROCESSING,
       ts_name: restartedName,
       ts_errormessage: "",
-      ts_payloadjson: null,
       ts_doneunits: 0,
       ts_totalunits: 0,
       ts_nextmergeindex: 0,
@@ -361,26 +267,20 @@ async function restartJob(primaryControl, options) {
     }
 
     await Xrm.WebApi.updateRecord("ts_workorderexportjob", jobId, restartPatch);
+    try {
+      window.localStorage.removeItem("wo-export-progress:" + jobId.toLowerCase());
+    } catch (e) { }
 
-    // Best effort clear of file column artifact (if present).
+    // Clear file column artifacts via DELETE (file columns cannot be nulled via updateRecord).
+    var clientUrl = Xrm.Utility.getGlobalContext().getClientUrl();
+    var fileColumnBase = clientUrl + "/api/data/v9.2/ts_workorderexportjobs(" + jobId + ")/";
     try {
-      await Xrm.WebApi.updateRecord("ts_workorderexportjob", jobId, {
-        ts_finalexportzip: null
-      });
-    } catch (e) {
-      // Ignore if file-column clear is not available in this org/version.
-    }
-    try {
-      await Xrm.WebApi.updateRecord("ts_workorderexportjob", jobId, {
-        ts_tempexportzip: null
-      });
-    } catch (e) {
-      // Ignore if temp file-column clear is not available in this org/version.
-    }
+      await fetch(fileColumnBase + "ts_finalexportzip", { method: "DELETE" });
+    } catch (e) { }
 
     Xrm.Utility.closeProgressIndicator();
     Xrm.Utility.showProgressIndicator(woejGetResourceString("ExportJobRestartedRefresh"));
-    await new Promise(function (resolve) { setTimeout(resolve, 5000); });
+    await new Promise(function (resolve) { setTimeout(resolve, 3000); });
     try { Xrm.Utility.closeProgressIndicator(); } catch (e) { }
     await woejReloadExportJobForm(jobId, formContext);
   } catch (e) {

@@ -1078,6 +1078,24 @@ async function getModelDrivenAppId() {
 }
 
 /**
+ * Gets the model-driven app base URL:
+ * <clientUrl>/main.aspx?appid=<appId>&
+ * @returns {Promise<string|null>} Base URL string or null when unavailable
+ */
+async function getModelDrivenAppBaseUrl() {
+    try {
+        const gc = Xrm.Utility.getGlobalContext();
+        const clientUrl = (gc.getClientUrl() || "").replace(/\/+$/g, "");
+        const appId = await getModelDrivenAppId();
+        if (!clientUrl || !appId) return null;
+        return `${clientUrl}/main.aspx?appid=${encodeURIComponent(appId)}&`;
+    } catch (error) {
+        console.error("Error retrieving Model-Driven App base URL:", error);
+        return null;
+    }
+}
+
+/**
  * Determines if the current user is using the Rail Safety App.
  * @returns {Promise<boolean>} True if the user is using the Rail Safety App}
  */

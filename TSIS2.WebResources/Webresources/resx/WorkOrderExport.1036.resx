@@ -143,7 +143,7 @@
     <comment/>
   </data>
   <data name="RestartExportConfirmText" xml:space="preserve">
-    <value>Ceci redémarrera l'export et remplacera les fichiers déjà générés (PDF/ZIP). Continuer?</value>
+    <value>Ceci redémarrera l'export et remplacera le fichier déjà généré. Continuer?</value>
     <comment/>
   </data>
   <data name="Cancel" xml:space="preserve">
@@ -159,7 +159,7 @@
     <comment/>
   </data>
   <data name="ExportJobRestartedRefresh" xml:space="preserve">
-    <value>Export redémarré. Le formulaire sera actualisé dans 5 secondes.</value>
+    <value>Export redémarré. Le formulaire sera actualisé dans 3 secondes.</value>
     <comment/>
   </data>
   <data name="CouldNotDetermineFormContext" xml:space="preserve">
@@ -237,6 +237,18 @@ La première étape s'exécute dans ce formulaire. Ne pas l'actualiser ni le fer
   <data name="QuestionnaireExportInProgress" xml:space="preserve">
     <value>L'export des questionnaires est en cours.</value>
     <comment/>
+  </data>
+  <data name="ExportProgressStarting" xml:space="preserve">
+    <value>Démarrage de l'export ({0} ordre(s) de travail)…</value>
+    <comment>Progress overlay; {0} = work order count</comment>
+  </data>
+  <data name="ExportProgressGeneratingPdf" xml:space="preserve">
+    <value>Génération du PDF {0} sur {1}…</value>
+    <comment>Progress overlay; {0} = current index, {1} = total</comment>
+  </data>
+  <data name="ExportProgressCompressing" xml:space="preserve">
+    <value>Compression du ZIP…</value>
+    <comment>Progress overlay</comment>
   </data>
   <data name="FinalizingExportRefreshing" xml:space="preserve">
     <value>Finalisation de l'export... Actualisation du statut...</value>

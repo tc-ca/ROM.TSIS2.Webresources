@@ -800,6 +800,11 @@
                 "description": "html2pdf library"
             },
             {
+                "uniquename": "ts_/js/jszip.min.js",
+                "file": "js\\jszip.min.js",
+                "description": "JSZip library for client-side ZIP generation"
+            },
+            {
                 "uniquename": "ts_/js/buildprovisiontext.js",
                 "file": "js\\buildprovisiontext.js",
                 "description": "Function library to build provision text"
